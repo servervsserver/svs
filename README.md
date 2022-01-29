@@ -1,5 +1,10 @@
 # svs
 
+## Collaborating
+
+Just to help with readability, I encourage everyone to use this convention for commit messages (although not enforced)
+https://www.conventionalcommits.org/en/v1.0.0/
+
 ## Project setup
 ```
 npm install

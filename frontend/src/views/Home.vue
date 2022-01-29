@@ -1,18 +1,24 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>
+
+      Welcome to <span style='color: #FFBA5E'> Server Versus Server</span>
+
+    </h1>
+    <event-countdown :time="$store.getters.nextSvsMainEventRemainingTime"></event-countdown>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
-export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
-}
 </script>
+
+<style lang='scss'>
+
+h1 {
+  margin-top: 80px;
+  text-align: center;
+  color: #333366;
+}
+
+</style>

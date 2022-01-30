@@ -1,6 +1,6 @@
 <template>
   <div class="container dhms-countdown">
-    <h1 id="headline">SVS IV</h1>
+    <h1>SVS IV</h1>
     <div>
       <ul>
         <li><span id="days">{{days}}</span>days</li>
@@ -428,9 +428,16 @@ export default {
 <style scoped lang="scss">
 
 .dhms-countdown {
+
+  text-align: center;
+
   .container {
     color: #333;
     margin: 0 auto;
+    text-align: center;
+  }
+
+  .container * {
     text-align: center;
   }
 
@@ -446,6 +453,7 @@ export default {
     list-style-type: none;
     padding: 1em;
     text-transform: uppercase;
+    text-align: center;
   }
 
   li span {

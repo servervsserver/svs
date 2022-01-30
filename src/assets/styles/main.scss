@@ -7,9 +7,14 @@
 //Import Bulma
 @import '~bulma';
 
+html {
+  background-color: inherit;
+}
+
 #app {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
+  height: 100%;
 }
 
 h1, h2, h3, h4 {

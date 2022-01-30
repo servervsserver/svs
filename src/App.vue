@@ -125,6 +125,11 @@ export default {
 
 @use 'assets/styles/main';
 
+.router-view {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
 // #nav {
 //   padding: 30px;
 //   background-color: #333366;

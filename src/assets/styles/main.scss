@@ -53,16 +53,20 @@ div.router-view {
 
 
   a {
+    color: #ffffff;
     height: 60%;
     margin-left: 10px;
+    text-decoration: none;
+    line-height: 36px;
+    margin-left: 20px;
 
     &.router-link-exact-active {
       color: #42b983;
     }
   }
 
-  a:visited {
-    color: inherit;
+  a:hover {
+    color: #e9e9e9;
   }
 }
 

@@ -14,12 +14,6 @@
 
 </script>
 
-<style lang='scss'>
-
-h1 {
-  margin-top: 80px;
-  text-align: center;
-  color: #333366;
-}
+<style scoped lang='scss'>
 
 </style>

@@ -13,10 +13,26 @@ $dark-primary-color: #333366;
 $secondary-color: #F5816B;
 $tertiary-color: #FFBA5E;
 
+/* ========================================================================= */
+
+/**
+* Resetting some user-agent properties
+*/
 html {
   min-height: 100vh;
   overflow: auto;
 }
+
+// body {
+//   margin: 0;
+//   background-color: cyan;
+// }
+
+/* ========================================================================= */
+
+/*
+* Default and base SvS styling
+*/
 
 * {
   background-color: inherit;
@@ -44,6 +60,12 @@ h1, h2, h3, h4 {
   background-image: url("/icons/svs/svs_square_dark_icon.svg");
 }
 
+/* ========================================================================= */
+
+/**
+* Navbar styling
+*/
+
 .navbar {
   .navbar-brand-image {
     width: 40px;
@@ -51,9 +73,6 @@ h1, h2, h3, h4 {
   }
 }
 
-/**
-* Navbar mixin to enable recolorisation
-*/
 @mixin navbar($text-color, $background-color) {
   .navbar {
     background-color: $background-color;
@@ -86,12 +105,68 @@ h1, h2, h3, h4 {
   }
 }
 
+/* ========================================================================= */
+
+/**
+* Footer styling
+*/
+
+.footer {
+  ul {
+    list-style: none;
+    margin: 0;
+  }
+}
+
+@mixin footer($text-color, $background-color) {
+
+  .footer * {
+    background-color: inherit;
+    color: $text-color;
+  }
+
+  .footer {
+    background-color: $background-color;
+    color: $text-color;
+
+    a:hover {
+      color: $secondary-color;
+    }
+
+    .social-medias {
+      margin-top: 40px;
+    }
+  }
+
+
+}
+
+/* ========================================================================= */
+
+.app-container {
+
+}
+
+@mixin appcontainer($text-color, $background-color) {
+  .app-container {
+    color: $text-color;
+    background-color: $background-color;
+  }
+}
+
+/* =========================================================================
+**  Skins
+** ========================================================================= */
+
 
 /**
 * Light skin class
 */
 .light-skin {
+
   @include navbar($light-primary-color, $dark-primary-color);
+  @include footer($light-primary-color, $dark-primary-color);
+  @include appcontainer($dark-primary-color, $light-primary-color);
 
   .navbar-brand-image {
     background-image: url("/icons/svs/svs_square_light_icon.svg");
@@ -103,33 +178,16 @@ h1, h2, h3, h4 {
 * Dark skin class
 */
 .dark-skin {
+
   @include navbar($dark-primary-color, $light-primary-color);
+  @include footer($dark-primary-color, $light-primary-color);
+  @include appcontainer($light-primary-color, $dark-primary-color);
 
   .navbar-brand-image {
     background-image: url("/icons/svs/svs_square_dark_icon.svg");
   }
 }
 
-// .light-mode {
-//   color: #333366;
-// }
-//
-// .dark-mode {
-//   color: #FFFADE;
-// }
-
-/*
-Alternative colors :
-#F5816B
-#FFBA5E
-*/
-
 div.router-view {
   margin-top: 60px;
 }
-
-
-
-// body {
-//   margin: 0;
-// }

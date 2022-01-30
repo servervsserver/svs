@@ -425,7 +425,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 
 .dhms-countdown {
   .container {

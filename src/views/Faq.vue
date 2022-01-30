@@ -6,3 +6,5 @@
     <p>LUFS is ...</p>
   </div>
 </template>
+
+<style scoped lang='scss'></style>

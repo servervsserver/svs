@@ -30,6 +30,6 @@
 
 </template>
 
-<script>
+<script scoped lang="scss">
 
 </script>

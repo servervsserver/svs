@@ -1,20 +1,43 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to='/'>
-      <img src="/banner.png">
-      </router-link>
+  <div id="app" class="light-skin">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
 
-      <router-link to="/main-event">Main event</router-link>
-      <!-- <router-link to="/main-event/server-application">Server application</router-link> -->
-      <router-link to="/about">About us</router-link>
-    </div>
+      <div class="navbar-brand">
+        <router-link class="navbar-item" to="/">
+          <div class="navbar-brand-image svs-logo"></div>
+        </router-link>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <router-link class="navbar-item" to="/main-event">Main event</router-link>
+          <router-link class="navbar-item" to="/about">About us</router-link>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-light">
+                Log in with Discord
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </nav>
 
     <div class='router-view'>
       <router-view/>
     </div>
 
     <footer>
+
       <div id="socialmedia">
         <ul>
           <li v-for="x in SocMedLinks" :key="x.href">
@@ -22,13 +45,9 @@
               <img v-bind:src="x.icon">{{x.text}}
             </a>
           </li>
-          <!-- <li>
-            <a href="https://www.twitch.tv/servervsserver">
-              <img src="icons/twitch/16x16_black.svg">Discord
-            </a>
-          </li> -->
         </ul>
       </div>
+      
     </footer>
 
   </div>
@@ -61,5 +80,42 @@ export default {
 <style lang="scss">
 
 @use 'assets/styles/main';
+
+// #nav {
+//   padding: 30px;
+//   background-color: #333366;
+//   width: 100%;
+//   padding: 0;
+//   height: 60px;
+//   position: fixed;
+//   top: 0;
+//   z-index: 100;
+//   margin: 0;
+//   display: flex;
+//   align-items: center;
+//   box-shadow: 0px 5px 10px #0000004e;
+//
+//   img {
+//     height: 100%;
+//   }
+//
+//
+//   a {
+//     color: #ffffff;
+//     height: 60%;
+//     margin-left: 10px;
+//     text-decoration: none;
+//     line-height: 36px;
+//     margin-left: 20px;
+//
+//     &.router-link-exact-active {
+//       color: #42b983;
+//     }
+//   }
+//
+//   a:hover {
+//     color: #e9e9e9;
+//   }
+// }
 
 </style>

@@ -36,18 +36,18 @@
       <router-view/>
     </div>
 
-    <footer>
+    <footer class="footer">
 
-      <div id="socialmedia">
+      <div class="content has-text-centered">
         <ul>
           <li v-for="x in SocMedLinks" :key="x.href">
             <a v-bind:href="x.href">
-              <img v-bind:src="x.icon">{{x.text}}
+              <img v-bind:src="x.icon"> {{x.text}}
             </a>
           </li>
         </ul>
       </div>
-      
+
     </footer>
 
   </div>

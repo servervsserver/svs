@@ -1,20 +1,20 @@
 <template>
-  <div class="container">
-  <h1 id="headline">SVS IV</h1>
-  <div id="countdown">
-    <ul>
-      <li><span id="days">{{days}}</span>days</li>
-      <li><span id="hours">{{hours}}</span>Hours</li>
-      <li><span id="minutes">{{minutes}}</span>Minutes</li>
-      <li><span id="seconds">{{seconds}}</span>Seconds</li>
-    </ul>
+  <div class="container dhms-countdown">
+    <h1 id="headline">SVS IV</h1>
+    <div>
+      <ul>
+        <li><span id="days">{{days}}</span>days</li>
+        <li><span id="hours">{{hours}}</span>Hours</li>
+        <li><span id="minutes">{{minutes}}</span>Minutes</li>
+        <li><span id="seconds">{{seconds}}</span>Seconds</li>
+      </ul>
+    </div>
+    <div id="content" class="emoji">
+      <span>🥳</span>
+      <span>🎉</span>
+      <span>🎂</span>
+    </div>
   </div>
-  <div id="content" class="emoji">
-    <span>🥳</span>
-    <span>🎉</span>
-    <span>🎂</span>
-  </div>
-</div>
 </template>
 
 <script>
@@ -426,52 +426,55 @@ export default {
 </script>
 
 <style>
-.container {
-  color: #333;
-  margin: 0 auto;
-  text-align: center;
-}
 
-h1 {
-  font-weight: normal;
-  letter-spacing: 0.125rem;
-  text-transform: uppercase;
-}
+.dhms-countdown {
+  .container {
+    color: #333;
+    margin: 0 auto;
+    text-align: center;
+  }
 
-li {
-  display: inline-block;
-  font-size: 1.5em;
-  list-style-type: none;
-  padding: 1em;
-  text-transform: uppercase;
-}
-
-li span {
-  display: block;
-  font-size: 4.5rem;
-}
-
-.emoji {
-  display: none;
-  padding: 1rem;
-}
-
-.emoji span {
-  font-size: 4rem;
-  padding: 0 0.5rem;
-}
-
-@media all and (max-width: 768px) {
   h1 {
-    font-size: calc(1.5rem * var(--smaller));
+    font-weight: normal;
+    letter-spacing: 0.125rem;
+    text-transform: uppercase;
   }
 
   li {
-    font-size: calc(1.125rem * var(--smaller));
+    display: inline-block;
+    font-size: 1.5em;
+    list-style-type: none;
+    padding: 1em;
+    text-transform: uppercase;
   }
 
   li span {
-    font-size: calc(3.375rem * var(--smaller));
+    display: block;
+    font-size: 4.5rem;
+  }
+
+  .emoji {
+    display: none;
+    padding: 1rem;
+  }
+
+  .emoji span {
+    font-size: 4rem;
+    padding: 0 0.5rem;
+  }
+
+  @media all and (max-width: 768px) {
+    h1 {
+      font-size: calc(1.5rem * var(--smaller));
+    }
+
+    li {
+      font-size: calc(1.125rem * var(--smaller));
+    }
+
+    li span {
+      font-size: calc(3.375rem * var(--smaller));
+    }
   }
 }
 </style>

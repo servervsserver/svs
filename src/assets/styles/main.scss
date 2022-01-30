@@ -17,7 +17,7 @@ h1 {
   div.router-view {
     margin-top: 60px;
   }
-  
+
   #nav {
     padding: 30px;
     background-color: #333366;
@@ -35,15 +35,19 @@ h1 {
     img {
       height: 100%;
     }
-  
+
 
     a {
       height: 60%;
       margin-left: 10px;
-  
+
       &.router-link-exact-active {
         color: #42b983;
       }
+    }
+
+    a:visited {
+      color: inherit;
     }
   }
 

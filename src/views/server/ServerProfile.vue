@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <section class="server-overview">
+
       <div class="column is-hidden-desktop">
         <img v-bind:src="iconUrl" width="100%"/>
       </div>
@@ -14,6 +15,12 @@
 
         </div>
 
+        <div class="column is-hidden-desktop">
+          <a target="about:blank" v-bind:href="serverLink">Join the server</a>
+          <br/>
+          Members: <strong>{{memberCountFormatted}}</strong>
+        </div>
+
         <div class="column is-hidden-mobile">
           <img v-bind:src="iconUrl" width="180"/>
           <br/>
@@ -23,6 +30,7 @@
         </div>
 
       </div>
+
     </section>
 
     <section class="server-eps">
@@ -64,6 +72,7 @@ export default {
   text-align: justify;
 }
 section {
+  padding: 5px;
   padding-bottom: 50px;
 }
 </style>

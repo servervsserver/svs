@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="light-skin">
+  <div id="app" :class="skin">
     <div class="app-container">
       <nav class="navbar" role="navigation" aria-label="main navigation">
 
@@ -7,14 +7,14 @@
           <router-link class="navbar-item" to="/">
             <div class="navbar-brand-image svs-logo"></div>
           </router-link>
-          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" v-bind:class="{ 'is-active': isActive }" @click="isActive = !isActive">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </a>
         </div>
 
-        <div class="navbar-menu">
+        <div id="navbarBasicExample" class="navbar-menu" v-bind:class="{ 'is-active': isActive }">
           <div class="navbar-start">
             <router-link class="navbar-item" to="/main-event">Main event</router-link>
             <router-link class="navbar-item" to="/about">About us</router-link>
@@ -23,7 +23,7 @@
           <div class="navbar-end">
             <div class="navbar-item">
               <div class="buttons">
-                <a class="button is-light">
+                <a class="button is-dark">
                   Log in with Discord
                 </a>
               </div>
@@ -102,6 +102,8 @@
 export default {
   data () {
     return {
+      skin: 'light-skin',
+      isActive: false,
       SocMedLinks: [
         {
           text: '@servervserver',

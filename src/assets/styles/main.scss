@@ -71,12 +71,17 @@ h1, h2, h3, h4 {
     width: 40px;
     height: 40px;
   }
+
 }
 
 @mixin navbar($text-color, $background-color) {
   .navbar {
     background-color: $background-color;
     color: $text-color;
+
+    .navbar-burger {
+      color: $text-color;
+    }
 
     .navbar-item {
       transition: all 0.15s;
@@ -100,6 +105,19 @@ h1, h2, h3, h4 {
 
     .navbar-brand .navbar-item:hover {
       transform: scale(1.1);
+    }
+
+    .navbar-menu.is-active {
+      background-color: $secondary-color;
+      a:active, a:hover, a:focus {
+        background-color: $tertiary-color;
+        color: $text-color;
+      }
+    }
+
+    .button {
+      color: $background-color;
+      background-color: $text-color;
     }
 
   }
@@ -158,6 +176,18 @@ h1, h2, h3, h4 {
 **  Skins
 ** ========================================================================= */
 
+/*
+* Without skin it defaults to that
+*/
+html {
+  @include navbar($light-primary-color, $dark-primary-color);
+  @include footer($light-primary-color, $dark-primary-color);
+  @include appcontainer($dark-primary-color, $light-primary-color);
+
+  .navbar-brand-image {
+    background-image: url("/icons/svs/svs_square_light_icon.svg");
+  }
+}
 
 /**
 * Light skin class
@@ -179,8 +209,8 @@ h1, h2, h3, h4 {
 */
 .dark-skin {
 
-  @include navbar($dark-primary-color, $light-primary-color);
-  @include footer($dark-primary-color, $light-primary-color);
+  @include navbar($light-primary-color, $secondary-color);
+  @include footer($light-primary-color, $secondary-color);
   @include appcontainer($light-primary-color, $dark-primary-color);
 
   .navbar-brand-image {

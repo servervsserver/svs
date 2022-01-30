@@ -17,14 +17,9 @@
     <footer>
       <div id="socialmedia">
         <ul>
-          <li>
-            <a href="https://twitter.com/servervsserver?ref_src=twsrc%5Etfw">
-              <img src="/icons/twitter/16x16_black.svg">@servervserver
-            </a>
-          </li>
-          <li>
-            <a href="https://www.twitch.tv/servervsserver">
-              <img src="/icons/twitch/16x16_black.svg">servervserver
+          <li v-for="x in SocMedLinks" :key="x.href">
+            <a v-bind:href="x.href">
+              <img v-bind:src="x.icon">{{x.text}}
             </a>
           </li>
           <!-- <li>
@@ -38,6 +33,30 @@
 
   </div>
 </template>
+
+<script>
+
+export default {
+  data () {
+    return {
+      SocMedLinks: [
+        {
+          text: '@servervserver',
+          icon: '/icons/twitter/16x16_black.svg',
+          href: 'https://twitter.com/servervsserver?ref_src=twsrc%5Etfw'
+        },
+        {
+          text: 'servervserver',
+          icon: '/icons/twitch/16x16_black.svg',
+          href: 'https://www.twitch.tv/servervsserver"'
+        }
+
+      ]
+    }
+  }
+}
+
+</script>
 
 <style lang="scss">
 

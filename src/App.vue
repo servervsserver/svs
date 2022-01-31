@@ -1,5 +1,6 @@
 <template>
   <div id="app" :class="[theme]">
+    <div id='top' />
     <div class="app-container">
       <nav class="navbar" role="navigation" aria-label="main navigation">
 
@@ -17,7 +18,7 @@
         <div id="navbarBasicExample" class="navbar-menu" v-bind:class="{ 'is-active': isActive }">
           <div class="navbar-start">
             <router-link class="navbar-item" to="/main-event">Main event</router-link>
-            <router-link class="navbar-item" to="/about">About us</router-link>
+            <router-link class="navbar-item" to="/#about">About us</router-link>
           </div>
 
           <div class="navbar-end">
@@ -81,7 +82,7 @@
           <section class="social-medias columns">
             <div class="column" v-for="x in SocMedLinks" :key="x.href">
               <a v-bind:href="x.href">
-                <img v-bind:src="x.icon" width="32"> {{x.text}}
+                <img v-bind:src="x.icon" height='32' width="32"> {{x.text}}
               </a>
             </div>
           </section>

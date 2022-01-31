@@ -1,36 +1,47 @@
 <template>
   <div class="container">
     <section class="server-overview">
-
       <div class="column is-hidden-desktop">
-        <img v-bind:src="iconUrl" width="100%"/>
+        <img
+          :src="iconUrl"
+          width="100%"
+        >
       </div>
       <div class="columns">
-
         <div class="column is-three-quarters">
+          <h1 class="title">
+            {{ name }}
+          </h1>
 
-          <h1 class="title">{{name}}</h1>
-
-          <p v-html="description" class="description"></p>
-
+          <p
+            class="description"
+            v-html="description"
+          />
         </div>
 
         <div class="column is-hidden-desktop">
-          <a target="about:blank" v-bind:href="serverLink">Join the server</a>
-          <br/>
-          Members: <strong>{{memberCountFormatted}}</strong>
+          <a
+            target="about:blank"
+            :href="serverLink"
+          >Join the server</a>
+          <br>
+          Members: <strong>{{ memberCountFormatted }}</strong>
         </div>
 
         <div class="column is-hidden-mobile">
-          <img v-bind:src="iconUrl" width="180"/>
-          <br/>
-          <a target="about:blank" v-bind:href="serverLink">Join the server</a>
-          <br/>
-          Members: <strong>{{memberCountFormatted}}</strong>
+          <img
+            :src="iconUrl"
+            width="180"
+          >
+          <br>
+          <a
+            target="about:blank"
+            :href="serverLink"
+          >Join the server</a>
+          <br>
+          Members: <strong>{{ memberCountFormatted }}</strong>
         </div>
-
       </div>
-
     </section>
 
     <section class="server-eps">
@@ -38,7 +49,6 @@
         <h2>Listen to previous EPs</h2>
       </div>
     </section>
-
   </div>
 </template>
 

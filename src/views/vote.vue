@@ -1,79 +1,119 @@
 <template>
-    <div class='vote_page'>
-        <h1>
+  <div class="vote_page">
+    <h1>
+      Please rank your five favourite EPs from Highest to Lowest
+    </h1>
 
-            Please rank your five favourite EPs from Highest to Lowest
-
-        </h1>
-
-<form>
-        <div class="field">
-        <div class="label">1 (Favourite)</div>
+    <form>
+      <div class="field">
+        <div class="label">
+          1 (Favourite)
+        </div>
         <div class="select is-rounded">
-        <select v-model='ballot[1]'>
-             <option>Please select an EP</option>
-             <option v-for='x in EPs' :key='x.name'> {{x.server}} - {{x.name}} </option>
-        </select>
+          <select v-model="ballot[1]">
+            <option>Please select an EP</option>
+            <option
+              v-for="x in EPs"
+              :key="x.name"
+            >
+              {{ x.server }} - {{ x.name }}
+            </option>
+          </select>
         </div>
-        </div>
+      </div>
 
-        <div class="field">
-        <div class="label">2</div>
+      <div class="field">
+        <div class="label">
+          2
+        </div>
         <div class="select is-rounded">
-        <select v-model='ballot[2]'>
-             <option>Please select an EP</option>
-             <option v-for='x in EPs' :key='x.name'> {{x.server}} - {{x.name}} </option>
-        </select>
+          <select v-model="ballot[2]">
+            <option>Please select an EP</option>
+            <option
+              v-for="x in EPs"
+              :key="x.name"
+            >
+              {{ x.server }} - {{ x.name }}
+            </option>
+          </select>
         </div>
-        </div>
+      </div>
 
-        <div class="field">
-        <div class="label">3</div>
+      <div class="field">
+        <div class="label">
+          3
+        </div>
         <div class="select is-rounded">
-        <select v-model='ballot[3]'>
-             <option>Please select an EP</option>
-             <option v-for='x in EPs' :key='x.name'> {{x.server}} - {{x.name}} </option>
-        </select>
+          <select v-model="ballot[3]">
+            <option>Please select an EP</option>
+            <option
+              v-for="x in EPs"
+              :key="x.name"
+            >
+              {{ x.server }} - {{ x.name }}
+            </option>
+          </select>
         </div>
-        </div>
+      </div>
 
-        <div class="field">
-        <div class="label">4</div>
+      <div class="field">
+        <div class="label">
+          4
+        </div>
         <div class="select is-rounded">
-        <select v-model='ballot[4]'>
-             <option>Please select an EP</option>
-             <option v-for='x in EPs' :key='x.name'> {{x.server}} - {{x.name}} </option>
-        </select>
+          <select v-model="ballot[4]">
+            <option>Please select an EP</option>
+            <option
+              v-for="x in EPs"
+              :key="x.name"
+            >
+              {{ x.server }} - {{ x.name }}
+            </option>
+          </select>
         </div>
-        </div>
+      </div>
 
-        <div class="field">
-        <div class="label">5 (Least Favourite)</div>
+      <div class="field">
+        <div class="label">
+          5 (Least Favourite)
+        </div>
         <div class="select is-rounded">
-        <select v-model='ballot[5]'>
-             <option>Please select an EP</option>
-             <option v-for='x in EPs' :key='x.name'> {{x.server}} - {{x.name}} </option>
-        </select>
+          <select v-model="ballot[5]">
+            <option>Please select an EP</option>
+            <option
+              v-for="x in EPs"
+              :key="x.name"
+            >
+              {{ x.server }} - {{ x.name }}
+            </option>
+          </select>
         </div>
-        </div>
+      </div>
 
-        <div class="field submitbuttonvote">
+      <div class="field submitbuttonvote">
         <label class="checkbox">
-        <input type="checkbox" v-model='ballot[0]' value="false">
-        By voting, I agree to SVS's <a href="#">Terms of Voting</a> and <a href="https://cc.servervsserver.com/">Community Conduct</a>
+          <input
+            v-model="ballot[0]"
+            type="checkbox"
+            value="false"
+          >
+          By voting, I agree to SVS's <a href="#">Terms of Voting</a> and <a href="https://cc.servervsserver.com/">Community Conduct</a>
         </label>
-        </div>
+      </div>
 
-        <div class="field">
+      <div class="field">
         <div class="control">
-        <input type="submit" class="button" value='Submit'/>
+          <input
+            type="submit"
+            class="button"
+            value="Submit"
+          >
         </div>
-        </div>
-</form>
+      </div>
+    </form>
 
-<div>{{ballot}}</div>
-
-    </div>
+    <div>{{ ballot }}</div>
+  </div>
 </template>
 
 <script>

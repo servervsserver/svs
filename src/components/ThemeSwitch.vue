@@ -1,10 +1,19 @@
 <template>
   <div class="theme-switch">
-    <input type="checkbox" class="checkbox" id="checkbox" v-model='checked' @click='themeChange'>
-    <label for="checkbox" class="label">
-      <i class="fas fa-moon"></i>
-      <i class="fas fa-sun"></i>
-      <div class="ball"></div>
+    <input
+      id="checkbox"
+      v-model="checked"
+      type="checkbox"
+      class="checkbox"
+      @click="themeChange"
+    >
+    <label
+      for="checkbox"
+      class="label"
+    >
+      <i class="fas fa-moon" />
+      <i class="fas fa-sun" />
+      <div class="ball" />
     </label>
   </div>
 </template>

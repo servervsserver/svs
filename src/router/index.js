@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Vote from '../views/vote.vue'
 
 import MainEvent from '../views/main-event/MainEvent.vue'
 import ServerApplication from '../views/main-event/ServerApplication.vue'
@@ -24,6 +25,10 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/vote',
+    component: Vote
   },
   {
     path: '/home',

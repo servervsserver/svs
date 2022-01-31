@@ -15,6 +15,8 @@ $tertiary-color: #FFBA5E;
 
 /* ========================================================================= */
 
+* { transition: 0.15s background-color, 0.15s color; }
+
 /**
 * Resetting some user-agent properties
 */
@@ -23,11 +25,6 @@ html {
   overflow: auto;
 }
 
-// body {
-//   margin: 0;
-//   background-color: cyan;
-// }
-
 /* ========================================================================= */
 
 /*
@@ -35,7 +32,6 @@ html {
 */
 
 * {
-  background-color: inherit;
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
 }
@@ -139,7 +135,6 @@ h1, h2, h3, h4 {
 @mixin footer($text-color, $background-color) {
 
   .footer * {
-    background-color: inherit;
     color: $text-color;
   }
 
@@ -147,8 +142,13 @@ h1, h2, h3, h4 {
     background-color: $background-color;
     color: $text-color;
 
+    a {
+      transition: 0.15s all;
+    }
+
     a:hover {
-      color: $secondary-color;
+      padding-left: 3px;
+      text-shadow: 0px 0px 2px $text-color;
     }
 
     .social-medias {
@@ -173,7 +173,7 @@ h1, h2, h3, h4 {
 }
 
 /* =========================================================================
-**  Skins
+**  Themes
 ** ========================================================================= */
 
 /*
@@ -192,7 +192,7 @@ html {
 /**
 * Light skin class
 */
-.light-skin {
+.light-theme {
 
   @include navbar($light-primary-color, $dark-primary-color);
   @include footer($light-primary-color, $dark-primary-color);
@@ -207,7 +207,7 @@ html {
 /**
 * Dark skin class
 */
-.dark-skin {
+.dark-theme {
 
   @include navbar($light-primary-color, $secondary-color);
   @include footer($light-primary-color, $secondary-color);
@@ -217,7 +217,3 @@ html {
     background-image: url("/icons/svs/svs_square_dark_icon.svg");
   }
 }
-
-// div.router-view {
-//   margin-top: 60px;
-// }

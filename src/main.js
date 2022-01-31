@@ -8,7 +8,10 @@ import store from './store'
 // =================================================
 
 import EventCountdown from './components/countdown/DHMSCountdown.vue'
+import ThemeSwitch from './components/ThemeSwitch.vue'
+
 Vue.component('event-countdown', EventCountdown)
+Vue.component('theme-switch', ThemeSwitch)
 
 Vue.config.productionTip = false
 

@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="skin">
+  <div id="app" :class="[theme]">
     <div class="app-container">
       <nav class="navbar" role="navigation" aria-label="main navigation">
 
@@ -21,6 +21,9 @@
           </div>
 
           <div class="navbar-end">
+            <div class="navbar-item">
+              <theme-switch @themeChanged='onThemeChanged'></theme-switch>
+            </div>
             <div class="navbar-item">
               <div class="buttons">
                 <a class="button is-dark">
@@ -102,7 +105,7 @@
 export default {
   data () {
     return {
-      skin: 'light-skin',
+      theme: 'light-theme',
       isActive: false,
       SocMedLinks: [
         {
@@ -118,6 +121,11 @@ export default {
 
       ]
     }
+  },
+  methods: {
+    onThemeChanged (theme) {
+      this.theme = theme
+    }
   }
 }
 
@@ -131,42 +139,5 @@ export default {
   padding-top: 60px;
   padding-bottom: 60px;
 }
-
-// #nav {
-//   padding: 30px;
-//   background-color: #333366;
-//   width: 100%;
-//   padding: 0;
-//   height: 60px;
-//   position: fixed;
-//   top: 0;
-//   z-index: 100;
-//   margin: 0;
-//   display: flex;
-//   align-items: center;
-//   box-shadow: 0px 5px 10px #0000004e;
-//
-//   img {
-//     height: 100%;
-//   }
-//
-//
-//   a {
-//     color: #ffffff;
-//     height: 60%;
-//     margin-left: 10px;
-//     text-decoration: none;
-//     line-height: 36px;
-//     margin-left: 20px;
-//
-//     &.router-link-exact-active {
-//       color: #42b983;
-//     }
-//   }
-//
-//   a:hover {
-//     color: #e9e9e9;
-//   }
-// }
 
 </style>

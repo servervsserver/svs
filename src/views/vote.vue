@@ -10,7 +10,7 @@
         <div class="field">
         <div class="label">1 (Favourite)</div>
         <div class="select is-rounded">
-        <select v-model='ballot[0]'>
+        <select v-model='ballot[1]'>
              <option>Please select an EP</option>
              <option v-for='x in EPs' :key='x.name'> {{x.server}} - {{x.name}} </option>
         </select>
@@ -20,7 +20,7 @@
         <div class="field">
         <div class="label">2</div>
         <div class="select is-rounded">
-        <select v-model='ballot[1]'>
+        <select v-model='ballot[2]'>
              <option>Please select an EP</option>
              <option v-for='x in EPs' :key='x.name'> {{x.server}} - {{x.name}} </option>
         </select>
@@ -30,7 +30,7 @@
         <div class="field">
         <div class="label">3</div>
         <div class="select is-rounded">
-        <select v-model='ballot[2]'>
+        <select v-model='ballot[3]'>
              <option>Please select an EP</option>
              <option v-for='x in EPs' :key='x.name'> {{x.server}} - {{x.name}} </option>
         </select>
@@ -40,7 +40,7 @@
         <div class="field">
         <div class="label">4</div>
         <div class="select is-rounded">
-        <select v-model='ballot[3]'>
+        <select v-model='ballot[4]'>
              <option>Please select an EP</option>
              <option v-for='x in EPs' :key='x.name'> {{x.server}} - {{x.name}} </option>
         </select>
@@ -50,7 +50,7 @@
         <div class="field">
         <div class="label">5 (Least Favourite)</div>
         <div class="select is-rounded">
-        <select v-model='ballot[4]'>
+        <select v-model='ballot[5]'>
              <option>Please select an EP</option>
              <option v-for='x in EPs' :key='x.name'> {{x.server}} - {{x.name}} </option>
         </select>
@@ -59,7 +59,7 @@
 
         <div class="field submitbuttonvote">
         <label class="checkbox">
-        <input type="checkbox" v-model='ballot[5]'>
+        <input type="checkbox" v-model='ballot[0]' value="false">
         By voting, I agree to SVS's <a href="#">Terms of Voting</a> and <a href="https://cc.servervsserver.com/">Community Conduct</a>
         </label>
         </div>
@@ -128,6 +128,10 @@ h1 {
 h1.RankNumber {
     text-align: left;
     margin-left: 20em;
+}
+
+div.label {
+    color: inherit;
 }
 
 </style>

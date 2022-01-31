@@ -6,7 +6,8 @@
 
         </h1>
 
-<form>
+<div>
+
         <div class="field">
         <div class="label">1 (Favourite)</div>
         <div class="select is-rounded">
@@ -66,10 +67,11 @@
 
         <div class="field">
         <div class="control">
-        <input type="submit" class="button" value='Submit'/>
+        <input type="submit" v-on:click='submitvote' class="button" value='Submit'/>
         </div>
         </div>
-</form>
+
+</div>
 
 <div>{{ballot}}</div>
 
@@ -77,6 +79,33 @@
 </template>
 
 <script>
+
+import { initializeApp } from 'firebase/app'
+import { getDatabase } from 'firebase/database'
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: process.env.VUE_APP_apiKey,
+  authDomain: process.env.VUE_APP_authDomain,
+  databaseURL: process.env.VUE_APP_databaseURL,
+  projectId: process.env.VUE_APP_projectId,
+  storageBucket: process.env.VUE_APP_storageBucket,
+  messagingSenderId: process.env.VUE_APP_messagingSenderId,
+  appId: process.env.VUE_APP_appId,
+  measurementId: process.env.VUE_APP_measurementId
+}
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig)
+const database = getDatabase(app)
+console.log(database)
+
+const validateVoteData = (_data_) => {
+  return (true)
+}
 
 export default ({
   data () {
@@ -88,10 +117,19 @@ export default ({
           { name: 'EP 3', server: 'server 3' },
           { name: 'EP 4', server: 'server 4' }
         ],
-
+        discordusername: 'abc#123',
+        pool: 'examplepool',
         ballot: []
       }
     )
+  },
+  methods: {
+    submitvote: function () {
+      var voteData = this.$data.ballot
+      if (validateVoteData(voteData)) {
+
+      }
+    }
   }
 })
 </script>

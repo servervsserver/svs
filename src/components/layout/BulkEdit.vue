@@ -158,3 +158,9 @@ export default {
   }
 }
 </script>
+
+<style scoped lang='scss'>
+.edit-section {
+  padding: 32px 10px;
+}
+</style>

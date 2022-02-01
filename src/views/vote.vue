@@ -136,6 +136,10 @@
 
 import { initializeApp } from 'firebase/app'
 import { getDatabase, ref, get, child, set} from 'firebase/database'
+const bcrypt = require('bcryptjs');
+
+
+const saltRounds = 10;
 
 //Config Firebase
 const firebaseConfig = {
@@ -193,8 +197,12 @@ export default ({
         //Get Value of "Voters" -> List of discord IDs who have voted
     get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
       if (snapshot.exists()) {
-        console.log(snapshot.val())
-        this.$data.hasvoted = snapshot.val().includes(this.$data.discordID)
+        var foreachresults = []
+        snapshot.val().forEach((element) => {
+          foreachresults.push(bcrypt.compareSync(this.$data.discordID, element))
+        })
+        console.log(foreachresults)
+        this.$data.hasvoted = foreachresults.includes(true)
       } else {
         console.log("Voters not found");
       }
@@ -213,9 +221,8 @@ export default ({
         get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
         var tempvoterobject = snapshot.val()
 
-        set(child(dbRef, `realTimeVoting/voters/` + tempvoterobject.length ),this.$data.discordID).then( () => {
-          this.$data.hasvoted = true
-        })
+        set(child(dbRef, `realTimeVoting/voters/` + tempvoterobject.length ),bcrypt.hashSync(this.$data.discordID, saltRounds))
+        this.$data.hasvoted = true
 
         
       }).catch((error) => {

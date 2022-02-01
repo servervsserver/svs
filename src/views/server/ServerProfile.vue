@@ -1,7 +1,11 @@
 <template>
   <div class="container">
     <section class="server-overview">
-      <bulk-edit :editable="editable" :hide-top="false" :hide-bottom="false">
+      <bulk-edit
+        :editable="editable"
+        :hide-top="false"
+        :hide-bottom="false"
+      >
         <div class="columns">
           <div class="column is-hidden-desktop">
             <img

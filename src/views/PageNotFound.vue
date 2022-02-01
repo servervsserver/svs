@@ -1,25 +1,34 @@
 <template>
   <div>
-    <h1>Oh no!</h1>
+    <h1>404 - Page not found!</h1>
     <p class="zoom-area">
-      <b>Sorry!</b> The page you tried to access doesn't exist :/
+      <b>We recommend the following cheese to accompany your dissapointment:</b>
     </p>
-    <section class="error-container">
-      <span class="four"><span class="screen-reader-text">4</span></span>
-      <span class="zero"><span class="screen-reader-text">0</span></span>
-      <span class="four"><span class="screen-reader-text">4</span></span>
-    </section>
-    <div class="link-container">
-      <a
-        target="_blank"
-        href="https://www.silocreativo.com/en/creative-examples-404-error-css/"
-        class="more-link"
-      >404 page design, courtesy of silocreativo</a>
-    </div>
+    <p class="zoom-area">
+      <img
+        v-if="msg.img_source != 'https://cheese.com/media/img/icon-cheese-default.svg'"
+        :src="msg.img_source"
+      ><br>
+      {{ msg.name }}
+      <br>
+      {{ msg.Description }}
+    </p>
   </div>
 </template>
 
 <script>
+
+const cheese = require('../assets/cheese.json')
+
+export default {
+  data () {
+    console.log(cheese)
+    return ({
+    msg : cheese[Math.floor(Math.random() * cheese.length)]
+    }
+    )
+  }
+}
 
 </script>
 

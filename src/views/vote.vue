@@ -1,10 +1,15 @@
 <template>
-  <div class="vote_page">
+  <!-- Render if user has not yet voted -->
+
+  <div
+    v-if="hasvoted == false"
+    class="vote_page"
+  >
     <h1>
       Please rank your five favourite EPs from Highest to Lowest
     </h1>
 
-    <form>
+    <div>
       <div class="field">
         <div class="label">
           1 (Favourite)
@@ -99,6 +104,7 @@
           >
           By voting, I agree to SVS's <a href="#">Terms of Voting</a> and <a href="https://cc.servervsserver.com/">Community Conduct</a>
         </label>
+        <div v-if='VoteValidationErrorMessage' style="color: red">{{VoteValidationErrorMessage}}</div>
       </div>
 
       <div class="field">
@@ -107,21 +113,63 @@
             type="submit"
             class="button"
             value="Submit"
+            @click="submitvote"
           >
         </div>
       </div>
-    </form>
+    </div>
 
     <div>{{ ballot }}</div>
+  </div>
+
+  <!-- Render if user has voted -->
+
+  <div v-else-if="hasvoted">
+    <h1> Thank you for voting ! </h1>
+  </div>
+
+  <div v-else>
+    <h1> Loading... </h1>
   </div>
 </template>
 
 <script>
 
+import { initializeApp } from 'firebase/app'
+import { getDatabase, ref, get, child, set} from 'firebase/database'
+const bcrypt = require('bcryptjs');
+
+
+const saltRounds = 10;
+
+//Config Firebase
+const firebaseConfig = {
+  apiKey: process.env.VUE_APP_apiKey,
+  authDomain: process.env.VUE_APP_authDomain,
+  databaseURL: process.env.VUE_APP_databaseURL,
+  projectId: process.env.VUE_APP_projectId,
+  storageBucket: process.env.VUE_APP_storageBucket,
+  messagingSenderId: process.env.VUE_APP_messagingSenderId,
+  appId: process.env.VUE_APP_appId,
+  measurementId: process.env.VUE_APP_measurementId
+}
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig)
+
+//Get Database
+const db = getDatabase(app)
+
+//Create Reference for Database
+const dbRef = ref(db);
+
 export default ({
   data () {
     return (
       {
+        hasvoted : null,
+
+        //EPs available to vote for
         EPs: [
           { name: 'EP 1', server: 'server 1' },
           { name: 'EP 2', server: 'server 2' },
@@ -129,11 +177,95 @@ export default ({
           { name: 'EP 4', server: 'server 4' }
         ],
 
-        ballot: []
+        //Discord ID of user
+        discordID: 'abc246',
+
+        //Pool users vote goes to -> Can be server or community -> If > 1 in array, prompt user to choose pool
+        pool: ['examplepool'],
+
+        //User's Vote
+        ballot: [false,false,false,false,false,false],
+
+        VoteValidationErrorMessage : false
       }
     )
+  },
+  mounted () {
+        //Get Value of "Voters" -> List of discord IDs who have voted
+    get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
+      if (snapshot.exists()) {
+        var foreachresults = []
+        snapshot.val().forEach((element) => {
+          foreachresults.push(bcrypt.compareSync(this.$data.discordID, element))
+        })
+        console.log(foreachresults)
+        this.$data.hasvoted = foreachresults.includes(true)
+      } else {
+        console.log("Voters not found");
+      }
+      }).catch((error) => {
+        console.error(error);
+      });
+  },
+  methods: {
+    validateVoteData : function (_data_, availableOptions) {
+  //Check for no empty boxes & Checkbox ticked
+  var valid_options = []
+  availableOptions.forEach((element) => {
+
+    valid_options.push(element.server + ' - ' + element.name)
+
+  })
+  var withoutcheckbox = _data_.slice(1,(_data_.length))
+  var returnvariable = true
+  withoutcheckbox.forEach((element) => {
+
+    if (!(valid_options.includes(element))) {
+      
+      returnvariable = false
+
+    }
+
+  })
+
+  if (returnvariable == false) {
+    this.$data.VoteValidationErrorMessage = ('* Make sure all inputs are complete')
+    return false
   }
-})
+
+  if (_data_[0] != true) {
+    this.$data.VoteValidationErrorMessage =  ('* Please agree to the Terms of Voting and Code of Conduct')
+    returnvariable = false
+  }
+
+  console.log(returnvariable)
+  return returnvariable
+  },
+    submitvote: function () {
+
+
+
+      let voteData = this.$data.ballot
+      if (this.validateVoteData(voteData,this.$data.EPs) && this.$data.hasvoted == false) {
+
+        console.log('here')
+
+        get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
+        var tempvoterobject = snapshot.val()
+
+        set(child(dbRef, `realTimeVoting/voters/` + tempvoterobject.length ),bcrypt.hashSync(this.$data.discordID, saltRounds))
+        this.$data.hasvoted = true
+
+        
+      }).catch((error) => {
+        console.error(error);
+      });}
+
+      }
+      
+    }
+  }
+)
 </script>
 
 <style lang='scss'>

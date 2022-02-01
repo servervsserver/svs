@@ -25,8 +25,16 @@ html {
   overflow: auto;
 }
 
-h1, h2, h3, h4, h5, h6, span, strong, em {
+h1, h2, h3, h4, h5, h6, span, strong, em, b {
   color: inherit;
+}
+
+b, strong {
+  font-weight: bolder;
+}
+
+em {
+  font-style: italic;
 }
 
 /* ========================================================================= */
@@ -35,10 +43,13 @@ h1, h2, h3, h4, h5, h6, span, strong, em {
 * Default and base SvS styling
 */
 
+html {
+  font-size: 14px;
+}
+
 * {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
-  font-size: 14px;
 }
 
 h1, h2, h3, h4 {
@@ -54,8 +65,78 @@ h5 { font-size: 0.83em; }
 h6 { font-size: 0.67em; }
 h1, h2, h3, h4, h5, h6 { margin-top: 1.6em; margin-bottom: 0.8em; }
 
+a {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  &:hover {
+    color: inherit;
+  }
+}
+
+p {
+  margin: 1.25em 0;
+  line-height: 1.8;
+
+  a {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    &:hover {
+      color: inherit;
+    }
+  }
+}
+
+blockquote {
+  // border-left: 0.25em solid #8888;
+  font-style: italic;
+  position: relative;
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 7%), 0 3px 1px -2px rgb(0 0 0 / 6%), 0 1px 5px 0 rgb(0 0 0 / 10%);
+  background-color: rgb(255 255 255 / 5%);
+  padding: 1em 2em;
+  // padding-left: 1em;
+  margin: 1.6em 0;
+
+  ::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    min-width: 0.25em;
+    width: 0.25em;
+    height: 100%;
+    background-color: pink;
+    content: '';
+    opacity: 0.8;
+  }
+
+  a {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    &:hover {
+      color: inherit;
+    }
+  }
+}
+
+ul {
+  position: relative;
+  list-style: outside disc;
+  margin-left: 2em;
+  li {
+    position: relative;
+    margin: 0.6em 0;
+
+    &:before {
+      background-color: #9b9a9fd4;
+    }
+
+  }
+}
+
 @media (max-width: 768px) {
-  * {
+  html {
     font-size: 12px;
   }
 
@@ -117,6 +198,15 @@ h1, h2, h3, h4, h5, h6 { margin-top: 1.6em; margin-bottom: 0.8em; }
   .navbar-brand-image {
     width: 40px;
     height: 40px;
+  }
+
+  a {
+    text-decoration: none;
+    font-weight: 400;
+    &:hover {
+      text-decoration: none;
+      font-weight: 400;
+    }
   }
 
 }
@@ -195,11 +285,14 @@ h1, h2, h3, h4, h5, h6 { margin-top: 1.6em; margin-bottom: 0.8em; }
 
     a {
       transition: 0.15s all;
+      text-decoration: none;
+      font-weight: 400;
     }
 
     a:hover {
       padding-left: 3px;
       text-shadow: 0px 0px 2px $text-color;
+      font-weight: 400;
     }
 
     .social-medias {
@@ -271,6 +364,12 @@ html {
     background-image: url("/icons/svs/svs_square_light_icon.svg");
   }
 
+  blockquote {
+    ::before {
+      background-color: $dark-primary-color;
+    }
+  }
+
 }
 
 /**
@@ -285,4 +384,11 @@ html {
   .navbar-brand-image {
     background-image: url("/icons/svs/svs_square_dark_icon.svg");
   }
+
+  blockquote {
+    ::before {
+      background-color: $light-primary-color;
+    }
+  }
+
 }

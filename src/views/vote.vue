@@ -1,7 +1,8 @@
 <template>
   <!-- Render if user has not yet voted -->
+
   <div
-    v-if="!(hasvoted)"
+    v-if="hasvoted == false"
     class="vote_page"
   >
     <h1>
@@ -119,12 +120,22 @@
 
     <div>{{ ballot }}</div>
   </div>
+
+  <!-- Render if user has voted -->
+
+  <div v-else-if="hasvoted">
+    <h1> Thank you for voting ! </h1>
+  </div>
+
+  <div v-else>
+    <h1> Loading... </h1>
+  </div>
 </template>
 
 <script>
 
 import { initializeApp } from 'firebase/app'
-import { getDatabase, ref, get, child} from 'firebase/database'
+import { getDatabase, ref, get, child, set} from 'firebase/database'
 
 //Config Firebase
 const firebaseConfig = {
@@ -147,18 +158,6 @@ const db = getDatabase(app)
 //Create Reference for Database
 const dbRef = ref(db);
 
-//Get Value of "Voters" -> List of discord IDs who have voted
-get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
-  if (snapshot.exists()) {
-    console.log(snapshot.val());
-  } else {
-    console.log("No data available");
-  }
-}).catch((error) => {
-  console.error(error);
-});
-
-
 
 const validateVoteData = (_data_) => {
   //Check for no empty boxes & Checkbox ticked
@@ -167,13 +166,9 @@ const validateVoteData = (_data_) => {
 
 export default ({
   data () {
-    
-    //PlaceHolder value for development -> Must be false for user to be ablet to vote
-    let hasvoted = false
-
     return (
       {
-        hasvoted : hasvoted,
+        hasvoted : null,
 
         //EPs available to vote for
         EPs: [
@@ -184,7 +179,7 @@ export default ({
         ],
 
         //Discord ID of user
-        discordID: 'abc123',
+        discordID: 'abc246',
 
         //Pool users vote goes to -> Can be server or community -> If > 1 in array, prompt user to choose pool
         pool: ['examplepool'],
@@ -194,15 +189,44 @@ export default ({
       }
     )
   },
+  mounted () {
+        //Get Value of "Voters" -> List of discord IDs who have voted
+    get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
+      if (snapshot.exists()) {
+        console.log(snapshot.val())
+        this.$data.hasvoted = snapshot.val().includes(this.$data.discordID)
+      } else {
+        console.log("Voters not found");
+      }
+      }).catch((error) => {
+        console.error(error);
+      });
+  },
   methods: {
     submitvote: function () {
-      var voteData = this.$data.ballot
+
+
+
+      let voteData = this.$data.ballot
       if (validateVoteData(voteData)) {
 
+        get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
+        var tempvoterobject = snapshot.val()
+
+        set(child(dbRef, `realTimeVoting/voters/` + tempvoterobject.length ),this.$data.discordID).then( () => {
+          this.$data.hasvoted = true
+        })
+
+        
+      }).catch((error) => {
+        console.error(error);
+      });}
+
       }
+      
     }
   }
-})
+)
 </script>
 
 <style lang='scss'>

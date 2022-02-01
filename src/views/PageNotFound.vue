@@ -5,10 +5,13 @@
       <b>We recommend the following cheese to accompany your dissapointment:</b>
     </p>
     <p class="zoom-area">
-    <img v-if="msg.img_source != 'https://cheese.com/media/img/icon-cheese-default.svg'" v-bind:src='msg.img_source'><br>
-    {{msg.name}}
-    <br>
-    {{msg.Description}}
+      <img
+        v-if="msg.img_source != 'https://cheese.com/media/img/icon-cheese-default.svg'"
+        :src="msg.img_source"
+      ><br>
+      {{ msg.name }}
+      <br>
+      {{ msg.Description }}
     </p>
   </div>
 </template>

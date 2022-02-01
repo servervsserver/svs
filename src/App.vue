@@ -202,6 +202,7 @@ export default {
 @use 'assets/styles/main';
 
 .router-view {
+  min-height: 100vh;
   padding-top: 120px;
   padding-bottom: 60px;
 }

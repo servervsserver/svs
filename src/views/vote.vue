@@ -1,4 +1,6 @@
 <template>
+
+  <!-- Render if user has not yet voted -->
   <div v-if="!(hasvoted)" class="vote_page">
     <h1>
       Please rank your five favourite EPs from Highest to Lowest
@@ -121,11 +123,8 @@
 
 import { initializeApp } from 'firebase/app'
 import { getDatabase, ref, get, child} from 'firebase/database'
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+//Config Firebase
 const firebaseConfig = {
   apiKey: process.env.VUE_APP_apiKey,
   authDomain: process.env.VUE_APP_authDomain,
@@ -139,9 +138,14 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
+
+//Get Database
 const db = getDatabase(app)
 
+//Create Reference for Database
 const dbRef = ref(db);
+
+//Get Value of "Voters" -> List of discord IDs who have voted
 get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
   if (snapshot.exists()) {
     console.log(snapshot.val());
@@ -155,26 +159,35 @@ get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
 
 
 const validateVoteData = (_data_) => {
+  //Check for no empty boxes & Checkbox ticked
   return (true)
 }
 
 export default ({
   data () {
-    let hasvoted = false
     
-
+    //PlaceHolder value for development -> Must be false for user to be ablet to vote
+    let hasvoted = false
 
     return (
       {
         hasvoted : hasvoted,
+
+        //EPs available to vote for
         EPs: [
           { name: 'EP 1', server: 'server 1' },
           { name: 'EP 2', server: 'server 2' },
           { name: 'EP 3', server: 'server 3' },
           { name: 'EP 4', server: 'server 4' }
         ],
-        discordusername: 'abc#123',
-        pool: 'examplepool',
+
+        //Discord ID of user
+        discordID: 'abc123',
+
+        //Pool users vote goes to -> Can be server or community -> If > 1 in array, prompt user to choose pool
+        pool: ['examplepool'],
+
+        //User's Vote
         ballot: []
       }
     )

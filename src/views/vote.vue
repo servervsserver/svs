@@ -1,7 +1,9 @@
 <template>
-
   <!-- Render if user has not yet voted -->
-  <div v-if="!(hasvoted)" class="vote_page">
+  <div
+    v-if="!(hasvoted)"
+    class="vote_page"
+  >
     <h1>
       Please rank your five favourite EPs from Highest to Lowest
     </h1>

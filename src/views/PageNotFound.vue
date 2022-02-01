@@ -22,7 +22,6 @@ const cheese = require('../assets/cheese.json')
 
 export default {
   data () {
-    console.log(cheese)
     return ({
     msg : cheese[Math.floor(Math.random() * cheese.length)]
     }

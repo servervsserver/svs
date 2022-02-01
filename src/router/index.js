@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Vote from '../views/vote.vue'
+import About from '../views/About.vue'
 
 import MainEvent from '../views/main-event/MainEvent.vue'
 import ServerApplication from '../views/main-event/ServerApplication.vue'
@@ -14,6 +15,11 @@ import Admin from '../views/admin/Admin.vue'
 import Dashboard from '../views/admin/Dashboard.vue'
 
 import PageNotFound from '../views/PageNotFound.vue'
+
+/* ===== Test vues ===== */
+
+import MainTest from '../views/test-views/MainTest.vue'
+import TractTest from '../views/test-views/TrackTest.vue'
 
 Vue.use(VueRouter)
 
@@ -85,12 +91,25 @@ const routes = [
     ]
   },
   {
+    path: '/test',
+    name: 'Test',
+    component: MainTest,
+    children: [
+      {
+        path: 'track',
+        name: 'Track',
+        component: TractTest
+      }
+    ]
+  },
+  {
     path: '/about',
     name: 'About',
+    component: About
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
     path: '*',

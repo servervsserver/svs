@@ -1,14 +1,20 @@
 <template>
   <div>
     <h1>Oh no!</h1>
-    <p class="zoom-area"><b>Sorry!</b> The page you tried to access doesn't exist :/</p>
+    <p class="zoom-area">
+      <b>Sorry!</b> The page you tried to access doesn't exist :/
+    </p>
     <section class="error-container">
       <span class="four"><span class="screen-reader-text">4</span></span>
       <span class="zero"><span class="screen-reader-text">0</span></span>
       <span class="four"><span class="screen-reader-text">4</span></span>
     </section>
     <div class="link-container">
-      <a target="_blank" href="https://www.silocreativo.com/en/creative-examples-404-error-css/" class="more-link">404 page design, courtesy of silocreativo</a>
+      <a
+        target="_blank"
+        href="https://www.silocreativo.com/en/creative-examples-404-error-css/"
+        class="more-link"
+      >404 page design, courtesy of silocreativo</a>
     </div>
   </div>
 </template>

@@ -3,13 +3,16 @@
     <h1>SVS IV</h1>
     <div>
       <ul>
-        <li><span id="days">{{days}}</span>days</li>
-        <li><span id="hours">{{hours}}</span>Hours</li>
-        <li><span id="minutes">{{minutes}}</span>Minutes</li>
-        <li><span id="seconds">{{seconds}}</span>Seconds</li>
+        <li><span id="days">{{ days }}</span>days</li>
+        <li><span id="hours">{{ hours }}</span>Hours</li>
+        <li><span id="minutes">{{ minutes }}</span>Minutes</li>
+        <li><span id="seconds">{{ seconds }}</span>Seconds</li>
       </ul>
     </div>
-    <div id="content" class="emoji">
+    <div
+      id="content"
+      class="emoji"
+    >
       <span>🥳</span>
       <span>🎉</span>
       <span>🎂</span>

@@ -1,29 +1,60 @@
 <template>
-  <div id="app" :class="[theme]">
-    <div id='top' />
+  <div
+    id="app"
+    :class="[theme]"
+  >
+    <div id="top" />
     <div class="app-container">
-      <nav class="navbar" role="navigation" aria-label="main navigation">
-
+      <nav
+        class="navbar"
+        role="navigation"
+        aria-label="main navigation"
+      >
         <div class="navbar-brand">
-          <router-link class="navbar-item" to="/">
-            <div class="navbar-brand-image svs-logo"></div>
+          <router-link
+            class="navbar-item"
+            to="/"
+          >
+            <div class="navbar-brand-image svs-logo" />
           </router-link>
-          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" v-bind:class="{ 'is-active': isActive }" @click="isActive = !isActive">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
+          <a
+            role="button"
+            class="navbar-burger"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="navbarBasicExample"
+            :class="{ 'is-active': isActive }"
+            @click="isActive = !isActive"
+          >
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
           </a>
         </div>
 
-        <div id="navbarBasicExample" class="navbar-menu" v-bind:class="{ 'is-active': isActive }">
+        <div
+          id="navbarBasicExample"
+          class="navbar-menu"
+          :class="{ 'is-active': isActive }"
+        >
           <div class="navbar-start">
-            <router-link class="navbar-item" to="/main-event">Main event</router-link>
-            <router-link class="navbar-item" to="/#about">About us</router-link>
+            <router-link
+              class="navbar-item"
+              to="/main-event"
+            >
+              Main event
+            </router-link>
+            <router-link
+              class="navbar-item"
+              to="/#about"
+            >
+              About us
+            </router-link>
           </div>
 
           <div class="navbar-end">
             <div class="navbar-item">
-              <theme-switch @themeChanged='onThemeChanged'></theme-switch>
+              <theme-switch @themeChanged="onThemeChanged" />
             </div>
             <div class="navbar-item">
               <div class="buttons">
@@ -34,40 +65,67 @@
             </div>
           </div>
         </div>
-
       </nav>
 
-      <div class='router-view'>
-        <router-view/>
+      <div class="router-view">
+        <router-view />
       </div>
 
       <footer class="footer">
-
         <div class="content has-text-centered">
-
           <div class="columns">
             <div class="column">
               <h4>Main event</h4>
               <ul>
-                <li><router-link to="/main-event">Main event</router-link></li>
-                <li><router-link to="/main-event/code-of-conduct">Code of conduct</router-link></li>
-                <li><router-link to="/main-event/rules">Rules</router-link></li>
-                <li><router-link to="/main-event/server-application">Server application</router-link></li>
+                <li>
+                  <router-link to="/main-event">
+                    Main event
+                  </router-link>
+                </li>
+                <li>
+                  <router-link to="/main-event/code-of-conduct">
+                    Code of conduct
+                  </router-link>
+                </li>
+                <li>
+                  <router-link to="/main-event/rules">
+                    Rules
+                  </router-link>
+                </li>
+                <li>
+                  <router-link to="/main-event/server-application">
+                    Server application
+                  </router-link>
+                </li>
               </ul>
             </div>
 
             <div class="column">
               <h4>Archive</h4>
               <ul>
-                <li><router-link to="">A link</router-link></li>
-                <li><router-link to="">Another  link</router-link></li>
-                <li><router-link to="">Yet another link</router-link></li>
+                <li>
+                  <router-link to="">
+                    A link
+                  </router-link>
+                </li>
+                <li>
+                  <router-link to="">
+                    Another  link
+                  </router-link>
+                </li>
+                <li>
+                  <router-link to="">
+                    Yet another link
+                  </router-link>
+                </li>
               </ul>
             </div>
 
             <div class="column">
               <h4>The event staff</h4>
-              <router-link to="/about">About us</router-link>
+              <router-link to="/about">
+                About us
+              </router-link>
             </div>
 
             <!-- <div class="column has-text-left">
@@ -80,9 +138,17 @@
           </div>
 
           <section class="social-medias columns">
-            <div class="column" v-for="x in SocMedLinks" :key="x.href">
-              <a v-bind:href="x.href">
-                <img v-bind:src="x.icon" height='32' width="32"> {{x.text}}
+            <div
+              v-for="x in SocMedLinks"
+              :key="x.href"
+              class="column"
+            >
+              <a :href="x.href">
+                <img
+                  :src="x.icon"
+                  height="32"
+                  width="32"
+                > {{ x.text }}
               </a>
             </div>
           </section>
@@ -95,7 +161,6 @@
             </li>
           </ul> -->
         </div>
-
       </footer>
     </div>
   </div>
@@ -137,7 +202,7 @@ export default {
 @use 'assets/styles/main';
 
 .router-view {
-  padding-top: 60px;
+  padding-top: 120px;
   padding-bottom: 60px;
 }
 

@@ -104,7 +104,12 @@
           >
           By voting, I agree to SVS's <a href="#">Terms of Voting</a> and <a href="https://cc.servervsserver.com/">Community Conduct</a>
         </label>
-        <div v-if='VoteValidationErrorMessage' style="color: red">{{VoteValidationErrorMessage}}</div>
+        <div
+          v-if="VoteValidationErrorMessage"
+          style="color: red"
+        >
+          {{ VoteValidationErrorMessage }}
+        </div>
       </div>
 
       <div class="field">
@@ -221,7 +226,7 @@ export default ({
   withoutcheckbox.forEach((element) => {
 
     if (!(valid_options.includes(element))) {
-      
+
       returnvariable = false
 
     }
@@ -256,19 +261,19 @@ export default ({
         set(child(dbRef, `realTimeVoting/voters/` + tempvoterobject.length ),bcrypt.hashSync(this.$data.discordID, saltRounds))
         this.$data.hasvoted = true
 
-        
+
       }).catch((error) => {
         console.error(error);
       });}
 
       }
-      
+
     }
   }
 )
 </script>
 
-<style lang='scss'>
+<style scoped lang='scss'>
 
 .field {
     width: 80%;

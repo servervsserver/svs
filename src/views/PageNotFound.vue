@@ -140,7 +140,7 @@ export default {
 }
 
 /* demo stuff */
-* {
+/* * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -180,5 +180,5 @@ a.more-link {
     text-decoration: none;
   margin-top: 50px;
   letter-spacing: 1px;
-}
+} */
 </style>

@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import CodeOfConduct from '../views/CodeOfConduct.vue'
 import Vote from '../views/vote.vue'
 import About from '../views/About.vue'
 
 import MainEvent from '../views/main-event/MainEvent.vue'
 import ServerApplication from '../views/main-event/ServerApplication.vue'
-import CodeOfConduct from '../views/main-event/CodeOfConduct.vue'
 import Rules from '../views/main-event/Rules.vue'
 
 import ServerProfile from '../views/server/ServerProfile.vue'
@@ -41,6 +41,10 @@ const routes = [
     redirect: '/'
   },
   {
+    path: '/code-of-conduct',
+    component: CodeOfConduct
+  },
+  {
     path: '/server/:id',
     name: 'ServerProfile',
     component: ServerProfile
@@ -53,10 +57,6 @@ const routes = [
       {
         path: 'server-application',
         component: ServerApplication
-      },
-      {
-        path: 'code-of-conduct',
-        component: CodeOfConduct
       },
       {
         path: 'rules',

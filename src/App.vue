@@ -1,6 +1,5 @@
 <template>
   <div
-    id="app"
     :class="[theme]"
   >
     <div id="top" />
@@ -83,7 +82,7 @@
                   </router-link>
                 </li>
                 <li>
-                  <router-link to="/main-event/code-of-conduct">
+                  <router-link to="/code-of-conduct">
                     Code of conduct
                   </router-link>
                 </li>
@@ -128,13 +127,6 @@
               </router-link>
             </div>
 
-            <!-- <div class="column has-text-left">
-              <div v-for="x in SocMedLinks" :key="x.href">
-                <a v-bind:href="x.href">
-                  <img v-bind:src="x.icon"> {{x.text}}
-                </a>
-              </div>
-            </div> -->
           </div>
 
           <section class="social-medias columns">
@@ -153,13 +145,6 @@
             </div>
           </section>
 
-          <!-- <ul>
-            <li v-for="x in SocMedLinks" :key="x.href">
-              <a v-bind:href="x.href">
-                <img v-bind:src="x.icon"> {{x.text}}
-              </a>
-            </li>
-          </ul> -->
         </div>
       </footer>
     </div>

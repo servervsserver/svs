@@ -1,12 +1,12 @@
 <template>
   <div>
     <h1>Track test</h1>
-    {{track.name}}<br>
-    {{track.credits}}<br>
-    <p v-html="track.lyrics"></p>
-    <a v-bind:href="track.link">Track link</a><br>
-    {{track.serverId}}<br>
-    {{track.epId}}
+    {{ track.name }}<br>
+    {{ track.credits }}<br>
+    <p v-html="track.lyrics" />
+    <a :href="track.link">Track link</a><br>
+    {{ track.serverId }}<br>
+    {{ track.epId }}
   </div>
 </template>
 

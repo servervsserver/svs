@@ -25,6 +25,10 @@ html {
   overflow: auto;
 }
 
+h1, h2, h3, h4, h5, h6, span, strong, em {
+  color: inherit;
+}
+
 /* ========================================================================= */
 
 /*
@@ -39,6 +43,30 @@ html {
 h1, h2, h3, h4 {
   font-family: 'Jost', sans-serif;
   font-weight: 600;
+}
+
+.svs-button-transparent {
+  color: inherit;
+  background-color: transparent;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.15s all;
+  border: none;
+  transform: scale(1);
+}
+
+.svs-fab-button-transparent {
+  color: inherit;
+  background-color: transparent;
+  outline: none;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.15s all;
+  border: none;
+
 }
 
 .svs-logo {
@@ -173,6 +201,24 @@ h1, h2, h3, h4 {
   .app-container {
     color: $text-color;
     background-color: $background-color;
+  }
+
+  .svs-button-transparent {
+    color: $text-color;
+    background-color: transparent;
+    &:hover {
+      color: $text-color;
+      text-shadow: 0 0 2px $text-color;
+    }
+  }
+
+  .svs-fab-button-transparent {
+    color: $text-color;
+    background-color: transparent;
+    &:hover {
+      color: $text-color;
+      text-shadow: 0 0 2px $text-color;
+    }
   }
 }
 

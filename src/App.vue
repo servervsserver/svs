@@ -202,7 +202,7 @@ export default {
 @use 'assets/styles/main';
 
 .router-view {
-  padding-top: 60px;
+  padding-top: 120px;
   padding-bottom: 60px;
 }
 

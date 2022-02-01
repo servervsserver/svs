@@ -80,6 +80,7 @@ export default {
 
   .label {
     background: #333366;
+    font-size: 6px;
   }
 
   .ball {
@@ -89,10 +90,12 @@ export default {
   .dark-theme {
     .label {
       background: #333366;
+      color: #FFFADE;
     }
 
     .ball {
       background: #FFFADE;
+      color: #333366;
     }
   }
 

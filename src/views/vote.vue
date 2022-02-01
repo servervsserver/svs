@@ -203,10 +203,7 @@ export default ({
         snapshot.val().forEach((element) => {
           foreachresults.push(bcrypt.compareSync(this.$data.discordID, element))
         })
-        console.log(foreachresults)
         this.$data.hasvoted = foreachresults.includes(true)
-      } else {
-        console.log("Voters not found");
       }
       }).catch((error) => {
         console.error(error);
@@ -243,7 +240,6 @@ export default ({
     returnvariable = false
   }
 
-  console.log(returnvariable)
   return returnvariable
   },
     submitvote: function () {
@@ -252,8 +248,6 @@ export default ({
 
       let voteData = this.$data.ballot
       if (this.validateVoteData(voteData,this.$data.EPs) && this.$data.hasvoted == false) {
-
-        console.log('here')
 
         get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
         var tempvoterobject = snapshot.val()

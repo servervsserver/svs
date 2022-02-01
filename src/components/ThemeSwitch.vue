@@ -42,7 +42,7 @@ export default {
 
 <style scoped lang='scss'>
 
-  $label-width: 25px;
+$label-width: 25px;
   $label-height: 13px;
 
   .checkbox {
@@ -61,6 +61,7 @@ export default {
     width: $label-width;
     height: $label-height;
     transform: scale(1.5);
+    cursor: pointer;
   }
 
   .ball {

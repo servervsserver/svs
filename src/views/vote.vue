@@ -1,5 +1,5 @@
 <template>
-  <div class="vote_page">
+  <div v-if="!(hasvoted)" class="vote_page">
     <h1>
       Please rank your five favourite EPs from Highest to Lowest
     </h1>
@@ -120,7 +120,7 @@
 <script>
 
 import { initializeApp } from 'firebase/app'
-import { getDatabase } from 'firebase/database'
+import { getDatabase, ref, get, child} from 'firebase/database'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -139,8 +139,20 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
-const database = getDatabase(app)
-var x = database
+const db = getDatabase(app)
+
+const dbRef = ref(db);
+get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
+  if (snapshot.exists()) {
+    console.log(snapshot.val());
+  } else {
+    console.log("No data available");
+  }
+}).catch((error) => {
+  console.error(error);
+});
+
+
 
 const validateVoteData = (_data_) => {
   return (true)
@@ -148,8 +160,13 @@ const validateVoteData = (_data_) => {
 
 export default ({
   data () {
+    let hasvoted = false
+    
+
+
     return (
       {
+        hasvoted : hasvoted,
         EPs: [
           { name: 'EP 1', server: 'server 1' },
           { name: 'EP 2', server: 'server 2' },

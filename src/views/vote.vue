@@ -104,6 +104,7 @@
           >
           By voting, I agree to SVS's <a href="#">Terms of Voting</a> and <a href="https://cc.servervsserver.com/">Community Conduct</a>
         </label>
+        <div v-if='VoteValidationErrorMessage' style="color: red">{{VoteValidationErrorMessage}}</div>
       </div>
 
       <div class="field">
@@ -162,12 +163,6 @@ const db = getDatabase(app)
 //Create Reference for Database
 const dbRef = ref(db);
 
-
-const validateVoteData = (_data_) => {
-  //Check for no empty boxes & Checkbox ticked
-  return (true)
-}
-
 export default ({
   data () {
     return (
@@ -189,7 +184,9 @@ export default ({
         pool: ['examplepool'],
 
         //User's Vote
-        ballot: []
+        ballot: [false,false,false,false,false,false],
+
+        VoteValidationErrorMessage : false
       }
     )
   },
@@ -211,12 +208,47 @@ export default ({
       });
   },
   methods: {
+    validateVoteData : function (_data_, availableOptions) {
+  //Check for no empty boxes & Checkbox ticked
+  var valid_options = []
+  availableOptions.forEach((element) => {
+
+    valid_options.push(element.server + ' - ' + element.name)
+
+  })
+  var withoutcheckbox = _data_.slice(1,(_data_.length))
+  var returnvariable = true
+  withoutcheckbox.forEach((element) => {
+
+    if (!(valid_options.includes(element))) {
+      
+      returnvariable = false
+
+    }
+
+  })
+
+  if (returnvariable == false) {
+    this.$data.VoteValidationErrorMessage = ('* Make sure all inputs are complete')
+    return false
+  }
+
+  if (_data_[0] != true) {
+    this.$data.VoteValidationErrorMessage =  ('* Please agree to the Terms of Voting and Code of Conduct')
+    returnvariable = false
+  }
+
+  console.log(returnvariable)
+  return returnvariable
+  },
     submitvote: function () {
 
 
 
       let voteData = this.$data.ballot
-      if (validateVoteData(voteData)) {
+      if (this.validateVoteData(voteData,this.$data.EPs) && this.$data.hasvoted == false) {
+
+        console.log('here')
 
         get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
         var tempvoterobject = snapshot.val()

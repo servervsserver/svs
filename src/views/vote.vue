@@ -1,20 +1,13 @@
 <template>
-    <div class='vote_page'>
-        <h1>
+  <div class="vote_page">
+    <h1>
+      Please rank your five favourite EPs from Highest to Lowest
+    </h1>
 
-            Please rank your five favourite EPs from Highest to Lowest
-
-        </h1>
-
-<div>
-
-        <div class="field">
-        <div class="label">1 (Favourite)</div>
-        <div class="select is-rounded">
-        <select v-model='ballot[1]'>
-             <option>Please select an EP</option>
-             <option v-for='x in EPs' :key='x.name'> {{x.server}} - {{x.name}} </option>
-        </select>
+    <div>
+      <div class="field">
+        <div class="label">
+          1 (Favourite)
         </div>
         <div class="select is-rounded">
           <select v-model="ballot[1]">
@@ -110,13 +103,18 @@
 
       <div class="field">
         <div class="control">
-        <input type="submit" v-on:click='submitvote' class="button" value='Submit'/>
+          <input
+            type="submit"
+            class="button"
+            value="Submit"
+            @click="submitvote"
+          >
         </div>
-        </div>
-
-</div>
+      </div>
+    </div>
 
     <div>{{ ballot }}</div>
+  </div>
 </template>
 
 <script>
@@ -142,7 +140,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
 const database = getDatabase(app)
-console.log(database)
+var x = database
 
 const validateVoteData = (_data_) => {
   return (true)

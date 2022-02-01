@@ -1,6 +1,5 @@
 <template>
   <div class="bulk-edit">
-
     <section
       v-if="!hideTop"
       class="edit-section edit-header has-text-centered"
@@ -35,14 +34,20 @@
           </button>
         </div>
         <div
+          v-if="canPreview"
           class="column"
           @click="togglePreview()"
-          v-if="canPreview"
         >
-          <button class="button svs-button-transparent" v-if="!preview">
+          <button
+            v-if="!preview"
+            class="button svs-button-transparent"
+          >
             <span>Preview</span>&nbsp;<i class="fas fa-edit" />
           </button>
-          <button class="button svs-button-transparent" v-if="preview">
+          <button
+            v-if="preview"
+            class="button svs-button-transparent"
+          >
             <span>Edit</span>&nbsp;<i class="fas fa-edit" />
           </button>
         </div>
@@ -95,14 +100,20 @@
           </button>
         </div>
         <div
+          v-if="canPreview"
           class="column"
           @click="togglePreview()"
-          v-if="canPreview"
         >
-          <button class="button svs-button-transparent" v-if="!preview">
+          <button
+            v-if="!preview"
+            class="button svs-button-transparent"
+          >
             <span>Preview</span>&nbsp;<i class="fas fa-edit" />
           </button>
-          <button class="button svs-button-transparent" v-if="preview">
+          <button
+            v-if="preview"
+            class="button svs-button-transparent"
+          >
             <span>Edit</span>&nbsp;<i class="fas fa-edit" />
           </button>
         </div>

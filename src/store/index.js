@@ -9,7 +9,6 @@ export default new Vuex.Store({
   },
   getters: {
     nextSvsMainEventRemainingTime: state => {
-      console.log('Hello')
       return state.nextSvsMainEventTime.getTime() - Date.now()
     }
   },

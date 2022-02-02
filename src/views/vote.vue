@@ -1,15 +1,27 @@
 <template>
-  <!-- Render if user has not yet voted -->
+  <!-- Render if user has voted -->
 
-  <div v-if="pool.length > 1">
+  <div v-if="hasvoted">
+    <h1> Thank you for voting ! </h1>
+  </div>
+
+  <div v-else-if="pool.length > 1 && hasvoted == false">
     <h1>
       We have detected that you participated in multiple servers
     </h1>
     <h2>
       To continue, select the EP you would like to vote on behalf of:
     </h2>
-    <ChoosePool />
+    <ChoosePool
+      v-for="(y, index) in pool"
+      :key="index"
+      :msg="y"
+      :array-index="index"
+      @pool-button-click="poolpop"
+    />
   </div>
+
+  <!-- Render if user has not yet voted -->
 
   <div
     v-else-if="hasvoted == false"
@@ -137,12 +149,6 @@
     <div>{{ ballot }}</div>
   </div>
 
-  <!-- Render if user has voted -->
-
-  <div v-else-if="hasvoted">
-    <h1> Thank you for voting ! </h1>
-  </div>
-
   <div v-else>
     <h1> Loading... </h1>
   </div>
@@ -200,7 +206,7 @@ export default ({
         discordID: 'abc246',
 
         //Pool users vote goes to -> Can be server or community -> If > 1 in array, prompt user to choose pool
-        pool: ['examplepool','examplepool'],
+        pool: ['server1','server2'],
 
         //User's Vote
         ballot: [false,false,false,false,false,false],
@@ -274,7 +280,13 @@ export default ({
         console.error(error);
       });}
 
-      }
+      },
+    poolpop : function(e) {
+
+      this.$data.pool = [this.$data.pool[e]]
+      console.log(this.$data.pool)
+
+    }
 
     }
   }

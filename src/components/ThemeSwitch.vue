@@ -33,7 +33,6 @@ export default {
       } else {
         this.theme = 'light-theme'
       }
-      console.log(this.theme)
       this.$emit('themeChanged', this.theme)
     }
   }

@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <article class="coc-container">
-      <h1 class="has-text-centered">Code of Conduct</h1>
+      <h1 class="has-text-centered">
+        Code of Conduct
+      </h1>
       <h2>Our Community</h2>
       <p>
         It is important to us that Server vs Server (SvS) fosters a harassment-free environment. Thus, we have designed the following

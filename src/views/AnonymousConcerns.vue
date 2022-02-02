@@ -15,14 +15,17 @@
       <form @submit.prevent="onSubmit">
         <div class="field">
           <textarea
+            v-model="message"
             class="textarea"
             placeholder="Type your message here."
-            v-model="message">
-          </textarea>
+          />
         </div>
         <div class="field">
-          <button class="button svs-button-transparent" type="submit">
-            Submit&nbsp;<i class="fas fa-paper-plane"></i>
+          <button
+            class="button svs-button-transparent"
+            type="submit"
+          >
+            Submit&nbsp;<i class="fas fa-paper-plane" />
           </button>
         </div>
       </form>
@@ -40,11 +43,13 @@
       </p>
       <p class="help is-danger">
         <strong>Problem:</strong>
-        <br>{{errorMessage}}
+        <br>{{ errorMessage }}
       </p>
 
       <h4>Your original message</h4>
-      <blockquote class="message-block">{{message}}</blockquote>
+      <blockquote class="message-block">
+        {{ message }}
+      </blockquote>
     </section>
 
     <section v-if="isPendingAnswer">
@@ -55,7 +60,9 @@
         When we have read your message we will update this page with our response. Due to the anonymous nature of submissions, we are unable to notify you of any new responses. <br>
         Make sure to regularly check the url below:
       </p>
-      <button class="button is-medium">{{link}}</button>
+      <button class="button is-medium">
+        {{ link }}
+      </button>
     </section>
 
     <section v-if="isAnswered">
@@ -63,9 +70,15 @@
         We got your message, sorry for the wait. You can check our answer below!
       </p>
       <h4>Your original message</h4>
-      <blockquote class="message-block">{{message}}</blockquote>
-      <h4 class="has-text-right">Our answer</h4>
-      <blockquote class="message-block">{{answer}}</blockquote>
+      <blockquote class="message-block">
+        {{ message }}
+      </blockquote>
+      <h4 class="has-text-right">
+        Our answer
+      </h4>
+      <blockquote class="message-block">
+        {{ answer }}
+      </blockquote>
     </section>
     <!-- <iframe
     src="https://svs-website.vercel.app/concerns">
@@ -121,7 +134,6 @@ export default {
   },
   methods: {
     onSubmit () {
-      console.log("Submitting", this.message)
       this.state = ConcernState.SENDING
 
       setTimeout(() => {

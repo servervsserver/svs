@@ -135,7 +135,6 @@
                 </li>
               </ul>
             </div>
-
           </div>
 
           <section class="social-medias columns">
@@ -153,7 +152,6 @@
               </a>
             </div>
           </section>
-
         </div>
       </footer>
     </div>

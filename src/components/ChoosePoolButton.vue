@@ -1,11 +1,26 @@
 <template>
-    <div class="choose-pool-button">
-        <div>
-        Example
-        <i class="fas fa-angle-right"></i>
-        </div>
+  <div
+    class="choose-pool-button"
+    @click="clicked"
+  >
+    <div>
+      {{ msg }}
+      <i class="fas fa-angle-right" />
     </div>
+  </div>
 </template>
+
+<script>
+export default ({
+    props : {'msg' : {type: String, default : ''},'arrayIndex' : {type : Number, default : 0}},
+    methods : {
+        clicked : function () {
+            this.$emit('pool-button-click',this.$props.arrayIndex)
+        }
+    }
+})
+</script>
+
 
 <style scoped lang='scss'>
 
@@ -16,6 +31,7 @@
     width: 80%;
     margin: auto;
     border-radius: 20px;
+    margin-bottom: 30px;
     height: 50px;
     align-items: center;
     display: flex;

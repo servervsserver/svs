@@ -76,7 +76,6 @@ const routes = [
     redirect: '/admin/dashboard',
     component: Admin,
     beforeEnter: (to, from, next) => {
-      console.log('Trying to pass the admin guard')
       if (!isAdmin) {
         next('home')
       } else {

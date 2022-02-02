@@ -122,9 +122,18 @@
 
             <div class="column">
               <h4>The event staff</h4>
-              <router-link to="/about">
-                About us
-              </router-link>
+              <ul>
+                <li>
+                  <router-link to="/anonymous-concerns">
+                    Anonymous concerns
+                  </router-link>
+                </li>
+                <li>
+                  <router-link to="/about">
+                    About us
+                  </router-link>
+                </li>
+              </ul>
             </div>
 
           </div>

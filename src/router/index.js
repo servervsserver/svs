@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import CodeOfConduct from '../views/CodeOfConduct.vue'
 import Vote from '../views/vote.vue'
+import AnonymousConcerns from "../views/AnonymousConcerns.vue"
 import About from '../views/About.vue'
 
 import MainEvent from '../views/main-event/MainEvent.vue'
@@ -101,6 +102,11 @@ const routes = [
         component: TractTest
       }
     ]
+  },
+  {
+    path: '/anonymous-concerns',
+    name: 'AnonymousConcerns',
+    component: AnonymousConcerns
   },
   {
     path: '/about',

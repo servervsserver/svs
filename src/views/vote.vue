@@ -1,8 +1,18 @@
 <template>
   <!-- Render if user has not yet voted -->
 
+  <div v-if="pool.length > 1">
+    <h1>
+      We have detected that you participated in multiple servers
+    </h1>
+    <h2>
+      To continue, select the EP you would like to vote on behalf of:
+    </h2>
+    <ChoosePool />
+  </div>
+
   <div
-    v-if="hasvoted == false"
+    v-else-if="hasvoted == false"
     class="vote_page"
   >
     <h1>
@@ -142,6 +152,7 @@
 
 import { initializeApp } from 'firebase/app'
 import { getDatabase, ref, get, child, set} from 'firebase/database'
+import ChoosePool from '../components/ChoosePoolButton.vue'
 const bcrypt = require('bcryptjs');
 
 
@@ -169,6 +180,9 @@ const db = getDatabase(app)
 const dbRef = ref(db);
 
 export default ({
+  components: {
+    ChoosePool
+  },
   data () {
     return (
       {
@@ -186,7 +200,7 @@ export default ({
         discordID: 'abc246',
 
         //Pool users vote goes to -> Can be server or community -> If > 1 in array, prompt user to choose pool
-        pool: ['examplepool'],
+        pool: ['examplepool','examplepool'],
 
         //User's Vote
         ballot: [false,false,false,false,false,false],
@@ -294,6 +308,14 @@ h1 {
     margin-top: 30px;
     text-align: center;
     margin-bottom: 30px;
+}
+
+h2 {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 h1.RankNumber {

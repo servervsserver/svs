@@ -102,7 +102,7 @@
 
       <div class="field">
         <div class="label">
-          5 (Least Favourite)
+          5
         </div>
         <div class="select is-rounded">
           <select v-model="ballot[5]">
@@ -146,7 +146,6 @@
       </div>
     </div>
 
-    <div>{{ ballot }}</div>
   </div>
 
   <div v-else>
@@ -317,7 +316,7 @@ h1 {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 30px;
+    margin-top: 0;
     text-align: center;
     margin-bottom: 30px;
 }

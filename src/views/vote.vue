@@ -7,10 +7,10 @@
 
   <div v-else-if="pool.length > 1 && hasvoted == false">
     <h1>
-      We have detected that you participated in multiple servers
+      We detected that you have participated in multiple servers
     </h1>
     <h2>
-      To continue, select the EP you would like to vote on behalf of:
+      To continue, select the Server you would like to vote on behalf of:
     </h2>
     <ChoosePool
       v-for="(y, index) in pool"

@@ -118,6 +118,9 @@ export default {
     },
     validateEdit () {
       this.editing = false
+    },
+    onImageChange () {
+      console.log("Image change")
     }
   }
 }

@@ -10,7 +10,7 @@
 
         <div class="columns">
 
-          <div class="column is-two-thirds">
+          <div class="column is-half">
 
             <div class="field">
               <label>Name of the Discord server</label>
@@ -39,41 +39,61 @@
 
           <div class="column">
 
-            <div class="field ">
-              <label>Server image</label>
-              <div class="has-text-centered">
-                <div class="file has-name is-boxed">
-                  <label class="file-label">
-                    <input class="file-input" type="file" name="resume">
-                    <span class="file-cta">
-                      <span class="file-icon">
-                        <i class="fas fa-upload"></i>
-                      </span>
-                      <span class="file-label">
-                        Choose a file…
-                      </span>
-                    </span>
-                    <span class="file-name">
-                      Server icon
-                    </span>
-                  </label>
+            <div class="columns">
+              <div class="column">
+                <div class="field ">
+                  <label>Server image</label>
+                  <div class="has-text-centered">
+                    <div class="file has-name is-boxed">
+                      <label class="file-label">
+                        <input
+                          accept="image/*"
+                          class="file-input"
+                          type="file"
+                          @change="onImageChange"
+                          >
+                        <span class="file-cta">
+                          <span class="file-icon">
+                            <i class="fas fa-upload"></i>
+                          </span>
+                          <span class="file-label">
+                            Choose a file…
+                          </span>
+                        </span>
+                        <span class="file-name">
+                          {{serverIconFileName}}
+                        </span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
+              </div>
+              <div class="column">
+                <img :src="serverIconUrl" width="140px" height="140px"/>
               </div>
             </div>
 
+
+
+
             <div class="field">
-              <label>Discord tag of people in charge <span class="icon is-small is-left"><i class="fas fa-info-circle"></i></span></label>
+              <label>
+                Discord tags of people in charge
+                <tooltip :vertical="'top'">
+                  <template v-slot:message></template>
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-info-circle"></i>
+                  </span>
+                </tooltip>
+              </label>
               <div class="columns">
 
                 <div class="column is-three-quarters">
                   <div class="control has-icons-left">
                     <input class="input" type="text" placeholder="ImTheChief#1234">
-                    <tooltip :vertical="'top'">
-                      <template v-slot:message></template>
-                      <span class="icon is-small is-left">
-                        <i class="fas fa-user"></i>
-                      </span>
-                    </tooltip>
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-user"></i>
+                    </span>
 
                   </div>
                 </div>
@@ -92,14 +112,14 @@
             <div class="field is-grouped is-grouped-multiline">
               <div class="control">
                 <div class="tags has-addons">
-                  <a class="tag is-link">Technology</a>
+                  <span class="tag is-link">TheShiningDandrobat#1234</span>
                   <a class="tag is-delete"></a>
                 </div>
               </div>
 
               <div class="control">
                 <div class="tags has-addons">
-                  <a class="tag is-link">CSS</a>
+                  <span class="tag is-link">Nobody#5678</span>
                   <a class="tag is-delete"></a>
                 </div>
               </div>
@@ -124,6 +144,27 @@
   </div>
 </template>
 
-<script scoped lang="scss">
+<script>
+
+export default {
+  data: function () {
+    return {
+      serverIconUrl: "/placeholders/server_placeholder_icon.jpg",
+      serverIconFileName: "..."
+    }
+  },
+  methods: {
+    onImageChange: function (event) {
+      const [file] = event.target.files
+      if (file) {
+        this.serverIconUrl = URL.createObjectURL(file)
+        this.serverIconFileName = file.name
+      }
+    }
+  }
+}
 
 </script>
+
+<style scoped lang="scss">
+</style>

@@ -51,10 +51,12 @@ export default {
 <style scoped lang='scss'>
 
 .tooltip {
+  display: inline;
   position: relative;
 
   .tooltip-bubble  {
     position: absolute;
+    display: none;
   }
 
 }

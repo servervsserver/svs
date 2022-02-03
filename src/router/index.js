@@ -21,6 +21,7 @@ import PageNotFound from '../views/PageNotFound.vue'
 
 import MainTest from '../views/test-views/MainTest.vue'
 import TractTest from '../views/test-views/TrackTest.vue'
+import ValidatorTest from '../views/test-views/ValidatorTest.vue'
 
 Vue.use(VueRouter)
 
@@ -99,6 +100,11 @@ const routes = [
         path: 'track',
         name: 'Track',
         component: TractTest
+      },
+      {
+        path: 'validator',
+        name: 'Validator',
+        component: ValidatorTest
       }
     ]
   },
@@ -130,7 +136,7 @@ const router = new VueRouter({
   scrollBehavior (to, from, savedPosition) {
     return {
       x: 0,
-      y: 0,  
+      y: 0,
       behavior: 'smooth'
     }
   }

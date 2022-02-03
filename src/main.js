@@ -10,10 +10,12 @@ import store from './store'
 import EventCountdown from './components/countdown/DHMSCountdown.vue'
 import ThemeSwitch from './components/ThemeSwitch.vue'
 import BulkEdit from './components/layout/BulkEdit.vue'
+import Tooltip from './components/Tooltip.vue'
 
 Vue.component('event-countdown', EventCountdown)
 Vue.component('theme-switch', ThemeSwitch)
 Vue.component('bulk-edit', BulkEdit)
+Vue.component('tooltip', Tooltip)
 
 Vue.config.productionTip = false
 

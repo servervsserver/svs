@@ -59,6 +59,33 @@ export class Validators {
       return array.indexOf(value) != -1
     }
   }
+
+  /**
+  * Checks if the value matches the pattern
+  * @param {RegExp} regexp - Expression to match
+  * @param {boolean} loose - If false, matches the exact expression. If true validates if the regexp is found in the value
+  */
+  static pattern(regexp, loose) {
+
+    if (!regexp) return (value) => { return true }
+    if (loose) return (value) => {
+      return regexp.test(value)
+    }
+
+    return (value) => {
+      if (value === undefined || value === null) return false
+      var match = value.match(regexp)
+      return !!(match && value === match[0])
+    }
+  }
+
+  static get discordUserName() {
+    return Validators.pattern(/^.{3,32}#[0-9]{4}$/)
+  }
+
+  static get discordInviteLink() {
+    return Validators.pattern(/^(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]$/)
+  }
 }
 
 /**

@@ -27,9 +27,20 @@
                   class="input"
                   type="text"
                   placeholder="https://discord.gg/my-permanent-link"
+                  v-model="serverInviteLink"
                   >
                 <span class="icon is-small is-left"><i class="fas fa-link"></i></span>
               </div>
+              <p
+                v-if="validServerLink || !serverInviteLink"
+                class="help" style="color: transparent">
+                &nbsp;
+              </p>
+              <p
+                v-if="!validServerLink && serverInviteLink"
+                class="help is-danger">
+                Your link is invalid
+              </p>
             </div>
 
             <div class="field">
@@ -84,6 +95,7 @@
 
 
             <div class="field">
+
               <label>
                 Discord tags of people in charge
                 <tooltip
@@ -99,11 +111,17 @@
                   </span>
                 </tooltip>
               </label>
+
               <div class="columns">
 
                 <div class="column is-three-quarters">
                   <div class="control has-icons-left">
-                    <input class="input" type="text" placeholder="ImTheChief#1234">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="ImTheChief#1234"
+                      v-model="userName"
+                      >
                     <span class="icon is-small is-left">
                       <i class="fas fa-user"></i>
                     </span>
@@ -112,7 +130,10 @@
                 </div>
 
                 <div class="column">
-                  <button class="button">
+                  <button
+                    class="button"
+                    :disabled="!canAddUserName"
+                    @click="addUserName()">
                     <span class="icon is-small">
                       <i class="fas fa-user-plus"></i>
                     </span>
@@ -120,20 +141,29 @@
                 </div>
 
               </div>
+              <p
+                v-if="!validUserName && userName"
+                class="help is-danger">Invalid username format.
+                Perhaps you forgot the hashtag?
+              </p>
+              <p
+                v-if="alreadyAdded"
+                class="help is-danger">
+                You already proposed this user!
+              </p>
             </div>
 
-            <div class="field is-grouped is-grouped-multiline">
-              <div class="control">
+            <div
+              class="field is-grouped is-grouped-multiline"
+              >
+              <div
+                class="control"
+                v-for="username in adminNames"
+                :key="username"
+                >
                 <div class="tags has-addons">
-                  <span class="tag is-link">TheShiningDandrobat#1234</span>
-                  <a class="tag is-delete"></a>
-                </div>
-              </div>
-
-              <div class="control">
-                <div class="tags has-addons">
-                  <span class="tag is-link">Nobody#5678</span>
-                  <a class="tag is-delete"></a>
+                  <span class="tag is-link">{{username}}</span>
+                  <a class="tag is-delete" @click="dropAdmin(username)"></a>
                 </div>
               </div>
             </div>
@@ -158,12 +188,33 @@
 </template>
 
 <script>
+import { Validators } from "../../models/properties/validators"
 
 export default {
   data: function () {
     return {
+      serverInviteLink: "",
       serverIconUrl: "/placeholders/server_placeholder_icon.jpg",
-      serverIconFileName: "..."
+      serverIconFileName: "...",
+      userName: "",
+      adminNames: [
+        "TheShiningDandrobat#1234",
+        "Nobody#5678"
+      ]
+    }
+  },
+  computed: {
+    validUserName () {
+      return Validators.discordUserName(this.userName)
+    },
+    alreadyAdded () {
+      return Validators.oneOf(this.adminNames)(this.userName)
+    },
+    canAddUserName () {
+      return this.validUserName && !this.alreadyAdded
+    },
+    validServerLink () {
+      return Validators.discordInviteLink(this.serverInviteLink)
     }
   },
   methods: {
@@ -173,6 +224,14 @@ export default {
         this.serverIconUrl = URL.createObjectURL(file)
         this.serverIconFileName = file.name
       }
+    },
+    addUserName: function() {
+      this.adminNames.push(this.userName)
+      this.userName = ""
+    },
+    dropAdmin: function(username) {
+      let idx = this.adminNames.indexOf(username)
+      this.adminNames.splice(idx, 1)
     }
   }
 }

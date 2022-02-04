@@ -15,7 +15,7 @@
             <div class="field">
               <label>Name of the Discord server</label>
               <div class="control has-icons-left">
-                <input class="input" type="text" placeholder="My awesome Discord server">
+                <input class="input" type="text" placeholder="My awesome Discord server" v-model="serverName">
                 <span class="icon is-small is-left"><i class="fas fa-discord"></i></span>
               </div>
             </div>
@@ -48,6 +48,7 @@
               <div class="control has-icons-left">
                 <textarea
                   class="textarea"
+                  v-model="serverDescription"
                   placeholder="My Discord is awesome because we have cookies! Loads of cookies!">
                 </textarea>
               </div>
@@ -65,6 +66,7 @@
                     <div class="file has-name is-boxed">
                       <label class="file-label">
                         <input
+                          id="serverInput"
                           accept="image/*"
                           class="file-input"
                           type="file"
@@ -181,7 +183,7 @@
           type="number"
           step="1"
         > -->
-
+        <button class="button" @click="save">Save</button>
       </div>
     </div>
   </div>
@@ -189,10 +191,18 @@
 
 <script>
 import { Validators } from "../../models/properties/validators"
+import { s3, db, rtdb} from "../../assets/db.js"
+import { collection, doc, setDoc } from "firebase/firestore";
+import { push, ref } from "firebase/database";
+
+import * as fs from 'fs';
+const newCityRef = doc(collection(db, "cities"));
 
 export default {
   data: function () {
     return {
+      application_ref: '',
+      serverName: "",
       serverInviteLink: "",
       serverIconUrl: "/placeholders/server_placeholder_icon.jpg",
       serverIconFileName: "...",
@@ -200,7 +210,8 @@ export default {
       adminNames: [
         "TheShiningDandrobat#1234",
         "Nobody#5678"
-      ]
+      ],
+    serverDescription: "",
     }
   },
   computed: {
@@ -232,6 +243,37 @@ export default {
     dropAdmin: function(username) {
       let idx = this.adminNames.indexOf(username)
       this.adminNames.splice(idx, 1)
+    },
+    save: function(){
+      let appObj = { name: this.serverName, discord_invite: this.serverInviteLink, icon: this.serverIconUrl, admins: this.adminNames, description: this.serverDescription};
+      const newServerRef = this.application_ref ? this.application_ref : doc(collection(db, "servers"));
+      let uid = (newServerRef.id);
+      fetch(appObj.icon)
+        .then(function(r){
+          var files = document.getElementById("serverInput").files;
+          if (!files.length) {
+            return alert("Please choose a file to upload first.");
+          }
+          var file = files[0];
+          var fileName = `${uid}.jpg`;
+          const params = {
+            Bucket: process.env.VUE_APP_AWS_BUCKET_NAME,
+            Key: `${uid}.jpg`,
+            Body: file,
+            Prefix:"servers_icons/"
+          };
+
+          s3.upload(params, (err, data) => {
+            if (err) {
+              console.log(err)
+            }
+            appObj.icon = ("d16ax4eys2wwsd.cloudfront.net/" + fileName);
+            setDoc(newServerRef, appObj).then(function(data){
+              const appRef = ref(rtdb, 'applications/');
+              push(appRef,uid);
+            });  
+          });
+        });
     }
   }
 }

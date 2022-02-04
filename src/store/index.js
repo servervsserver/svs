@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    nextSvsMainEventTime: new Date(2022, 1, 28, 2, 3, 4)
+    nextSvsMainEventTime: new Date(2022, 1, 28, 2, 3, 4),
+    _uid:""
   },
   getters: {
     nextSvsMainEventRemainingTime: state => {
@@ -13,6 +14,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    set_uid(state,uid){
+      state._uid = uid;
+    }
   },
   actions: {
   },

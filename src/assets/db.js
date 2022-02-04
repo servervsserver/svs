@@ -17,7 +17,7 @@ const firebaseConfig = {
   measurementId: process.env.VUE_APP_measurementId,
 };
 
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 
 // Get a reference to the database service
 export const rtdb = getDatabase(app);

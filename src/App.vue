@@ -56,11 +56,7 @@
               <theme-switch @themeChanged="onThemeChanged" />
             </div>
             <div class="navbar-item">
-              <div class="buttons">
-                <a class="button is-dark">
-                  Log in with Discord
-                </a>
-              </div>
+              <Login/>
             </div>
           </div>
         </div>
@@ -159,8 +155,13 @@
 </template>
 
 <script>
+// @ is an alias to /src
+import Login from '@/components/Login.vue'
 
 export default {
+  components: {
+    Login
+  },
   data () {
     return {
       theme: 'light-theme',

@@ -23,7 +23,11 @@
             <div class="field">
               <label>Permanent invite link</label>
               <div class="control has-icons-left">
-                <input class="input" type="text" placeholder="https://discord.gg/my-permanent-link">
+                <input
+                  class="input"
+                  type="text"
+                  placeholder="https://discord.gg/my-permanent-link"
+                  >
                 <span class="icon is-small is-left"><i class="fas fa-link"></i></span>
               </div>
             </div>
@@ -31,7 +35,10 @@
             <div class="field">
               <label>Description</label>
               <div class="control has-icons-left">
-                <textarea class="textarea" placeholder="My Discord is awesome because we have cookies! Loads of cookies!"></textarea>
+                <textarea
+                  class="textarea"
+                  placeholder="My Discord is awesome because we have cookies! Loads of cookies!">
+                </textarea>
               </div>
             </div>
 
@@ -79,8 +86,14 @@
             <div class="field">
               <label>
                 Discord tags of people in charge
-                <tooltip :vertical="'top'">
-                  <template v-slot:message></template>
+                <tooltip
+                  :vertical="'top'"
+                  :mode="'hover'">
+                  <!-- <template v-slot:title>Yep'</template> -->
+                  <template v-slot:message>
+                    List people we should contact to confirm your server's participation.<br>
+                    Until we reach out, do not change your discord tags to ease the process.
+                  </template>
                   <span class="icon is-small is-left">
                     <i class="fas fa-info-circle"></i>
                   </span>

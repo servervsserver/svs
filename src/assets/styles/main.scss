@@ -45,6 +45,7 @@ em {
 
 html {
   font-size: 14px;
+  overflow: hidden;
 }
 
 * {
@@ -170,6 +171,8 @@ ul {
 
 }
 
+/* Logos */
+
 .svs-logo {
   display: inline-block;
   background-size: cover;
@@ -183,6 +186,34 @@ ul {
 
 .svs-logo.dark {
   background-image: url("/icons/svs/svs_square_dark_icon.svg");
+}
+
+/* Shadows */
+
+.no-shadow {
+  box-shadow: none !important;
+}
+
+.shadow-depth-1 {
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+}
+
+.shadow-depth-2 {
+  box-shadow:0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
+}
+
+.shadow-depth-3 {
+    -webkit-box-shadow: 0 8px 17px 2px rgba(0,0,0,0.14),0 3px 14px 2px rgba(0,0,0,0.12),0 5px 5px -3px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 17px 2px rgba(0,0,0,0.14),0 3px 14px 2px rgba(0,0,0,0.12),0 5px 5px -3px rgba(0,0,0,0.2);
+}
+
+.shadow-depth-4 {
+    -webkit-box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14),0 6px 30px 5px rgba(0,0,0,0.12),0 8px 10px -7px rgba(0,0,0,0.2);
+    box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14),0 6px 30px 5px rgba(0,0,0,0.12),0 8px 10px -7px rgba(0,0,0,0.2);
+}
+
+.shadow-depth-5 {
+  box-shadow: 0 24px 38px 3px rgb(0 0 0 / 14%), 0 9px 46px 8px rgb(0 0 0 / 12%), 0 11px 15px -7px rgb(0 0 0 / 20%);
 }
 
 /* ========================================================================= */
@@ -306,6 +337,9 @@ ul {
 
 /* ========================================================================= */
 
+/**
+* App container
+*/
 .app-container {
 
 }
@@ -335,6 +369,27 @@ ul {
   }
 }
 
+/* ========================================================================= */
+
+/**
+* Tooltip
+*/
+
+@mixin tooltip($text-color, $background-color) {
+  .tooltip {
+    .tooltip-bubble {
+      background-color: $background-color;
+      * {
+        color: $text-color;
+      }
+
+      .anchor-box .anchor-inner {
+        background: $background-color;
+      }
+    }
+  }
+}
+
 /* =========================================================================
 **  Themes
 ** ========================================================================= */
@@ -346,6 +401,7 @@ html {
   @include navbar($light-primary-color, $dark-primary-color);
   @include footer($light-primary-color, $dark-primary-color);
   @include appcontainer($dark-primary-color, $light-primary-color);
+  @include tooltip($light-primary-color, $dark-primary-color);
 
   .navbar-brand-image {
     background-image: url("/icons/svs/svs_square_light_icon.svg");
@@ -360,6 +416,7 @@ html {
   @include navbar($light-primary-color, $dark-primary-color);
   @include footer($light-primary-color, $dark-primary-color);
   @include appcontainer($dark-primary-color, $light-primary-color);
+  @include tooltip($light-primary-color, $dark-primary-color);
 
   .navbar-brand-image {
     background-image: url("/icons/svs/svs_square_light_icon.svg");
@@ -381,6 +438,7 @@ html {
   @include navbar($light-primary-color, $secondary-color);
   @include footer($light-primary-color, $secondary-color);
   @include appcontainer($light-primary-color, $dark-primary-color);
+  @include tooltip($light-primary-color, $secondary-color);;
 
   .navbar-brand-image {
     background-image: url("/icons/svs/svs_square_dark_icon.svg");

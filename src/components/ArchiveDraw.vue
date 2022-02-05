@@ -5,9 +5,18 @@
     @click="openclose"
   >
     <h1>
-      {{ title }} <i v-if='this.$data.isOpen' class="far fa-caret-square-up"></i><i v-else class="far fa-caret-square-down"></i>
+      {{ title }} <i
+        v-if="this.$data.isOpen"
+        class="far fa-caret-square-up"
+      /><i
+        v-else
+        class="far fa-caret-square-down"
+      />
     </h1>
-    <div class="draw_content">
+    <div
+      class="draw_content"
+      onclick="event.stopPropagation();"
+    >
       <slot />
     </div>
   </div>

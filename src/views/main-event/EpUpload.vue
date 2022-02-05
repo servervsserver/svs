@@ -26,7 +26,7 @@
                   placeholder="My awesome server EP"
                 >
                 <span class="icon is-small is-left">
-                  <i class="fas fa-compact-disc"></i>
+                  <i class="fas fa-compact-disc" />
                 </span>
               </div>
             </div>
@@ -44,7 +44,7 @@
                     >
                     <span class="file-cta">
                       <span class="file-icon">
-                        <i class="fas fa-upload"></i>
+                        <i class="fas fa-upload" />
                       </span>
                       <span class="file-label">
                         Choose a file…
@@ -62,20 +62,23 @@
               <label>Permanent invite link</label>
               <div class="control has-icons-left">
                 <input
+                  v-model="epStreamingLink"
                   class="input"
                   type="text"
                   placeholder="https://soundcloud.com/my-server/my-awesome-ep-link"
-                  v-model="epStreamingLink"
-                  >
-                <span class="icon is-small is-left"><i class="fas fa-link"></i></span>
+                >
+                <span class="icon is-small is-left"><i class="fas fa-link" /></span>
               </div>
             </div>
           </div>
 
           <div class="column is-offset-2 is-5">
-            <img :src="coverArtUrl" width="100%" class="shadow-depth-2"/>
+            <img
+              :src="coverArtUrl"
+              width="100%"
+              class="shadow-depth-2"
+            >
           </div>
-
         </div>
 
         <!-- EP info end -->
@@ -90,10 +93,11 @@
             class="column is-full track-section shadow-depth-2"
           >
             <button
-              class="button svs-button-transparent delete-track-button" @click="dropTrack(track)"
+              class="button svs-button-transparent delete-track-button"
+              @click="dropTrack(track)"
             >
               <span class="icon">
-                <i class="fas fa-trash-alt"></i>
+                <i class="fas fa-trash-alt" />
               </span>
             </button>
             <h3>
@@ -113,20 +117,20 @@
                       type="text"
                       placeholder="My awesome Discord server"
                     >
-                    <span class="icon is-small is-left"><i class="fas fa-play"></i></span>
+                    <span class="icon is-small is-left"><i class="fas fa-play" /></span>
                   </div>
                 </div>
                 <!-- Lyrics -->
                 <div
-                  class="field">
+                  class="field"
+                >
                   <label>Lyrics</label>
                   <textarea
                     v-model="track.lyrics"
                     class="textarea lyrics"
                     :class="{ 'no-lyrics': !track.hasLyrics }"
                     :disabled="!track.hasLyrics"
-                  >
-                  </textarea>
+                  />
                 </div>
               </div>
 
@@ -135,27 +139,27 @@
                 <div class="field">
                   <label>Audio file</label>
                   <!-- <div class="has-text-centered"> -->
-                    <div class="file has-name">
-                      <label class="file-label">
-                        <input
-                          accept=".mp3"
-                          class="file-input"
-                          type="file"
-                          @change="onTrackFileChange($event, track)"
-                          >
-                        <span class="file-cta">
-                          <span class="file-icon">
-                            <i class="fas fa-file-audio"></i>
-                          </span>
-                          <span class="file-label">
-                            Choose a file…
-                          </span>
-                          <span class="file-name">
-                            {{ track.audioFilename }}
-                          </span>
+                  <div class="file has-name">
+                    <label class="file-label">
+                      <input
+                        accept=".mp3"
+                        class="file-input"
+                        type="file"
+                        @change="onTrackFileChange($event, track)"
+                      >
+                      <span class="file-cta">
+                        <span class="file-icon">
+                          <i class="fas fa-file-audio" />
                         </span>
-                      </label>
-                    </div>
+                        <span class="file-label">
+                          Choose a file…
+                        </span>
+                        <span class="file-name">
+                          {{ track.audioFilename }}
+                        </span>
+                      </span>
+                    </label>
+                  </div>
                   <!-- </div> -->
                 </div>
 
@@ -168,12 +172,22 @@
                     <div class="control has-icons-left">
                       <div class="select">
                         <select v-model="track.genre">
-                          <option disabled value="">Unclassified</option>
-                          <option v-for="genre in musicGenres" :key="genre">{{ genre }}</option>
+                          <option
+                            disabled
+                            value=""
+                          >
+                            Unclassified
+                          </option>
+                          <option
+                            v-for="genre in musicGenres"
+                            :key="genre"
+                          >
+                            {{ genre }}
+                          </option>
                           <!-- <option>With options</option> -->
                         </select>
                         <span class="icon is-left">
-                          <i class="fas fa-music"></i>
+                          <i class="fas fa-music" />
                         </span>
                       </div>
                     </div>
@@ -207,7 +221,8 @@
                       <label class="checkbox">
                         <input
                           v-model="track.hasLyrics"
-                          type="checkbox">
+                          type="checkbox"
+                        >
 
                       </label>
                     </div>
@@ -215,13 +230,9 @@
                 </div>
 
                 <div class="columns is-vcentered">
-                  <div class="column is-half is-mobile has-text-right">
-                  </div>
-                  <div class="column is-half is-mobile">
-                  </div>
+                  <div class="column is-half is-mobile has-text-right" />
+                  <div class="column is-half is-mobile" />
                 </div>
-
-
               </div>
 
               <div class="column is-12">
@@ -237,10 +248,11 @@
                   </div>
                   <div class="column is-narrow has-text-centered">
                     <button
-                      class="button svs-button-transparent" @click="track.removeCreditEntry(ce)"
+                      class="button svs-button-transparent"
+                      @click="track.removeCreditEntry(ce)"
                     >
                       <span class="icon is-small">
-                        <i class="fas fa-user-minus"></i>
+                        <i class="fas fa-user-minus" />
                       </span>
                     </button>
                   </div>
@@ -256,7 +268,7 @@
                           placeholder="Jiway"
                         >
                         <span class="icon is-small is-left">
-                          <i class="fas fa-user"></i>
+                          <i class="fas fa-user" />
                         </span>
                       </div>
                     </div>
@@ -273,7 +285,7 @@
                           placeholder="Jiway#7289"
                         >
                         <span class="icon is-small is-left">
-                          <i class="fab fa-discord"></i>
+                          <i class="fab fa-discord" />
                         </span>
                       </div>
                     </div>
@@ -290,7 +302,7 @@
                           placeholder="Mix, mastering, bass"
                         >
                         <span class="icon is-small is-left">
-                          <i class="fas fa-user-tag"></i>
+                          <i class="fas fa-user-tag" />
                         </span>
                         <!-- <textarea
                           v-model="ce.description"
@@ -316,9 +328,12 @@
                   </div>
                 </div>
                 <div>
-                  <button class="button" @click="track.addCreditEntry()">
+                  <button
+                    class="button"
+                    @click="track.addCreditEntry()"
+                  >
                     <span class="icon is-small">
-                      <i class="fas fa-user-plus"></i>
+                      <i class="fas fa-user-plus" />
                     </span>
                     <span>Add credit</span>
                   </button>
@@ -327,18 +342,19 @@
             </div>
           </section>
           <section class="track-section has-text-centered">
-            <button class="button is-medium " @click="addTrack">
-              <span class="icon"><i class="fas fa-headphones"></i></span>
+            <button
+              class="button is-medium "
+              @click="addTrack"
+            >
+              <span class="icon"><i class="fas fa-headphones" /></span>
               <span>Add track</span>
             </button>
           </section>
         </div>
 
         <!-- Track info end -->
-
       </div>
     </div>
-
   </div>
 </template>
 

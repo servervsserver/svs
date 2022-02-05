@@ -12,7 +12,7 @@
 
       <p>
         Due to the fact this is anonymous, your message will be given a unique
-        link on which you can see the answer.<br />
+        link on which you can see the answer.<br>
         We will respond to your message on this link but can't notify you when.
         So don't lose the link before we can answer, we won't have any mean to
         give it back to you.
@@ -27,7 +27,10 @@
           />
         </div>
         <div class="field">
-          <button class="button svs-button-transparent" type="submit">
+          <button
+            class="button svs-button-transparent"
+            type="submit"
+          >
             Submit&nbsp;<i class="fas fa-paper-plane" />
           </button>
         </div>
@@ -48,7 +51,7 @@
       </p>
       <p class="help is-danger">
         <strong>Problem:</strong>
-        <br />{{ errorMessage }}
+        <br>{{ errorMessage }}
       </p>
 
       <h4>Your original message</h4>
@@ -62,7 +65,7 @@
       <p>
         When we have read your message we will update this page with our
         response. Due to the anonymous nature of submissions, we are unable to
-        notify you of any new responses. <br />
+        notify you of any new responses. <br>
         Make sure to regularly check the url below:
       </p>
       <button class="button is-medium">
@@ -78,7 +81,9 @@
       <blockquote class="message-block">
         {{ message }}
       </blockquote>
-      <h4 class="has-text-right">Our answer</h4>
+      <h4 class="has-text-right">
+        Our answer
+      </h4>
       <blockquote class="message-block">
         {{ answer }}
       </blockquote>

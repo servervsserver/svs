@@ -164,7 +164,7 @@ export default {
   },
   data () {
     return {
-      theme: 'light-theme',
+      theme: 'dark-theme',
       isActive: false,
       SocMedLinks: [
         {

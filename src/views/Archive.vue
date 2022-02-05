@@ -2,9 +2,11 @@
   <div class="archive">
     <h1> SVS Archive: </h1>
     <h2> Past EPs: </h2>
-    <Draw v-for='(x,index) in PastEPs' v-bind:title="index" v-bind:key='x'>
-        
-    </Draw>
+    <Draw
+      v-for="(x,index) in PastEPs"
+      :key="x"
+      :title="index"
+    />
   </div>
 </template>
 

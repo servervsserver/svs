@@ -1,0 +1,31 @@
+/**
+* App container
+*/
+.app-container {
+
+}
+
+@mixin appcontainer($text-color, $background-color) {
+  .app-container {
+    color: $text-color;
+    background-color: $background-color;
+  }
+
+  .svs-button-transparent {
+    color: $text-color;
+    background-color: transparent;
+    &:hover {
+      color: $text-color;
+      text-shadow: 0 0 2px $text-color;
+    }
+  }
+
+  .svs-fab-button-transparent {
+    color: $text-color;
+    background-color: transparent;
+    &:hover {
+      color: $text-color;
+      text-shadow: 0 0 2px $text-color;
+    }
+  }
+}

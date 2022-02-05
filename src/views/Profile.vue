@@ -1,9 +1,9 @@
 <template>
-<div class="profile">
+  <div class="profile">
     tesr
     
-    {{uid}}
-</div>
+    {{ uid }}
+  </div>
 </template>
 
 

@@ -1,0 +1,26 @@
+@use '../components/all' as svs;
+
+$light-primary-color: #FFFADE;
+$dark-primary-color: #333366;
+
+$secondary-color: #F5816B;
+$tertiary-color: #FFBA5E;
+
+@mixin theme() {
+
+  @include svs.navbar($light-primary-color, $secondary-color);
+  @include svs.footer($light-primary-color, $secondary-color);
+  @include svs.appcontainer($light-primary-color, $dark-primary-color);
+  @include svs.tooltip($light-primary-color, $secondary-color);;
+
+  .navbar-brand-image {
+    background-image: url("/icons/svs/svs_square_dark_icon.svg");
+  }
+
+  blockquote {
+    ::before {
+      background-color: $light-primary-color;
+    }
+  }
+
+}

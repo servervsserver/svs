@@ -1,0 +1,18 @@
+/**
+* Tooltip
+*/
+
+@mixin tooltip($text-color, $background-color) {
+  .tooltip {
+    .tooltip-bubble {
+      background-color: $background-color;
+      * {
+        color: $text-color;
+      }
+
+      .anchor-box .anchor-inner {
+        background: $background-color;
+      }
+    }
+  }
+}

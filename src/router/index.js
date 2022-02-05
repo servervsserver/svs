@@ -22,9 +22,9 @@ import PageNotFound from '../views/PageNotFound.vue'
 
 /* ===== Test vues ===== */
 
-import MainTest from '../views/test-views/MainTest.vue'
-import TractTest from '../views/test-views/TrackTest.vue'
-import ValidatorTest from '../views/test-views/ValidatorTest.vue'
+import { addTestBlockToRoutes } from "./router.dev.js"
+
+
 
 Vue.use(VueRouter)
 
@@ -41,8 +41,9 @@ const routes = [
     name: 'Home',
     component: Home
   },
-  {path: '/archive',
-  component: Archive  
+  {
+    path: '/archive',
+    component: Archive
   },
   {
     path: '/vote',
@@ -107,23 +108,6 @@ const routes = [
     ]
   },
   {
-    path: '/test',
-    name: 'Test',
-    component: MainTest,
-    children: [
-      {
-        path: 'track',
-        name: 'Track',
-        component: TractTest
-      },
-      {
-        path: 'validator',
-        name: 'Validator',
-        component: ValidatorTest
-      }
-    ]
-  },
-  {
     path: '/anonymous-concerns/:id',
     name: 'AnonymousConcerns',
     component: AnonymousConcerns
@@ -137,17 +121,12 @@ const routes = [
     path: '/about',
     name: 'About',
     component: About
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
-  {
-    path: '*',
-    name: '404',
-    component: PageNotFound
   }
 ]
+
+addTestBlockToRoutes(routes)
+
+routes.push({ path: '*', name: '404', component: PageNotFound })
 
 const router = new VueRouter({
   mode: 'history',

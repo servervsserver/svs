@@ -1,0 +1,56 @@
+@use 'sass:map';
+
+/*
+
+Example minimap palette:
+
+$minimal-color-palette: (
+  "primary": #FFFADE,
+  "secondary": #FFBA5E,
+  "tertiary": #F5816B,
+  "back": #333366,
+  "alternative": #FFFFFF
+);
+
+*/
+
+@function map-get($map, $keys...) {
+  @each $key in $keys {
+    $map: map.get($map, $key);
+  }
+  @return $map;
+}
+
+
+@function generateCompletePalette ($minimal-color-palette) {
+  $navbar: (
+    "fg": map.get($minimal-color-palette, "primary"),
+    "bg": map.get($minimal-color-palette, "tertiary"),
+    "active-item": (
+      "bg": map.get($minimal-color-palette, "tertiary")
+    )
+  );
+
+  $footer: (
+    "fg": map.get($minimal-color-palette, "primary"),
+    "bg": map.get($minimal-color-palette, "tertiary")
+  );
+
+  $tooltip: (
+    "fg": map.get($minimal-color-palette, "primary"),
+    "bg": map.get($minimal-color-palette, "tertiary")
+  );
+
+  @return (
+    "fg": map.get($minimal-color-palette, "primary"),
+    "bg": map.get($minimal-color-palette, "back"),
+    "primary": map.get($minimal-color-palette, "primary"),
+    "secondary": map.get($minimal-color-palette, "secondary"),
+    "tertiary": map.get($minimal-color-palette, "tertiary"),
+    "back": map.get($minimal-color-palette, "back"),
+    "alternative": map.get($minimal-color-palette, "alternative"),
+    "navbar": $navbar,
+    "footer": $footer,
+    "tooltip": $tooltip
+  )
+}

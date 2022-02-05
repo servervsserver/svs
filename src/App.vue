@@ -5,7 +5,7 @@
     <div id="top" />
     <div class="app-container">
       <nav
-        class="navbar"
+        class="navbar shadow-depth-1"
         role="navigation"
         aria-label="main navigation"
       >
@@ -164,7 +164,7 @@ export default {
   },
   data () {
     return {
-      theme: 'light-theme',
+      theme: 'dark-theme',
       isActive: false,
       SocMedLinks: [
         {

@@ -22,8 +22,8 @@
 export default {
   data: function () {
     return {
-      theme: 'dark-theme',
-      checked: true
+      theme: 'light-theme',
+      checked: false
     }
   },
   methods: {

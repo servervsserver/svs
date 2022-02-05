@@ -1,6 +1,7 @@
 import TractTest from '../views/test-views/TrackTest.vue'
 import ValidatorTest from '../views/test-views/ValidatorTest.vue'
 import MainTest from '../views/test-views/MainTest.vue'
+import ColorPaletteTest from '../views/test-views/ColorPalette.vue'
 
 const DEV_ROUTES = [
     {
@@ -12,11 +13,15 @@ const DEV_ROUTES = [
       path: 'validator',
       name: 'Validator',
       component: ValidatorTest
+    },
+    {
+      path: 'color-palette',
+      name: 'ColorPaletteTest',
+      component: ColorPaletteTest
     }
 ]
 
 function createTestBlockRouter(path) {
-  console.log(process.env)
   return {
       path: path,
       name: 'Test',
@@ -29,6 +34,5 @@ export function addTestBlockToRoutes(routes, path) {
   if (process.env.NODE_ENV === "development") {
     if (!path) path = "/test"
     routes.push(createTestBlockRouter(path))
-    console.log(routes)
   }
 }

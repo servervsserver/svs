@@ -1,0 +1,38 @@
+@use 'sass:map';
+@use '../theming/palette';
+
+/**
+* App container
+*/
+.app-container {
+
+}
+
+@mixin appcontainer($color-theme) {
+
+  $text-color: palette.map-get($color-theme, "fg");
+  $background-color: palette.map-get($color-theme, "bg");
+
+  .app-container {
+    color: $text-color;
+    background-color: $background-color;
+  }
+
+  .svs-button-transparent {
+    color: $text-color;
+    background-color: transparent;
+    &:hover {
+      color: $text-color;
+      text-shadow: 0 0 2px $text-color;
+    }
+  }
+
+  .svs-fab-button-transparent {
+    color: $text-color;
+    background-color: transparent;
+    &:hover {
+      color: $text-color;
+      text-shadow: 0 0 2px $text-color;
+    }
+  }
+}

@@ -1,0 +1,99 @@
+@use 'sass:map';
+@use '../theming/palette';
+
+/**
+* Navbar styling
+*/
+
+.navbar {
+
+  position: fixed;
+  width: 100%;
+
+  .navbar-brand-image {
+    width: 40px;
+    height: 40px;
+  }
+
+  a {
+    text-decoration: none;
+    font-weight: 400;
+    &:hover {
+      text-decoration: none;
+      font-weight: 400;
+    }
+  }
+
+}
+
+@mixin navbar($color-theme) {
+
+  $text-color: palette.map-get($color-theme, "navbar", "fg");
+  $background-color: palette.map-get($color-theme, "navbar", "bg");
+  $active-menu-hover: palette.map-get($color-theme, "navbar", "active-item", "bg");
+
+  .navbar {
+    background-color: $background-color;
+    color: $text-color;
+
+    .navbar-burger {
+      color: $text-color;
+    }
+
+    .navbar-item {
+      transition: all 0.15s;
+    }
+
+    .navbar-start {
+      .navbar-item {
+        color: inherit;
+      }
+
+      .navbar-item {
+        &:focus {
+          background-color: inherit;
+          color: inherit;
+        }
+        &:hover, &:active {
+          color: $background-color;
+          background-color: $text-color;
+        }
+      }
+    }
+
+    .navbar-brand {
+
+      .navbar-item {
+        background-color: transparent;
+        transform: scale(1);
+      }
+
+      .navbar-item:hover {
+        transform: scale(1.1);
+      }
+
+      @media(max-height: 768px) {
+        & {
+           box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+        }
+      }
+    }
+
+    .navbar-menu.is-active {
+      // background-color: $secondary-color;
+      background-color: transparent;
+      a:active, a:hover, a:focus {
+        color: $background-color;
+        background-color: $text-color;
+        // background-color: $active-menu-hover;
+        // background-color: $tertiary-color;
+      }
+    }
+
+    .button {
+      color: $background-color;
+      background-color: $text-color;
+    }
+
+  }
+}

@@ -25,8 +25,9 @@
 
             <p
               class="description"
-              v-html="description"
-            />
+            >
+              {{ description }}
+            </p>
           </div>
 
           <div class="column is-hidden-desktop">

@@ -118,7 +118,12 @@ const routes = [
     ]
   },
   {
-    path: '/anonymous-concerns',
+    path: '/anonymous-concerns/:id',
+    name: 'AnonymousConcerns',
+    component: AnonymousConcerns
+  },
+  {
+    path: '/anonymous-concerns/',
     name: 'AnonymousConcerns',
     component: AnonymousConcerns
   },

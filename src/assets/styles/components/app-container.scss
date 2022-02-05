@@ -1,3 +1,6 @@
+@use 'sass:map';
+@use '../theming/palette';
+
 /**
 * App container
 */
@@ -5,7 +8,11 @@
 
 }
 
-@mixin appcontainer($text-color, $background-color) {
+@mixin appcontainer($color-theme) {
+
+  $text-color: palette.map-get($color-theme, "fg");
+  $background-color: palette.map-get($color-theme, "bg");
+
   .app-container {
     color: $text-color;
     background-color: $background-color;

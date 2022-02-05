@@ -22,7 +22,6 @@ const DEV_ROUTES = [
 ]
 
 function createTestBlockRouter(path) {
-  console.log(process.env)
   return {
       path: path,
       name: 'Test',
@@ -35,6 +34,5 @@ export function addTestBlockToRoutes(routes, path) {
   if (process.env.NODE_ENV === "development") {
     if (!path) path = "/test"
     routes.push(createTestBlockRouter(path))
-    console.log(routes)
   }
 }

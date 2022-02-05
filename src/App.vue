@@ -5,7 +5,7 @@
     <div id="top" />
     <div class="app-container">
       <nav
-        class="navbar"
+        class="navbar shadow-depth-1"
         role="navigation"
         aria-label="main navigation"
       >

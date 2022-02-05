@@ -3,16 +3,15 @@
 /**
 * Import themes
 */
-@use 'themes/light';
 @use 'themes/dark';
+@use 'themes/light';
 
 /**
 * Apply themes
+* Currently defaults to dark
 */
-html {
-  @include dark.theme();
-}
 
+html,
 .dark-theme {
   @include dark.theme()
 }

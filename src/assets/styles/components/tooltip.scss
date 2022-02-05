@@ -1,8 +1,15 @@
+@use 'sass:map';
+@use '../theming/palette';
+
 /**
 * Tooltip
 */
 
-@mixin tooltip($text-color, $background-color) {
+@mixin tooltip($color-theme) {
+
+  $text-color: palette.map-get($color-theme, "tooltip", "fg");
+  $background-color: palette.map-get($color-theme, "tooltip", "bg");
+
   .tooltip {
     .tooltip-bubble {
       background-color: $background-color;

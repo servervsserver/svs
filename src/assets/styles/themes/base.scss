@@ -1,0 +1,22 @@
+@forward '../theming/palette';
+@use '../components/all' as svs;
+@use '../theming/palette';
+
+@mixin theme($color-theme) {
+
+  @include svs.appcontainer($color-theme);
+  @include svs.navbar($color-theme);
+  @include svs.footer($color-theme);
+  @include svs.tooltip($color-theme);
+
+  .navbar-brand-image {
+    background-image: url("/icons/svs/svs_square_dark_icon.svg");
+  }
+
+  blockquote {
+    ::before {
+      background-color: palette.map-get($color-theme, "fg");
+    }
+  }
+
+}

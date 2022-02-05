@@ -233,9 +233,8 @@
                   class="columns is-vcentered"
                 >
                   <div class="column is-narrow has-text-centered">
-                    {{ index + 1 }}
-                  </div>
-                  <div class="column is-narrow has-text-centered">
+                    <span class="credit-index">{{ index + 1 }}</span>
+                    <!-- &nbsp; -->
                     <button
                       class="button svs-button-transparent" @click="track.removeCreditEntry(ce)"
                     >
@@ -564,5 +563,22 @@ export default {
   top: 0;
   right: 0;
   margin: 10px;
+}
+
+.credit-index {
+  color: inherit;
+  background-color: transparent;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.15s all;
+  border: none;
+  transform: scale(1);
+  padding: calc(0.5em  - 1px) 1em;
+  text-align: center;
+  white-space: nowrap;
+  justify-content: center;
+  vertical-align: baseline;
+  line-height: 2.2em;
 }
 </style>

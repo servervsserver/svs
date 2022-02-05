@@ -20,25 +20,15 @@
           Server application
         </router-link>
       </li>
+      <li>
+        <router-link to="/main-event/ep-upload">
+          EP Upload
+        </router-link>
+      </li>
     </ul>
 
     <h2>List of participants</h2>
     <ul>
-      <li>
-        <router-link to="/server/server-id">
-          A server
-        </router-link>
-      </li>
-      <li>
-        <router-link to="/server/server-id">
-          A server
-        </router-link>
-      </li>
-      <li>
-        <router-link to="/server/server-id">
-          A server
-        </router-link>
-      </li>
       <li>
         <router-link to="/server/server-id">
           A server

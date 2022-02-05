@@ -9,6 +9,7 @@ import About from '../views/About.vue'
 import MainEvent from '../views/main-event/MainEvent.vue'
 import ServerApplication from '../views/main-event/ServerApplication.vue'
 import Rules from '../views/main-event/Rules.vue'
+import EpUpload from "../views/main-event/EpUpload.vue"
 
 import ServerProfile from '../views/server/ServerProfile.vue'
 
@@ -63,6 +64,11 @@ const routes = [
       {
         path: 'rules',
         component: Rules
+      },
+      {
+        path: 'ep-upload',
+        name: 'EpUpload',
+        component: EpUpload
       }
     ]
   },

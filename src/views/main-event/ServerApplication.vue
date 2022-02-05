@@ -3,7 +3,9 @@
     <h1>
       Wanna join the event?
     </h1>
-    <h2>If you are in lead position in your discord, fill this form and we will get back to you!</h2>
+    <p>
+      If you are in lead position in your discord, fill this form and we will get back to you!
+    </p>
 
     <div>
       <div>
@@ -16,7 +18,7 @@
               <label>Name of the Discord server</label>
               <div class="control has-icons-left">
                 <input class="input" type="text" placeholder="My awesome Discord server" v-model="serverName">
-                <span class="icon is-small is-left"><i class="fas fa-discord"></i></span>
+                <span class="icon is-small is-left"><i class="fab fa-discord"></i></span>
               </div>
             </div>
 
@@ -66,7 +68,6 @@
                     <div class="file has-name is-boxed">
                       <label class="file-label">
                         <input
-                          id="serverInput"
                           accept="image/*"
                           class="file-input"
                           type="file"
@@ -271,7 +272,7 @@ export default {
             setDoc(newServerRef, appObj).then(function(data){
               const appRef = ref(rtdb, 'applications/');
               push(appRef,uid);
-            });  
+            });
           });
         });
     }

@@ -10,6 +10,8 @@ import MainEvent from '../views/main-event/MainEvent.vue'
 import ServerApplication from '../views/main-event/ServerApplication.vue'
 import Rules from '../views/main-event/Rules.vue'
 
+import Archive from '../views/Archive.vue'
+
 import ServerProfile from '../views/server/ServerProfile.vue'
 
 import Admin from '../views/admin/Admin.vue'
@@ -37,6 +39,9 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {path: '/archive',
+  component: Archive  
   },
   {
     path: '/vote',

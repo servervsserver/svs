@@ -1,12 +1,26 @@
 <template>
-
-       <div class="buttons">
-                <a v-if="!$auth.isAuthenticated" @click="login" class="button is-dark">
-                  Log in with Discord
-                </a> 
-                <button class="button is-dark" v-if="$auth.isAuthenticated">{{ $auth.user.name }} </button>
-                <button class="button is-dark" v-if="$auth.isAuthenticated" @click="logout">Log out</button>
-              </div>
+  <div class="buttons">
+    <a
+      v-if="!$auth.isAuthenticated"
+      class="button is-dark"
+      @click="login"
+    >
+      Log in with Discord
+    </a> 
+    <button
+      v-if="$auth.isAuthenticated"
+      class="button is-dark"
+    >
+      {{ $auth.user.name }}
+    </button>
+    <button
+      v-if="$auth.isAuthenticated"
+      class="button is-dark"
+      @click="logout"
+    >
+      Log out
+    </button>
+  </div>
 </template>
 
 <script>

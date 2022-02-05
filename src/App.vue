@@ -56,7 +56,7 @@
               <theme-switch @themeChanged="onThemeChanged" />
             </div>
             <div class="navbar-item">
-              <Login/>
+              <Login />
             </div>
           </div>
         </div>

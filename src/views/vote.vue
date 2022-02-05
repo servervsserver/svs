@@ -145,7 +145,6 @@
         </div>
       </div>
     </div>
-
   </div>
 
   <div v-else>

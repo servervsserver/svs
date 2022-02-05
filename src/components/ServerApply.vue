@@ -1,32 +1,49 @@
 <template>
-<div class="">
-  <form>
-    <input type="text" name="name" id="name" placeholder="Server Name" v-model="application.name" />
-    <input type="text" name="invite" id="invite" placeholder="Discord Invite" v-model="application.discord_invite" />
-    <input type="number" name="size" id="size" placeholder="Discord Size" v-model="application.size" />
-    <input
-      type="file"
-      name=""
-      id=""
-      accept="image/png, image/gif, image/jpeg"
-      v-bind:value="application.icon"
-    />
-    <textarea
-      type="text"
-      name="admins"
-      id="admins"
-      placeholder="Admin Discord Tags Comma seperated"
-    ></textarea>
-    <textarea
-      name="desc"
-      id="desc"
-      cols="30"
-      rows="10"
-      placeholder="Server Description"
-    ></textarea>
-  </form>
-  <span> {{ application.icon }}</span>
-
+  <div class="">
+    <form>
+      <input
+        id="name"
+        v-model="application.name"
+        type="text"
+        name="name"
+        placeholder="Server Name"
+      >
+      <input
+        id="invite"
+        v-model="application.discord_invite"
+        type="text"
+        name="invite"
+        placeholder="Discord Invite"
+      >
+      <input
+        id="size"
+        v-model="application.size"
+        type="number"
+        name="size"
+        placeholder="Discord Size"
+      >
+      <input
+        id=""
+        type="file"
+        name=""
+        accept="image/png, image/gif, image/jpeg"
+        :value="application.icon"
+      >
+      <textarea
+        id="admins"
+        type="text"
+        name="admins"
+        placeholder="Admin Discord Tags Comma seperated"
+      />
+      <textarea
+        id="desc"
+        name="desc"
+        cols="30"
+        rows="10"
+        placeholder="Server Description"
+      />
+    </form>
+    <span> {{ application.icon }}</span>
   </div>
 </template>
 

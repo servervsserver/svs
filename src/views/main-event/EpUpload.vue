@@ -138,7 +138,7 @@
                     <div class="file has-name">
                       <label class="file-label">
                         <input
-                          accept="audio/*"
+                          accept=".mp3"
                           class="file-input"
                           type="file"
                           @change="onTrackFileChange($event, track)"

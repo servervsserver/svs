@@ -11,6 +11,8 @@ import ServerApplication from '../views/main-event/ServerApplication.vue'
 import Rules from '../views/main-event/Rules.vue'
 import EpUpload from "../views/main-event/EpUpload.vue"
 
+import Archive from '../views/Archive.vue'
+
 import ServerProfile from '../views/server/ServerProfile.vue'
 
 import Admin from '../views/admin/Admin.vue'
@@ -26,7 +28,11 @@ import ValidatorTest from '../views/test-views/ValidatorTest.vue'
 
 Vue.use(VueRouter)
 
-// TODO: Should be done in an auth plugin
+// TODO: ADD ADMIN CHECK
+/* So You can do this by using meta tags
+  for stuff that needs to be login blocked add a meta : {requiresAuth : true}
+  meta : {isAdmin : true}
+  */
 const isAdmin = false
 
 const routes = [
@@ -34,6 +40,9 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {path: '/archive',
+  component: Archive  
   },
   {
     path: '/vote',
@@ -147,5 +156,23 @@ const router = new VueRouter({
     }
   }
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!auth.loggedIn()) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next() // make sure to always call next()!
+  }
+})
+
 
 export default router

@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <Login />
     <h1>
       Welcome to <span style="color: #FFBA5E"> Server Versus Server</span>
     </h1>
@@ -28,7 +29,15 @@
 </template>
 
 <script>
+// @ is an alias to /src
+import Login from '@/components/Login.vue'
 
+export default {
+  name: 'Home',
+  components: {
+    Login
+  }
+}
 </script>
 
 <style scoped lang='scss'>

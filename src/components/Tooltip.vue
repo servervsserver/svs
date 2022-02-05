@@ -1,18 +1,21 @@
 <template>
-  <div class="tooltip" @click="toggle()">
-
-    <slot></slot>
+  <div
+    class="tooltip"
+    @click="toggle()"
+  >
+    <slot />
 
     <article
       class="tooltip-bubble message shadow-depth-2"
-      :class="[position, modeClass]">
+      :class="[position, modeClass]"
+    >
       <div class="message-body">
-        <slot name="message"></slot>
+        <slot name="message" />
       </div>
-      <div class="anchor-box"><div class="anchor-inner"></div></div>
+      <div class="anchor-box">
+        <div class="anchor-inner" />
+      </div>
     </article>
-
-
   </div>
 </template>
 

@@ -2,15 +2,26 @@
   <section class="container">
     <h1>Validator test</h1>
 
-    <blockquote class="columns" v-for="test in tests" :key="test.name">
-      <div class="column is-three-quarters">{{test.name}}</div>
+    <blockquote
+      v-for="test in tests"
+      :key="test.name"
+      class="columns"
+    >
+      <div class="column is-three-quarters">
+        {{ test.name }}
+      </div>
       <div class="column">
-        <span class="tag is-success" v-if="test.result" >Success</span>
-        <span class="tag is-danger" v-if="!test.result" >Failed</span>
+        <span
+          v-if="test.result"
+          class="tag is-success"
+        >Success</span>
+        <span
+          v-if="!test.result"
+          class="tag is-danger"
+        >Failed</span>
       </div>
     </blockquote>
   </section>
-
 </template>
 
 <script>

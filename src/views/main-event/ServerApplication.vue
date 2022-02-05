@@ -9,16 +9,18 @@
 
     <div>
       <div>
-
         <div class="columns">
-
           <div class="column is-half">
-
             <div class="field">
               <label>Name of the Discord server</label>
               <div class="control has-icons-left">
-                <input class="input" type="text" placeholder="My awesome Discord server" v-model="serverName">
-                <span class="icon is-small is-left"><i class="fab fa-discord"></i></span>
+                <input
+                  v-model="serverName"
+                  class="input"
+                  type="text"
+                  placeholder="My awesome Discord server"
+                >
+                <span class="icon is-small is-left"><i class="fab fa-discord" /></span>
               </div>
             </div>
 
@@ -26,21 +28,24 @@
               <label>Permanent invite link</label>
               <div class="control has-icons-left">
                 <input
+                  v-model="serverInviteLink"
                   class="input"
                   type="text"
                   placeholder="https://discord.gg/my-permanent-link"
-                  v-model="serverInviteLink"
-                  >
-                <span class="icon is-small is-left"><i class="fas fa-link"></i></span>
+                >
+                <span class="icon is-small is-left"><i class="fas fa-link" /></span>
               </div>
               <p
                 v-if="validServerLink || !serverInviteLink"
-                class="help" style="color: transparent">
+                class="help"
+                style="color: transparent"
+              >
                 &nbsp;
               </p>
               <p
                 v-if="!validServerLink && serverInviteLink"
-                class="help is-danger">
+                class="help is-danger"
+              >
                 Your link is invalid
               </p>
             </div>
@@ -49,17 +54,15 @@
               <label>Description</label>
               <div class="control has-icons-left">
                 <textarea
-                  class="textarea"
                   v-model="serverDescription"
-                  placeholder="My Discord is awesome because we have cookies! Loads of cookies!">
-                </textarea>
+                  class="textarea"
+                  placeholder="My Discord is awesome because we have cookies! Loads of cookies!"
+                />
               </div>
             </div>
-
           </div>
 
           <div class="column">
-
             <div class="columns">
               <div class="column">
                 <div class="field ">
@@ -72,17 +75,17 @@
                           class="file-input"
                           type="file"
                           @change="onImageChange"
-                          >
+                        >
                         <span class="file-cta">
                           <span class="file-icon">
-                            <i class="fas fa-upload"></i>
+                            <i class="fas fa-upload" />
                           </span>
                           <span class="file-label">
                             Choose a file…
                           </span>
                         </span>
                         <span class="file-name">
-                          {{serverIconFileName}}
+                          {{ serverIconFileName }}
                         </span>
                       </label>
                     </div>
@@ -90,7 +93,11 @@
                 </div>
               </div>
               <div class="column">
-                <img :src="serverIconUrl" width="140px" height="140px"/>
+                <img
+                  :src="serverIconUrl"
+                  width="140px"
+                  height="140px"
+                >
               </div>
             </div>
 
@@ -98,37 +105,35 @@
 
 
             <div class="field">
-
               <label>
                 Discord tags of people in charge
                 <tooltip
                   :vertical="'top'"
-                  :mode="'hover'">
+                  :mode="'hover'"
+                >
                   <!-- <template v-slot:title>Yep'</template> -->
                   <template v-slot:message>
                     List people we should contact to confirm your server's participation.<br>
                     Until we reach out, do not change your discord tags to ease the process.
                   </template>
                   <span class="icon is-small is-left">
-                    <i class="fas fa-info-circle"></i>
+                    <i class="fas fa-info-circle" />
                   </span>
                 </tooltip>
               </label>
 
               <div class="columns">
-
                 <div class="column is-three-quarters">
                   <div class="control has-icons-left">
                     <input
+                      v-model="userName"
                       class="input"
                       type="text"
                       placeholder="ImTheChief#1234"
-                      v-model="userName"
-                      >
+                    >
                     <span class="icon is-small is-left">
-                      <i class="fas fa-user"></i>
+                      <i class="fas fa-user" />
                     </span>
-
                   </div>
                 </div>
 
@@ -136,55 +141,64 @@
                   <button
                     class="button"
                     :disabled="!canAddUserName"
-                    @click="addUserName()">
+                    @click="addUserName()"
+                  >
                     <span class="icon is-small">
-                      <i class="fas fa-user-plus"></i>
+                      <i class="fas fa-user-plus" />
                     </span>
                   </button>
                 </div>
-
               </div>
               <p
                 v-if="!validUserName && userName"
-                class="help is-danger">Invalid username format.
+                class="help is-danger"
+              >
+                Invalid username format.
                 Perhaps you forgot the hashtag?
               </p>
               <p
                 v-if="alreadyAdded"
-                class="help is-danger">
+                class="help is-danger"
+              >
                 You already proposed this user!
               </p>
             </div>
 
             <div
               class="field is-grouped is-grouped-multiline"
-              >
+            >
               <div
-                class="control"
                 v-for="username in adminNames"
                 :key="username"
-                >
+                class="control"
+              >
                 <div class="tags has-addons">
-                  <span class="tag is-link">{{username}}</span>
-                  <a class="tag is-delete" @click="dropAdmin(username)"></a>
+                  <span class="tag is-link">{{ username }}</span>
+                  <a
+                    class="tag is-delete"
+                    @click="dropAdmin(username)"
+                  />
                 </div>
               </div>
             </div>
-
           </div>
-
         </div>
         <!-- <div class="field">
           <label>Server icon</label>
           <input class="input" type="file" />
         </div> -->
-<!--
+        <!--
         <span>Server Size (number of people in the server)</span>
         <input
           type="number"
           step="1"
         > -->
-        <button class="button" @click="save">Save</button>
+        <button
+          class="button"
+          @click="save"
+        >
+          Save
+        </button>
       </div>
     </div>
   </div>

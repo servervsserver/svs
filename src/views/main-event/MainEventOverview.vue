@@ -1,10 +1,11 @@
 <template>
   <div class="container">
+    <h1>Main event overview</h1>
     <div class="timeline">
 
       <header class="timeline-header">
         <span class="tag is-medium shadow-depth-1">
-          SVS Edition IV
+          SVS IV
         </span>
       </header>
 

@@ -2,7 +2,7 @@
   <div
     :class="[theme]"
   >
-    <CookieBanner />
+    <CookieBanner @cookiePreferenceChange='setCookiePreferences'/>
     <div id="top" />
     <div class="app-container">
       <nav
@@ -224,9 +224,12 @@ export default {
     Login, CookieBanner
   },
   data () {
+    var cookiepreference = this.$cookie.get('cookiepreference')
+    var themecookie = this.$cookie.get('usertheme') == null ? 'dark-theme' : this.$cookie.get('usertheme')
     return {
-      theme: 'dark-theme',
+      theme: themecookie,
       isActive: false,
+      cookiepreferences: cookiepreference,
       SocMedLinks: [
         {
           text: '@servervserver',
@@ -245,10 +248,16 @@ export default {
   methods: {
     onThemeChanged (theme) {
       this.theme = theme
+      if (JSON.parse(this.$data.cookiepreferences).functional == true) {
+        this.$cookie.set('usertheme', theme, {expires : '6M'})
+      }
     },
     deletecookiesettings : function () {
       this.$cookie.delete('cookiepreference');
       this.$router.go()
+    },
+    setCookiePreferences : function (preferenceobject) {
+      this.$data.cookiepreferences = preferenceobject
     }
   }
 }

@@ -3,8 +3,13 @@
     <h1>
       Welcome to <span style="color: #FFBA5E"> Server Versus Server</span>
     </h1>
-    <p>SVS IV will happen the {{ $store.state.nextSvsMainEventTime.toUTCString() }}</p>
-    <event-countdown :time="$store.getters.nextSvsMainEventRemainingTime" />
+    <p>
+      SVS IV - Main event <br/>
+      {{ $store.getters.nextMilestone.name }} -
+      {{ $store.getters.nextMilestone.date | date('dd MONTH yyyy at hour:min', false, true) }}
+    </p>
+
+    <event-countdown :time="$store.getters.nextMilestone.timeRemaining" />
 
     <div
       id="about"

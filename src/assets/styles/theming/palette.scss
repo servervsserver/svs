@@ -33,6 +33,15 @@ $minimal-color-palette: (
     "bg": map.get($minimal-color-palette, "tertiary")
   );
 
+  $timeline: (
+    "fg": map.get($minimal-color-palette, "primary"),
+    "bg": map.get($minimal-color-palette, "back"),
+    "header": (
+      "fg": map.get($minimal-color-palette, "primary"),
+      "bg": map.get($minimal-color-palette, "tertiary"),
+    )
+  );
+
   @return (
     "fg": map.get($minimal-color-palette, "primary"),
     "bg": map.get($minimal-color-palette, "back"),
@@ -43,6 +52,7 @@ $minimal-color-palette: (
     "alternative": map.get($minimal-color-palette, "alternative"),
     "navbar": $navbar,
     "footer": $footer,
-    "tooltip": $tooltip
+    "tooltip": $tooltip,
+    "timeline": $timeline
   )
 }

@@ -1,6 +1,7 @@
 /* Base framework */
 @import '~bulma';
 @import '~bulma-switch';
+@import '~bulma-timeline';
 
 //Import Jost
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
@@ -109,19 +110,6 @@ blockquote {
   padding: 1em 2em;
   // padding-left: 1em;
   margin: 1.6em 0;
-
-  ::before {
-    position: absolute;
-    left: 0;
-    top: 0;
-    min-width: 0.25em;
-    width: 0.25em;
-    height: 100%;
-    background-color: pink;
-    content: '.';
-    color: transparent;
-    opacity: 0.8;
-  }
 
   a {
     color: inherit;

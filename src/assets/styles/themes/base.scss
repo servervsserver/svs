@@ -1,6 +1,7 @@
 @forward '../theming/palette';
 @use '../components/all' as svs;
 @use '../theming/palette';
+@use 'sass:color';
 
 @mixin theme($color-theme) {
 
@@ -9,15 +10,14 @@
   @include svs.footer($color-theme);
   @include svs.tooltip($color-theme);
   @include svs.switch($color-theme);
-  
+  @include svs.timeline($color-theme);
+
   .navbar-brand-image {
     background-image: url("/icons/svs/svs_square_dark_icon.svg");
   }
 
   blockquote {
-    ::before {
-      background-color: palette.map-get($color-theme, "fg");
-    }
+    border-left: 3px color.adjust(palette.map-get($color-theme, "fg"), $alpha: -0.4) solid;
   }
 
 }

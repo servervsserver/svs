@@ -22,6 +22,14 @@ Vue.component('theme-switch', ThemeSwitch)
 Vue.component('bulk-edit', BulkEdit)
 Vue.component('tooltip', Tooltip)
 
+// =================================================
+// Global imports of filters
+// =================================================
+
+import { date } from "./filters/date"
+
+Vue.filter('date', date)
+
 Vue.config.productionTip = false
 
 let domain = process.env.VUE_APP_AUTH0_DOMAIN;

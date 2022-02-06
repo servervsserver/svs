@@ -37,12 +37,49 @@
           :class="{ 'is-active': isActive }"
         >
           <div class="navbar-start">
-            <router-link
+            <!-- <router-link
               class="navbar-item"
               to="/main-event"
             >
               Main event
-            </router-link>
+            </router-link> -->
+
+            <div class="navbar-item has-dropdown is-hoverable">
+              <router-link
+                class="navbar-item"
+                to="/main-event/overview"
+              >
+                Main Event - SvS IV
+              </router-link>
+
+              <div class="navbar-dropdown">
+                <router-link
+                  class="navbar-item"
+                  to="/main-event/overview"
+                >
+                  Overview
+                </router-link>
+                <router-link
+                  class="navbar-item"
+                  to="/main-event/rules"
+                >
+                  Rules
+                </router-link>
+                <router-link
+                  class="navbar-item"
+                  to="/main-event/server-application"
+                >
+                  Server application
+                </router-link>
+                <router-link
+                  class="navbar-item"
+                  to="/main-event/ep-upload"
+                >
+                  EP Submission
+                </router-link>
+              </div>
+            </div>
+
             <router-link
               class="navbar-item"
               to="/#about"
@@ -62,7 +99,7 @@
         </div>
       </nav>
 
-      <div class="router-view">
+      <div id=main-router-view class="router-view">
         <router-view />
       </div>
 
@@ -194,9 +231,9 @@ export default {
 
 @use 'assets/styles/main';
 
-.router-view {
+#main-router-view {
   min-height: 100vh;
-  padding-top: 120px;
+  padding-top: 100px;
   padding-bottom: 60px;
 }
 

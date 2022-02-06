@@ -111,7 +111,6 @@
                   :vertical="'top'"
                   :mode="'hover'"
                 >
-                  <!-- <template v-slot:title>Yep'</template> -->
                   <template v-slot:message>
                     List people we should contact to confirm your server's participation.<br>
                     Until we reach out, do not change your discord tags to ease the process.

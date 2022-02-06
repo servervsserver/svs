@@ -25,22 +25,25 @@
 
 <script>
 const axios = require("axios");
-import { getAuth, onAuthStateChanged, signInWithCustomToken  } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signInWithCustomToken, signOut  } from "firebase/auth";
 import {app} from "@/assets/db.js"
-import { getAnalytics } from "firebase/analytics";
-const analytics = getAnalytics(app);
+const FIREBASE_APP = app;
 
 const auth = getAuth();
 export default {
-  name: "HelloWorld",
+  name: "Login",
   data:function(){return {
     test:""
   }},
   updated : function() {
-    console.log(this.$auth.isAuthenticated);
+    
     if(this.$auth.isAuthenticated){
-        this.fAuth(this.$auth.user.sub.split("|")[2]);
+        let str = this.$auth.user.sub
+        let person = (str.split("|"));
+        console.log(person[2] + "before fauth");
+        this.fAuth(person[2]);
     }
+    
     
   },
   mounted: function () {
@@ -49,8 +52,7 @@ onAuthStateChanged(auth, (user) => {
       const uid = user.uid;
       this.$store.commit("set_uid",uid);
     } else {
-      // User is signed out
-      console.log("NOT LOGGED IN");
+      //this.$store.commit("set_uid",uid);
     }
   });
   },
@@ -61,17 +63,18 @@ onAuthStateChanged(auth, (user) => {
 
     fAuth: function (uid) {
       axios
-        .get("http://ec2-34-215-138-39.us-west-2.compute.amazonaws.com:3000/authenticate", {
+        .get("http://localhost:3000/authenticate", {
           params: { uid: uid },
         })
-        .then(function (response) {
+        .then( (response) => {
     
             let token = response.data;
               signInWithCustomToken(auth,token)
               .then((userCredential) => {
                 // Signed in
                 var user = userCredential.user;
-                this.test = ('USER'+ user.uid);
+                console.log(user.uid);
+                this.$store.commit("set_uid",user.uid);
               })
               .catch((error) => {
                 var errorCode = error.code;
@@ -83,9 +86,15 @@ onAuthStateChanged(auth, (user) => {
     },
 
     logout: function () {
+      signOut(auth).then(() => {
+        this.$store.commit("set_uid",undefined);
       this.$auth.logout({
-        returnTo: "https://localhost:8080",
+        returnTo: "http://localhost:8080",
       });
+
+
+      })
+      
     },
   },
 };
@@ -110,3 +119,6 @@ a {
   color: #42b983;
 }
 </style>
+
+
+// TODO: AUTOROUTE TO PROFILE

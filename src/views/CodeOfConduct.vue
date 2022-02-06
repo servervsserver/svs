@@ -187,7 +187,7 @@
           class="link"
           href="/anonymous-concerns"
         >
-        anonymousform
+          anonymousform
         </a> or contact a member of our Event Moderation or Event Staff team immediately.
       </blockquote>
       <h2>License</h2>

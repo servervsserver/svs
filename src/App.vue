@@ -99,7 +99,10 @@
         </div>
       </nav>
 
-      <div id=main-router-view class="router-view">
+      <div
+        id="main-router-view"
+        class="router-view"
+      >
         <router-view />
       </div>
 

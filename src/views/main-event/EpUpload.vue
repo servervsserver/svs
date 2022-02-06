@@ -215,18 +215,17 @@
                         </span>
                       </tooltip>
                     </label>
-
                   </div>
                   <div class="column is-half is-mobile">
                     <div class="field">
                       <input
-                        v-bind:id="'explicit-track-' + index"
+                        :id="'explicit-track-' + index"
                         v-model="track.explicit"
                         type="checkbox"
                         name="ce-anonymous"
                         class="switch is-rounded"
                       >
-                      <label :for="'explicit-track-' + index"></label>
+                      <label :for="'explicit-track-' + index" />
                     </div>
                   </div>
                 </div>
@@ -254,13 +253,13 @@
                   <div class="column is-half is-mobile">
                     <div class="field">
                       <input
-                        v-bind:id="'lyrics-track-' + index"
+                        :id="'lyrics-track-' + index"
                         v-model="track.hasLyrics"
                         type="checkbox"
                         name="ce-anonymous"
                         class="switch is-rounded"
                       >
-                      <label :for="'lyrics-track-' + index"></label>
+                      <label :for="'lyrics-track-' + index" />
                     </div>
                   </div>
                 </div>
@@ -347,9 +346,9 @@
                     <label>
                       Stay anonymous
                       <tooltip
-                      :vertical="'top'"
-                      :horizontal="'left'"
-                      :mode="'hover'"
+                        :vertical="'top'"
+                        :horizontal="'left'"
+                        :mode="'hover'"
                       >
                         <!-- <template v-slot:title>Yep'</template> -->
                         <template v-slot:message>
@@ -362,14 +361,13 @@
                     </label>
                     <div class="field">
                       <input
-                        v-bind:id="'ce-anonymous-track-' + index + '-ce-' + ceidx"
+                        :id="'ce-anonymous-track-' + index + '-ce-' + ceidx"
                         v-model="ce.anonymous"
                         type="checkbox"
                         name="ce-anonymous"
                         class="switch is-rounded"
                       >
-                      <label :for="'ce-anonymous-track-' + index + '-ce-' + ceidx">
-                      </label>
+                      <label :for="'ce-anonymous-track-' + index + '-ce-' + ceidx" />
                     </div>
                   </div>
                 </div>

@@ -1,0 +1,16 @@
+@use 'sass:map';
+@use '../theming/palette';
+
+@mixin switch($color-theme) {
+
+  $checked-label-color: palette.map-get($color-theme, "tertiary");
+  $handle-color: palette.map-get($color-theme, "bg");
+
+  .switch[type=checkbox]:checked + label::before, .switch[type=checkbox]:checked + label:before {
+    background: $checked-label-color;
+  }
+
+  .switch[type=checkbox] + label::after, .switch[type=checkbox] + label:after {
+    background: $handle-color;
+  }
+}

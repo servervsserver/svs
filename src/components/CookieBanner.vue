@@ -233,7 +233,7 @@ p.infomessage {
     margin-right: auto;
     margin-top: 10vh;
     margin-bottom: 10vh;
-    border-radius: 30px;
+    border-radius: 10px;
     
     div.preferencewrapper {
         display: flex;

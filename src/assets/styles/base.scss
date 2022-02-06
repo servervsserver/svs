@@ -84,6 +84,21 @@ p {
   }
 }
 
+article {
+  ol {
+    list-style: upper-alpha;
+      margin-left: 10px;
+    ol {
+      margin-left: 20px;
+      list-style: decimal;
+      text-align: justify;
+      ol {
+        list-style: lower-alpha;
+      }
+    }
+  }
+}
+
 blockquote {
   // border-left: 0.25em solid #8888;
   font-style: italic;

@@ -4,7 +4,7 @@
     <h2> Past EPs: </h2>
     <Draw
       v-for="(x,index) in PastEPs"
-      :key="x"
+      :key="index"
       :title="index"
     />
   </div>

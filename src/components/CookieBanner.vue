@@ -1,61 +1,83 @@
 <template>
-    <div class="cookie_banner_container" scroll="no">
-        <div class="cookie_banner">
-            <h1>
-                Cookie Consent
-            </h1>
-            <p class="infomessage">
-                This website uses cookies to improve your experience. These cookies are grouped into different categories. For more information on how we use cookies, and to customise your cookie settings, click 'preferences.'
-            </p>
-            <div class="preferencewrapper">
-            <div @click="openclose">
-            Preferences <i
-        v-if="this.$data.isOpen"
-        class="far fa-caret-square-up"
-      /><i
-        v-else
-        class="far fa-caret-square-down"
-      />
-            </div>
-            </div>
-            <div v-if="isOpen" class="cookietable">
-            <tr>
-            <th>
-            <div class="field">
-            <label>Neccesary Cookies - Enabled by Default</label>
-            </div>
-            </th>
-            <th>
-                <a>How we use Neccesary cookies</a>
-            </th>
-            </tr>
-            <tr>
-            <th>
-            <div class="field">
-            <input id='func_cook' type="checkbox" name="switchExample" class="switch is-rtl is-info is-rounded is-outlined" checked="checked">
-            <label for="func_cook">Functional Cookies</label>
-            <p class="help">Disabling may remove some website functionality</p>
-            </div>
-            </th>
-                        <th>
-                <a>How we use Functional cookies</a>
-            </th>
-            </tr>
-            <tr>
-            <th>
-            <div class="field">
-            <input id='anal_cook' type="checkbox" name="switchExample" class="switch is-rtl is-info is-rounded is-outlined" checked="checked">
-            <label for="anal_cook">Analytics Cookies</label>
-            <p class="help">Disabling may remove some website functionality</p>
-            </div>
-            </th>
-                        <th>
-                <a>How we use Analytics cookies</a>
-            </th>
-            </tr>
-            </div>
+  <div
+    class="cookie_banner_container"
+    scroll="no"
+  >
+    <div class="cookie_banner">
+      <p class="title is-3">
+        Cookie Consent
+      </p>
+      <p class="infomessage">
+        This website uses cookies to improve your experience. These cookies are grouped into different categories. For more information on how we use cookies, and to customise your cookie settings, click 'preferences.'
+      </p>
+      <div class="preferencewrapper">
+        <div @click="openclose">
+          Preferences <i
+            v-if="this.$data.isOpen"
+            class="far fa-caret-square-up"
+          /><i
+            v-else
+            class="far fa-caret-square-down"
+          />
         </div>
+      </div>
+      <div
+        v-if="isOpen"
+        class="cookietable"
+      >
+        <tr>
+          <th>
+            <div class="field">
+              <label>Neccesary Cookies - Enabled by Default</label>
+            </div>
+          </th>
+          <th>
+            <a>How we use Neccesary cookies</a>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <div class="field">
+              <input
+                id="func_cook"
+                type="checkbox"
+                name="switchExample"
+                class="switch is-rtl is-info is-rounded is-outlined"
+                checked="checked"
+              >
+              <label for="func_cook">Functional Cookies</label>
+              <p class="help">
+                Disabling may remove some website functionality
+              </p>
+            </div>
+          </th>
+          <th>
+            <a>How we use Functional cookies</a>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <div class="field">
+              <input
+                id="anal_cook"
+                type="checkbox"
+                name="switchExample"
+                class="switch is-rtl is-info is-rounded is-outlined"
+                checked="checked"
+              >
+              <label for="anal_cook">Analytics Cookies</label>
+              <p class="help">
+                Disabling may remove some website functionality
+              </p>
+            </div>
+          </th>
+          <th>
+            <a>How we use Analytics cookies</a>
+          </th>
+        </tr>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -142,6 +164,14 @@ p.infomessage {
 
     }
 
+}
+
+.title {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    top:20px;
+    position: relative;
 }
 
 div.dark-theme {

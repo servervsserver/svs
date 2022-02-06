@@ -4,6 +4,9 @@ import router from './router'
 import store from './store'
 import { Auth0Plugin } from "./auth";
 
+const VueCookie = require('vue-cookie');
+Vue.use(VueCookie);
+
 
 // =================================================
 // Global imports that should be moved locally later

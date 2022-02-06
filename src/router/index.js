@@ -5,6 +5,7 @@ import CodeOfConduct from '../views/CodeOfConduct.vue'
 import Vote from '../views/vote.vue'
 import AnonymousConcerns from "../views/AnonymousConcerns.vue"
 import About from '../views/About.vue'
+import CookiePolicy from '../views/CookiePolicy.vue'
 
 import MainEvent from '../views/main-event/MainEvent.vue'
 import MainEventOverview from "../views/main-event/MainEventOverview.vue"
@@ -42,6 +43,9 @@ const routes = [
     name: 'Home',
     component: Home
   },
+  {path: '/cookie-policy',
+  component: CookiePolicy
+},
   {
     path: '/archive',
     component: Archive

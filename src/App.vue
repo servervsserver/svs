@@ -2,6 +2,7 @@
   <div
     :class="[theme]"
   >
+    <CookieBanner />
     <div id="top" />
     <div class="app-container">
       <nav
@@ -171,7 +172,27 @@
                 </li>
               </ul>
             </div>
+
+            <div class="column">
+              <h4>Cookies</h4>
+              <ul>
+                <li >
+                  <a @click="deletecookiesettings">
+                    Revoke Cookie Consent
+                  </a>
+                </li>
+                <li>
+                  <router-link to="/cookie-policy">
+                    Cookie Policy
+                  </router-link>
+                </li>
+              </ul>
+            </div>
+
           </div>
+          
+
+          
 
           <section class="social-medias columns">
             <div
@@ -197,10 +218,11 @@
 <script>
 // @ is an alias to /src
 import Login from '@/components/Login.vue'
+import CookieBanner from '@/components/CookieBanner.vue'
 
 export default {
   components: {
-    Login
+    Login, CookieBanner
   },
   data () {
     return {
@@ -224,6 +246,10 @@ export default {
   methods: {
     onThemeChanged (theme) {
       this.theme = theme
+    },
+    deletecookiesettings : function () {
+      this.$cookie.delete('cookiepreference');
+      this.$router.go()
     }
   }
 }

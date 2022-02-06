@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="this.$route.path != '/cookie-policy' && this.$data.cookiepreferences == null"
     class="cookie_banner_container"
   >
     <div class="cookie_banner">
@@ -32,7 +33,7 @@
                 </div>
               </td>
               <td>
-                <a>How we use Neccesary cookies</a>
+                <a href="/cookie-policy#strictlyneccesary">How we use Neccesary cookies</a>
               </td>
             </tr>
             <tr>
@@ -40,6 +41,7 @@
                 <div class="field">
                   <input
                     id="func_cook"
+                    v-model="functional"
                     type="checkbox"
                     name="switchExample"
                     class="switch is-rtl is-info is-rounded is-outlined"
@@ -52,7 +54,7 @@
                 </div>
               </td>
               <td>
-                <a>How we use Functional cookies</a>
+                <a href="/cookie-policy#functional">How we use Functional cookies</a>
               </td>
             </tr>
             <tr>
@@ -60,6 +62,7 @@
                 <div class="field">
                   <input
                     id="anal_cook"
+                    v-model="analytical"
                     type="checkbox"
                     name="switchExample"
                     class="switch is-rtl is-info is-rounded is-outlined"
@@ -72,21 +75,51 @@
                 </div>
               </td>
               <td>
-                <a>How we use Analytics cookies</a>
+                <a href="/cookie-policy#analytical">How we use Analytics cookies</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="field">
+                  <input
+                    id="third_cook"
+                    v-model="thirdparty"
+                    type="checkbox"
+                    name="switchExample"
+                    class="switch is-rtl is-info is-rounded is-outlined"
+                    checked="checked"
+                  >
+                  <label for="third_cook">Third Party Cookies</label>
+                  <p class="help">
+                    Disabling may remove some website functionality
+                  </p>
+                </div>
+              </td>
+              <td>
+                <a href="/cookie-policy#thirdparty">How we use Third party cookies</a>
               </td>
             </tr>
           </table>
           <div class="buttons_wrapper">
-            <button class="button is-info">
+            <button
+              class="button is-info"
+              @click="customsubmit"
+            >
               Accept Custom
             </button>
           </div>
         </div>
         <div class="buttons_wrapper">
-          <button class="button">
+          <button
+            class="button"
+            @click="submit(false,false,false)"
+          >
             Reject All
           </button>
-          <button class="button is-info">
+          <button
+            class="button is-info"
+            @click="submit(true,true,true)"
+          >
             Accept All
           </button>
         </div>
@@ -101,12 +134,27 @@ export default {
 
     data () {
         return {
-            isOpen : false
+            isOpen : false,
+            cookiepreferences : this.$cookie.get('cookiepreference'),
+            functional : true,
+            analytical : true,
+            thirdparty : true
         }
+    },
+    mounted () {
+        console.log(this.$cookie.get('cookiepreference'))
     },
     methods : {
         openclose : function () {
             this.$data.isOpen = !(this.$data.isOpen)
+        },
+        submit : function (functional, analytical, thirdparty) {
+            let preferenceobject = JSON.stringify({'functional' : functional, 'analytical' : analytical, 'thirdparty' : thirdparty})
+            this.$cookie.set('cookiepreference',preferenceobject,{ expires: '1Y' })
+            this.$data.cookiepreferences = preferenceobject
+        },
+        customsubmit : function () {
+            this.submit(this.$data.functional,this.$data.analytical,this.$data.thirdparty)
         }
     }
 
@@ -171,6 +219,8 @@ p.infomessage {
     top: 0;
     z-index: 200;
     background: rgba(255, 255, 255, 0.165);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .cookie_banner {

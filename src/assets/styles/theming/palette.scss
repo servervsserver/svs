@@ -1,5 +1,5 @@
+@forward "util";
 @use 'sass:map';
-
 /*
 
 Example minimap palette:
@@ -13,14 +13,6 @@ $minimal-color-palette: (
 );
 
 */
-
-@function map-get($map, $keys...) {
-  @each $key in $keys {
-    $map: map.get($map, $key);
-  }
-  @return $map;
-}
-
 
 @function generateCompletePalette ($minimal-color-palette) {
   $navbar: (

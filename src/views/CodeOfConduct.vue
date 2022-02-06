@@ -51,8 +51,8 @@
           A welcome message with a link to this CC and the contact information for making an incident report:
           <a
             class="link"
-            href="https://svs-website.vercel.app/concerns"
-          >https://svs-website.vercel.app/concerns</a>
+            href="/anonymous-concerns"
+          >anonymous concerns form</a>
         </li>
       </ul>
       <h3>Additional spaces</h3>
@@ -182,11 +182,13 @@
       </ul>
 
       <blockquote>
-        If you believe that someone is violating the CC, or have any other concerns, please either use this <a
+        If you believe that someone is violating the CC, or have any other concerns, please either use this
+        <a
           class="link"
-          href="https://svs-website.vercel.app/concerns"
-        >anonymous
-          form</a> or contact a member of our Event Moderation or Event Staff team immediately.
+          href="/anonymous-concerns"
+        >
+          anonymousform
+        </a> or contact a member of our Event Moderation or Event Staff team immediately.
       </blockquote>
       <h2>License</h2>
       <blockquote>

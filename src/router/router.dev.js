@@ -3,6 +3,7 @@ import ValidatorTest from '../views/test-views/ValidatorTest.vue'
 import MainTest from '../views/test-views/MainTest.vue'
 import ColorPaletteTest from '../views/test-views/ColorPalette.vue'
 import ProfileTest from '../views/test-views/ProfileTest.vue'
+import CookieBanner from '../components/CookieBanner.vue'
 
 const DEV_ROUTES = [
     {
@@ -24,7 +25,10 @@ const DEV_ROUTES = [
       path: 'color-palette',
       name: 'ColorPaletteTest',
       component: ColorPaletteTest
-    }
+    },
+    {path: 'cookie-banner',
+    component: CookieBanner
+  }
 ]
 
 function createTestBlockRouter(path) {

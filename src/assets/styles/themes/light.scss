@@ -20,6 +20,9 @@ $color-theme: palette.generateCompletePalette(
 
 @mixin theme() {
   @include base.theme($color-theme);
+  .gradient-bg {
+    background: url("/backgrounds/bg_light.png") fixed;
+  }
 }
 
 

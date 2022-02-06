@@ -1,7 +1,7 @@
 <template>
   <div class="container ep-upload">
     <h1>
-      Upload your EP
+      Submit your EP
     </h1>
     <p>
       You are happy with what your server has produced and think it's ready to submit?<br>
@@ -90,7 +90,7 @@
           <section
             v-for="(track, index) in tracks"
             :key="track.vueId"
-            class="column is-full track-section shadow-depth-2"
+            class="column is-full track-section shadow-depth-2 gradient-bg"
           >
             <button
               class="button svs-button-transparent delete-track-button"
@@ -115,7 +115,7 @@
                       v-model="track.name"
                       class="input"
                       type="text"
-                      placeholder="My awesome Discord server"
+                      :placeholder="'My awesome track n°' + (index + 1)"
                     >
                     <span class="icon is-small is-left"><i class="fas fa-play" /></span>
                   </div>
@@ -197,16 +197,35 @@
                 <div class="columns is-vcentered">
                   <!-- Parental Advisory -->
                   <div class="column is-half is-mobile has-text-right">
-                    <label>Explicit?</label>
+                    <label>
+                      Explicit?
+                      <tooltip
+                        :vertical="'top'"
+                        :mode="'hover'"
+                      >
+                        <!-- <template v-slot:title>Yep'</template> -->
+                        <template v-slot:message>
+                          It is explicit if your lyrics contains words or expressions that could fall under the
+                          <strong>Parental&nbsp;Advisory&nbsp;Label&nbsp;</strong>
+                          <em>(PAL)</em><br>
+                          (Violence, sexe, drugs,...)
+                        </template>
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-info-circle" />
+                        </span>
+                      </tooltip>
+                    </label>
                   </div>
                   <div class="column is-half is-mobile">
                     <div class="field">
-                      <label class="checkbox">
-                        <input
-                          v-model="track.explicit"
-                          type="checkbox"
-                        >
-                      </label>
+                      <input
+                        :id="'explicit-track-' + index"
+                        v-model="track.explicit"
+                        type="checkbox"
+                        name="ce-anonymous"
+                        class="switch is-rounded"
+                      >
+                      <label :for="'explicit-track-' + index" />
                     </div>
                   </div>
                 </div>
@@ -214,17 +233,33 @@
                 <div class="columns is-vcentered">
                   <!-- Instrumental or vocal -->
                   <div class="column is-half is-mobile has-text-right">
-                    <label>Has vocals?</label>
+                    <label>
+                      Has vocals?
+                    </label>
+                    <tooltip
+                      :vertical="'top'"
+                      :mode="'hover'"
+                    >
+                      <!-- <template v-slot:title>Yep'</template> -->
+                      <template v-slot:message>
+                        If your track has a vocal performance, toggle this on. <br>
+                        Beatboxing is considered an instrument.
+                      </template>
+                      <span class="icon is-small is-left">
+                        <i class="fas fa-info-circle" />
+                      </span>
+                    </tooltip>
                   </div>
                   <div class="column is-half is-mobile">
                     <div class="field">
-                      <label class="checkbox">
-                        <input
-                          v-model="track.hasLyrics"
-                          type="checkbox"
-                        >
-
-                      </label>
+                      <input
+                        :id="'lyrics-track-' + index"
+                        v-model="track.hasLyrics"
+                        type="checkbox"
+                        name="ce-anonymous"
+                        class="switch is-rounded"
+                      >
+                      <label :for="'lyrics-track-' + index" />
                     </div>
                   </div>
                 </div>
@@ -303,26 +338,36 @@
                         <span class="icon is-small is-left">
                           <i class="fas fa-user-tag" />
                         </span>
-                        <!-- <textarea
-                          v-model="ce.description"
-                          class="textarea"
-                          rows="2"
-                          placeholder="Mix, mastering, bass"
-                          >
-                        </textarea> -->
                       </div>
                     </div>
                   </div>
                   <!-- Anonymous -->
-                  <div class="column is-vcentered">
+                  <div class="column">
+                    <label>
+                      Stay anonymous
+                      <tooltip
+                        :vertical="'top'"
+                        :horizontal="'left'"
+                        :mode="'hover'"
+                      >
+                        <!-- <template v-slot:title>Yep'</template> -->
+                        <template v-slot:message>
+                          If this person doesn't want to appear in the credits.
+                        </template>
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-info-circle" />
+                        </span>
+                      </tooltip>
+                    </label>
                     <div class="field">
-                      <label class="checkbox">
-                        Stay anonymous
-                        <input
-                          v-model="ce.anonymous"
-                          type="checkbox"
-                        >
-                      </label>
+                      <input
+                        :id="'ce-anonymous-track-' + index + '-ce-' + ceidx"
+                        v-model="ce.anonymous"
+                        type="checkbox"
+                        name="ce-anonymous"
+                        class="switch is-rounded"
+                      >
+                      <label :for="'ce-anonymous-track-' + index + '-ce-' + ceidx" />
                     </div>
                   </div>
                 </div>

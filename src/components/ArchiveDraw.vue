@@ -13,7 +13,10 @@
         class="far fa-caret-square-down"
       />
     </h1>
-    <div class="draw_content">
+    <div
+      class="draw_content"
+      onclick="event.stopPropagation();"
+    >
       <slot />
     </div>
   </div>

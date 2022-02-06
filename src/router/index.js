@@ -5,10 +5,12 @@ import CodeOfConduct from '../views/CodeOfConduct.vue'
 import Vote from '../views/vote.vue'
 import AnonymousConcerns from "../views/AnonymousConcerns.vue"
 import About from '../views/About.vue'
+import CookiePolicy from '../views/CookiePolicy.vue'
 
 import MainEvent from '../views/main-event/MainEvent.vue'
-import ServerApplication from '../views/main-event/ServerApplication.vue'
+import MainEventOverview from "../views/main-event/MainEventOverview.vue"
 import Rules from '../views/main-event/Rules.vue'
+import ServerApplication from '../views/main-event/ServerApplication.vue'
 import EpUpload from "../views/main-event/EpUpload.vue"
 
 import Archive from '../views/Archive.vue'
@@ -41,6 +43,9 @@ const routes = [
     name: 'Home',
     component: Home
   },
+  {path: '/cookie-policy',
+  component: CookiePolicy
+},
   {
     path: '/archive',
     component: Archive
@@ -67,6 +72,11 @@ const routes = [
     name: 'MainEvent',
     component: MainEvent,
     children: [
+      {
+        path: 'overview',
+        name: 'MainEventOverview',
+        component: MainEventOverview
+      },
       {
         path: 'server-application',
         component: ServerApplication
@@ -108,15 +118,15 @@ const routes = [
     ]
   },
   {
-    path: '/anonymous-concerns/:id',
+    path: '/anonymous-concerns/:id?',
     name: 'AnonymousConcerns',
     component: AnonymousConcerns
   },
-  {
-    path: '/anonymous-concerns/',
-    name: 'AnonymousConcerns',
-    component: AnonymousConcerns
-  },
+  // {
+  //   path: '/anonymous-concerns/',
+  //   name: 'AnonymousConcerns',
+  //   component: AnonymousConcerns
+  // },
   {
     path: '/about',
     name: 'About',

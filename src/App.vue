@@ -2,6 +2,7 @@
   <div
     :class="[theme]"
   >
+    <CookieBanner />
     <div id="top" />
     <div class="app-container">
       <nav
@@ -37,12 +38,49 @@
           :class="{ 'is-active': isActive }"
         >
           <div class="navbar-start">
-            <router-link
+            <!-- <router-link
               class="navbar-item"
               to="/main-event"
             >
               Main event
-            </router-link>
+            </router-link> -->
+
+            <div class="navbar-item has-dropdown is-hoverable">
+              <router-link
+                class="navbar-item"
+                to="/main-event/overview"
+              >
+                Main Event - SvS IV
+              </router-link>
+
+              <div class="navbar-dropdown">
+                <router-link
+                  class="navbar-item"
+                  to="/main-event/overview"
+                >
+                  Overview
+                </router-link>
+                <router-link
+                  class="navbar-item"
+                  to="/main-event/rules"
+                >
+                  Rules
+                </router-link>
+                <router-link
+                  class="navbar-item"
+                  to="/main-event/server-application"
+                >
+                  Server application
+                </router-link>
+                <router-link
+                  class="navbar-item"
+                  to="/main-event/ep-upload"
+                >
+                  EP Submission
+                </router-link>
+              </div>
+            </div>
+
             <router-link
               class="navbar-item"
               to="/#about"
@@ -62,7 +100,10 @@
         </div>
       </nav>
 
-      <div class="router-view">
+      <div
+        id="main-router-view"
+        class="router-view"
+      >
         <router-view />
       </div>
 
@@ -131,7 +172,27 @@
                 </li>
               </ul>
             </div>
+
+            <div class="column">
+              <h4>Cookies</h4>
+              <ul>
+                <li >
+                  <a @click="deletecookiesettings">
+                    Revoke Cookie Consent
+                  </a>
+                </li>
+                <li>
+                  <router-link to="/cookie-policy">
+                    Cookie Policy
+                  </router-link>
+                </li>
+              </ul>
+            </div>
+
           </div>
+          
+
+          
 
           <section class="social-medias columns">
             <div
@@ -157,10 +218,11 @@
 <script>
 // @ is an alias to /src
 import Login from '@/components/Login.vue'
+import CookieBanner from '@/components/CookieBanner.vue'
 
 export default {
   components: {
-    Login
+    Login, CookieBanner
   },
   data () {
     return {
@@ -184,6 +246,10 @@ export default {
   methods: {
     onThemeChanged (theme) {
       this.theme = theme
+    },
+    deletecookiesettings : function () {
+      this.$cookie.delete('cookiepreference');
+      this.$router.go()
     }
   }
 }
@@ -194,9 +260,9 @@ export default {
 
 @use 'assets/styles/main';
 
-.router-view {
+#main-router-view {
   min-height: 100vh;
-  padding-top: 120px;
+  padding-top: 100px;
   padding-bottom: 60px;
 }
 

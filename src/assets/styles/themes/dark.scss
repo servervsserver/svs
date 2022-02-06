@@ -14,6 +14,9 @@ $color-theme: palette.generateCompletePalette(
 
 @mixin theme() {
   @include base.theme($color-theme);
+  .gradient-bg {
+    background: url("/backgrounds/bg_dark.png") fixed;
+  }
 }
 
 // $light-primary-color: #FFFADE;

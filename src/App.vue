@@ -176,7 +176,7 @@
             <div class="column">
               <h4>Cookies</h4>
               <ul>
-                <li >
+                <li>
                   <a @click="deletecookiesettings">
                     Revoke Cookie Consent
                   </a>
@@ -188,7 +188,6 @@
                 </li>
               </ul>
             </div>
-
           </div>
           
 

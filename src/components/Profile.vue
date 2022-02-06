@@ -1,16 +1,20 @@
 <template>
-    
-<div>
-<img :src="profile.avatar" alt="" class="image">
-{{$store._uid}}
+  <div>
+    <img
+      :src="profile.avatar"
+      alt=""
+      class="image"
+    >
+    {{ $store._uid }}
 
-{{profile.avatar}}
+    {{ profile.avatar }}
 
-<button class="button">    <span class="icon">
-      <i class="fas fa-sync"></i>
-    </span> <span> Re-sync Profile</span></button>
-</div>
-
+    <button class="button">
+      <span class="icon">
+        <i class="fas fa-sync" />
+      </span> <span> Re-sync Profile</span>
+    </button>
+  </div>
 </template>
 
 

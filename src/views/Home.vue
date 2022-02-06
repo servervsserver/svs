@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-
     <h1>
       Welcome to <span style="color: #FFBA5E"> Server Versus Server</span>
     </h1>

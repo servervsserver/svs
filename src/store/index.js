@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     nextSvsMainEventTime: new Date(2022, 1, 28, 2, 3, 4),
-    _uid:""
+    _uid:undefined,
+    profile:undefined
   },
   getters: {
     nextSvsMainEventRemainingTime: state => {
@@ -16,6 +17,10 @@ export default new Vuex.Store({
   mutations: {
     set_uid(state,uid){
       state._uid = uid;
+    },
+    set_profile(state,data){
+      console.log("set_data");
+      state.profile = data;
     }
   },
   actions: {
@@ -23,3 +28,12 @@ export default new Vuex.Store({
   modules: {
   }
 })
+
+
+
+
+
+
+
+
+//TODO: https://dev.to/nickitax/persistent-store-with-vuejs-vuex-and-vuex-persisted-state-354n

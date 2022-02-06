@@ -56,7 +56,7 @@ export default {
     min-height: 120px;
     transition: 0.5s;
     background-color: inherit;
-    border-radius: 20px;
+    border-radius: 5px;
     cursor: pointer;
 
     .draw_content {

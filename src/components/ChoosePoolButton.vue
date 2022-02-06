@@ -30,7 +30,7 @@ export default ({
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.094);
     width: 80%;
     margin: auto;
-    border-radius: 20px;
+    border-radius: 10px;
     margin-bottom: 30px;
     height: 50px;
     align-items: center;

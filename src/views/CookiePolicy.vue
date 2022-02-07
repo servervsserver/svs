@@ -100,6 +100,17 @@
             Purpose:
           </th>
         </tr>
+        <tr>
+          <td>
+            usertheme
+          </td>
+          <td>
+            6 Months
+          </td>
+          <td>
+            Stores the users preferred application theme
+          </td>
+        </tr>
       </table>
     </ul>
     <h2 id="analytical">

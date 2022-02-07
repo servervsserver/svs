@@ -152,6 +152,7 @@ export default {
             let preferenceobject = JSON.stringify({'functional' : functional, 'analytical' : analytical, 'thirdparty' : thirdparty})
             this.$cookie.set('cookiepreference',preferenceobject,{ expires: '1Y' })
             this.$data.cookiepreferences = preferenceobject
+            this.$emit('cookiePreferenceChange',preferenceobject)
         },
         customsubmit : function () {
             this.submit(this.$data.functional,this.$data.analytical,this.$data.thirdparty)

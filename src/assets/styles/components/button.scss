@@ -1,0 +1,61 @@
+@use 'sass:map';
+@use '../theming/palette';
+@use 'sass:color';
+
+/**
+* Buttons styling
+*/
+
+
+@mixin button($color-theme) {
+
+  $text-color: palette.map-get($color-theme, "button", "fg");
+  $background-color: palette.map-get($color-theme, "button", "bg");
+
+  .button {
+    background-color: $background-color;
+    color: $text-color;
+  }
+
+  .tag {
+    background-color: $background-color;
+    color: $text-color;
+    font-size: 0.95em;
+  }
+
+  .tag.is-delete {
+    background: color.adjust($background-color, $lightness: -5%);
+    &:hover {
+      background: color.adjust($background-color, $lightness: -15%);;
+    }
+  }
+
+  /*
+  * In the mixin so they don't get overriden by the mixin
+  */
+
+  .svs-button-transparent {
+    color: inherit;
+    background-color: transparent;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.15s all;
+    border: none;
+    transform: scale(1);
+  }
+
+  .svs-fab-button-transparent {
+    color: inherit;
+    background-color: transparent;
+    outline: none;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.15s all;
+    border: none;
+
+  }
+
+}

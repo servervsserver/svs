@@ -1,5 +1,5 @@
 <template>
-    
+
 <div>
 <img :src="profile.icon" alt="" class="image">
 

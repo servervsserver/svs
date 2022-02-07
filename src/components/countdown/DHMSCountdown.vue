@@ -1,6 +1,5 @@
 <template>
   <div class="container dhms-countdown">
-    <h1>SVS IV</h1>
     <div>
       <ul>
         <li><span id="days">{{ days }}</span>days</li>

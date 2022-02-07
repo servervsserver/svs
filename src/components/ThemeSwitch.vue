@@ -21,9 +21,11 @@
 <script>
 export default {
   data: function () {
+    var theme = this.$cookie.get('usertheme') == null ? 'dark-theme' : this.$cookie.get('usertheme')
+    var checked = theme == 'light-theme' ? true : false
     return {
-      theme: 'light-theme',
-      checked: false
+      theme: theme,
+      checked: checked
     }
   },
   methods: {

@@ -2,7 +2,7 @@
   <div
     :class="[theme]"
   >
-    <CookieBanner />
+    <CookieBanner @cookiePreferenceChange="setCookiePreferences" />
     <div id="top" />
     <div class="app-container">
       <nav
@@ -45,7 +45,10 @@
               Main event
             </router-link> -->
 
-            <div class="navbar-item has-dropdown is-hoverable">
+            <div
+              :key="$route.fullPath"
+              class="navbar-item has-dropdown is-hoverable"
+            >
               <router-link
                 class="navbar-item"
                 to="/main-event/overview"
@@ -176,7 +179,7 @@
             <div class="column">
               <h4>Cookies</h4>
               <ul>
-                <li >
+                <li>
                   <a @click="deletecookiesettings">
                     Revoke Cookie Consent
                   </a>
@@ -188,24 +191,23 @@
                 </li>
               </ul>
             </div>
-
           </div>
-          
 
-          
+
+
 
           <section class="social-medias columns">
             <div
-              v-for="x in SocMedLinks"
-              :key="x.href"
+              v-for="sml in socialMediaLinks"
+              :key="sml.link"
               class="column"
             >
-              <a :href="x.href">
-                <img
-                  :src="x.icon"
-                  height="32"
-                  width="32"
-                > {{ x.text }}
+              <a :href="sml.link">
+                <i
+                  :class="sml.iconClass"
+                  style="font-size: 1.5em;"
+                /><br>
+                <span style="whitespace: nowrap;">{{ sml.text }}</span>
               </a>
             </div>
           </section>
@@ -225,31 +227,67 @@ export default {
     Login, CookieBanner
   },
   data () {
+    var cookiepreference = this.$cookie.get('cookiepreference')
+    var themecookie = this.$cookie.get('usertheme') == null ? 'dark-theme' : this.$cookie.get('usertheme')
     return {
-      theme: 'dark-theme',
+      theme: themecookie,
       isActive: false,
-      SocMedLinks: [
+      cookiepreferences: cookiepreference,
+      socialMediaLinks: [
         {
-          text: '@servervserver',
-          icon: '/icons/twitter/16x16_black.svg',
-          href: 'https://twitter.com/servervsserver?ref_src=twsrc%5Etfw'
+          text: 'Discord server',
+          iconClass: "fab fa-discord",
+          link: 'https://discord.com/invite/8wsGFwxT5S'
         },
         {
           text: 'servervserver',
-          icon: '/icons/twitch/16x16_black.svg',
-          href: 'https://www.twitch.tv/servervsserver"'
+          iconClass: "fab fa-twitch",
+          link: 'https://www.twitch.tv/servervsserver'
+        },
+        {
+          text: '@servervsserver_',
+          iconClass: "fab fa-instagram",
+          link: 'https://www.instagram.com/servervsserver_/'
+        },
+        {
+          text: '@servervserver_',
+          iconClass: "fab fa-tiktok",
+          link: 'https://www.tiktok.com/@servervsserver_'
+        },
+        {
+          text: '@servervserver_',
+          iconClass: "fab fa-twitter",
+          link: 'https://twitter.com/servervsserver?ref_src=twsrc%5Etfw'
+        },
+        {
+          text: 'servervsserver',
+          iconClass: "fab fa-reddit",
+          link: 'https://www.reddit.com/r/servervsserver/'
+        },
+        {
+          text: 'SvS VODs',
+          iconClass: "fab fa-youtube",
+          link: 'https://www.youtube.com/channel/UCZuoaVtW6W0Eck9_OnB5F3Q'
         }
-
       ]
     }
+  },
+  mounted () {
+    console.log(this.$route)
   },
   methods: {
     onThemeChanged (theme) {
       this.theme = theme
+      if (JSON.parse(this.$data.cookiepreferences).functional == true) {
+        this.$cookie.set('usertheme', theme, {expires : '6M'})
+      }
     },
     deletecookiesettings : function () {
       this.$cookie.delete('cookiepreference');
       this.$router.go()
+    },
+    setCookiePreferences : function (preferenceobject) {
+      this.$data.cookiepreferences = preferenceobject
     }
   }
 }

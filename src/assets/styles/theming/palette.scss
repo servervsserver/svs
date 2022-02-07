@@ -42,6 +42,11 @@ $minimal-color-palette: (
     )
   );
 
+  $button: (
+    "fg": map.get($minimal-color-palette, "primary"),
+    "bg": map.get($minimal-color-palette, "tertiary")
+  );
+
   @return (
     "fg": map.get($minimal-color-palette, "primary"),
     "bg": map.get($minimal-color-palette, "back"),
@@ -53,6 +58,7 @@ $minimal-color-palette: (
     "navbar": $navbar,
     "footer": $footer,
     "tooltip": $tooltip,
-    "timeline": $timeline
+    "timeline": $timeline,
+    "button": $button
   )
 }

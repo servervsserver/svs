@@ -11,6 +11,7 @@
   @include svs.tooltip($color-theme);
   @include svs.switch($color-theme);
   @include svs.timeline($color-theme);
+  @include svs.button($color-theme);
 
   .navbar-brand-image {
     background-image: url("/icons/svs/svs_square_dark_icon.svg");

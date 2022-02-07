@@ -2,7 +2,6 @@
   <div class="container">
     <h1>Main event overview</h1>
     <div class="timeline">
-
       <header class="timeline-header">
         <span class="tag is-medium shadow-depth-1">
           SVS IV
@@ -11,17 +10,21 @@
 
       <div
         v-for="milestone in $store.state.svsMainEventInformations.milestones"
-        v-bind:key="milestone.name"
+        :key="milestone.name"
         class="timeline-item"
       >
         <div class="timeline-marker is-icon">
-          <i class="fas fa-bullseye"></i>
+          <i class="fas fa-bullseye" />
         </div>
         <div class="timeline-content">
           <!-- <h2 class="supheading">{{ milestone.date | date('dd MONTH yyyy') }} </h2> -->
-          <h1 class="heading">{{ milestone.name }}</h1>
-          <h2 class="subheading">{{ milestone.date | date('dd MONTH yyyy') }} </h2>
-          <p>{{milestone.description}}</p>
+          <h1 class="heading">
+            {{ milestone.name }}
+          </h1>
+          <h2 class="subheading">
+            {{ milestone.date | date('dd MONTH yyyy') }}
+          </h2>
+          <p>{{ milestone.description }}</p>
         </div>
       </div>
 

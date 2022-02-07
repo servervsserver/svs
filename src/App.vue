@@ -2,7 +2,7 @@
   <div
     :class="[theme]"
   >
-    <CookieBanner @cookiePreferenceChange='setCookiePreferences'/>
+    <CookieBanner @cookiePreferenceChange="setCookiePreferences" />
     <div id="top" />
     <div class="app-container">
       <nav
@@ -203,7 +203,10 @@
               class="column"
             >
               <a :href="sml.link">
-                <i :class="sml.iconClass" style="font-size: 1.5em;"></i><br/>
+                <i
+                  :class="sml.iconClass"
+                  style="font-size: 1.5em;"
+                /><br>
                 <span style="whitespace: nowrap;">{{ sml.text }}</span>
               </a>
             </div>

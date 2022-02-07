@@ -101,15 +101,15 @@
           </th>
         </tr>
         <tr>
-            <td>
-                usertheme
-            </td>
-            <td>
-                6 Months
-            </td>
-            <td>
-                Stores the users preferred application theme
-            </td>
+          <td>
+            usertheme
+          </td>
+          <td>
+            6 Months
+          </td>
+          <td>
+            Stores the users preferred application theme
+          </td>
         </tr>
       </table>
     </ul>

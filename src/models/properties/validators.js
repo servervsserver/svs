@@ -34,6 +34,7 @@ export class Validators {
 
   /**
   * Checks if the value is greater or equal than min
+  * {number} min : minimum value
   */
   static min (min) {
     return (value) => {
@@ -43,10 +44,47 @@ export class Validators {
 
   /**
   * Checks if the value is lower or equal than max
+  * {number} max : maximum value
   */
   static max (max) {
     return (value) => {
       return value <= max
+    }
+  }
+
+  /**
+  * Checks if the number of elements in the array is above min
+  * {number} min : minimum count
+  */
+  static minCount (min) {
+    return (value) => {
+      if (!value) return false
+      if (!(value instanceof Array)) return false
+      return value.length >= min
+    }
+  }
+
+  /**
+  * Checks if the char count is equal or greater than min
+  * {number} min : minimum amount of chars
+  */
+  static minCharCount(min) {
+    return (value) => {
+      if (min == 0) return true
+      if (typeof value !== "string") return false
+      return value.length >= min
+    }
+  }
+
+  /**
+  * Checks if the char count is equal of lower than max
+  * {number} max : maximum amount of chars
+  */
+  static maxCharCount(max) {
+    return (value) => {
+      if (max === 0) return false
+      if (typeof value !== "string") return false
+      return value.length <= max
     }
   }
 
@@ -84,7 +122,7 @@ export class Validators {
   }
 
   static get discordInviteLink() {
-    return Validators.pattern(/^(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]$/)
+    return Validators.pattern(/^(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|com)|discordapp\.com\/invite)\/.+[a-zA-Z0-9]$/)
   }
 }
 

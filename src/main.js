@@ -16,11 +16,13 @@ import EventCountdown from './components/countdown/DHMSCountdown.vue'
 import ThemeSwitch from './components/ThemeSwitch.vue'
 import BulkEdit from './components/layout/BulkEdit.vue'
 import Tooltip from './components/Tooltip.vue'
+import SquaredImageContainer from './components/SquaredImageContainer.vue'
 
 Vue.component('event-countdown', EventCountdown)
 Vue.component('theme-switch', ThemeSwitch)
 Vue.component('bulk-edit', BulkEdit)
 Vue.component('tooltip', Tooltip)
+Vue.component('squared-image-box', SquaredImageContainer)
 
 // =================================================
 // Global imports of filters

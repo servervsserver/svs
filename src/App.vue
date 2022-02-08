@@ -47,7 +47,7 @@
                 class="navbar-item"
                 to="/main-event/overview"
               >
-                Main Event - SvS IV
+                Main&nbsp;Event -&nbsp;<brand-name-short/>&nbsp;IV
               </router-link>
 
               <div class="navbar-dropdown">

@@ -6,7 +6,7 @@
       </h1>
       <h2>Our Community</h2>
       <p>
-        It is important to us that Server vs Server (SvS) fosters a harassment-free environment. Thus, we have designed the following
+        It is important to us that Server vs Server (<brand-name-short/>) fosters a harassment-free environment. Thus, we have designed the following
         Code of Conduct (CC) to outline guidelines and expectations that we have for everyone to help us reach
         this. The CC also formalises repercussions for breaking these guidelines and provides a point of reference
         when dealing with issues that may arise in a community of our size.
@@ -19,19 +19,19 @@
         <li>Staff / organisers</li>
         <li>Guest speakers / interviewees</li>
         <li>Competition participants</li>
-        <li>Partners of SvS</li>
-        <li>Members of SvS online spaces</li>
+        <li>Partners of <brand-name-short/></li>
+        <li>Members of <brand-name-short/> online spaces</li>
         <li>Members of participating communities</li>
       </ul>
-      <h3>SvS Spaces</h3>
+      <h3><brand-name-short/> Spaces</h3>
       <p>This CC applies to the following spaces:</p>
       <ul>
-        <li>The SvS Twitch Channel</li>
-        <li>The SvS Discord</li>
+        <li>The <brand-name-short/> Twitch Channel</li>
+        <li>The <brand-name-short/> Discord</li>
         <li>Public spaces of partnered servers</li>
-        <li>Social Media accounts managed by or that relate to SvS</li>
+        <li>Social Media accounts managed by or that relate to <brand-name-short/></li>
         <li>
-          Code repositories, issue trackers and pull requests made against any SvS controlled GitHub organization
+          Code repositories, issue trackers and pull requests made against any <brand-name-short/> controlled GitHub organization
         </li>
         <li>
           Interactions with official event accounts on all social media spaces, including comments made on:
@@ -41,9 +41,9 @@
             <li>Official event pages, posts, hashtags etc.</li>
           </ul>
         </li>
-        <li>Any other online space administered by SvS</li>
+        <li>Any other online space administered by <brand-name-short/></li>
       </ul>
-      <p>This CC applies to everyone in any of these official SvS online spaces.</p>
+      <p>This CC applies to everyone in any of these official <brand-name-short/> online spaces.</p>
       <p>Each online space listed above is encouraged to provide the following information to community members:</p>
       <ul>
         <li>Contact information for any administrators/moderators</li>
@@ -57,11 +57,11 @@
       </ul>
       <h3>Additional spaces</h3>
       <h4>Participating Communities</h4>
-      <p>In addition to the SvS-managed spaces listed above, individuals within participating communities are held to the CC. It is the responsibility of moderators of these spaces to uphold these standards.</p>
+      <p>In addition to the <brand-name-short/>-managed spaces listed above, individuals within participating communities are held to the CC. It is the responsibility of moderators of these spaces to uphold these standards.</p>
       <h4>Organisers</h4>
       <p><b>“Organisers”</b> refer to both Event Staff or Partners.</p>
       <p>
-        <b>“Event Staff” </b>are members who are directly associated with SvS and are members of any of the following
+        <b>“Event Staff” </b>are members who are directly associated with <brand-name-short/> and are members of any of the following
         teams:
       </p>
       <ul>
@@ -75,7 +75,7 @@
       </ul>
       <p>
         <b>“Partners”</b> are those who are directly involved in the organisation of an event, but are not directly
-        part of the SvS staff team. These can include:
+        part of the <brand-name-short/> staff team. These can include:
       </p>
       <ul>
         <li>Communities/organisations that co-host an event</li>
@@ -85,12 +85,12 @@
       <p>Both kinds of event organisers are expected to:</p>
       <ul>
         <li>Provide a form of direct contact information to a representative of your organization</li>
-        <li>Uphold and enforce the CC everywhere - whether directly related to SvS or not</li>
+        <li>Uphold and enforce the CC everywhere - whether directly related to <brand-name-short/> or not</li>
         <li>Manage events fairly without bias towards or against any participants / participating communities</li>
       </ul>
       <h2>Behaviours</h2>
       <p>
-        Members of the SvS community are expected to be open, considerate, and respectful. The following behaviours
+        Members of the <brand-name-short/> community are expected to be open, considerate, and respectful. The following behaviours
         reinforce these values and contribute to a positive environment:
       </p>
       <ul>
@@ -100,7 +100,7 @@
           work within them.
         </li>
         <li>
-          Acknowledging time and effort. We're respectful of the volunteer efforts that form the foundation of the SvS
+          Acknowledging time and effort. We're respectful of the volunteer efforts that form the foundation of the <brand-name-short/>
           community. We're thoughtful when addressing the efforts of others, keeping in mind that the labour was often
           completed simply for the good of the community.
         </li>
@@ -111,7 +111,7 @@
           online, and we're tactful when approaching differing views.
         </li>
         <li>
-          Being considerate. Members of the community are considerate of their peers -- other SvS participants.
+          Being considerate. Members of the community are considerate of their peers -- other <brand-name-short/> participants.
           Being respectful. We're respectful of others, their positions, their skills, their commitments, and their
           efforts.
         </li>
@@ -126,7 +126,7 @@
       </ul>
       <h2>Standards</h2>
       <p>
-        Every member of our community has the right to have their identity respected. The SvS community is dedicated to
+        Every member of our community has the right to have their identity respected. The <brand-name-short/> community is dedicated to
         providing a positive and welcoming environment and experience for everyone, regardless of age, gender identity
         and expression, sexual orientation, disability, physical appearance, ethnicity, nationality, religious beliefs,
         or socioeconomic status.
@@ -157,7 +157,7 @@
       </blockquote>
       <h2>Enforcement</h2>
       <p>
-        If a participant engages in behaviour that violates this CC, the SvS Moderation team may take action that they
+        If a participant engages in behaviour that violates this CC, the <brand-name-short/> Moderation team may take action that they
         deem appropriate, including warning the offender or expulsion from the community and community events. The full
         list of consequences for inappropriate behavior is listed in the Enforcement Procedures.
       </p>
@@ -173,7 +173,7 @@
         </li>
         <li>
           Participants, staff, and partners who are found violating the CC will be barred from organizing or competing in
-          future SvS events.
+          future <brand-name-short/> events.
         </li>
         <li>
           Event moderators will enforce this code regardless of the event. They will work with the Event Coordination team
@@ -212,7 +212,7 @@
           href="http://geekfeminism.wikia.com/wiki/Conference_anti-harassment"
         >(http://geekfeminism.wikia.com/wiki/Conference_anti-harassment)</a>
       </p>
-      <p>Additional new language and modifications were created by SvS.</p>
+      <p>Additional new language and modifications were created by <brand-name-short/>.</p>
     </article>
   </div>
 </template>

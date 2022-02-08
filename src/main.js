@@ -4,6 +4,11 @@ import router from './router'
 import store from './store'
 import { Auth0Plugin } from "./auth";
 
+import BrandName from './components/branding/BrandName.vue'
+import BrandNameShort from './components/branding/BrandNameShort.vue'
+Vue.component('brand-name', BrandName)
+Vue.component('brand-name-short', BrandNameShort)
+
 const VueCookie = require('vue-cookie');
 Vue.use(VueCookie);
 

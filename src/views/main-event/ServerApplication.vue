@@ -412,7 +412,15 @@ export default {
       this.adminNames.splice(idx, 1)
     },
     submit: function(){
-      let appObj = { name: this.serverName, discord_invite: this.serverInviteLink, icon: this.serverIconUrl, admins: this.adminNames, description: this.serverDescription};
+      
+      let appObj = {
+        name: this.serverName,
+        discord_invite: this.serverInviteLink,
+        icon: this.serverIconUrl,
+        admins: this.adminNames,
+        description: this.serverDescription
+      };
+
       const newServerRef = this.application_ref ? this.application_ref : doc(collection(db, "servers"));
       let uid = (newServerRef.id);
       fetch(appObj.icon)

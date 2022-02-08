@@ -1,6 +1,6 @@
 <template>
   <div class="archive">
-    <h1> SVS Archive: </h1>
+    <h1> <brand-name-short/> Archive: </h1>
     <h2> Past EPs: </h2>
     <Draw
       v-for="(x,index) in PastEPs"

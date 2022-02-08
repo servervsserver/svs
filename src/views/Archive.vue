@@ -6,16 +6,19 @@
       v-for="(x,index) in PastEPs"
       :key="index"
       :title="index"
-    />
+    >
+    <Player />
+    </Draw>
   </div>
 </template>
 
 <script>
 import Draw from '../components/ArchiveDraw.vue'
+import Player from '../components/SoundCloudPlayer.vue'
 
 export default {
     components : {
-        Draw
+        'Draw' : Draw, 'Player' : Player
     },
     data () {
         return (
@@ -24,7 +27,7 @@ export default {
                     SVS1 : [],
                     SVS2 : [],
                     SVS4 : []
-                }
+                },
             }
         )
     }

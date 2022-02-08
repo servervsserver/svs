@@ -1,0 +1,37 @@
+@use 'sass:map';
+@use '../theming/palette';
+
+@mixin timeline($color-theme) {
+
+  $timeline-header-fg: palette.map-get($color-theme, "timeline", "header", "fg");
+  $timeline-header-bg: palette.map-get($color-theme, "timeline", "header", "bg");
+  $handle-color: palette.map-get($color-theme, "bg");
+
+  .timeline {
+    .timeline-header {
+      .tag {
+        background-color: $timeline-header-bg;
+        color: $timeline-header-fg;
+      }
+    }
+
+    .heading {
+      margin: 0px;
+      font-size: 1.1em;
+    }
+
+    .supheading,
+    .subheading {
+      margin: 0px;
+      font-size: 0.9em;
+    }
+
+    .timeline-marker,
+    .timeline-marker.is-icon {
+      background: transparent;
+      border: 0px;
+    }
+
+  }
+
+}

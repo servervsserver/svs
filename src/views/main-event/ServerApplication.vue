@@ -22,6 +22,31 @@
                 >
                 <span class="icon is-small is-left"><i class="fab fa-discord" /></span>
               </div>
+              <p
+                v-if="!serverName"
+                class="help is-danger"
+              >
+                You must provide a server name
+              </p>
+              <p
+                v-if="serverName && serverNameIsTooShort"
+                class="help is-danger"
+              >
+                Your server name is too short
+              </p>
+              <p
+                v-if="serverName && serverNameIsTooLong"
+                class="help is-danger"
+              >
+                Your server name is too long (100 chars limit)
+              </p>
+              <p
+                v-if="serverName && serverNameIsValid"
+                class="help"
+                style="color: transparent"
+              >
+                &nbsp;
+              </p>
             </div>
 
             <div class="field">
@@ -36,17 +61,23 @@
                 <span class="icon is-small is-left"><i class="fas fa-link" /></span>
               </div>
               <p
-                v-if="validServerLink || !serverInviteLink"
+                v-if="!serverInviteLink"
+                class="help is-danger"
+              >
+                You must provide an invite link
+              </p>
+              <p
+                v-if="serverInviteLink && !validServerLink"
+                class="help is-danger"
+              >
+                Your link is invalid
+              </p>
+              <p
+                v-if="serverInviteLink && validServerLink"
                 class="help"
                 style="color: transparent"
               >
                 &nbsp;
-              </p>
-              <p
-                v-if="!validServerLink && serverInviteLink"
-                class="help is-danger"
-              >
-                Your link is invalid
               </p>
             </div>
 
@@ -56,9 +87,42 @@
                 <textarea
                   v-model="serverDescription"
                   class="textarea"
+                  rows="9"
+                  :class="{ 'is-danger': !descriptionIsValid }"
                   placeholder="My Discord is awesome because we have cookies! Loads of cookies!"
                 />
               </div>
+              <p
+                class="help"
+                style="text-align: right;"
+              >
+                {{ serverDescription.length || 0 }} / 500
+              </p>
+              <p
+                v-if="!serverDescription"
+                class="help is-danger"
+              >
+                You must provide a description
+              </p>
+              <p
+                v-if="serverDescription && descriptionIsTooShort"
+                class="help is-danger"
+              >
+                Provide a substantial descrition (min 100 chars)
+              </p>
+              <p
+                v-if="serverDescription && descriptionIsTooLong"
+                class="help is-danger"
+              >
+                Your description is too long (500 chars limit)
+              </p>
+              <p
+                v-if="serverDescription && descriptionIsValid"
+                class="help"
+                style="color: transparent"
+              >
+                &nbsp;
+              </p>
             </div>
           </div>
 
@@ -93,16 +157,44 @@
                 </div>
               </div>
               <div class="column">
-                <img
-                  :src="serverIconUrl"
-                  width="140px"
-                  height="140px"
+                <squared-image-box style="max-width: 250px">
+                  <img
+                    ref="serverIconEl"
+                    class="shadow-depth-2"
+                    :src="serverIconUrl"
+                  >
+                </squared-image-box>
+                <!-- <div
+                  class="image-container"
+                  style="max-width: 140px"
                 >
+                  <div class="image-content">
+                    <img
+                      src="/placeholders/server_placeholder_icon.png"
+                      class="placeholder" />
+
+                  </div>
+                </div> -->
               </div>
             </div>
-
-
-
+            <p
+              v-if="!hasImage"
+              class="help is-danger"
+            >
+              You must provide a valid image (squared)
+            </p>
+            <p
+              v-if="hasImage && !hasSquaredImage"
+              class="help is-danger"
+            >
+              You must provide a squared image
+            </p>
+            <p
+              v-if="hasValidImage"
+              class="help"
+            >
+              &nbsp;
+            </p>
 
             <div class="field">
               <label>
@@ -161,6 +253,12 @@
               >
                 You already proposed this user!
               </p>
+              <p
+                v-if="!userName || (validUserName && !alreadyAdded)"
+                class="help"
+              >
+                &nbsp;
+              </p>
             </div>
 
             <div
@@ -172,7 +270,7 @@
                 class="control"
               >
                 <div class="tags has-addons">
-                  <span class="tag is-link">{{ username }}</span>
+                  <span class="tag">{{ username }}</span>
                   <a
                     class="tag is-delete"
                     @click="dropAdmin(username)"
@@ -180,23 +278,30 @@
                 </div>
               </div>
             </div>
+            <p
+              v-if="!hasEnoughPeopleInCharge"
+              class="help is-danger"
+            >
+              We need at least one person to contact.
+            </p>
+            <p
+              v-if="hasEnoughPeopleInCharge"
+              class="help"
+            >
+              &nbsp;
+            </p>
           </div>
         </div>
-        <!-- <div class="field">
-          <label>Server icon</label>
-          <input class="input" type="file" />
-        </div> -->
-        <!--
-        <span>Server Size (number of people in the server)</span>
-        <input
-          type="number"
-          step="1"
-        > -->
+
         <button
-          class="button"
-          @click="save"
+          :disabled="!canSubmit"
+          class="button is-medium"
+          @click="submit"
         >
-          Save
+          <span>Submit</span>
+          <span class="icon">
+            <i class="fas fa-paper-plane" />
+          </span>
         </button>
       </div>
     </div>
@@ -204,7 +309,7 @@
 </template>
 
 <script>
-import { Validators } from "../../models/properties/validators"
+import { Validators, Validate } from "../../models/properties/validators"
 import { s3, db, rtdb} from "../../assets/db.js"
 import { collection, doc, setDoc } from "firebase/firestore";
 import { push, ref } from "firebase/database";
@@ -218,17 +323,37 @@ export default {
       application_ref: '',
       serverName: "",
       serverInviteLink: "",
-      serverIconUrl: "/placeholders/server_placeholder_icon.jpg",
+      serverIconUrl: "",
       serverIconFileName: "...",
+      serverIcon: undefined,
+      serverIconDims: null,
       userName: "",
-      adminNames: [
-        "TheShiningDandrobat#1234",
-        "Nobody#5678"
-      ],
-    serverDescription: "",
+      adminNames: [],
+      serverDescription: "",
     }
   },
   computed: {
+    serverNameIsTooShort () {
+      return !Validators.minCharCount(1)(this.serverName)
+    },
+    serverNameIsTooLong () {
+      return !Validators.maxCharCount(100)(this.serverName)
+    },
+    serverNameIsValid () {
+      return !this.serverNameIsTooShort && !this.serverNameIsTooLong
+    },
+    validServerLink () {
+      return Validators.discordInviteLink(this.serverInviteLink)
+    },
+    descriptionIsTooShort () {
+      return !Validators.minCharCount(100)(this.serverDescription)
+    },
+    descriptionIsTooLong () {
+      return !Validators.maxCharCount(500)(this.serverDescription)
+    },
+    descriptionIsValid () {
+      return !this.descriptionIsTooShort && !this.descriptionIsTooLong
+    },
     validUserName () {
       return Validators.discordUserName(this.userName)
     },
@@ -238,14 +363,42 @@ export default {
     canAddUserName () {
       return this.validUserName && !this.alreadyAdded
     },
-    validServerLink () {
-      return Validators.discordInviteLink(this.serverInviteLink)
+    hasEnoughPeopleInCharge () {
+      return Validators.minCount(1)(this.adminNames)
+    },
+    hasImage () {
+      return !!this.serverIcon
+    },
+    hasSquaredImage () {
+      return this.serverIconDims
+        && (this.serverIconDims.width > 0 && this.serverIconDims.height > 0)
+        && (this.serverIconDims.width == this.serverIconDims.height)
+    },
+    hasValidImage () {
+      return Validate([
+          Validators.required
+        ])(this.serverIcon) && this.hasSquaredImage
+    },
+    canSubmit() {
+      return this.validServerLink
+        && this.serverNameIsValid
+        && this.descriptionIsValid
+        && this.hasEnoughPeopleInCharge
+        && this.hasValidImage
     }
   },
   methods: {
     onImageChange: function (event) {
       const [file] = event.target.files
       if (file) {
+        let imageSize = null
+        this.$refs.serverIconEl.onload = () => {
+          this.serverIconDims = {
+            width: this.$refs.serverIconEl.clientWidth,
+            height: this.$refs.serverIconEl.clientHeight
+          }
+        }
+        this.serverIcon = file
         this.serverIconUrl = URL.createObjectURL(file)
         this.serverIconFileName = file.name
       }
@@ -258,17 +411,13 @@ export default {
       let idx = this.adminNames.indexOf(username)
       this.adminNames.splice(idx, 1)
     },
-    save: function(){
+    submit: function(){
       let appObj = { name: this.serverName, discord_invite: this.serverInviteLink, icon: this.serverIconUrl, admins: this.adminNames, description: this.serverDescription};
       const newServerRef = this.application_ref ? this.application_ref : doc(collection(db, "servers"));
       let uid = (newServerRef.id);
       fetch(appObj.icon)
-        .then(function(r){
-          var files = document.getElementById("serverInput").files;
-          if (!files.length) {
-            return alert("Please choose a file to upload first.");
-          }
-          var file = files[0];
+        .then((r) => {
+          var file = this.serverIcon
           var fileName = `${uid}.jpg`;
           const params = {
             Bucket: process.env.VUE_APP_AWS_BUCKET_NAME,
@@ -293,6 +442,3 @@ export default {
 }
 
 </script>
-
-<style scoped lang="scss">
-</style>

@@ -1,12 +1,13 @@
 <template>
-    
+
 <div>
-<img :src="profile.avatar" alt="" class="image">
-{{$store._uid}}
+<img :src="profile.icon" alt="" class="image">
 
-{{profile.avatar}}
-
-<button class="button">    <span class="icon">
+{{profile.name}} |
+{{profile.tag}} |
+{{profile.isStaff}} | 
+{{profile.isLeaders}} |
+<button @click="pullData" class="button">    <span class="icon">
       <i class="fas fa-sync"></i>
     </span> <span> Re-sync Profile</span></button>
 </div>
@@ -21,32 +22,36 @@ const axios = require("axios");
 export default {
     data(){
         return{
-            profile:{avatar:"https://i.pravatar.cc/150"}
+            profile:{icon:"https://i.pravatar.cc/150"}
         }
     },
-    mounted(){
-         this.$nextTick(() => {
-            let storedProfile = this.$store.state.profile;
+    methods:{
+        pullData(){
+let storedProfile = this.$store.state.profile;
             let uid = this.$store.state._uid;
-        console.log(uid + " ", this.$store.state.profile);
+        console.log(storedProfile);
             if(storedProfile){
-                console.log("test");
-                this.profile = storedProfile;
+                this.$set(profile,storedProfile);
             }
             else if(uid != undefined){
                  axios
         .get(`http://localhost:3000/users/${uid}`)
-        .then( response => {
+        .then( (response)=>{
         console.log(response.data);
-        this.$store.dispatch("set_profile", response.data);
+        this.$store.commit("set_profile", response.data);
         this.profile = response.data;
-        });
+
+ });
+
+            }}
 
 
-            }
-        }) 
-
-    }
+    },
+    mounted(){
+         this.$nextTick(() => {
+        this.pullData();
+      });
+    },
 }
 </script>
 

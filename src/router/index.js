@@ -17,25 +17,17 @@ import Archive from '../views/Archive.vue'
 
 import ServerProfile from '../views/server/ServerProfile.vue'
 
-import Admin from '../views/admin/Admin.vue'
-import Dashboard from '../views/admin/Dashboard.vue'
+
 
 import PageNotFound from '../views/PageNotFound.vue'
 
 /* ===== Test vues ===== */
 
 import { addTestBlockToRoutes } from "./router.dev.js"
-
+import { addAdminBlockToRoutes } from "./admin-router.js"
 
 
 Vue.use(VueRouter)
-
-// TODO: ADD ADMIN CHECK
-/* So You can do this by using meta tags
-  for stuff that needs to be login blocked add a meta : {requiresAuth : true}
-  meta : {isAdmin : true}
-  */
-const isAdmin = false
 
 const routes = [
   {
@@ -43,23 +35,28 @@ const routes = [
     name: 'Home',
     component: Home
   },
-  {path: '/cookie-policy',
-  component: CookiePolicy
-},
-  {
-    path: '/archive',
-    component: Archive
-  },
-  {
-    path: '/vote',
-    component: Vote
-  },
   {
     path: '/home',
     redirect: '/'
   },
   {
+    path: '/cookie-policy',
+    name: 'CookiePolicy',
+    component: CookiePolicy
+  },
+  {
+    path: '/archive',
+    name: 'Archive',
+    component: Archive
+  },
+  {
+    path: '/vote',
+    name: 'Vote',
+    component: Vote
+  },
+  {
     path: '/code-of-conduct',
+    name: 'CodeOfConduct',
     component: CodeOfConduct
   },
   {
@@ -79,10 +76,12 @@ const routes = [
       },
       {
         path: 'server-application',
+        name: 'ServerApplication',
         component: ServerApplication
       },
       {
         path: 'rules',
+        name: 'Rules',
         component: Rules
       },
       {
@@ -93,40 +92,10 @@ const routes = [
     ]
   },
   {
-    path: '/server-application',
-    name: 'ServerApplication',
-    component: ServerApplication
-  },
-  {
-    path: '/admin',
-    name: 'Admin',
-    redirect: '/admin/dashboard',
-    component: Admin,
-    beforeEnter: (to, from, next) => {
-      if (!isAdmin) {
-        next('home')
-      } else {
-        next()
-      }
-    },
-    children: [
-      {
-        path: 'dashboard',
-        name: 'Dashboard',
-        component: Dashboard
-      }
-    ]
-  },
-  {
     path: '/anonymous-concerns/:id?',
     name: 'AnonymousConcerns',
     component: AnonymousConcerns
   },
-  // {
-  //   path: '/anonymous-concerns/',
-  //   name: 'AnonymousConcerns',
-  //   component: AnonymousConcerns
-  // },
   {
     path: '/about',
     name: 'About',
@@ -134,7 +103,9 @@ const routes = [
   }
 ]
 
+addAdminBlockToRoutes(routes)
 addTestBlockToRoutes(routes)
+
 
 routes.push({ path: '*', name: '404', component: PageNotFound })
 
@@ -165,6 +136,18 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     next() // make sure to always call next()!
+  }
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAdmin)) {
+    if (!admin) {
+      next()
+    } else {
+      next()
+    }
+  } else {
+    next()
   }
 })
 

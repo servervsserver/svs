@@ -62,20 +62,35 @@
     }
 
     .navbar-brand {
-
+      .navbar-brand-image {
+        height: 30px;
+        width: 30px;
+      }
       .navbar-item {
         background-color: transparent;
         transform: scale(1);
       }
 
       .navbar-item:hover {
-        transform: scale(1.1);
+        transform: scale(1.2);
       }
 
       @media(max-height: 768px) {
         & {
            box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
         }
+      }
+    }
+
+    .navbar-dropdown {
+      background-color: $text-color;
+      color: $background-color;
+      a {
+        border-left: 3px solid transparent;
+      }
+      a:hover {
+        text-shadow: 0 0 2px $background-color;
+        border-left: 3px solid $background-color;
       }
     }
 

@@ -87,6 +87,7 @@ onAuthStateChanged(auth, (user) => {
 
     logout: function () {
       signOut(auth).then(() => {
+        this.$store.commit("set_profile",undefined);
         this.$store.commit("set_uid",undefined);
       this.$auth.logout({
         returnTo: "http://localhost:8080",

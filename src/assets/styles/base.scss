@@ -136,6 +136,16 @@ ul {
   }
 }
 
+.menu {
+  ul {
+    list-style: none;
+    margin-left: 0px;
+    a {
+      text-decoration: none;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   html {
     font-size: 12px;

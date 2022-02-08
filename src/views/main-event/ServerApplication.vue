@@ -300,7 +300,7 @@
         >
           <span>Submit</span>
           <span class="icon">
-            <i class="fas fa-paper-plane"></i>
+            <i class="fas fa-paper-plane" />
           </span>
         </button>
       </div>

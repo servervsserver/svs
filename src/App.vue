@@ -38,15 +38,9 @@
           :class="{ 'is-active': isActive }"
         >
           <div class="navbar-start">
-            <!-- <router-link
-              class="navbar-item"
-              to="/main-event"
-            >
-              Main event
-            </router-link> -->
-
+            <!-- Main event menu -->
             <div
-              :key="$route.fullPath"
+              :key="$route.fullPath + '@mainevent'"
               class="navbar-item has-dropdown is-hoverable"
             >
               <router-link
@@ -80,6 +74,28 @@
                   to="/main-event/ep-upload"
                 >
                   EP Submission
+                </router-link>
+              </div>
+            </div>
+
+            <div
+              v-if="$store.getters.isAdmin"
+              :key="$route.fullPath + '@madmin'"
+              class="navbar-item has-dropdown is-hoverable"
+            >
+              <router-link
+                class="navbar-item"
+                to="/admin"
+              >
+                Admin
+              </router-link>
+
+              <div class="navbar-dropdown">
+                <router-link
+                  class="navbar-item"
+                  to="/admin/dashboard"
+                >
+                  Dashboard
                 </router-link>
               </div>
             </div>
@@ -271,9 +287,6 @@ export default {
         }
       ]
     }
-  },
-  mounted () {
-    console.log(this.$route)
   },
   methods: {
     onThemeChanged (theme) {

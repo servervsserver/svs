@@ -1,17 +1,24 @@
 <template>
+  <div>
+    <img
+      :src="profile.icon"
+      alt=""
+      class="image"
+    >
 
-<div>
-<img :src="profile.icon" alt="" class="image">
-
-{{profile.name}} |
-{{profile.tag}} |
-{{profile.isStaff}} | 
-{{profile.isLeaders}} |
-<button @click="pullData" class="button">    <span class="icon">
-      <i class="fas fa-sync"></i>
-    </span> <span> Re-sync Profile</span></button>
-</div>
-
+    {{ profile.name }} |
+    {{ profile.tag }} |
+    {{ profile.isStaff }} | 
+    {{ profile.isLeaders }} |
+    <button
+      class="button"
+      @click="pullData"
+    >
+      <span class="icon">
+        <i class="fas fa-sync" />
+      </span> <span> Re-sync Profile</span>
+    </button>
+  </div>
 </template>
 
 
@@ -24,6 +31,11 @@ export default {
         return{
             profile:{icon:"https://i.pravatar.cc/150"}
         }
+    },
+    mounted(){
+         this.$nextTick(() => {
+        this.pullData();
+      });
     },
     methods:{
         pullData(){
@@ -46,11 +58,6 @@ let storedProfile = this.$store.state.profile;
             }}
 
 
-    },
-    mounted(){
-         this.$nextTick(() => {
-        this.pullData();
-      });
     },
 }
 </script>

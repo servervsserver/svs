@@ -7,7 +7,7 @@
       :key="index"
       :title="index"
     >
-    <Player />
+      <Player />
     </Draw>
   </div>
 </template>

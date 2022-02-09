@@ -3,6 +3,14 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import { Auth0Plugin } from "./auth";
+import { BackendPlugin } from "./plugins/all"
+
+import ComingSoon from "./components/ComingSoon.vue"
+import BrandName from './components/branding/BrandName.vue'
+import BrandNameShort from './components/branding/BrandNameShort.vue'
+Vue.component('coming-soon', ComingSoon)
+Vue.component('brand-name', BrandName)
+Vue.component('brand-name-short', BrandNameShort)
 
 const VueCookie = require('vue-cookie');
 Vue.use(VueCookie);
@@ -15,12 +23,14 @@ Vue.use(VueCookie);
 import EventCountdown from './components/countdown/DHMSCountdown.vue'
 import ThemeSwitch from './components/ThemeSwitch.vue'
 import BulkEdit from './components/layout/BulkEdit.vue'
+import Drawer from './components/layout/Drawer.vue'
 import Tooltip from './components/Tooltip.vue'
 import SquaredImageContainer from './components/SquaredImageContainer.vue'
 
 Vue.component('event-countdown', EventCountdown)
 Vue.component('theme-switch', ThemeSwitch)
 Vue.component('bulk-edit', BulkEdit)
+Vue.component('drawer', Drawer)
 Vue.component('tooltip', Tooltip)
 Vue.component('squared-image-box', SquaredImageContainer)
 
@@ -29,8 +39,10 @@ Vue.component('squared-image-box', SquaredImageContainer)
 // =================================================
 
 import { date } from "./filters/date"
+import { discordInviteHandle } from "./filters/discord"
 
 Vue.filter('date', date)
+Vue.filter('discordInviteHandle', discordInviteHandle)
 
 Vue.config.productionTip = false
 
@@ -49,6 +61,8 @@ Vue.use(Auth0Plugin, {
     );
   }
 });
+
+Vue.use(BackendPlugin)
 
 new Vue({
   router,

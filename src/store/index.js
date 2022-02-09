@@ -75,7 +75,6 @@ class SvSMainEventInformations {
   }
 
   get nextMilestone() {
-    console.log(this.milestones)
     for (let m of this.milestones) {
       if (m.isIncoming) return m
     }
@@ -86,22 +85,20 @@ class SvSMainEventInformations {
 
 export default new Vuex.Store({
   state: {
-    // nextSvsMainEventTime: new Date(2022, 1, 28, 2, 3, 4),
     _uid:undefined,
     profile:undefined,
     svsMainEventInformations: new SvSMainEventInformations()
   },
   getters: {
-    // nextSvsMainEventRemainingTime: state => {
-    //   console.log(state.svsMainEventInformations)
-    //   return state.svsMainEventInformations.serverApplicationPhaseStart.timeRemaining
-    // },
-    // nextSvsMainEventTime: state => {
-    //   console.log(state.svsMainEventInformations)
-    //   return state.svsMainEventInformations.serverApplicationPhaseStart.date
-    // },
+    isAdmin: state => {
+      console.log(process.env)
+      return process.env.VUE_APP_IS_ADMIN
+    },
     nextMilestone: state => {
       return state.svsMainEventInformations.nextMilestone
+    },
+    isComingSoonBypassed: state => {
+      return process.env.VUE_APP_BYPASS_COMINGSOON
     }
   },
   mutations: {

@@ -58,7 +58,7 @@ export function date(date, format, local, specialTimes) {
   }
 
   result = result.replace(/yyyy/g, date[`get${UTC}FullYear`]())
-  result = result.replace(/mm/g, date[`get${UTC}Month`]+ 1)
+  result = result.replace(/mm/g, date[`get${UTC}Month`]() + 1)
   result = result.replace(/MONTH/g, MONTHS[date[`get${UTC}Month`]()])
   result = result.replace(/dd/g, date[`get${UTC}Date`]())
   result = result.replace(/DAY/g, DAYS[date[`get${UTC}Day`]()])

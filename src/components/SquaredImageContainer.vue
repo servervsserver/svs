@@ -1,12 +1,11 @@
 <template>
   <div
     class="image-container"
-    >
+  >
     <div
-      class="image-content">
-
-      <slot></slot>
-
+      class="image-content"
+    >
+      <slot />
     </div>
   </div>
 </template>

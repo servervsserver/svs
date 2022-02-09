@@ -8,7 +8,15 @@ import {
   ServerApplicationConverter
 } from "../../models/dto/server-application"
 
-import { collection, doc, setDoc, addDoc, getDocs } from "firebase/firestore";
+import {
+  AnonymousConcernsTicket
+} from "../../models/dto/anonymous-concerns"
+
+import {
+  collection, doc,
+  setDoc, addDoc,
+  getDoc, getDocs
+} from "firebase/firestore";
 import { push, ref } from "firebase/database";
 
 /*
@@ -48,57 +56,15 @@ export default class BackendPlugin {
   constructor(Vue) {
 
     this.Vue = Vue
+    
     this._firebaseApp = initializeApp(firebaseConfig)
     this._firebaseDb = getDatabase(this._firebaseApp)
     this._firestoreDb = getFirestore(this._firebaseApp)
-    this._amazonS3 = new AWS.S3(amazonS3Config)
 
+    this._amazonS3 = new AWS.S3(amazonS3Config)
     this._awsBucket = process.env.VUE_APP_AWS_BUCKET_NAME
 
   }
-
-  // /**
-  // * Creates a new server application document in DB
-  // * {ServerApplication} serverApplication : data for the server application
-  // */
-  // createServerApplication(serverApplication) {
-  //   // TODO: Insert some final data validation
-  //
-  //   let data = ServerApplicationConverter.toFirestore(serverApplication)
-  //
-  //   const bucket = this._awsBucket
-  //   const storeIconInAws = ref => {
-  //
-  //     const iconFile = serverApplication.icon
-  //     const iconName = `${ref.id}.${data.iconExt}`
-  //
-  //     const params = {
-  //       Bucket: bucket,
-  //       Key: iconName,
-  //       Body: iconFile,
-  //       Prefix: "servers_icons/"
-  //     };
-  //
-  //     return {
-  //       applicationDocRef: ref,
-  //       iconRef: this._amazonS3.upload( params, (err, data) => {
-  //         if (err) {
-  //           console.error(err)
-  //           throw err
-  //         }
-  //       })
-  //     }
-  //   }
-  //
-  //   const serverApplicationDocRef
-  //     = addDoc(
-  //         collection(this._firestoreDb, "test-server-application"),
-  //         data
-  //       )
-  //       .then(storeIconInAws)
-  //
-  //   return serverApplicationDocRef
-  // }
 
   /**
   * Creates a new server application document in DB
@@ -178,6 +144,10 @@ export default class BackendPlugin {
 
   /**
   * Gets all the servers
+  * @returns An array of all the ServerApplication
+  * TODO: it actually disreguards the list in firebase of the submissions for this Event.
+  * This has no impact now, but once we get some new events, going on it needs to be changed
+  *
   */
   getAllServerApplications() {
     const colSnap = getDocs(collection(this._firestoreDb, "servers"))
@@ -190,6 +160,14 @@ export default class BackendPlugin {
     })
   }
 
+
+
+  // ======== Anonymous concerns
+
+  /**
+  * Creates a new ticket
+  * @returns a promise on the document created (id of the document is the ticket id)
+  */
   createAnonymousConcernsTicket(message) {
     const anonyConDocRef
       = addDoc(
@@ -200,21 +178,32 @@ export default class BackendPlugin {
     return anonyConDocRef
   }
 
+  /**
+  * Gets all the tickets
+  * @returns A promise on an array of AnonymousConcernsTicket
+  */
   getAllAnonymousConcernsTickets() {
     const colSnap = getDocs(collection(this._firestoreDb, "anonymous-concerns"))
 
     return colSnap.then(snappedDocs => {
       let data = []
       snappedDocs.forEach(doc => {
-        data.push({
-          id: doc.id,
-          message: doc.data().message,
-          answer: doc.data().answer,
-          date: new Date(doc.data().date.seconds * 1000)
-        })
+        data.push(AnonymousConcernsTicket.fromFirestoreDoc(doc))
       })
       return data
     })
+  }
+
+  /**
+  * Gets a ticket by its id
+  * @returns A promise on the AnonymousConcernsTicket of the corresponding id. null if not found
+  */
+  getAnonymousConcernsTicketById(id) {
+    return getDoc(doc(this._firestoreDb, "anonymous-concerns", id))
+      .then(snappedDoc => {
+        if (!snappedDoc.exists()) return null
+        return AnonymousConcernsTicket.fromFirestoreDoc(snappedDoc)
+      })
   }
 
 

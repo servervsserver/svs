@@ -44,6 +44,14 @@ import { discordInviteHandle } from "./filters/discord"
 Vue.filter('date', date)
 Vue.filter('discordInviteHandle', discordInviteHandle)
 
+// =================================================
+// Global import directives
+// =================================================
+
+import VueClipboards from 'vue-clipboards';
+
+Vue.use(VueClipboards);
+
 Vue.config.productionTip = false
 
 let domain = process.env.VUE_APP_AUTH0_DOMAIN;

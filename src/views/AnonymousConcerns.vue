@@ -64,11 +64,12 @@
       <p>Thank you for your message.</p>
       <p>
         When we have read your message we will update this page with our
-        response. Due to the anonymous nature of submissions, we are unable to
+        response. <br/>
+        Due to the anonymous nature of submissions, we are unable to
         notify you of any new responses. <br>
         Make sure to regularly check the url below:
       </p>
-      <button class="button is-medium">
+      <button class="button is-medium" v-clipboard="link">
         {{ link }}
       </button>
     </section>
@@ -113,7 +114,7 @@ export default {
   },
   data: function () {
     return {
-      msgID : undefined,
+      msgId : undefined,
       message: undefined,
       answer: undefined,
       state: ConcernState.WRITING,
@@ -137,51 +138,34 @@ export default {
       return this.state == ConcernState.SENDING_FAILURE;
     },
     link() {
-      return `Link to this page with the ticket of id ${this.msgID}`;
+      return `${window.location.origin}${this.$route.path}/${this.msgId}`;
     },
   },
   mounted() {
-    const id = this.$route.params.id;
-    this.msgID = id;
-    if (id) {
-      const docRef = doc(db, "feedback", id);
-      getDoc(docRef).then(docSnap => {
-        if(docSnap.exists()){
-        let data = docSnap.data();
-        this.state = data.answer ? ConcernState.ANSWERED: ConcernState.PENDING_ANSWER;
-        this.message = data.message;
-        this.answer = data.answer ? data.answer : "Sorry, we haven't gotten to your feedback yet. Please continue to check back!";
-}
-      });
 
-        }
-
+    if (this.$route.params.id) {
+      this.$svsBackend.getAnonymousConcernsTicketById(this.$route.params.id)
+        .then(res => {
+          if (!res) {
+            this.$router.push({ name: 'AnonymousConcerns', replace: true })
+          } else {
+            this.msgId = res.id
+            this.message = res.message
+            this.answer = res.answer
+            this.date = res.date
+            this.state = this.answer ? ConcernState.ANSWERED : ConcernState.PENDING_ANSWER
+          }
+        })
+    }
+    
   },
   methods: {
     onSubmit() {
       this.state = ConcernState.SENDING;
-      // let feedObj = {
-      //   message: this.message,
-      //   timestamp: new Date(),
-      //   answer: "",
-      // };
-      // const ref = doc(collection(db, "feedback"));
-      // let uid = ref.id;
-      // setDoc(ref, feedObj)
-      //   .then(function (data) {
-      //     this.state = ConcernState.PENDING_ANSWER;
-      //     const appRef = ref(rtdb, "applications/");
-      //     push(appRef, uid);
-      //   })
-      //   .catch((e) => {
-      //     this.state = ConcernState.SENDING_FAILURE;
-      //     this.errorMessage =
-      //       "Well, I just don't want anyone to send messages.";
-      //   });
-
       this.$svsBackend.createAnonymousConcernsTicket(this.message)
         .then(res => {
           this.state = ConcernState.PENDING_ANSWER
+          this.msgId = res.id
         })
         .catch(err => {
           this.state = ConcernState.SENDING_FAILURE;

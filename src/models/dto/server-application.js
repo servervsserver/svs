@@ -8,8 +8,10 @@ export class ServerApplication {
     if (!discordInvite) throw Error("Discord link cannot be null")
     this.discordInvite = discordInvite
 
-    if (!icon) throw Error("Icon cannot be null")
+    // if (!icon) throw Error("Icon cannot be null")
     this.icon = icon
+    this.icon_url = ""
+
 
     if (!admins || !(admins instanceof Array)) throw Error("Admins must be an array")
     this.admins = admins
@@ -54,7 +56,7 @@ export const ServerApplicationConverter = {
   },
   fromFirestore(data) {
     // console.log(data.submission_date.seconds)
-    return new ServerApplication(
+    let sa = new ServerApplication(
       data.name,
       data.discord_invite,
       data.iconExt,
@@ -62,5 +64,8 @@ export const ServerApplicationConverter = {
       data.description,
       new Date(data.submission_date.seconds * 1000)
     )
+    sa.icon_url = data.icon_url
+    console.log(data, sa)
+    return sa
   }
 }

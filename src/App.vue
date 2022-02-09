@@ -128,12 +128,15 @@
         </div>
       </nav>
 
+
+      <!-- Router view -->
       <div
         id="main-router-view"
         class="router-view"
       >
         <router-view />
       </div>
+      <!-- End router view -->
 
       <footer class="footer">
         <div class="content has-text-centered">

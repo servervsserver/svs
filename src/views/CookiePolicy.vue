@@ -166,6 +166,15 @@
             Site Cookie Policy:
           </th>
         </tr>
+        <td>
+          Soundcloud
+        </td>
+        <td>
+          Analytical
+        </td>
+        <td>
+          <a>https://soundcloud.com/pages/cookies</a>
+        </td>
       </table>
     </ul>
   </div>

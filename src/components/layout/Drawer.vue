@@ -3,16 +3,20 @@
     class="drawer-container"
     :class="[modeClass, openedClass]"
   >
-    <div v-if="hasBackdrop" class="backdrop" @click="close"></div>
+    <div
+      v-if="hasBackdrop"
+      class="backdrop"
+      @click="close"
+    />
     <aside
       class="drawer-sidebar"
     >
       <div class="drawer-sidebar-inner shadow-depth-3">
-        <slot name="aside"></slot>
+        <slot name="aside" />
       </div>
     </aside>
     <div class="drawer-content">
-      <slot name="content"></slot>
+      <slot name="content" />
     </div>
   </div>
 </template>
@@ -49,6 +53,11 @@ export default {
     openedClass () { return this.openedData ? "opened":"closed" },
     modeClass () { return `mode-${this.mode}` }
   },
+  watch: {
+    opened: function(newVal, oldVal) {
+      console.log(newVal, oldVal, this)
+    }
+  },
   methods: {
     open () {
       this.openedData = true
@@ -59,11 +68,6 @@ export default {
     toggle () {
       if (this.openedData) this.close()
       else this.open()
-    }
-  },
-  watch: {
-    opened: function(newVal, oldVal) {
-      console.log(newVal, oldVal, this)
     }
   }
 }

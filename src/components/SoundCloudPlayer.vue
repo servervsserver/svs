@@ -1,10 +1,17 @@
 <template>
-    <div v-if="JSON.parse(this.$cookie.get('cookiepreference')).thirdparty == true">
-    <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" v-bind:src="'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + playlist_id"></iframe>
-    </div>
-    <div v-else>
-        Third Party cookies must be enabled to view this item
-    </div>
+  <div v-if="JSON.parse(this.$cookie.get('cookiepreference')).thirdparty == true">
+    <iframe
+      width="100%"
+      height="300"
+      scrolling="no"
+      frameborder="no"
+      allow="autoplay"
+      :src="'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + playlist_id"
+    />
+  </div>
+  <div v-else>
+    Third Party cookies must be enabled to view this item
+  </div>
 </template>
 
 <script>

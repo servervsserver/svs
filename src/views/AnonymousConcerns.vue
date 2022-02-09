@@ -3,11 +3,11 @@
     <h1>Anonymous concerns</h1>
     <section v-if="isWriting">
       <p>
-        SVS is, and has always, a community focused and community led event.
-        That's why it is vital that you, as a member of the SVS community, have
+        <brand-name-short/> is, and has always, a community focused and community led event.
+        That's why it is vital that you, as a member of the <brand-name-short/> community, have
         a platform to voice any concerns you may have about the event, the way
-        it's run, or anything else related to SVS, so that we can continue to
-        make SVS better for you and everyone involved.
+        it's run, or anything else related to <brand-name-short/>, so that we can continue to
+        make <brand-name-short/> better for you and everyone involved.
       </p>
 
       <p>
@@ -153,31 +153,40 @@ export default {
         this.answer = data.answer ? data.answer : "Sorry, we haven't gotten to your feedback yet. Please continue to check back!";
 }
       });
-          
+
         }
 
   },
   methods: {
     onSubmit() {
       this.state = ConcernState.SENDING;
-      let feedObj = {
-        message: this.message,
-        timestamp: new Date(),
-        answer: "",
-      };
-      const ref = doc(collection(db, "feedback"));
-      let uid = ref.id;
-      setDoc(ref, feedObj)
-        .then(function (data) {
-          this.state = ConcernState.PENDING_ANSWER;
-          const appRef = ref(rtdb, "applications/");
-          push(appRef, uid);
+      // let feedObj = {
+      //   message: this.message,
+      //   timestamp: new Date(),
+      //   answer: "",
+      // };
+      // const ref = doc(collection(db, "feedback"));
+      // let uid = ref.id;
+      // setDoc(ref, feedObj)
+      //   .then(function (data) {
+      //     this.state = ConcernState.PENDING_ANSWER;
+      //     const appRef = ref(rtdb, "applications/");
+      //     push(appRef, uid);
+      //   })
+      //   .catch((e) => {
+      //     this.state = ConcernState.SENDING_FAILURE;
+      //     this.errorMessage =
+      //       "Well, I just don't want anyone to send messages.";
+      //   });
+
+      this.$svsBackend.createAnonymousConcernsTicket(this.message)
+        .then(res => {
+          this.state = ConcernState.PENDING_ANSWER
         })
-        .catch((e) => {
+        .catch(err => {
           this.state = ConcernState.SENDING_FAILURE;
-          this.errorMessage =
-            "Well, I just don't want anyone to send messages.";
-        });
+          this.errorMessage = "Hugh... something went south. It may just be server shortage, try again later."
+        })
 
     },
   },

@@ -13,8 +13,6 @@ import Rules from '../views/main-event/Rules.vue'
 import ServerApplication from '../views/main-event/ServerApplication.vue'
 import EpUpload from "../views/main-event/EpUpload.vue"
 
-import Archive from '../views/Archive.vue'
-
 import ServerProfile from '../views/server/ServerProfile.vue'
 
 
@@ -25,6 +23,7 @@ import PageNotFound from '../views/PageNotFound.vue'
 
 import { addTestBlockToRoutes } from "./router.dev.js"
 import { addAdminBlockToRoutes } from "./admin-router.js"
+import { addArchiveBlockToRoutes } from "./archive-router.js"
 
 
 Vue.use(VueRouter)
@@ -43,11 +42,6 @@ const routes = [
     path: '/cookie-policy',
     name: 'CookiePolicy',
     component: CookiePolicy
-  },
-  {
-    path: '/archive',
-    name: 'Archive',
-    component: Archive
   },
   {
     path: '/vote',
@@ -103,6 +97,7 @@ const routes = [
   }
 ]
 
+addArchiveBlockToRoutes(routes)
 addAdminBlockToRoutes(routes)
 addTestBlockToRoutes(routes)
 

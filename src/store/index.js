@@ -96,6 +96,9 @@ export default new Vuex.Store({
     },
     nextMilestone: state => {
       return state.svsMainEventInformations.nextMilestone
+    },
+    isComingSoonBypassed: state => {
+      return process.env.VUE_APP_BYPASS_COMINGSOON
     }
   },
   mutations: {

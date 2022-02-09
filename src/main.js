@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import { Auth0Plugin } from "./auth";
+import { BackendPlugin } from "./plugins/all"
 
 import BrandName from './components/branding/BrandName.vue'
 import BrandNameShort from './components/branding/BrandNameShort.vue'
@@ -36,8 +37,10 @@ Vue.component('squared-image-box', SquaredImageContainer)
 // =================================================
 
 import { date } from "./filters/date"
+import { discordInviteHandle } from "./filters/discord"
 
 Vue.filter('date', date)
+Vue.filter('discordInviteHandle', discordInviteHandle)
 
 Vue.config.productionTip = false
 
@@ -56,6 +59,8 @@ Vue.use(Auth0Plugin, {
     );
   }
 });
+
+Vue.use(BackendPlugin)
 
 new Vue({
   router,

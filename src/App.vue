@@ -85,7 +85,7 @@
             >
               <router-link
                 class="navbar-item"
-                to="/admin"
+                to="/admin/dashboard"
               >
                 Admin
               </router-link>
@@ -102,7 +102,7 @@
 
             <router-link
               class="navbar-item"
-              to="/#about"
+              to="/about"
             >
               About us
             </router-link>

@@ -19,7 +19,7 @@
         </div>
         <div class="column is-6 has-text-centered">
           <h2>Wanna join the fourth edition?</h2>
-          <router-link class="button svs-evolving-gradient" to="/main-event/server-application">
+          <router-link class="button svs-evolving-gradient is-large" style="text-decoration: none" to="/main-event/server-application">
             Apply here!
           </router-link>
         </div>
@@ -33,8 +33,9 @@
 
 export default {
   name: 'Home',
-  components: {
-
+  mounted () {
+    console.log("Heya!")
+    console.log(this.$svsBackend)
   }
 }
 </script>

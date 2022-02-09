@@ -6,7 +6,7 @@
       scrolling="no"
       frameborder="no"
       allow="autoplay"
-      :src="'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + playlist_id"
+      :src="'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + playlistId"
     />
   </div>
   <div v-else>
@@ -18,7 +18,7 @@
 
 export default ({
     props : {
-        playlist_id : {default: '1366455853', type : String},
+        playlistId : {default: '1366455853', type : String},
     }
 })
 </script>

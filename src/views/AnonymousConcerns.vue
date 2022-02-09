@@ -3,11 +3,11 @@
     <h1>Anonymous concerns</h1>
     <section v-if="isWriting">
       <p>
-        <brand-name-short/> is, and has always, a community focused and community led event.
-        That's why it is vital that you, as a member of the <brand-name-short/> community, have
+        <brand-name-short /> is, and has always, a community focused and community led event.
+        That's why it is vital that you, as a member of the <brand-name-short /> community, have
         a platform to voice any concerns you may have about the event, the way
-        it's run, or anything else related to <brand-name-short/>, so that we can continue to
-        make <brand-name-short/> better for you and everyone involved.
+        it's run, or anything else related to <brand-name-short />, so that we can continue to
+        make <brand-name-short /> better for you and everyone involved.
       </p>
 
       <p>

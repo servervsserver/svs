@@ -2,9 +2,9 @@
   <!-- Render if user has voted -->
 
   <div v-if="typeof discordID == 'undefined'">
-    <div class='login'>
+    <div class="login">
       <h1>
-        <i class="fa-brands fa-discord"></i><br>
+        <i class="fa-brands fa-discord" /><br>
         Login to Vote
       </h1>
     </div>

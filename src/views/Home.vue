@@ -3,10 +3,10 @@
     <div class="home container">
       <h1>
         <!-- Welcome to <span style="color: #FFBA5E"> Server Versus Server</span> -->
-        Welcome to <brand-name style="color: #ffba5e"/>
+        Welcome to <brand-name style="color: #ffba5e" />
       </h1>
       <p>
-        <brand-name-short/>&nbsp;IV - Main event <br>
+        <brand-name-short />&nbsp;IV - Main event <br>
         {{ $store.getters.nextMilestone.name }} -
         {{ $store.getters.nextMilestone.date | date('dd MONTH yyyy at hour:min', false, true) }}
       </p>
@@ -19,7 +19,11 @@
         </div>
         <div class="column is-6 has-text-centered">
           <h2>Wanna join the fourth edition?</h2>
-          <router-link class="button svs-evolving-gradient is-large" style="text-decoration: none" to="/main-event/server-application">
+          <router-link
+            class="button svs-evolving-gradient is-large"
+            style="text-decoration: none"
+            to="/main-event/server-application"
+          >
             Apply here!
           </router-link>
         </div>

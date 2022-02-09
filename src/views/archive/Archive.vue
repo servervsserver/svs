@@ -1,14 +1,14 @@
 <template>
   <coming-soon>
     <div class="archive">
-      <h1> <brand-name-short/> Archive: </h1>
+      <h1> <brand-name-short /> Archive: </h1>
       <h2> Past EPs: </h2>
       <Draw
         v-for="(x,index) in PastEPs"
         :key="index"
         :title="index"
       >
-      <Player />
+        <Player />
       </Draw>
     </div>
   </coming-soon>

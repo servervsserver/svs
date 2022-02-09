@@ -2,7 +2,12 @@
   <!-- Render if user has voted -->
 
   <div v-if="typeof discordID == 'undefined'">
-    Login to vote
+    <div class='login'>
+      <h1>
+        <i class="fa-brands fa-discord"></i><br>
+        Login to Vote
+      </h1>
+    </div>
   </div>
 
   <div v-else-if="hasvoted">
@@ -157,7 +162,6 @@
 </template>
 
 <script>
-
 import { initializeApp } from 'firebase/app'
 import { getDatabase, ref, get, child, set} from 'firebase/database'
 import ChoosePool from '../components/ChoosePoolButton.vue'
@@ -365,5 +369,6 @@ h1.RankNumber {
 div.label {
     color: inherit;
 }
+
 
 </style>

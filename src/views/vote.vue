@@ -1,7 +1,11 @@
 <template>
   <!-- Render if user has voted -->
 
-  <div v-if="hasvoted">
+  <div v-if="typeof discordID == 'undefined'">
+    Login to vote
+  </div>
+
+  <div v-else-if="hasvoted">
     <h1> Thank you for voting ! </h1>
   </div>
 
@@ -202,7 +206,7 @@ export default ({
         ],
 
         //Discord ID of user
-        discordID: 'abc246',
+        discordID: this.$store.state._uid,
 
         //Pool users vote goes to -> Can be server or community -> If > 1 in array, prompt user to choose pool
         pool: ['server1','server2'],
@@ -215,6 +219,7 @@ export default ({
     )
   },
   mounted () {
+
         //Get Value of "Voters" -> List of discord IDs who have voted
     get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
       if (snapshot.exists()) {

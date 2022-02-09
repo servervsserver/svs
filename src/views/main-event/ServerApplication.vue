@@ -322,7 +322,7 @@
 import { Validators, Validate } from "../../models/properties/validators"
 import { ServerApplication } from "../../models/dto/server-application"
 
-const APPLICATION_STATUS = Object.freeze({
+const ApplicationStatus = Object.freeze({
   NOT_SENT: 0,
   SENDING: 1,
   SENT: 2,
@@ -342,21 +342,21 @@ export default {
       userName: "",
       adminNames: [],
       serverDescription: "",
-      status: APPLICATION_STATUS.NOT_SENT
+      status: ApplicationStatus.NOT_SENT
     }
   },
   computed: {
     isApplicationNotSent() {
-      return this.status == APPLICATION_STATUS.NOT_SENT
+      return this.status == ApplicationStatus.NOT_SENT
     },
     isApplicationSending() {
-      return this.status == APPLICATION_STATUS.SENDING
+      return this.status == ApplicationStatus.SENDING
     },
     isApplicationSent() {
-      return this.status == APPLICATION_STATUS.SENT
+      return this.status == ApplicationStatus.SENT
     },
     isApplicationFailure() {
-      return this.status == APPLICATION_STATUS.FAILURE
+      return this.status == ApplicationStatus.FAILURE
     },
     serverNameIsTooShort () {
       return !Validators.minCharCount(1)(this.serverName)
@@ -443,6 +443,7 @@ export default {
       this.adminNames.splice(idx, 1)
     },
     submit: function() {
+      this.status = ApplicationStatus.SENDING
 
       try {
         this.$svsBackend.createServerApplication(new ServerApplication(
@@ -452,9 +453,11 @@ export default {
           this.adminNames,
           this.serverDescription
         )).then(res => {
+          this.status = ApplicationStatus.SENT
           console.log(res)
         })
       } catch (error) {
+        this.status = ApplicationStatus.FAILURE
         console.error(error)
       }
 

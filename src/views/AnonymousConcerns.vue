@@ -160,24 +160,33 @@ export default {
   methods: {
     onSubmit() {
       this.state = ConcernState.SENDING;
-      let feedObj = {
-        message: this.message,
-        timestamp: new Date(),
-        answer: "",
-      };
-      const ref = doc(collection(db, "feedback"));
-      let uid = ref.id;
-      setDoc(ref, feedObj)
-        .then(function (data) {
-          this.state = ConcernState.PENDING_ANSWER;
-          const appRef = ref(rtdb, "applications/");
-          push(appRef, uid);
+      // let feedObj = {
+      //   message: this.message,
+      //   timestamp: new Date(),
+      //   answer: "",
+      // };
+      // const ref = doc(collection(db, "feedback"));
+      // let uid = ref.id;
+      // setDoc(ref, feedObj)
+      //   .then(function (data) {
+      //     this.state = ConcernState.PENDING_ANSWER;
+      //     const appRef = ref(rtdb, "applications/");
+      //     push(appRef, uid);
+      //   })
+      //   .catch((e) => {
+      //     this.state = ConcernState.SENDING_FAILURE;
+      //     this.errorMessage =
+      //       "Well, I just don't want anyone to send messages.";
+      //   });
+
+      this.$svsBackend.createAnonymousConcernsTicket(this.message)
+        .then(res => {
+          this.state = ConcernState.PENDING_ANSWER
         })
-        .catch((e) => {
+        .catch(err => {
           this.state = ConcernState.SENDING_FAILURE;
-          this.errorMessage =
-            "Well, I just don't want anyone to send messages.";
-        });
+          this.errorMessage = "Hugh... something went south. It may just be server shortage, try again later."
+        })
 
     },
   },

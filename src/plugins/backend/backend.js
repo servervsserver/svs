@@ -118,6 +118,33 @@ export default class BackendPlugin {
     })
   }
 
+  createAnonymousConcernsTicket(message) {
+    const anonyConDocRef
+      = addDoc(
+          collection(this._firestoreDb, "test-anonymous-concerns"),
+          { message: message, date: new Date(), answer: "" }
+        )
+
+    return anonyConDocRef
+  }
+
+  getAllAnonymousConcernsTickets() {
+    const colSnap = getDocs(collection(this._firestoreDb, "test-anonymous-concerns"))
+
+    return colSnap.then(snappedDocs => {
+      let data = []
+      snappedDocs.forEach(doc => {
+        data.push({
+          id: doc.id,
+          message: doc.data().message,
+          answer: doc.data().answer,
+          date: new Date(doc.data().date.seconds * 1000)
+        })
+      })
+      return data
+    })
+  }
+
 
 
   static install (Vue, options) {

@@ -46,10 +46,5 @@ export class Server {
   copy () {
     return new Server().setFrom(this)
   }
-  // _uid: string
-  // name: string
-  // discordInvite: string
-  // iconUrl: string
-  // admins: Array<string>
-  // description: string
+
 }

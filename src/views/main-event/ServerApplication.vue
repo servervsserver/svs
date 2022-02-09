@@ -413,10 +413,10 @@ export default {
     }
   },
   mounted () {
-    // this.serverName = "Default server name for tests"
-    // this.serverInviteLink = "https://discord.com/invite/8wsGFwxT5S"
-    // this.adminNames = ["Jiwayt#1234"]
-    // this.serverDescription = "I should Hideaway to tell a new story about having a fake description...and make it twice as long because this story doesn't pass my validator. ROFL"
+    this.serverName = "Default server name for tests " + (Math.random() * 1000).toFixed(1)
+    this.serverInviteLink = "https://discord.com/invite/8wsGFwxT5S"
+    this.adminNames = ["Jiwayt#1234"]
+    this.serverDescription = "I should Hideaway to tell a new story about having a fake description...and make it twice as long because this story doesn't pass my validator. ROFL"
   },
   methods: {
     onImageChange: function (event) {
@@ -445,21 +445,38 @@ export default {
     submit: function() {
       this.status = ApplicationStatus.SENDING
 
-      try {
-        this.$svsBackend.createServerApplication(new ServerApplication(
-          this.serverName,
-          this.serverInviteLink,
-          this.serverIcon,
-          this.adminNames,
-          this.serverDescription
-        )).then(res => {
-          this.status = ApplicationStatus.SENT
-          console.log(res)
-        })
-      } catch (error) {
-        this.status = ApplicationStatus.FAILURE
-        console.error(error)
-      }
+      let serverApplication = new ServerApplication(
+        this.serverName,
+        this.serverInviteLink,
+        this.serverIcon,
+        this.adminNames,
+        this.serverDescription
+      )
+
+      this.$svsBackend.createServerApplicationToSvSIV(serverApplication)
+      .then( res => {
+        this.status = ApplicationStatus.SENT
+        console.log(res)
+      })
+      
+      // this.$svsBackend.createServer(serverApplication)
+      //   .then( res => {
+      //       this.status = ApplicationStatus.SENT
+      //       console.log(res)
+      //   })
+
+
+
+      // try {
+      //   this.$svsBackend.createServerApplication(serverApplication)
+      //   .then(res => {
+      //     this.status = ApplicationStatus.SENT
+      //     console.log(res)
+      //   })
+      // } catch (error) {
+      //   this.status = ApplicationStatus.FAILURE
+      //   console.error(error)
+      // }
 
       // let appObj = {
       //   name: this.serverName,

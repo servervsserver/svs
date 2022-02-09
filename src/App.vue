@@ -47,7 +47,7 @@
                 class="navbar-item"
                 to="/main-event/overview"
               >
-                Main&nbsp;Event -&nbsp;<brand-name-short/>&nbsp;IV
+                <brand-name-short/>&nbsp;IV
               </router-link>
 
               <div class="navbar-dropdown">
@@ -77,7 +77,16 @@
                 </router-link>
               </div>
             </div>
-
+            <div
+              class="navbar-item">
+              <router-link
+                class="navbar-item"
+                to="/archives"
+              >
+              Archives
+              </router-link>
+            </div>
+            <!-- Admin menu  -->
             <div
               v-if="$store.getters.isAdmin"
               :key="$route.fullPath + '@madmin'"

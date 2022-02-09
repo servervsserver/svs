@@ -5,8 +5,10 @@ import store from './store'
 import { Auth0Plugin } from "./auth";
 import { BackendPlugin } from "./plugins/all"
 
+import ComingSoon from "./components/ComingSoon.vue"
 import BrandName from './components/branding/BrandName.vue'
 import BrandNameShort from './components/branding/BrandNameShort.vue'
+Vue.component('coming-soon', ComingSoon)
 Vue.component('brand-name', BrandName)
 Vue.component('brand-name-short', BrandNameShort)
 

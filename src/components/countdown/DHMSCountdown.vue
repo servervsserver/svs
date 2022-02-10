@@ -8,7 +8,7 @@
             id="days"
             class="countdown-number"
           >
-          {{ days }}
+            {{ days }}
           </span>
           <span class="countdown-subtext">days</span>
         </li>

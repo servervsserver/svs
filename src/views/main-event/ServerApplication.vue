@@ -92,7 +92,7 @@
                 >
                   <!-- <template v-slot:title>Yep'</template> -->
                   <template v-slot:message>
-                    If your server is only accessible through direct invites<br/>
+                    If your server is only accessible through direct invites<br>
                     (Patreon Discords, Closed crews,...)
                   </template>
                   <span class="icon is-small is-left">
@@ -101,9 +101,9 @@
                 </tooltip>
                 <div class="field">
                   <input
+                    id="is-private"
                     type="checkbox"
                     name="is-private"
-                    id="is-private"
                     class="switch is-rounded"
                   >
                   <label for="is-private" />
@@ -313,10 +313,10 @@
 
           <div class="field">
             <input
+              id="coc-accept"
               v-model="hasReadAndAgreedCoC"
               type="checkbox"
               name="coc-accept"
-              id="coc-accept"
               class="switch is-rounded"
             >
             <label for="coc-accept">
@@ -326,10 +326,10 @@
 
           <div class="field">
             <input
+              id="rules-accept"
               v-model="hasReadAndAgreedRules"
               type="checkbox"
               name="rules-accept"
-              id="rules-accept"
               class="switch is-rounded"
             >
             <label for="rules-accept">

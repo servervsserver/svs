@@ -39,6 +39,5 @@
       Start dates start from midnight of this day<br>
       End dates ends at mignight of this day
     </blockquote>
-
   </div>
 </template>

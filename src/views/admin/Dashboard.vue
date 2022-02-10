@@ -80,11 +80,16 @@
           </tbody>
         </table>
       </div>
+
+      <br>
+
+      <ToggleVoting />
     </div>
   </div>
 </template>
 
 <script>
+import ToggleVoting from '@/components/OpenVoting.vue'
 
 export default {
   data: function () {
@@ -93,6 +98,9 @@ export default {
       anonymousConcernsTickers: [],
       ascending: false
     }
+  },
+  components : {
+    ToggleVoting
   },
   mounted () {
     this.$svsBackend.getAllServerApplications()

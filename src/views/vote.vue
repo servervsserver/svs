@@ -231,10 +231,10 @@ export default ({
         })
         this.$data.hasvoted = foreachresults.includes(true)
       }
-      
       else {
         this.$data.hasvoted = false
-      }}
+      }
+      }
       ).catch((error) => {
       });
   },

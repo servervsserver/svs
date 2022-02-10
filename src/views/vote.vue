@@ -305,7 +305,6 @@ export default ({
       });
       
        let ballot_location = `realTimeVoting/pools/` + this.$data.pool[0] + '/' + this.$data.discordID
-       console.log(ballot_location)
 
        set(child(dbRef, ballot_location), JSON.parse(JSON.stringify(voteData.slice(1,(voteData.length)))))
 
@@ -315,7 +314,6 @@ export default ({
     poolpop : function(e) {
 
       this.$data.pool = [this.$data.pool[e]]
-      console.log(this.$data.pool)
 
     }
 

@@ -42,12 +42,7 @@
 // @ is an alias to /src
 
 export default {
-  name: 'Home',
-  mounted () {
-    console.log("Heya!")
-    console.log(this.$svsBackend)
-  }
-}
+  name: 'Home'}
 </script>
 
 <style scoped lang='scss'>

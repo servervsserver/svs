@@ -41,7 +41,6 @@ export default {
         pullData(){
 let storedProfile = this.$store.state.profile;
             let uid = this.$store.state._uid;
-        console.log(storedProfile);
             if(storedProfile){
                 this.$set(profile,storedProfile);
             }
@@ -49,7 +48,6 @@ let storedProfile = this.$store.state.profile;
                  axios
         .get(`http://localhost:3000/users/${uid}`)
         .then( (response)=>{
-        console.log(response.data);
         this.$store.commit("set_profile", response.data);
         this.profile = response.data;
 

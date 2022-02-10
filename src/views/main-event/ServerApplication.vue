@@ -82,6 +82,34 @@
                 </p>
               </div>
 
+
+
+              <div>
+                Is private?
+                <tooltip
+                  :vertical="'top'"
+                  :mode="'hover'"
+                >
+                  <!-- <template v-slot:title>Yep'</template> -->
+                  <template v-slot:message>
+                    If your server is only accessible through direct invites<br/>
+                    (Patreon Discords, Closed crews,...)
+                  </template>
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-info-circle" />
+                  </span>
+                </tooltip>
+                <div class="field">
+                  <input
+                    type="checkbox"
+                    name="is-private"
+                    id="is-private"
+                    class="switch is-rounded"
+                  >
+                  <label for="is-private" />
+                </div>
+              </div>
+
               <div class="field">
                 <label>Description</label>
                 <div class="control has-icons-left">
@@ -283,6 +311,32 @@
             </div>
           </div>
 
+          <div class="field">
+            <input
+              v-model="hasReadAndAgreedCoC"
+              type="checkbox"
+              name="coc-accept"
+              id="coc-accept"
+              class="switch is-rounded"
+            >
+            <label for="coc-accept">
+              I have read and agreed to the terms of the&#160;<router-link to="/code-of-conduct">Code of Conduct</router-link>
+            </label>
+          </div>
+
+          <div class="field">
+            <input
+              v-model="hasReadAndAgreedRules"
+              type="checkbox"
+              name="rules-accept"
+              id="rules-accept"
+              class="switch is-rounded"
+            >
+            <label for="rules-accept">
+              I have read and agreed to the&#160;<router-link to="/main-event/rules">Rules of the Competition</router-link>
+            </label>
+          </div>
+
           <button
             :disabled="!canSubmit"
             class="button is-medium"
@@ -332,6 +386,9 @@ const ApplicationStatus = Object.freeze({
 export default {
   data: function () {
     return {
+      hasReadAndAgreedCoC: false,
+      hasReadAndAgreedRules: false,
+      isPrivate: false,
       application_ref: '',
       serverName: "",
       serverInviteLink: "",
@@ -410,6 +467,8 @@ export default {
         && this.descriptionIsValid
         && this.hasEnoughPeopleInCharge
         && this.hasValidImage
+        && this.hasReadAndAgreedCoC
+        && this.hasReadAndAgreedRules
     }
   },
   mounted () {
@@ -450,7 +509,9 @@ export default {
         this.serverInviteLink,
         this.serverIcon,
         this.adminNames,
-        this.serverDescription
+        this.serverDescription,
+        new Date(),
+        this.isPrivate
       )
 
       this.$svsBackend.createServerApplicationToSvSIV(serverApplication)

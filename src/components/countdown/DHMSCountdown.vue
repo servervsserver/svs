@@ -2,19 +2,11 @@
   <div class="container dhms-countdown">
     <div>
       <ul>
-        <li><span id="days">{{ days }}</span>days</li>
-        <li><span id="hours">{{ hours }}</span>Hours</li>
-        <li><span id="minutes">{{ minutes }}</span>Minutes</li>
-        <li><span id="seconds">{{ seconds }}</span>Seconds</li>
+        <li><span class="countdown-number" id="days">{{ days }}</span>days</li>
+        <li><span class="countdown-number" id="hours">{{ hours }}</span>Hours</li>
+        <li><span class="countdown-number" id="minutes">{{ minutes }}</span>Minutes</li>
+        <li><span class="countdown-number" id="seconds">{{ seconds }}</span>Seconds</li>
       </ul>
-    </div>
-    <div
-      id="content"
-      class="emoji"
-    >
-      <span>🥳</span>
-      <span>🎉</span>
-      <span>🎂</span>
     </div>
   </div>
 </template>
@@ -431,6 +423,10 @@ export default {
 
 .dhms-countdown {
 
+  * {
+    font-family: "Jost";
+  }
+
   text-align: center;
 
   .container {
@@ -444,23 +440,30 @@ export default {
   }
 
   h1 {
-    font-weight: normal;
+    font-weight: bold;
     letter-spacing: 0.125rem;
     text-transform: uppercase;
   }
 
   li {
     display: inline-block;
-    font-size: 1.5em;
     list-style-type: none;
     padding: 1em;
+    font-size: 1.5em;
     text-transform: uppercase;
     text-align: center;
   }
 
+
   li span {
     display: block;
     font-size: 4.5rem;
+  }
+
+  .countdown-number {
+    font-weight: 800;
+    font-size: 5rem;
+    text-shadow: #F5816B 4px 4px 0px;
   }
 
   .emoji {

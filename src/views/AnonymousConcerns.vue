@@ -1,21 +1,19 @@
 <template>
   <div class="container">
-    <h1>Anonymous concerns</h1>
+    <h1>Anonymous Concerns</h1>
     <section v-if="isWriting">
       <p>
-        <brand-name-short/> is, and has always, a community focused and community led event.
-        That's why it is vital that you, as a member of the <brand-name-short/> community, have
-        a platform to voice any concerns you may have about the event, the way
-        it's run, or anything else related to <brand-name-short/>, so that we can continue to
-        make <brand-name-short/> better for you and everyone involved.
+        <brand-name-short/> s, and has always been, a community focused and community led event.
+        That is why it is vital that you, as a member of the <brand-name-short/> community,
+        have a platform to voice any concerns you may have about the event,
+        the way it is run, or anything else related to <brand-name-short/>, so that we can continue to make
+        <brand-name-short/> better for you and everyone involved.
       </p>
 
       <p>
-        Due to the fact this is anonymous, your message will be given a unique
-        link on which you can see the answer.<br>
-        We will respond to your message on this link but can't notify you when.
-        So don't lose the link before we can answer, we won't have any mean to
-        give it back to you.
+        Due to the fact this form is anonymous, your message will be given a unique link.<br>
+        We will respond to your message on this link but cannot notify you when.
+        Do not lose the link before we can answer, or we will not have any means to get back to you.
       </p>
 
       <form @submit.prevent="onSubmit">
@@ -28,7 +26,7 @@
         </div>
         <div class="field">
           <button
-            class="button svs-button-transparent"
+            class="button"
             type="submit"
           >
             Submit&nbsp;<i class="fas fa-paper-plane" />
@@ -157,7 +155,7 @@ export default {
           }
         })
     }
-    
+
   },
   methods: {
     onSubmit() {

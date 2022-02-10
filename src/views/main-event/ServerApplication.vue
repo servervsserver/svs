@@ -413,10 +413,10 @@ export default {
     }
   },
   mounted () {
-    this.serverName = "Default server name for tests " + (Math.random() * 1000).toFixed(1)
-    this.serverInviteLink = "https://discord.com/invite/8wsGFwxT5S"
-    this.adminNames = ["Jiwayt#1234"]
-    this.serverDescription = "I should Hideaway to tell a new story about having a fake description...and make it twice as long because this story doesn't pass my validator. ROFL"
+    // this.serverName = "Default server name for tests " + (Math.random() * 1000).toFixed(1)
+    // this.serverInviteLink = "https://discord.com/invite/8wsGFwxT5S"
+    // this.adminNames = ["Jiwayt#1234"]
+    // this.serverDescription = "I should Hideaway to tell a new story about having a fake description...and make it twice as long because this story doesn't pass my validator. ROFL"
   },
   methods: {
     onImageChange: function (event) {
@@ -458,59 +458,7 @@ export default {
         this.status = ApplicationStatus.SENT
         console.log(res)
       })
-      
-      // this.$svsBackend.createServer(serverApplication)
-      //   .then( res => {
-      //       this.status = ApplicationStatus.SENT
-      //       console.log(res)
-      //   })
 
-
-
-      // try {
-      //   this.$svsBackend.createServerApplication(serverApplication)
-      //   .then(res => {
-      //     this.status = ApplicationStatus.SENT
-      //     console.log(res)
-      //   })
-      // } catch (error) {
-      //   this.status = ApplicationStatus.FAILURE
-      //   console.error(error)
-      // }
-
-      // let appObj = {
-      //   name: this.serverName,
-      //   discord_invite: this.serverInviteLink,
-      //   // icon_name: this.serverIconUrl,
-      //   icon_file: this.iconFile,
-      //   admins: this.adminNames,
-      //   description: this.serverDescription
-      // };
-      //
-      // const newServerRef = this.application_ref ? this.application_ref : doc(collection(db, "servers"));
-      // let uid = (newServerRef.id);
-      // fetch(appObj.icon)
-      //   .then((r) => {
-      //     var file = this.serverIcon
-      //     var fileName = `${uid}.jpg`;
-      //     const params = {
-      //       Bucket: process.env.VUE_APP_AWS_BUCKET_NAME,
-      //       Key: `${uid}.jpg`,
-      //       Body: file,
-      //       Prefix:"servers_icons/"
-      //     };
-      //
-      //     s3.upload(params, (err, data) => {
-      //       if (err) {
-      //         console.log(err)
-      //       }
-      //       appObj.icon = ("d16ax4eys2wwsd.cloudfront.net/" + fileName);
-      //       setDoc(newServerRef, appObj).then(function(data){
-      //         const appRef = ref(rtdb, 'applications/');
-      //         push(appRef,uid);
-      //       });
-      //     });
-      //   });
     }
   }
 }

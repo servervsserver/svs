@@ -6,9 +6,9 @@
         Welcome to <brand-name style="color: #ffba5e"/>
       </h1>
       <p>
-        <brand-name-short/>&nbsp;IV - Main event <br>
+        <!-- <brand-name-short/>&nbsp;IV - Main event <br> -->
         {{ $store.getters.nextMilestone.name }} -
-        {{ $store.getters.nextMilestone.date | date('dd MONTH yyyy at hour:min', false, true) }}
+        {{ $store.getters.nextMilestone.date | date('dd MONTH yyyy at hour:min', false, false) }} UTC
       </p>
 
       <event-countdown :time="$store.getters.nextMilestone.timeRemaining" />

@@ -142,16 +142,16 @@
         <div class="content has-text-centered">
           <div class="columns">
             <div class="column">
-              <h4>Main event</h4>
+              <h4><router-link to="/main-event/overview"><brand-name/> IV</router-link></h4>
               <ul>
                 <li>
-                  <router-link to="/main-event">
-                    Main event
+                  <router-link to="/main-event/overview">
+                    Overview
                   </router-link>
                 </li>
                 <li>
                   <router-link to="/code-of-conduct">
-                    Code of conduct
+                    Code of Conduct
                   </router-link>
                 </li>
                 <li>
@@ -161,13 +161,13 @@
                 </li>
                 <li>
                   <router-link to="/main-event/server-application">
-                    Server application
+                    Server Application
                   </router-link>
                 </li>
               </ul>
             </div>
 
-            <div class="column">
+            <!-- <div class="column">
               <h4>Archive</h4>
               <ul>
                 <li>
@@ -186,14 +186,14 @@
                   </router-link>
                 </li>
               </ul>
-            </div>
+            </div> -->
 
             <div class="column">
-              <h4>The event staff</h4>
+              <h4>Get in touch</h4>
               <ul>
                 <li>
                   <router-link to="/anonymous-concerns">
-                    Anonymous concerns
+                    Anonymous Concerns
                   </router-link>
                 </li>
                 <li>
@@ -263,12 +263,12 @@ export default {
       cookiepreferences: cookiepreference,
       socialMediaLinks: [
         {
-          text: 'Discord server',
+          text: 'Discord',
           iconClass: "fab fa-discord",
           link: 'https://discord.com/invite/8wsGFwxT5S'
         },
         {
-          text: 'servervserver',
+          text: 'servervsserver',
           iconClass: "fab fa-twitch",
           link: 'https://www.twitch.tv/servervsserver'
         },
@@ -278,14 +278,14 @@ export default {
           link: 'https://www.instagram.com/servervsserver_/'
         },
         {
-          text: '@servervserver_',
+          text: '@servervsserver_',
           iconClass: "fab fa-tiktok",
           link: 'https://www.tiktok.com/@servervsserver_'
         },
         {
-          text: '@servervserver_',
+          text: '@servervsserver_',
           iconClass: "fab fa-twitter",
-          link: 'https://twitter.com/servervsserver?ref_src=twsrc%5Etfw'
+          link: 'https://twitter.com/servervsserver_'
         },
         {
           text: 'servervsserver',

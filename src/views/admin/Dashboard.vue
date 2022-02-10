@@ -6,12 +6,19 @@
         <table class="table is-striped is-hoverable">
           <thead>
             <tr>
+              <th>Icon</th>
               <th>Server name</th>
               <th>Discord Invite</th>
-              <th>Icon</th>
               <th>Admins</th>
               <th>Descriptions</th>
-              <th><button class="button svs-transparent-button" @click="orderByDate()">Submission date</button></th>
+              <th>
+                <button
+                  class="button svs-transparent-button"
+                  @click="orderByDate()"
+                >
+                  Submission date
+                </button>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -19,22 +26,30 @@
               v-for="sa in serverApplications"
               :key="sa.vueId"
             >
-              <th>{{sa.name}}</th>
+              <th>
+                <!-- {{sa.iconExt}} -->
+                <img
+                  :src="'https://'+sa.icon_url"
+                  style="min-width: 140px; max-width: 160px;"
+                >
+              </th>
+              <th>{{ sa.name }}</th>
               <th>
                 <a :href="sa.discordInvite">{{ sa.discordInvite | discordInviteHandle }}</a>
               </th>
-              <th>{{sa.iconExt}}</th>
               <th>
                 <span
-                  class="tag"
                   v-for="a in sa.admins"
                   :key="a"
+                  class="tag"
                 >
-                  {{a}}
+                  {{ a }}
                 </span>
               </th>
-              <th>{{sa.description}}</th>
-              <th class="has-text-centered">{{sa.submission_date | date('dd/mm/yyyy hour:min') }} </th>
+              <th>{{ sa.description }}</th>
+              <th class="has-text-centered">
+                {{ sa.submission_date | date('dd/mm/yyyy hour:min') }}
+              </th>
             </tr>
           </tbody>
         </table>

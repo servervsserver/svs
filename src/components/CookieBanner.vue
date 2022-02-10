@@ -142,7 +142,6 @@ export default {
         }
     },
     mounted () {
-        console.log(this.$cookie.get('cookiepreference'))
     },
     methods : {
         openclose : function () {

@@ -82,6 +82,34 @@
                 </p>
               </div>
 
+
+
+              <div>
+                Is private?
+                <tooltip
+                  :vertical="'top'"
+                  :mode="'hover'"
+                >
+                  <!-- <template v-slot:title>Yep'</template> -->
+                  <template v-slot:message>
+                    If your server is only accessible through direct invites<br/>
+                    (Patreon Discords, Closed crews,...)
+                  </template>
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-info-circle" />
+                  </span>
+                </tooltip>
+                <div class="field">
+                  <input
+                    type="checkbox"
+                    name="is-private"
+                    id="is-private"
+                    class="switch is-rounded"
+                  >
+                  <label for="is-private" />
+                </div>
+              </div>
+
               <div class="field">
                 <label>Description</label>
                 <div class="control has-icons-left">
@@ -283,6 +311,32 @@
             </div>
           </div>
 
+          <div class="field">
+            <input
+              v-model="hasReadAndAgreedCoC"
+              type="checkbox"
+              name="coc-accept"
+              id="coc-accept"
+              class="switch is-rounded"
+            >
+            <label for="coc-accept">
+              I have read and agreed to the terms of the&#160;<router-link to="/code-of-conduct">Code of Conduct</router-link>
+            </label>
+          </div>
+
+          <div class="field">
+            <input
+              v-model="hasReadAndAgreedRules"
+              type="checkbox"
+              name="rules-accept"
+              id="rules-accept"
+              class="switch is-rounded"
+            >
+            <label for="rules-accept">
+              I have read and agreed to the&#160;<router-link to="/main-event/rules">Rules of the Competition</router-link>
+            </label>
+          </div>
+
           <button
             :disabled="!canSubmit"
             class="button is-medium"
@@ -332,6 +386,9 @@ const ApplicationStatus = Object.freeze({
 export default {
   data: function () {
     return {
+      hasReadAndAgreedCoC: false,
+      hasReadAndAgreedRules: false,
+      isPrivate: false,
       application_ref: '',
       serverName: "",
       serverInviteLink: "",
@@ -410,10 +467,12 @@ export default {
         && this.descriptionIsValid
         && this.hasEnoughPeopleInCharge
         && this.hasValidImage
+        && this.hasReadAndAgreedCoC
+        && this.hasReadAndAgreedRules
     }
   },
   mounted () {
-    // this.serverName = "Default server name for tests"
+    // this.serverName = "Default server name for tests " + (Math.random() * 1000).toFixed(1)
     // this.serverInviteLink = "https://discord.com/invite/8wsGFwxT5S"
     // this.adminNames = ["Jiwayt#1234"]
     // this.serverDescription = "I should Hideaway to tell a new story about having a fake description...and make it twice as long because this story doesn't pass my validator. ROFL"
@@ -445,55 +504,22 @@ export default {
     submit: function() {
       this.status = ApplicationStatus.SENDING
 
-      try {
-        this.$svsBackend.createServerApplication(new ServerApplication(
-          this.serverName,
-          this.serverInviteLink,
-          this.serverIcon,
-          this.adminNames,
-          this.serverDescription
-        )).then(res => {
-          this.status = ApplicationStatus.SENT
-          console.log(res)
-        })
-      } catch (error) {
-        this.status = ApplicationStatus.FAILURE
-        console.error(error)
-      }
+      let serverApplication = new ServerApplication(
+        this.serverName,
+        this.serverInviteLink,
+        this.serverIcon,
+        this.adminNames,
+        this.serverDescription,
+        new Date(),
+        this.isPrivate
+      )
 
-      // let appObj = {
-      //   name: this.serverName,
-      //   discord_invite: this.serverInviteLink,
-      //   // icon_name: this.serverIconUrl,
-      //   icon_file: this.iconFile,
-      //   admins: this.adminNames,
-      //   description: this.serverDescription
-      // };
-      //
-      // const newServerRef = this.application_ref ? this.application_ref : doc(collection(db, "servers"));
-      // let uid = (newServerRef.id);
-      // fetch(appObj.icon)
-      //   .then((r) => {
-      //     var file = this.serverIcon
-      //     var fileName = `${uid}.jpg`;
-      //     const params = {
-      //       Bucket: process.env.VUE_APP_AWS_BUCKET_NAME,
-      //       Key: `${uid}.jpg`,
-      //       Body: file,
-      //       Prefix:"servers_icons/"
-      //     };
-      //
-      //     s3.upload(params, (err, data) => {
-      //       if (err) {
-      //         console.log(err)
-      //       }
-      //       appObj.icon = ("d16ax4eys2wwsd.cloudfront.net/" + fileName);
-      //       setDoc(newServerRef, appObj).then(function(data){
-      //         const appRef = ref(rtdb, 'applications/');
-      //         push(appRef,uid);
-      //       });
-      //     });
-      //   });
+      this.$svsBackend.createServerApplicationToSvSIV(serverApplication)
+      .then( res => {
+        this.status = ApplicationStatus.SENT
+        console.log(res)
+      })
+
     }
   }
 }

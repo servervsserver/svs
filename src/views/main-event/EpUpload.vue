@@ -5,7 +5,8 @@
     </h1>
     <p>
       You are happy with what your server has produced and think it's ready to submit?<br>
-      Here is the form you must fill to submit your server EP!
+      Submit your server's EP by filling out this form! <br>
+      Only one submission per server allowed. You cannot change your submission afterwards, so make sure everything meets your standards and our competition rules.
     </p>
 
     <div>
@@ -32,7 +33,21 @@
             </div>
             <!-- Cover art form  -->
             <div class="field ">
-              <label>EP Cover Art</label>
+              <label>
+                EP Cover Art
+                <tooltip
+                  :vertical="'top'"
+                  :mode="'hover'"
+                >
+                  <template v-slot:message>
+                    The image should be squared, preferably 3000x3000 pixels<br>
+                    The same standard used by distributing platforms.
+                  </template>
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-info-circle" />
+                  </span>
+                </tooltip>
+              </label>
               <div class="has-text-centered">
                 <div class="file has-name is-boxed">
                   <label class="file-label">
@@ -59,7 +74,21 @@
             </div>
             <!-- Streaming link -->
             <div class="field">
-              <label>Permanent invite link</label>
+              <label>
+                Public streaming link
+                <tooltip
+                  :vertical="'top'"
+                  :mode="'hover'"
+                >
+                  <template v-slot:message>
+                    A link where people can listen to your EP<br>
+                    (Youtube, Soundcloud,...)
+                  </template>
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-info-circle" />
+                  </span>
+                </tooltip>
+              </label>
               <div class="control has-icons-left">
                 <input
                   v-model="epStreamingLink"
@@ -73,11 +102,18 @@
           </div>
 
           <div class="column is-offset-2 is-5">
-            <img
+            <squared-image-box style="max-width: 300px">
+              <img
+                ref="serverIconEl"
+                class="shadow-depth-2"
+                :src="coverArtUrl"
+              >
+            </squared-image-box>
+            <!-- <img
               :src="coverArtUrl"
               width="100%"
               class="shadow-depth-2"
-            >
+            > -->
           </div>
         </div>
 
@@ -101,7 +137,7 @@
               </span>
             </button>
             <h3>
-              Track n° {{ index + 1 }}
+              Track {{ index + 1 }}
             </h3>
             <div class="columns is-multiline">
               <div class="column is-7">
@@ -136,8 +172,22 @@
 
               <div class="column is-5">
                 <!-- Audio file -->
-                <div class="field">
-                  <label>Audio file</label>
+                <div class="field has-text-centered-on-mobile">
+                  <label>
+                    Audio file
+                    <tooltip
+                      :vertical="'top'"
+                      :mode="'hover'"
+                    >
+                      <template v-slot:message>
+                        The audio file should be an mp3, 320kbps.<br>
+                        Aim for -14 integrated LUFS for mastering.
+                      </template>
+                      <span class="icon is-small is-left">
+                        <i class="fas fa-info-circle" />
+                      </span>
+                    </tooltip>
+                  </label>
                   <!-- <div class="has-text-centered"> -->
                   <div class="file has-name">
                     <label class="file-label">
@@ -165,10 +215,10 @@
 
                 <div class="columns is-vcentered">
                   <!-- Music genre -->
-                  <div class="column is-half is-mobile has-text-right">
+                  <div class="column is-half is-mobile has-text-right-on-desktop has-text-centered-on-mobile">
                     <label>Music genre</label>
                   </div>
-                  <div class="column is-half is-mobile">
+                  <div class="column is-half is-mobile has-text-left-on-desktop has-text-centered-on-mobile">
                     <div class="control has-icons-left">
                       <div class="select">
                         <select v-model="track.genre">
@@ -196,7 +246,7 @@
 
                 <div class="columns is-vcentered">
                   <!-- Parental Advisory -->
-                  <div class="column is-half is-mobile has-text-right">
+                  <div class="column is-half is-mobile has-text-right-on-desktop has-text-centered-on-mobile">
                     <label>
                       Explicit?
                       <tooltip
@@ -216,7 +266,7 @@
                       </tooltip>
                     </label>
                   </div>
-                  <div class="column is-half is-mobile">
+                  <div class="column is-half is-mobile has-text-left-on-desktop has-text-centered-on-mobile">
                     <div class="field">
                       <input
                         :id="'explicit-track-' + index"
@@ -232,7 +282,7 @@
 
                 <div class="columns is-vcentered">
                   <!-- Instrumental or vocal -->
-                  <div class="column is-half is-mobile has-text-right">
+                  <div class="column is-half is-mobile has-text-right-on-desktop has-text-centered-on-mobile">
                     <label>
                       Has vocals?
                     </label>
@@ -250,7 +300,7 @@
                       </span>
                     </tooltip>
                   </div>
-                  <div class="column is-half is-mobile">
+                  <div class="column is-half is-mobile has-text-left-on-desktop has-text-centered-on-mobile">
                     <div class="field">
                       <input
                         :id="'lyrics-track-' + index"
@@ -264,10 +314,10 @@
                   </div>
                 </div>
 
-                <div class="columns is-vcentered">
+                <!-- <div class="columns is-vcentered">
                   <div class="column is-half is-mobile has-text-right" />
                   <div class="column is-half is-mobile" />
-                </div>
+                </div> -->
               </div>
 
               <div class="column is-12">
@@ -299,7 +349,7 @@
                           v-model="ce.artistName"
                           class="input"
                           type="text"
-                          placeholder="Jiway"
+                          placeholder="The artist"
                         >
                         <span class="icon is-small is-left">
                           <i class="fas fa-user" />
@@ -316,7 +366,7 @@
                           v-model="ce.discordTag"
                           class="input"
                           type="text"
-                          placeholder="Jiway#7289"
+                          placeholder="TheArtist#0420"
                         >
                         <span class="icon is-small is-left">
                           <i class="fab fa-discord" />
@@ -532,21 +582,21 @@ export class Track {
 let testTrack = null
 let testTracks = []
 
-testTrack = new Track()
-testTrack.name = "My insane first track"
-testTrack.lyrics = "I saw pollen at a grocery store in Ohio yesterday. \n I told her how cool it was to meet her in person,  \n but I didn’t want to be a douche and bother her and ask her for photos or anything.  \n\n She said, \n “Oh, like you’re doing now?” \n \nI was taken aback, and all I could say was  \n“Huh?” but she kept cutting me off and going  \n“huh? huh? huh?”  \nand closing her hand shut in f ront of my face. "
-testTrack.hasLyrics = true
-testTrack.addCreditEntry()
-testTrack.addCreditEntry()
-testTrack.addCreditEntry()
-testTracks.push(testTrack)
+// testTrack = new Track()
+// testTrack.name = "My insane first track"
+// testTrack.lyrics = "I saw pollen at a grocery store in Ohio yesterday. \n I told her how cool it was to meet her in person,  \n but I didn’t want to be a douche and bother her and ask her for photos or anything.  \n\n She said, \n “Oh, like you’re doing now?” \n \nI was taken aback, and all I could say was  \n“Huh?” but she kept cutting me off and going  \n“huh? huh? huh?”  \nand closing her hand shut in f ront of my face. "
+// testTrack.hasLyrics = true
+// testTrack.addCreditEntry()
+// testTrack.addCreditEntry()
+// testTrack.addCreditEntry()
+// testTracks.push(testTrack)
 
 
 export default {
   data: function () {
     return {
       epName: "",
-      coverArtUrl: "/placeholders/ep_cover_art_placeholder_icon.jpg",
+      coverArtUrl: /*"/placeholders/ep_cover_art_placeholder_icon.jpg"*/"",
       coverArtFile: null,
       epStreamingLink: "",
       tracks: testTracks
@@ -598,6 +648,10 @@ export default {
 
 <style scoped lang='scss'>
 
+.container {
+  width: 100%;
+}
+
 .textarea.lyrics {
   transition: 0.25s all;
   height: 18em;
@@ -641,5 +695,19 @@ export default {
   justify-content: center;
   vertical-align: baseline;
   line-height: 2.2em;
+}
+
+@media(min-width: 768px) {
+  .has-text-right-on-desktop {
+    text-align: right;
+  }
+  .has-text-left-on-desktop {
+    text-align: left;
+  }
+}
+@media(max-width: 768px) {
+  .has-text-centered-on-mobile {
+    text-align: center;
+  }
 }
 </style>

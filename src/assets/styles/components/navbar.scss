@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '../theming/palette';
+@use 'sass:color';
 
 /**
 * Navbar styling
@@ -9,6 +10,7 @@
 
   position: fixed;
   width: 100%;
+  text-transform: capitalize;
 
   .navbar-brand-image {
     width: 40px;
@@ -24,6 +26,8 @@
     }
   }
 
+
+
 }
 
 @mixin navbar($color-theme) {
@@ -33,8 +37,17 @@
   $active-menu-hover: palette.map-get($color-theme, "navbar", "active-item", "bg");
 
   .navbar {
-    background-color: $background-color;
+    background-color: color.adjust($background-color, $alpha: -1);
+    box-shadow: 0px;
     color: $text-color;
+  }
+
+  .navbar.scrolled {
+    background-color: color.adjust($background-color, $alpha: -0.1);
+    color: $text-color;
+  }
+
+  .navbar {
 
     .navbar-burger {
       color: $text-color;

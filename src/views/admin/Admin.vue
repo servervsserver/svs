@@ -2,7 +2,10 @@
   <div class="admin-container">
     <drawer ref="sidenav">
       <template v-slot:aside>
-        <div class="menu" style="width: auto; max-width: 300px; overflow: hidden;">
+        <div
+          class="menu"
+          style="width: auto; max-width: 300px; overflow: hidden;"
+        >
           <p class="menu-label">
             General
           </p>
@@ -38,8 +41,11 @@
         </div>
       </template>
       <template v-slot:content>
-
-        <button style="margin-left: 60vw" class="button" @click="toggleDrawer()">
+        <button
+          style="margin-left: 60vw"
+          class="button"
+          @click="toggleDrawer()"
+        >
           Toggle
         </button>
         <div class="router-view">

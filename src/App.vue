@@ -1,12 +1,14 @@
 <template>
   <div
     :class="[theme]"
+    nativeOnScroll="handleScroll"
   >
     <CookieBanner @cookiePreferenceChange="setCookiePreferences" />
     <div id="top" />
     <div class="app-container">
       <nav
-        class="navbar shadow-depth-1"
+        class="navbar"
+        :class="{'scrolled': scrolled}"
         role="navigation"
         aria-label="main navigation"
       >
@@ -47,7 +49,7 @@
                 class="navbar-item"
                 to="/main-event/overview"
               >
-                <brand-name-short/>&nbsp;IV
+                <brand-name-short />&nbsp;IV
               </router-link>
 
               <div class="navbar-dropdown">
@@ -78,12 +80,13 @@
               </div>
             </div>
             <div
-              class="navbar-item">
+              class="navbar-item"
+            >
               <router-link
                 class="navbar-item"
                 to="/archives"
               >
-              Archives
+                Archives
               </router-link>
             </div>
             <!-- Admin menu  -->
@@ -128,27 +131,34 @@
         </div>
       </nav>
 
+
+      <!-- Router view -->
       <div
         id="main-router-view"
         class="router-view"
       >
         <router-view />
       </div>
+      <!-- End router view -->
 
       <footer class="footer">
         <div class="content has-text-centered">
           <div class="columns">
             <div class="column">
-              <h4>Main event</h4>
+              <h4>
+                <router-link to="/main-event/overview">
+                  <brand-name /> IV
+                </router-link>
+              </h4>
               <ul>
                 <li>
-                  <router-link to="/main-event">
-                    Main event
+                  <router-link to="/main-event/overview">
+                    Overview
                   </router-link>
                 </li>
                 <li>
                   <router-link to="/code-of-conduct">
-                    Code of conduct
+                    Code of Conduct
                   </router-link>
                 </li>
                 <li>
@@ -158,13 +168,13 @@
                 </li>
                 <li>
                   <router-link to="/main-event/server-application">
-                    Server application
+                    Server Application
                   </router-link>
                 </li>
               </ul>
             </div>
 
-            <div class="column">
+            <!-- <div class="column">
               <h4>Archive</h4>
               <ul>
                 <li>
@@ -183,14 +193,14 @@
                   </router-link>
                 </li>
               </ul>
-            </div>
+            </div> -->
 
             <div class="column">
-              <h4>The event staff</h4>
+              <h4>Get in touch</h4>
               <ul>
                 <li>
                   <router-link to="/anonymous-concerns">
-                    Anonymous concerns
+                    Anonymous Concerns
                   </router-link>
                 </li>
                 <li>
@@ -255,17 +265,18 @@ export default {
     var cookiepreference = this.$cookie.get('cookiepreference')
     var themecookie = this.$cookie.get('usertheme') == null ? 'dark-theme' : this.$cookie.get('usertheme')
     return {
+      scrolled: false,
       theme: themecookie,
       isActive: false,
       cookiepreferences: cookiepreference,
       socialMediaLinks: [
         {
-          text: 'Discord server',
+          text: 'Discord',
           iconClass: "fab fa-discord",
           link: 'https://discord.com/invite/8wsGFwxT5S'
         },
         {
-          text: 'servervserver',
+          text: 'servervsserver',
           iconClass: "fab fa-twitch",
           link: 'https://www.twitch.tv/servervsserver'
         },
@@ -275,14 +286,14 @@ export default {
           link: 'https://www.instagram.com/servervsserver_/'
         },
         {
-          text: '@servervserver_',
+          text: '@servervsserver_',
           iconClass: "fab fa-tiktok",
           link: 'https://www.tiktok.com/@servervsserver_'
         },
         {
-          text: '@servervserver_',
+          text: '@servervsserver_',
           iconClass: "fab fa-twitter",
-          link: 'https://twitter.com/servervsserver?ref_src=twsrc%5Etfw'
+          link: 'https://twitter.com/servervsserver_'
         },
         {
           text: 'servervsserver',
@@ -297,6 +308,9 @@ export default {
       ]
     }
   },
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll)
+  },
   methods: {
     onThemeChanged (theme) {
       this.theme = theme
@@ -310,6 +324,14 @@ export default {
     },
     setCookiePreferences : function (preferenceobject) {
       this.$data.cookiepreferences = preferenceobject
+    },
+    handleScroll (evt) {
+      console.log(evt, window.scrollY)
+      if (window.scrollY > 49) {
+        this.scrolled = true
+      } else {
+        this.scrolled = false
+      }
     }
   }
 }
@@ -322,8 +344,11 @@ export default {
 
 #main-router-view {
   min-height: 100vh;
-  padding-top: 100px;
-  padding-bottom: 60px;
+  & > * {
+    min-height: 100vh;
+    padding-top: 49px;
+    padding-bottom: 60px;
+  }
 }
 
 </style>

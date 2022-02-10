@@ -1,17 +1,24 @@
 <template>
+  <div>
+    <img
+      :src="profile.icon"
+      alt=""
+      class="image"
+    >
 
-<div>
-<img :src="profile.icon" alt="" class="image">
-
-{{profile.name}} |
-{{profile.tag}} |
-{{profile.isStaff}} | 
-{{profile.isLeaders}} |
-<button @click="pullData" class="button">    <span class="icon">
-      <i class="fas fa-sync"></i>
-    </span> <span> Re-sync Profile</span></button>
-</div>
-
+    {{ profile.name }} |
+    {{ profile.tag }} |
+    {{ profile.isStaff }} | 
+    {{ profile.isLeaders }} |
+    <button
+      class="button"
+      @click="pullData"
+    >
+      <span class="icon">
+        <i class="fas fa-sync" />
+      </span> <span> Re-sync Profile</span>
+    </button>
+  </div>
 </template>
 
 
@@ -25,11 +32,15 @@ export default {
             profile:{icon:"https://i.pravatar.cc/150"}
         }
     },
+    mounted(){
+         this.$nextTick(() => {
+        this.pullData();
+      });
+    },
     methods:{
         pullData(){
 let storedProfile = this.$store.state.profile;
             let uid = this.$store.state._uid;
-        console.log(storedProfile);
             if(storedProfile){
                 this.$set(profile,storedProfile);
             }
@@ -37,7 +48,6 @@ let storedProfile = this.$store.state.profile;
                  axios
         .get(`http://localhost:3000/users/${uid}`)
         .then( (response)=>{
-        console.log(response.data);
         this.$store.commit("set_profile", response.data);
         this.profile = response.data;
 
@@ -46,11 +56,6 @@ let storedProfile = this.$store.state.profile;
             }}
 
 
-    },
-    mounted(){
-         this.$nextTick(() => {
-        this.pullData();
-      });
     },
 }
 </script>

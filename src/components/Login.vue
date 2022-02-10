@@ -40,7 +40,6 @@ export default {
     if(this.$auth.isAuthenticated){
         let str = this.$auth.user.sub
         let person = (str.split("|"));
-        console.log(person[2] + "before fauth");
         this.fAuth(person[2]);
     }
     
@@ -73,13 +72,11 @@ onAuthStateChanged(auth, (user) => {
               .then((userCredential) => {
                 // Signed in
                 var user = userCredential.user;
-                console.log(user.uid);
                 this.$store.commit("set_uid",user.uid);
               })
               .catch((error) => {
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                console.log(errorMessage);
               });
         
         });

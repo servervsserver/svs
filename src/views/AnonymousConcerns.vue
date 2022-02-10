@@ -1,21 +1,19 @@
 <template>
   <div class="container">
-    <h1>Anonymous concerns</h1>
+    <h1>Anonymous Concerns</h1>
     <section v-if="isWriting">
       <p>
-        <brand-name-short/> is, and has always, a community focused and community led event.
-        That's why it is vital that you, as a member of the <brand-name-short/> community, have
-        a platform to voice any concerns you may have about the event, the way
-        it's run, or anything else related to <brand-name-short/>, so that we can continue to
-        make <brand-name-short/> better for you and everyone involved.
+        <brand-name-short /> is, and has always been, a community focused and community led event.
+        That is why it is vital that you, as a member of the <brand-name-short /> community,
+        have a platform to voice any concerns you may have about the event,
+        the way it is run, or anything else related to <brand-name-short />, so that we can continue to make
+        <brand-name-short /> better for you and everyone involved.
       </p>
 
       <p>
-        Due to the fact this is anonymous, your message will be given a unique
-        link on which you can see the answer.<br>
-        We will respond to your message on this link but can't notify you when.
-        So don't lose the link before we can answer, we won't have any mean to
-        give it back to you.
+        Due to the fact this form is anonymous, your message will be given a unique link.<br>
+        We will respond to your message on this link but cannot notify you when.
+        Do not lose the link before we can answer, or we will not have any means to get back to you.
       </p>
 
       <form @submit.prevent="onSubmit">
@@ -28,7 +26,7 @@
         </div>
         <div class="field">
           <button
-            class="button svs-button-transparent"
+            class="button"
             type="submit"
           >
             Submit&nbsp;<i class="fas fa-paper-plane" />
@@ -64,11 +62,15 @@
       <p>Thank you for your message.</p>
       <p>
         When we have read your message we will update this page with our
-        response. Due to the anonymous nature of submissions, we are unable to
+        response. <br>
+        Due to the anonymous nature of submissions, we are unable to
         notify you of any new responses. <br>
         Make sure to regularly check the url below:
       </p>
-      <button class="button is-medium">
+      <button
+        v-clipboard="link"
+        class="button is-medium"
+      >
         {{ link }}
       </button>
     </section>
@@ -113,7 +115,7 @@ export default {
   },
   data: function () {
     return {
-      msgID : undefined,
+      msgId : undefined,
       message: undefined,
       answer: undefined,
       state: ConcernState.WRITING,
@@ -137,51 +139,34 @@ export default {
       return this.state == ConcernState.SENDING_FAILURE;
     },
     link() {
-      return `Link to this page with the ticket of id ${this.msgID}`;
+      return `${window.location.origin}${this.$route.path}/${this.msgId}`;
     },
   },
   mounted() {
-    const id = this.$route.params.id;
-    this.msgID = id;
-    if (id) {
-      const docRef = doc(db, "feedback", id);
-      getDoc(docRef).then(docSnap => {
-        if(docSnap.exists()){
-        let data = docSnap.data();
-        this.state = data.answer ? ConcernState.ANSWERED: ConcernState.PENDING_ANSWER;
-        this.message = data.message;
-        this.answer = data.answer ? data.answer : "Sorry, we haven't gotten to your feedback yet. Please continue to check back!";
-}
-      });
 
-        }
+    if (this.$route.params.id) {
+      this.$svsBackend.getAnonymousConcernsTicketById(this.$route.params.id)
+        .then(res => {
+          if (!res) {
+            this.$router.push({ name: 'AnonymousConcerns', replace: true })
+          } else {
+            this.msgId = res.id
+            this.message = res.message
+            this.answer = res.answer
+            this.date = res.date
+            this.state = this.answer ? ConcernState.ANSWERED : ConcernState.PENDING_ANSWER
+          }
+        })
+    }
 
   },
   methods: {
     onSubmit() {
       this.state = ConcernState.SENDING;
-      // let feedObj = {
-      //   message: this.message,
-      //   timestamp: new Date(),
-      //   answer: "",
-      // };
-      // const ref = doc(collection(db, "feedback"));
-      // let uid = ref.id;
-      // setDoc(ref, feedObj)
-      //   .then(function (data) {
-      //     this.state = ConcernState.PENDING_ANSWER;
-      //     const appRef = ref(rtdb, "applications/");
-      //     push(appRef, uid);
-      //   })
-      //   .catch((e) => {
-      //     this.state = ConcernState.SENDING_FAILURE;
-      //     this.errorMessage =
-      //       "Well, I just don't want anyone to send messages.";
-      //   });
-
       this.$svsBackend.createAnonymousConcernsTicket(this.message)
         .then(res => {
           this.state = ConcernState.PENDING_ANSWER
+          this.msgId = res.id
         })
         .catch(err => {
           this.state = ConcernState.SENDING_FAILURE;

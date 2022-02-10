@@ -17,4 +17,8 @@ $color-theme: palette.generateCompletePalette(
   .gradient-bg {
     background: url("/backgrounds/bg_dark.png") fixed;
   }
+
+  .app-container {
+    background: url("/backgrounds/bg_dark.png") fixed;
+  }
 }

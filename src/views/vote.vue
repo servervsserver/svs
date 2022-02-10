@@ -1,7 +1,16 @@
 <template>
   <!-- Render if user has voted -->
 
-  <div v-if="hasvoted">
+  <div v-if="typeof this.$store.state._uid == 'undefined'">
+    <div class="login">
+      <h1>
+        <i class="fa-brands fa-discord" /><br>
+        Login to Vote
+      </h1>
+    </div>
+  </div>
+
+  <div v-else-if="hasvoted">
     <h1> Thank you for voting ! </h1>
   </div>
 
@@ -153,7 +162,6 @@
 </template>
 
 <script>
-
 import { initializeApp } from 'firebase/app'
 import { getDatabase, ref, get, child, set} from 'firebase/database'
 import ChoosePool from '../components/ChoosePoolButton.vue'
@@ -197,11 +205,9 @@ export default ({
           { name: 'EP 1', server: 'server 1' },
           { name: 'EP 2', server: 'server 2' },
           { name: 'EP 3', server: 'server 3' },
-          { name: 'EP 4', server: 'server 4' }
+          { name: 'EP 4', server: 'server 4' },
+          {name: 'EP 5', server : 'server 5'}
         ],
-
-        //Discord ID of user
-        discordID: 'abc246',
 
         //Pool users vote goes to -> Can be server or community -> If > 1 in array, prompt user to choose pool
         pool: ['server1','server2'],
@@ -214,17 +220,22 @@ export default ({
     )
   },
   mounted () {
+    
         //Get Value of "Voters" -> List of discord IDs who have voted
     get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
+      console.log('here')
       if (snapshot.exists()) {
         var foreachresults = []
         snapshot.val().forEach((element) => {
-          foreachresults.push(bcrypt.compareSync(this.$data.discordID, element))
+          foreachresults.push(bcrypt.compareSync(this.$store.state._uid, element))
         })
         this.$data.hasvoted = foreachresults.includes(true)
       }
-      }).catch((error) => {
-        console.error(error);
+      
+      else {
+        this.$data.hasvoted = false
+      }}
+      ).catch((error) => {
       });
   },
   methods: {
@@ -238,10 +249,10 @@ export default ({
   })
   var withoutcheckbox = _data_.slice(1,(_data_.length))
   var returnvariable = true
+  var alreadyselected = []
   withoutcheckbox.forEach((element) => {
 
     if (!(valid_options.includes(element))) {
-
       returnvariable = false
 
     }
@@ -250,6 +261,22 @@ export default ({
 
   if (returnvariable == false) {
     this.$data.VoteValidationErrorMessage = ('* Make sure all inputs are complete')
+    return false
+  }
+
+
+  withoutcheckbox.forEach((element) => {
+
+    if (alreadyselected.includes(element)) {
+      returnvariable = false
+    }
+
+    alreadyselected.push(element)
+
+  })
+
+  if (returnvariable == false) {
+    this.$data.VoteValidationErrorMessage = ('* You cannot vote for the same EP twice')
     return false
   }
 
@@ -270,19 +297,24 @@ export default ({
         get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
         var tempvoterobject = snapshot.val()
 
-        set(child(dbRef, `realTimeVoting/voters/` + tempvoterobject.length ),bcrypt.hashSync(this.$data.discordID, saltRounds))
+        set(child(dbRef, `realTimeVoting/voters/` + tempvoterobject.length ),bcrypt.hashSync(this.$store.state._uid, saltRounds))
         this.$data.hasvoted = true
 
 
       }).catch((error) => {
         console.error(error);
-      });}
+      });
+      
+       let ballot_location = `realTimeVoting/pools/` + this.$data.pool[0] + '/' + this.$store.state._uid
+
+       set(child(dbRef, ballot_location), JSON.parse(JSON.stringify(voteData.slice(1,(voteData.length)))))
+
+      }
 
       },
     poolpop : function(e) {
 
       this.$data.pool = [this.$data.pool[e]]
-      console.log(this.$data.pool)
 
     }
 
@@ -336,5 +368,6 @@ h1.RankNumber {
 div.label {
     color: inherit;
 }
+
 
 </style>

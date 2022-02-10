@@ -40,14 +40,14 @@ class SvSMainEventInformations {
   constructor() {
 
     this.serverApplicationPhaseStart = new EventMilestone(
-      "Server application start",
+      "Server application opening",
       new Date(Date.UTC(2022, 1, 19, 0, 0, 0)),
       "If you want to participate in the competition, you apply now!"
     )
 
     this.serverApplicationPhaseEnd = new EventMilestone(
       "Server application end",
-      new Date(Date.UTC(2022, 2, 19, 0, 0, 0)),
+      new Date(Date.UTC(2022, 2, 19, 23, 59, 0)),
       "Application is closed and we finish reviewing the participants until next week."
     )
 
@@ -59,7 +59,7 @@ class SvSMainEventInformations {
 
     this.competitionEnd = new EventMilestone(
       "Competition submissions closed",
-      new Date(Date.UTC(2022, 3, 23, 0, 0, 0)),
+      new Date(Date.UTC(2022, 3, 23, 23, 59, 0)),
       "The EP submissions are now closed."
     )
 

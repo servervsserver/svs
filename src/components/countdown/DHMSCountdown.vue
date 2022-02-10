@@ -1,30 +1,37 @@
 <template>
   <div class="container dhms-countdown">
+    <h4>{{ title }}</h4>
     <div>
       <ul>
         <li>
           <span
             id="days"
             class="countdown-number"
-          >{{ days }}</span>days
+          >
+            {{ days }}
+          </span>
+          <span class="countdown-subtext">days</span>
         </li>
         <li>
           <span
             id="hours"
             class="countdown-number"
-          >{{ hours }}</span>Hours
+          >{{ hours }}</span>
+          <span class="countdown-subtext">Hours</span>
         </li>
         <li>
           <span
             id="minutes"
             class="countdown-number"
-          >{{ minutes }}</span>Minutes
+          >{{ minutes }}</span>
+          <span class="countdown-subtext">Minutes</span>
         </li>
         <li>
           <span
             id="seconds"
             class="countdown-number"
-          >{{ seconds }}</span>Seconds
+          >{{ seconds }}</span>
+          <span class="countdown-subtext">Seconds</span>
         </li>
       </ul>
     </div>
@@ -86,6 +93,11 @@ export default {
     tag: {
       type: String,
       default: 'span'
+    },
+
+    title: {
+      type: String,
+      default: 'This is the title of the coutdown'
     },
 
     /**
@@ -443,11 +455,8 @@ export default {
 
 .dhms-countdown {
 
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;  
-  margin-bottom: 50px;
+  margin: 5em 0;
+  user-select: none;
 
   * {
     font-family: "Jost";
@@ -471,6 +480,18 @@ export default {
     text-transform: uppercase;
   }
 
+  h4 {
+    font-size: 2em;
+    margin: 0px;
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: .1em;
+  }
+
+  ul {
+    margin: 0px;
+  }
+
   li {
     display: inline-block;
     list-style-type: none;
@@ -478,42 +499,36 @@ export default {
     font-size: 1.5em;
     text-transform: uppercase;
     text-align: center;
-  }
-
-
-  li span {
-    display: block;
-    font-size: 4.5rem;
+    margin: 0px;
+    padding-top: 0;
+    line-height: 1.2;
   }
 
   .countdown-number {
     font-weight: 800;
-    font-size: 5rem;
+    font-size: 4.2rem;
     text-shadow: #F5816B 4px 4px 0px;
+    display: block;
   }
 
-  .emoji {
-    display: none;
-    padding: 1rem;
+  .countdown-subtext {
+    font-size: 0.9em;
+    letter-spacing: 2px;
+    font-weight: 300;
   }
 
-  .emoji span {
-    font-size: 4rem;
-    padding: 0 0.5rem;
-  }
-
-  @media all and (max-width: 768px) {
-    h1 {
-      font-size: calc(1.5rem * var(--smaller));
-    }
-
-    li {
-      font-size: calc(1.125rem * var(--smaller));
-    }
-
-    li span {
-      font-size: calc(3.375rem * var(--smaller));
-    }
-  }
+  // @media all and (max-width: 768px) {
+  //   h1 {
+  //     font-size: calc(1.5rem * var(--smaller));
+  //   }
+  //
+  //   li {
+  //     font-size: calc(1.125rem * var(--smaller));
+  //   }
+  //
+  //   li span {
+  //     font-size: calc(3.375rem * var(--smaller));
+  //   }
+  // }
 }
 </style>

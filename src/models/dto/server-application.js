@@ -1,6 +1,8 @@
+import { firestoreTimestampToDate } from "./timestamp"
+
 export class ServerApplication {
 
-  constructor(name, discordInvite, icon, admins, description, submission_date) {
+  constructor(name, discordInvite, icon, admins, description, submission_date, isPrivate) {
     this.vueId = Math.floor(Math.random() * 123456)
     if (!name) throw Error("Name cannot be null")
     this.name = name
@@ -25,18 +27,20 @@ export class ServerApplication {
     }
     this.submission_date = submission_date
 
+    this.isPrivate = isPrivate
+
   }
 
-
-  toFirestore(serverApplication) {
-    return {
-      name: serverApplication.name,
-      discord_invite: serverApplication.discordInvite,
-      icon: serverApplication.icon,
-      admins: serverApplication.admins,
-      description: serverApplication.description
-    }
-  }
+  //
+  // toFirestore(serverApplication) {
+  //   return {
+  //     name: serverApplication.name,
+  //     discord_invite: serverApplication.discordInvite,
+  //     icon: serverApplication.icon,
+  //     admins: serverApplication.admins,
+  //     description: serverApplication.description
+  //   }
+  // }
 
 }
 
@@ -51,7 +55,8 @@ export const ServerApplicationConverter = {
       iconExt: serverApplication.icon.name.split(".").pop(),
       admins: serverApplication.admins,
       description: serverApplication.description,
-      submission_date: serverApplication.submission_date
+      submission_date: serverApplication.submission_date,
+      is_private: serverApplication.isPrivate
     }
   },
   fromFirestore(data) {
@@ -62,10 +67,10 @@ export const ServerApplicationConverter = {
       data.iconExt,
       data.admins,
       data.description,
-      new Date(data.submission_date.seconds * 1000)
+      firestoreTimestampToDate(data.submission_date),
+      data.is_private || false
     )
     sa.icon_url = data.icon_url
-    console.log(data, sa)
     return sa
   }
 }

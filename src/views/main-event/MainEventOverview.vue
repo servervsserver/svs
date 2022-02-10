@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <h1><brand-name /> overview</h1>
+
     <div class="timeline">
       <header class="timeline-header">
         <span class="tag is-medium shadow-depth-1">
@@ -22,7 +23,7 @@
             {{ milestone.name }}
           </h1>
           <h2 class="subheading">
-            {{ milestone.date | date('dd MONTH yyyy') }}
+            {{ milestone.date | date('dd MONTH yyyy') }} - {{ milestone.date | date('hour:min') }}
           </h2>
           <p>{{ milestone.description }}</p>
         </div>
@@ -32,18 +33,11 @@
         <span class="tag is-medium">End</span>
       </div>
     </div>
+
     <blockquote>
       All dates are displayed with UTC time.<br>
       Start dates start from midnight of this day<br>
       End dates ends at mignight of this day
     </blockquote>
-    <!-- <h2>List of participants</h2>
-    <ul>
-      <li>
-        <router-link to="/server/server-id">
-          A server
-        </router-link>
-      </li>
-    </ul> -->
   </div>
 </template>

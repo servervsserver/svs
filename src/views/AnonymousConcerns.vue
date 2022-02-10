@@ -97,8 +97,6 @@
 </template>
 
 <script>
-import { db } from "@/assets/db.js";
-import { collection, doc, setDoc, getDoc } from "firebase/firestore";
 
 const ConcernState = Object.freeze({
   WRITING: 0,

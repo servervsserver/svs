@@ -443,6 +443,12 @@ export default {
 
 .dhms-countdown {
 
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;  
+  margin-bottom: 50px;
+
   * {
     font-family: "Jost";
   }

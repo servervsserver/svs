@@ -2,10 +2,30 @@
   <div class="container dhms-countdown">
     <div>
       <ul>
-        <li><span class="countdown-number" id="days">{{ days }}</span>days</li>
-        <li><span class="countdown-number" id="hours">{{ hours }}</span>Hours</li>
-        <li><span class="countdown-number" id="minutes">{{ minutes }}</span>Minutes</li>
-        <li><span class="countdown-number" id="seconds">{{ seconds }}</span>Seconds</li>
+        <li>
+          <span
+            id="days"
+            class="countdown-number"
+          >{{ days }}</span>days
+        </li>
+        <li>
+          <span
+            id="hours"
+            class="countdown-number"
+          >{{ hours }}</span>Hours
+        </li>
+        <li>
+          <span
+            id="minutes"
+            class="countdown-number"
+          >{{ minutes }}</span>Minutes
+        </li>
+        <li>
+          <span
+            id="seconds"
+            class="countdown-number"
+          >{{ seconds }}</span>Seconds
+        </li>
       </ul>
     </div>
   </div>

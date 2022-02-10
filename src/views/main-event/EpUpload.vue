@@ -598,6 +598,10 @@ export default {
 
 <style scoped lang='scss'>
 
+.container {
+  width: 100%;
+}
+
 .textarea.lyrics {
   transition: 0.25s all;
   height: 18em;

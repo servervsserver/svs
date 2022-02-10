@@ -3,11 +3,11 @@
     <h1>Anonymous Concerns</h1>
     <section v-if="isWriting">
       <p>
-        <brand-name-short/> s, and has always been, a community focused and community led event.
-        That is why it is vital that you, as a member of the <brand-name-short/> community,
+        <brand-name-short /> is, and has always been, a community focused and community led event.
+        That is why it is vital that you, as a member of the <brand-name-short /> community,
         have a platform to voice any concerns you may have about the event,
-        the way it is run, or anything else related to <brand-name-short/>, so that we can continue to make
-        <brand-name-short/> better for you and everyone involved.
+        the way it is run, or anything else related to <brand-name-short />, so that we can continue to make
+        <brand-name-short /> better for you and everyone involved.
       </p>
 
       <p>
@@ -62,12 +62,15 @@
       <p>Thank you for your message.</p>
       <p>
         When we have read your message we will update this page with our
-        response. <br/>
+        response. <br>
         Due to the anonymous nature of submissions, we are unable to
         notify you of any new responses. <br>
         Make sure to regularly check the url below:
       </p>
-      <button class="button is-medium" v-clipboard="link">
+      <button
+        v-clipboard="link"
+        class="button is-medium"
+      >
         {{ link }}
       </button>
     </section>

@@ -47,7 +47,7 @@
                 class="navbar-item"
                 to="/main-event/overview"
               >
-                <brand-name-short/>&nbsp;IV
+                <brand-name-short />&nbsp;IV
               </router-link>
 
               <div class="navbar-dropdown">
@@ -78,12 +78,13 @@
               </div>
             </div>
             <div
-              class="navbar-item">
+              class="navbar-item"
+            >
               <router-link
                 class="navbar-item"
                 to="/archives"
               >
-              Archives
+                Archives
               </router-link>
             </div>
             <!-- Admin menu  -->
@@ -142,7 +143,11 @@
         <div class="content has-text-centered">
           <div class="columns">
             <div class="column">
-              <h4><router-link to="/main-event/overview"><brand-name/> IV</router-link></h4>
+              <h4>
+                <router-link to="/main-event/overview">
+                  <brand-name /> IV
+                </router-link>
+              </h4>
               <ul>
                 <li>
                   <router-link to="/main-event/overview">

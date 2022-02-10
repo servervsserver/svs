@@ -16,6 +16,7 @@
     "axios": "^0.25.0",
     "bcryptjs": "^2.4.3",
     "bulma": "^0.9.3",
+    "bulma-divider": "^0.2.0",
     "bulma-switch": "^2.0.4",
     "bulma-timeline": "^3.0.5",
     "core-js": "^3.6.5",

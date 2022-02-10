@@ -4,7 +4,7 @@
     <div class="timeline">
       <header class="timeline-header">
         <span class="tag is-medium shadow-depth-1">
-          <brand-name-short/> IV
+          <brand-name-short /> IV
         </span>
       </header>
 

@@ -40,6 +40,7 @@
     background-color: color.adjust($background-color, $alpha: -1);
     box-shadow: 0px;
     color: $text-color;
+    transition: background-color 0.5s;
   }
 
   .navbar.scrolled {

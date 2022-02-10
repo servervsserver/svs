@@ -1,39 +1,31 @@
 <template>
-  <div>
-    <div class="home container">
-      <h1>
+  <div class="container home">
+    <div class="front-container">
+      <h1 class="main-title">
         <!-- Welcome to <span style="color: #FFBA5E"> Server Versus Server</span> -->
         Welcome to <brand-name style="color: #ffba5e" />
       </h1>
-      <p>
+      <!-- <p> -->
         <!-- <brand-name-short/>&nbsp;IV - Main event <br> -->
-        {{ $store.getters.nextMilestone.name }} -
-        {{ $store.getters.nextMilestone.date | date('dd MONTH yyyy at hour:min', false, false) }} UTC
-      </p>
+        <!-- {{ $store.getters.nextMilestone.name }} - -->
+        <!-- {{ $store.getters.nextMilestone.date | date('dd MONTH yyyy at hour:min', false, false) }} UTC -->
+      <!-- </p> -->
 
-      <event-countdown :time="$store.getters.nextMilestone.timeRemaining" />
+      <event-countdown
+        :title="$store.getters.nextMilestone.name"
+        :time="$store.getters.nextMilestone.timeRemaining"
+      />
 
-      <section class="block columns">
-        <div
-          class="column is-6"
-          style="text-align: justify"
+      <div class="has-text-centered">
+        <!-- <h2>Wanna join the fourth edition?</h2> -->
+        <router-link
+          class="button svs-evolving-gradient is-large"
+          style="text-decoration: none"
+          to="/main-event/server-application"
         >
-          TODO: write something about the event || Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eleifend nunc id porta pellentesque. Fusce ac mauris egestas magna tempus iaculis vel eu nibh. Nam nulla massa, hendrerit sed lectus a, ultricies tempus neque. Maecenas et neque eleifend, sollicitudin lacus eget, ultrices lectus. Mauris eleifend, ex eget elementum lobortis, nisi mi ornare urna, eget semper ipsum diam in felis. Vivamus euismod augue sed dolor tincidunt ultrices. Quisque arcu arcu, convallis nec ornare vel, porttitor id orci. Suspendisse non quam nibh. Sed a nulla dui. Phasellus vitae purus sapien. Phasellus eros dolor, tristique at eleifend id, vulputate rutrum justo.
-
-          Phasellus viverra nisi ut mi pretium, mollis efficitur sapien tempor. Aenean non scelerisque nisl. Nulla varius, lacus at convallis placerat, tellus purus ultricies enim, ut finibus ipsum odio at augue. Pellentesque eget dui et nisl aliquam molestie. Mauris ipsum leo, auctor in neque eu, rhoncus facilisis nisi. Aenean eu ante tincidunt, venenatis urna ut, vehicula tellus. Proin vestibulum, ex at malesuada vestibulum, nunc lacus lacinia enim, in commodo odio nibh quis dui. Nam consequat, neque vel euismod tempus, metus odio ullamcorper ex, ut iaculis purus risus sed sem. Nulla aliquet ipsum vitae massa eleifend consequat. Phasellus cursus tincidunt mattis. In non odio ut massa pulvinar mattis. Praesent blandit massa ut congue pharetra. Suspendisse ut ex dolor. Vestibulum tincidunt quam eu ante maximus efficitur.
-        </div>
-        <div class="is-divider-vertical" />
-        <div class="column is-6 has-text-centered">
-          <h2>Wanna join the fourth edition?</h2>
-          <router-link
-            class="button svs-evolving-gradient is-large"
-            style="text-decoration: none"
-            to="/main-event/server-application"
-          >
-            Apply here!
-          </router-link>
-        </div>
-      </section>
+          Apply here!
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -50,32 +42,50 @@ export default {
 
 .home {
 
-  width: 93%;
+  height: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
 
-h1 {
-  margin-top: 30px;
-  text-align: center;
-}
+  .front-container {
+    align-self: flex;
+  }
 
-p {
-  margin-top: 10px;
-  width: 100%;
-  text-align: center;
-  margin-bottom: 30px;
-
-}
-
-.about {
-  margin-top: 50px;
-
-  p {
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
+  h1 {
+    margin-top: 30px;
     text-align: center;
   }
 
-}
+  .main-title {
+    text-transform: uppercase;
+    font-family: "Montserrat", "Jost", sans-serif;
+    font-size: 3em;
+    &, * { font-weight: 500 !important; }
+    letter-spacing: 5px;
+    text-shadow: 3px 4px 0px rgb(255, 186, 94, 0.2);
+  }
+
+  p {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
+
+  }
+
+  .about {
+    margin-top: 50px;
+
+    p {
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+  }
+
 
 }
 

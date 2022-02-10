@@ -1,12 +1,14 @@
 <template>
   <div
     :class="[theme]"
+    nativeOnScroll="handleScroll"
   >
     <CookieBanner @cookiePreferenceChange="setCookiePreferences" />
     <div id="top" />
     <div class="app-container">
       <nav
-        class="navbar shadow-depth-1"
+        class="navbar"
+        :class="{'scrolled': scrolled}"
         role="navigation"
         aria-label="main navigation"
       >
@@ -263,6 +265,7 @@ export default {
     var cookiepreference = this.$cookie.get('cookiepreference')
     var themecookie = this.$cookie.get('usertheme') == null ? 'dark-theme' : this.$cookie.get('usertheme')
     return {
+      scrolled: false,
       theme: themecookie,
       isActive: false,
       cookiepreferences: cookiepreference,
@@ -305,6 +308,9 @@ export default {
       ]
     }
   },
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll)
+  },
   methods: {
     onThemeChanged (theme) {
       this.theme = theme
@@ -318,6 +324,14 @@ export default {
     },
     setCookiePreferences : function (preferenceobject) {
       this.$data.cookiepreferences = preferenceobject
+    },
+    handleScroll (evt) {
+      console.log(evt, window.scrollY)
+      if (window.scrollY > 49) {
+        this.scrolled = true
+      } else {
+        this.scrolled = false
+      }
     }
   }
 }
@@ -330,8 +344,11 @@ export default {
 
 #main-router-view {
   min-height: 100vh;
-  padding-top: 100px;
-  padding-bottom: 60px;
+  & > * {
+    min-height: 100vh;
+    padding-top: 49px;
+    padding-bottom: 60px;
+  }
 }
 
 </style>

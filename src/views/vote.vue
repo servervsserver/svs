@@ -1,7 +1,7 @@
 <template>
   <!-- Render if user has voted -->
 
-  <div v-if="typeof discordID == 'undefined'">
+  <div v-if="typeof this.$store.state._uid == 'undefined'">
     <div class="login">
       <h1>
         <i class="fa-brands fa-discord" /><br>
@@ -209,9 +209,6 @@ export default ({
           {name: 'EP 5', server : 'server 5'}
         ],
 
-        //Discord ID of user
-        discordID: this.$store.state._uid,
-
         //Pool users vote goes to -> Can be server or community -> If > 1 in array, prompt user to choose pool
         pool: ['server1','server2'],
 
@@ -223,18 +220,22 @@ export default ({
     )
   },
   mounted () {
-
+    
         //Get Value of "Voters" -> List of discord IDs who have voted
     get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
+      console.log('here')
       if (snapshot.exists()) {
         var foreachresults = []
         snapshot.val().forEach((element) => {
-          foreachresults.push(bcrypt.compareSync(this.$data.discordID, element))
+          foreachresults.push(bcrypt.compareSync(this.$store.state._uid, element))
         })
         this.$data.hasvoted = foreachresults.includes(true)
       }
-      }).catch((error) => {
-        console.error(error);
+      
+      else {
+        this.$data.hasvoted = false
+      }}
+      ).catch((error) => {
       });
   },
   methods: {
@@ -296,7 +297,7 @@ export default ({
         get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
         var tempvoterobject = snapshot.val()
 
-        set(child(dbRef, `realTimeVoting/voters/` + tempvoterobject.length ),bcrypt.hashSync(this.$data.discordID, saltRounds))
+        set(child(dbRef, `realTimeVoting/voters/` + tempvoterobject.length ),bcrypt.hashSync(this.$store.state._uid, saltRounds))
         this.$data.hasvoted = true
 
 
@@ -304,7 +305,7 @@ export default ({
         console.error(error);
       });
       
-       let ballot_location = `realTimeVoting/pools/` + this.$data.pool[0] + '/' + this.$data.discordID
+       let ballot_location = `realTimeVoting/pools/` + this.$data.pool[0] + '/' + this.$store.state._uid
 
        set(child(dbRef, ballot_location), JSON.parse(JSON.stringify(voteData.slice(1,(voteData.length)))))
 

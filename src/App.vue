@@ -137,7 +137,9 @@
         id="main-router-view"
         class="router-view"
       >
+      <Transition> 
         <router-view />
+      </Transition>
       </div>
       <!-- End router view -->
 
@@ -349,6 +351,16 @@ export default {
     padding-top: 49px;
     padding-bottom: 60px;
   }
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.15s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 
 </style>

@@ -23,7 +23,7 @@
             {{ milestone.name }}
           </h1>
           <h2 class="subheading">
-            {{ milestone.date | date('dd MONTH yyyy') }} - {{ milestone.date | date('hour:min') }}
+            {{ milestone.date | date('DAY, dd MONTH yyyy') }} - {{ milestone.date | date('hour:min') }}
           </h2>
           <p>{{ milestone.description }}</p>
         </div>
@@ -35,7 +35,7 @@
     </div>
 
     <blockquote>
-      All dates are displayed with UTC time.<br>
+      All dates are displayed in UTC time.<br>
       Start dates start from midnight of this day<br>
       End dates ends at mignight of this day
     </blockquote>

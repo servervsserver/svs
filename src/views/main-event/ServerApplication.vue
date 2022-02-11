@@ -216,14 +216,14 @@
 
               <div class="field">
                 <label>
-                  Discord tags of people in charge
+                  Discord tags of server leaders
                   <tooltip
                     :vertical="'top'"
                     :mode="'hover'"
                   >
                     <template v-slot:message>
-                      List people we should contact to confirm your server's participation.<br>
-                      Until we reach out, do not change your discord tags to ease the process.
+                      List of people we should contact to confirm your server's participation.<br>
+                      Until we reach out, do not change your discord tags to ease the application process.
                     </template>
                     <span class="icon is-small is-left">
                       <i class="fas fa-info-circle" />

@@ -519,6 +519,10 @@ export default {
         this.status = ApplicationStatus.SENT
         console.log(res)
       })
+      .catch( err => {
+        this.status = ApplicationStatus.FAILURE
+        console.error(err)
+      })
 
     }
   }

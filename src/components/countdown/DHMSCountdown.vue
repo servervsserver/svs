@@ -517,6 +517,10 @@ export default {
     font-weight: 300;
   }
 
+  @media (max-width:768px) {
+    font-size: 0.7em;
+  }
+
   // @media all and (max-width: 768px) {
   //   h1 {
   //     font-size: calc(1.5rem * var(--smaller));

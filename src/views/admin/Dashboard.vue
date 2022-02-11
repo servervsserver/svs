@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div class="container">
       <h1>Dashboard</h1>
       <div class="table-container">
@@ -85,7 +84,6 @@
 
       <ToggleVoting />
     </div>
-  </div>
 </template>
 
 <script>

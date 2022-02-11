@@ -13,7 +13,7 @@
       <div class="form">
         <!-- EP info start -->
 
-        <h2>EP informations</h2>
+        <h2>EP Information</h2>
 
         <div class="columns">
           <div class="column is-5">
@@ -40,8 +40,7 @@
                   :mode="'hover'"
                 >
                   <template v-slot:message>
-                    The image should be squared, preferably 3000x3000 pixels<br>
-                    The same standard used by distributing platforms.
+                    The cover art should be square, preferably 3000x3000 pixels— the same standard used by distribution platforms.
                   </template>
                   <span class="icon is-small is-left">
                     <i class="fas fa-info-circle" />
@@ -82,7 +81,7 @@
                 >
                   <template v-slot:message>
                     A link where people can listen to your EP<br>
-                    (Youtube, Soundcloud,...)
+                    (Youtube, Soundcloud, etc.)
                   </template>
                   <span class="icon is-small is-left">
                     <i class="fas fa-info-circle" />
@@ -151,7 +150,7 @@
                       v-model="track.name"
                       class="input"
                       type="text"
-                      :placeholder="'My awesome track n°' + (index + 1)"
+                      :placeholder="'My awesome track #' + (index + 1)"
                     >
                     <span class="icon is-small is-left"><i class="fas fa-play" /></span>
                   </div>
@@ -383,7 +382,7 @@
                           v-model="ce.description"
                           class="input"
                           type="text"
-                          placeholder="Mix, mastering, bass"
+                          placeholder="Mixing, mastering, bass"
                         >
                         <span class="icon is-small is-left">
                           <i class="fas fa-user-tag" />

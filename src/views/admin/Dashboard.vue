@@ -92,15 +92,15 @@
 import ToggleVoting from '@/components/OpenVoting.vue'
 
 export default {
+  components : {
+    ToggleVoting
+  },
   data: function () {
     return {
       serverApplications: [],
       anonymousConcernsTickers: [],
       ascending: false
     }
-  },
-  components : {
-    ToggleVoting
   },
   mounted () {
     this.$svsBackend.getAllServerApplications()

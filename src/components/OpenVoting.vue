@@ -1,50 +1,94 @@
 <template>
-<div class='openvoting gradient-bg'>
-<h1> Enable Voting </h1>
-<form>
+  <div class="openvoting gradient-bg">
+    <h1> Enable Voting </h1>
+    <form>
+      <div class="field">
+        <label class="label">From:</label>
+        <div class="control">
+          <input
+            v-model="startDate"
+            class="input"
+            type="date"
+            placeholder="Text input"
+            @change="validate"
+          >
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">At:</label>
+        <div class="control">
+          <input
+            v-model="startTime"
+            class="input"
+            type="time"
+            placeholder="Text input"
+            @change="validate"
+          >
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Until:</label>
+        <div class="control">
+          <input
+            v-model="endDate"
+            class="input"
+            type="date"
+            placeholder="Text input"
+            @change="validate"
+          >
+        </div>
+      </div>
+      <div class="field">
         <div class="field">
-  <label class="label">From:</label>
-  <div class="control">
-    <input  @change='validate' class="input" type="date" placeholder="Text input" v-model="startDate">
-  </div>
+          <label class="label">At:</label>
+          <div class="control">
+            <input
+              v-model="endTime"
+              class="input"
+              type="time"
+              placeholder="Text input"
+              @change="validate"
+            >
+          </div>
         </div>
-   <div class="field">
-    <label class="label">At:</label>
-  <div class="control">
-    <input  @change='validate' class="input" type="time" placeholder="Text input" v-model="startTime">
-  </div>
-        </div>
-    <div class="field">
-  <label class="label">Until:</label>
-  <div class="control">
-    <input  @change='validate' class="input" type="date" placeholder="Text input" v-model="endDate">
-  </div>
-</div>
-            <div class="field">
-    <div class="field">
-  <label class="label">At:</label>
-  <div class="control">
-    <input  @change='validate' class="input" type="time" placeholder="Text input" v-model="endTime">
-  </div>
-</div>
-
-    </div>
-    <input class="button is-ghost" style="background: none" type="reset" value="Clear Input" @click="clearinput">
+      </div>
+      <input
+        class="button is-ghost"
+        style="background: none"
+        type="reset"
+        value="Clear Input"
+        @click="clearinput"
+      >
     </form>
-    <div class="is-divider" data-content="OR"></div>
-        <div class="field">
-  <div class="control">
-    
+    <div
+      class="is-divider"
+      data-content="OR"
+    />
     <div class="field">
-        <input @change='validate' id="manualSwitch" type="checkbox" v-model="manual" name="manualSwitch" class="switch  is-rounded is-info">
-  <label for="manualSwitch">Enable voting from now until manually closed</label>
-  <p class="help is-danger">{{err}}</p>
+      <div class="control">
+        <div class="field">
+          <input
+            id="manualSwitch"
+            v-model="manual"
+            type="checkbox"
+            name="manualSwitch"
+            class="switch  is-rounded is-info"
+            @change="validate"
+          >
+          <label for="manualSwitch">Enable voting from now until manually closed</label>
+          <p class="help is-danger">
+            {{ err }}
+          </p>
         </div>
-<div class="button is-info" @click="openvoting">Submit</div>
-
-</div>
-</div>
+        <div
+          class="button is-info"
+          @click="openvoting"
+        >
+          Submit
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>

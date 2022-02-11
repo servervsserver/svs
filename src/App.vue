@@ -137,9 +137,9 @@
         id="main-router-view"
         class="router-view"
       >
-      <Transition name='pageTransition'> 
-        <router-view />
-      </Transition>
+        <Transition name="pageTransition"> 
+          <router-view />
+        </Transition>
       </div>
       <!-- End router view -->
 

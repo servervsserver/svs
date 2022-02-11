@@ -137,7 +137,7 @@
         id="main-router-view"
         class="router-view"
       >
-      <Transition> 
+      <Transition name='pageTransition'> 
         <router-view />
       </Transition>
       </div>
@@ -353,13 +353,13 @@ export default {
   }
 }
 
-.v-enter-active,
-.v-leave-active {
+.pageTransition-enter-active,
+.pageTransition-leave-active {
   transition: opacity 0.15s ease;
 }
 
-.v-enter-from,
-.v-leave-to {
+.pageTransition-enter-from,
+.pageTransition-leave-to {
   opacity: 0;
 }
 

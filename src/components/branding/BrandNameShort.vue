@@ -6,9 +6,6 @@
 
 <style scoped lang='scss'>
 .brand-name {
-  font-size: 1.05em;
-  .vs {
-    font-size: 0.9em;
-  }
+
 }
 </style>

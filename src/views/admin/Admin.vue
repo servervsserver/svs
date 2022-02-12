@@ -25,7 +25,7 @@
           </p>
           <ul class="menu-list">
             <li v-for="route in routes" :key="route.name" @click="toggleDrawer()">
-              <router-link :to="route.path" >{{ route.meta.title }}</router-link>
+              <router-link :to="'/admin/' + route.path" >{{ route.meta.title }}</router-link>
             </li>
             <!-- <li><router-link to="dashboard">Dashboard</router-link></li>
             <li><router-link to="servers">Servers</router-link></li>

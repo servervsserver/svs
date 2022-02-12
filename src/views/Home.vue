@@ -67,26 +67,6 @@ export default {
     text-shadow: 3px 4px 0px rgb(255, 186, 94, 0.2);
   }
 
-  p {
-    margin-top: 10px;
-    width: 100%;
-    text-align: center;
-    margin-bottom: 30px;
-
-  }
-
-  .about {
-    margin-top: 50px;
-
-    p {
-      width: 80%;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-    }
-  }
-
-
 }
 
 

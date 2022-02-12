@@ -1,7 +1,6 @@
 <template>
   <div
     :class="[theme]"
-    nativeOnScroll="handleScroll"
   >
     <CookieBanner @cookiePreferenceChange="setCookiePreferences" />
     <div id="top" />
@@ -319,6 +318,7 @@ export default {
   },
   mounted () {
     window.addEventListener('scroll', this.handleScroll)
+    this.handleScroll()
   },
   methods: {
     onThemeChanged (theme) {

@@ -238,7 +238,10 @@
               :key="sml.link"
               class="column"
             >
-              <a :href="sml.link" class="social-media-item">
+              <a
+                :href="sml.link"
+                class="social-media-item"
+              >
                 <i
                   :class="sml.iconClass"
                   style="font-size: 1.5em;"

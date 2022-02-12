@@ -69,7 +69,6 @@ export default {
   mounted () {
     this.$svsBackend.getAllServerApplications()
       .then(res => {
-        console.log(res)
         this.serverApplications = res
       })
   },

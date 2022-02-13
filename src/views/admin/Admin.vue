@@ -35,7 +35,7 @@
               :key="route.name"
               @click="toggleDrawer()"
             >
-              <router-link :to="route.path">
+              <router-link :to="'/admin/' + route.path">
                 {{ route.meta.title }}
               </router-link>
             </li>

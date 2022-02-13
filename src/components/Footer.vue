@@ -157,3 +157,9 @@
     }
   }
 </script>
+
+<style scoped lang='scss'>
+.social-media-item:hover {
+  padding-left: 0 !important;
+}
+</style>

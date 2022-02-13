@@ -60,7 +60,6 @@ export const ServerApplicationConverter = {
     }
   },
   fromFirestore(data) {
-    // console.log(data.submission_date.seconds)
     let sa = new ServerApplication(
       data.name,
       data.discord_invite,

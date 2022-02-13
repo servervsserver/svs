@@ -8,22 +8,21 @@
         id="main-router-view"
         class="router-view"
       >
-          <div class="pre-opening">
-            <div class="front-container">
-              <h1 class="main-title">
+        <div class="pre-opening">
+          <div class="front-container">
+            <h1 class="main-title">
               <brand-name style="color: #ffba5e" />
-              </h1>
+            </h1>
 
-              <event-countdown
-                :title="'The website opens in'"
-                :time="$store.getters.nextMilestone.timeRemaining"
-              />
-
-            </div>
+            <event-countdown
+              :title="'The website opens in'"
+              :time="$store.getters.nextMilestone.timeRemaining"
+            />
           </div>
+        </div>
       </div>
     </div>
-    <slot v-if="$store.getters.isPreOpening"></slot>
+    <slot v-if="$store.getters.isPreOpening" />
   </div>
 </template>
 

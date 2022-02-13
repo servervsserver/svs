@@ -73,9 +73,9 @@
           <h4>Cookies</h4>
           <ul>
             <li>
-              <a @click="deletecookiesettings">
+              <!-- <a @click="deletecookiesettings">
                 Revoke Cookie Consent
-              </a>
+              </a> -->
             </li>
             <li>
               <router-link to="/cookie-policy">

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="this.$route.path != '/cookie-policy' && this.$data.cookiepreferences == null"
+    v-if="showBanner"
     class="cookie_banner_container"
   >
     <div class="cookie_banner">
@@ -12,9 +12,9 @@
           This website uses cookies to improve your experience. These cookies are grouped into different categories. For more information on how we use cookies, and to customise your cookie settings, click 'preferences.'
         </p>
         <div class="preferencewrapper">
-          <div @click="openclose">
+          <div @click="togglePreferenceExpansion">
             Preferences <i
-              v-if="this.$data.isOpen"
+              v-if="preferencesExpanded"
               class="far fa-caret-square-up"
             /><i
               v-else
@@ -22,7 +22,7 @@
             />
           </div>
         </div>
-        <div v-if="isOpen">
+        <div v-if="preferencesExpanded">
           <table
             class="cookietable"
           >
@@ -41,7 +41,7 @@
                 <div class="field">
                   <input
                     id="func_cook"
-                    v-model="functional"
+                    v-model="cookiePreference.functional"
                     type="checkbox"
                     name="switchExample"
                     class="switch is-rtl is-info is-rounded is-outlined"
@@ -62,7 +62,7 @@
                 <div class="field">
                   <input
                     id="anal_cook"
-                    v-model="analytical"
+                    v-model="cookiePreference.analytical"
                     type="checkbox"
                     name="switchExample"
                     class="switch is-rtl is-info is-rounded is-outlined"
@@ -83,7 +83,7 @@
                 <div class="field">
                   <input
                     id="third_cook"
-                    v-model="thirdparty"
+                    v-model="cookiePreference.thirdparty"
                     type="checkbox"
                     name="switchExample"
                     class="switch is-rtl is-info is-rounded is-outlined"
@@ -103,7 +103,7 @@
           <div class="buttons_wrapper">
             <button
               class="button is-info"
-              @click="customsubmit"
+              @click="savePreference()"
             >
               Accept Custom
             </button>
@@ -111,14 +111,14 @@
         </div>
         <div class="buttons_wrapper">
           <button
-            class="button"
-            @click="submit(false,false,false)"
+            class="button is-info"
+            @click="rejectAllAndSave()"
           >
             Reject All
           </button>
           <button
             class="button is-info"
-            @click="submit(true,true,true)"
+            @click="acceptAllAndSave()"
           >
             Accept All
           </button>
@@ -130,34 +130,38 @@
 
 <script>
 
+import { CookiePreference } from "@/plugins/settings/settings.js"
+
 export default {
-
-    data () {
-        return {
-            isOpen : false,
-            cookiepreferences : this.$cookie.get('cookiepreference'),
-            functional : true,
-            analytical : true,
-            thirdparty : true
-        }
-    },
-    mounted () {
-    },
-    methods : {
-        openclose : function () {
-            this.$data.isOpen = !(this.$data.isOpen)
-        },
-        submit : function (functional, analytical, thirdparty) {
-            let preferenceobject = JSON.stringify({'functional' : functional, 'analytical' : analytical, 'thirdparty' : thirdparty})
-            this.$cookie.set('cookiepreference',preferenceobject,{ expires: '1Y' })
-            this.$data.cookiepreferences = preferenceobject
-            this.$emit('cookiePreferenceChange',preferenceobject)
-        },
-        customsubmit : function () {
-            this.submit(this.$data.functional,this.$data.analytical,this.$data.thirdparty)
-        }
+  data () {
+    return {
+      preferencesExpanded: false,
+      cookiePreference: new CookiePreference()
     }
-
+  },
+  computed: {
+    showBanner() {
+      if (this.$route.name == 'CookiePolicy') return false
+      if (this.$svsSettings.hasCookiePreference) return false
+      return true
+    }
+  },
+  methods: {
+    togglePreferenceExpansion () {
+      this.preferencesExpanded = !this.preferencesExpanded
+    },
+    savePreference() {
+      this.$svsSettings.cookiePreference = this.cookiePreference
+    },
+    rejectAllAndSave() {
+      this.cookiePreference.rejectAll()
+      this.savePreference()
+    },
+    acceptAllAndSave() {
+      this.cookiePreference.acceptAll()
+      this.savePreference()
+    }
+  }
 }
 
 </script>
@@ -234,7 +238,7 @@ p.infomessage {
     margin-top: 10vh;
     margin-bottom: 10vh;
     border-radius: 10px;
-    
+
     div.preferencewrapper {
         display: flex;
         justify-content: center;

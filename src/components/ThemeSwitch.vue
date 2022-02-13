@@ -21,21 +21,23 @@
 <script>
 export default {
   data: function () {
-    var theme = this.$cookie.get('usertheme') == null ? 'dark-theme' : this.$cookie.get('usertheme')
-    var checked = theme == 'light-theme' ? true : false
     return {
-      theme: theme,
-      checked: checked
+      checked: false
     }
+  },
+  mounted () {
+    this.checked = this.$svsSettings.theme == 'light-theme'
   },
   methods: {
     themeChange (event) {
+      let theme = ""
       if (this.checked) {
-        this.theme = 'dark-theme'
+        theme = 'dark-theme'
       } else {
-        this.theme = 'light-theme'
+        theme = 'light-theme'
       }
-      this.$emit('themeChanged', this.theme)
+
+      this.$svsSettings.setTheme(theme)
     }
   }
 }

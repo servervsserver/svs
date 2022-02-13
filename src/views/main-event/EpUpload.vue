@@ -616,14 +616,12 @@ export default {
       const [file] = input.files
       this.coverArtFile = file
       this.coverArtUrl = URL.createObjectURL(file)
-      console.log(file)
     },
     onTrackFileChange (evt, track) {
       let input = evt.target
       const [file] = input.files
       track.audioFile = file
       track.audioUrl = URL.createObjectURL(file)
-      console.log(file)
     },
     addTrack() {
       let track = new Track()

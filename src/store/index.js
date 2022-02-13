@@ -164,11 +164,11 @@ export default new Vuex.Store({
   state: {
     _uid:undefined,
     profile:undefined,
-    svsMainEventInformations: new SvSMainEventInformations()
+    svsMainEventInformations: new SvSMainEventInformations(),
+    // theme: "dark-theme"
   },
   getters: {
     isAdmin: state => {
-      console.log(process.env)
       return process.env.VUE_APP_IS_ADMIN
     },
     nextMilestone: state => {
@@ -186,9 +186,11 @@ export default new Vuex.Store({
       state._uid = uid;
     },
     set_profile(state,data){
-      console.log("set_data");
       state.profile = data;
-    }
+    },
+    // setTheme(state, theme) {
+    //   state.theme = theme
+    // }
   },
   actions: {
   },

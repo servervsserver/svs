@@ -517,7 +517,6 @@ export default {
       this.$svsBackend.createServerApplicationToSvSIV(serverApplication)
       .then( res => {
         this.status = ApplicationStatus.SENT
-        console.log(res)
       })
       .catch( err => {
         this.status = ApplicationStatus.FAILURE

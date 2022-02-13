@@ -1,11 +1,33 @@
 import Admin from '../views/admin/Admin.vue'
 import Dashboard from '../views/admin/Dashboard.vue'
 
-const ADMIN_ROUTES = [
+import AnonymousConcerns from "../views/admin/AnonymousConcerns.vue"
+import ServerList from "../views/admin/ServerList.vue"
+
+export const ADMIN_ROUTES = [
   {
     path: 'dashboard',
-    name: 'Dashboard',
-    component: Dashboard
+    name: 'DashboardAdmin',
+    component: Dashboard,
+    meta: {
+      title: "Dashboard"
+    }
+  },
+  {
+    path: 'servers',
+    name: 'ServerListAdmin',
+    component: ServerList,
+    meta: {
+      title: "Servers"
+    }
+  },
+  {
+    path: 'anonymous-concerns',
+    name: 'AnonymousConcernsAdmin',
+    component: AnonymousConcerns,
+    meta: {
+      title: "Anonymous Concerns"
+    }
   }
 ]
 

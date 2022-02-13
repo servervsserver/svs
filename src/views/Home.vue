@@ -6,9 +6,9 @@
         Welcome to <brand-name style="color: #ffba5e" />
       </h1>
       <!-- <p> -->
-        <!-- <brand-name-short/>&nbsp;IV - Main event <br> -->
-        <!-- {{ $store.getters.nextMilestone.name }} - -->
-        <!-- {{ $store.getters.nextMilestone.date | date('dd MONTH yyyy at hour:min', false, false) }} UTC -->
+      <!-- <brand-name-short/>&nbsp;IV - Main event <br> -->
+      <!-- {{ $store.getters.nextMilestone.name }} - -->
+      <!-- {{ $store.getters.nextMilestone.date | date('dd MONTH yyyy at hour:min', false, false) }} UTC -->
       <!-- </p> -->
 
       <event-countdown
@@ -66,26 +66,6 @@ export default {
     letter-spacing: 5px;
     text-shadow: 3px 4px 0px rgb(255, 186, 94, 0.2);
   }
-
-  p {
-    margin-top: 10px;
-    width: 100%;
-    text-align: center;
-    margin-bottom: 30px;
-
-  }
-
-  .about {
-    margin-top: 50px;
-
-    p {
-      width: 80%;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-    }
-  }
-
 
 }
 

@@ -37,14 +37,21 @@
   $active-menu-hover: palette.map-get($color-theme, "navbar", "active-item", "bg");
 
   .navbar {
+    background-color: color.adjust($background-color, $alpha: -0.1);
+    color: $text-color;
+    transition: background-color 0.5s;
+  }
+
+  .navbar.transparent {
     background-color: color.adjust($background-color, $alpha: -1);
-    box-shadow: 0px;
+    background: rgb(0 0 0 / 14%);
     color: $text-color;
   }
 
-  .navbar.scrolled {
-    background-color: color.adjust($background-color, $alpha: -0.1);
-    color: $text-color;
+  @media (max-height: 768px) {
+    .navbar.transparent .navbar-brand {
+
+    }
   }
 
   .navbar {
@@ -108,13 +115,10 @@
     }
 
     .navbar-menu.is-active {
-      // background-color: $secondary-color;
       background-color: transparent;
       a:active, a:hover, a:focus {
         color: $background-color;
         background-color: $text-color;
-        // background-color: $active-menu-hover;
-        // background-color: $tertiary-color;
       }
     }
 

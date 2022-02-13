@@ -8,7 +8,7 @@
             id="days"
             class="countdown-number"
           >
-          {{ days }}
+            {{ days }}
           </span>
           <span class="countdown-subtext">days</span>
         </li>
@@ -515,6 +515,10 @@ export default {
     font-size: 0.9em;
     letter-spacing: 2px;
     font-weight: 300;
+  }
+
+  @media (max-width:768px) {
+    font-size: 0.7em;
   }
 
   // @media all and (max-width: 768px) {

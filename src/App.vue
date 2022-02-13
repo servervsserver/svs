@@ -1,14 +1,13 @@
 <template>
   <div
     :class="[theme]"
-    nativeOnScroll="handleScroll"
   >
     <CookieBanner @cookiePreferenceChange="setCookiePreferences" />
     <div id="top" />
     <div class="app-container">
       <nav
         class="navbar"
-        :class="{'scrolled': scrolled}"
+        :class="{'transparent': transparentNavbar}"
         role="navigation"
         aria-label="main navigation"
       >
@@ -137,7 +136,9 @@
         id="main-router-view"
         class="router-view"
       >
-        <router-view />
+        <Transition name="pageTransition">
+          <router-view />
+        </Transition>
       </div>
       <!-- End router view -->
 
@@ -237,11 +238,12 @@
               :key="sml.link"
               class="column"
             >
-              <a :href="sml.link">
+              <a :href="sml.link" class="social-media-item">
                 <i
                   :class="sml.iconClass"
                   style="font-size: 1.5em;"
-                /><br>
+                />
+                <!-- <br class="only-desktop"> -->
                 <span style="whitespace: nowrap;">{{ sml.text }}</span>
               </a>
             </div>
@@ -308,8 +310,15 @@ export default {
       ]
     }
   },
+  computed: {
+    transparentNavbar () {
+      // console.log()
+      return !(this.scrolled || this.$route.name != "Home" || this.isActive)
+    }
+  },
   mounted () {
     window.addEventListener('scroll', this.handleScroll)
+    this.handleScroll()
   },
   methods: {
     onThemeChanged (theme) {
@@ -326,7 +335,6 @@ export default {
       this.$data.cookiepreferences = preferenceobject
     },
     handleScroll (evt) {
-      console.log(evt, window.scrollY)
       if (window.scrollY > 49) {
         this.scrolled = true
       } else {
@@ -349,6 +357,16 @@ export default {
     padding-top: 49px;
     padding-bottom: 60px;
   }
+}
+
+.pageTransition-enter-active,
+.pageTransition-leave-active {
+  transition: opacity 0.15s ease;
+}
+
+.pageTransition-enter-from,
+.pageTransition-leave-to {
+  opacity: 0;
 }
 
 </style>

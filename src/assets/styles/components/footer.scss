@@ -41,6 +41,16 @@
     .social-medias {
       margin-top: 40px;
     }
+
+    .social-media-item > * {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .social-media-item > * {
+        display: inline-block;
+      }
+    }
   }
 
 }

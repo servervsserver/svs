@@ -92,7 +92,7 @@
                 >
                   <!-- <template v-slot:title>Yep'</template> -->
                   <template v-slot:message>
-                    If your server is only accessible through direct invites<br/>
+                    If your server is only accessible through direct invites<br>
                     (Patreon Discords, Closed crews,...)
                   </template>
                   <span class="icon is-small is-left">
@@ -101,9 +101,9 @@
                 </tooltip>
                 <div class="field">
                   <input
+                    id="is-private"
                     type="checkbox"
                     name="is-private"
-                    id="is-private"
                     class="switch is-rounded"
                   >
                   <label for="is-private" />
@@ -216,14 +216,14 @@
 
               <div class="field">
                 <label>
-                  Discord tags of people in charge
+                  Discord tags of server leaders
                   <tooltip
                     :vertical="'top'"
                     :mode="'hover'"
                   >
                     <template v-slot:message>
-                      List people we should contact to confirm your server's participation.<br>
-                      Until we reach out, do not change your discord tags to ease the process.
+                      List of people we should contact to confirm your server's participation.<br>
+                      Until we reach out, do not change your discord tags to ease the application process.
                     </template>
                     <span class="icon is-small is-left">
                       <i class="fas fa-info-circle" />
@@ -313,10 +313,10 @@
 
           <div class="field">
             <input
+              id="coc-accept"
               v-model="hasReadAndAgreedCoC"
               type="checkbox"
               name="coc-accept"
-              id="coc-accept"
               class="switch is-rounded"
             >
             <label for="coc-accept">
@@ -326,10 +326,10 @@
 
           <div class="field">
             <input
+              id="rules-accept"
               v-model="hasReadAndAgreedRules"
               type="checkbox"
               name="rules-accept"
-              id="rules-accept"
               class="switch is-rounded"
             >
             <label for="rules-accept">
@@ -518,6 +518,10 @@ export default {
       .then( res => {
         this.status = ApplicationStatus.SENT
         console.log(res)
+      })
+      .catch( err => {
+        this.status = ApplicationStatus.FAILURE
+        console.error(err)
       })
 
     }

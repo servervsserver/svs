@@ -369,4 +369,8 @@ export default {
   opacity: 0;
 }
 
+.social-media-item:hover {
+  padding-left: 0 !important;
+}
+
 </style>

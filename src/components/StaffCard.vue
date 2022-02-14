@@ -2,23 +2,40 @@
   <div class="staff-card">
 
     <div class="columns">
-      <!-- Left region -->
-      <div class="column is-narrow avatar-container has-text-centered">
+      <div class="column is-narrow avatar-container is-hidden-mobile">
         <img
           class="avatar"
           :src="staff.avatarUrl"
           alt="Avatar"
         >
       </div>
-
-      <!-- Right region -->
       <div class="column">
 
-        <div class="side-by-side">
-          <h2 class="name">{{ staff.name }} </h2>
-          <p> {{ staff.pronouns }} </p>
+        <div class="header is-hidden-mobile">
+          <div class="side-by-side">
+            <h2 class="name">{{ staff.name }} </h2>
+            <p> {{ staff.pronouns }} </p>
+          </div>
+          <h5> {{ staff.role }} </h5>
         </div>
-        <h5> {{ staff.role }} </h5>
+
+        <div class="columns is-mobile is-hidden-tablet" style="margin-bottom: 0px;">
+          <div class="column is-8">
+            <div class="side-by-side">
+              <h2 class="name">{{ staff.name }} </h2>
+              <p> {{ staff.pronouns }} </p>
+            </div>
+            <h5> {{ staff.role }} </h5>
+          </div>
+          <div class="column is-4">
+            <img
+              class="avatar"
+              :src="staff.avatarUrl"
+              alt="Avatar"
+            >
+          </div>
+        </div>
+
         <p class="bodytext">
           {{ staff.description }}
         </p>
@@ -28,9 +45,8 @@
             <p class="socials-text">
               <i
                 class="fab fa-discord"
-                style="font-size: 1.5em;"
               />
-              {{ staff.discordTag }}
+              <span style="white-space: nowrap;"> {{ staff.discordTag }}</span>
             </p>
           </div>
 
@@ -38,7 +54,6 @@
             <p class="socials-text">
               <i
                 class="fab fa-twitter"
-                style="font-size: 1.5em;"
               />
               <a
                 :href="'https://twitter.com/' + staff.extraSocialsLinks.twitter"
@@ -52,7 +67,6 @@
             <p class="socials-text">
               <i
                 class="fab fa-instagram"
-                style="font-size: 1.5em;"
               />
               <a
                 :href="'https://instagram.com/' + staff.extraSocialsLinks.instagram"
@@ -82,11 +96,6 @@ export default {
 
 <style scoped lang='scss'>
 
-/* &.flex-container {
-  display: flex;
-  color: #FFFADE;
-  align-items: center;
-} */
 .staff-card {
 
   border-radius: 5px;
@@ -97,17 +106,16 @@ export default {
     display: flex;
     color: #FFFADE;
     align-items: center;
-    justify-content: center;
 
     .avatar {
-      border-radius: 50%;
-      border: 2px solid #FFFADE;
-      /* box-shadow: 0px 0px 3px 3px #00000040; */
       max-width: 130px;
     }
-
   }
 
+  .avatar {
+    border-radius: 50%;
+    border: 1px solid #FFFADE;
+  }
 
   .side-by-side {
     display: flex;
@@ -135,7 +143,7 @@ export default {
     margin: 0px;
     padding-top: 1em;
     font-size: 1em;
-    min-height: 10em;
+    padding-bottom: 1em;
   }
 
   .name {
@@ -146,9 +154,27 @@ export default {
     padding-left: 5px;
     padding-right: 20px;
     font-size: 12px;
+    text-align: center;
+
+    i {
+      vertical-align: middle;
+      font-size: 1.5em;
+    }
 
     a {
       text-decoration: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .avatar {
+      border-radius: 50% 15% 50% 50%;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .bodytext {
+      min-height: 10em;
     }
   }
 }

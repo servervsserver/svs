@@ -9,7 +9,7 @@
           Cookie Consent
         </p>
         <p class="infomessage">
-          This website uses cookies to improve your experience. These cookies are grouped into different categories. For more information on how we use cookies, and to customise your cookie settings, click 'preferences.'
+          This website uses cookies to improve your experience. These cookies are grouped into different categories. For more information on how we use cookies, and to customise your cookie settings, click "preferences".
         </p>
         <div class="preferencewrapper">
           <div @click="togglePreferenceExpansion">
@@ -176,7 +176,6 @@ export default {
 .cookie_banner {
     display: flex;
     align-items: center;
-    overflow: scroll;
 }
 
 button {
@@ -230,8 +229,8 @@ p.infomessage {
 .cookie_banner {
     background-color: white;
     color: black;
-    width: 80%;
-    padding: 50px;
+    width: 50%;
+    padding: 20px;
     box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.227);
     margin-left:auto;
     margin-right: auto;
@@ -241,7 +240,9 @@ p.infomessage {
 
     div.preferencewrapper {
         display: flex;
-        justify-content: center;
+        justify-content: left;
+        margin-left: 5%;
+        padding-bottom:40px;
         cursor: pointer;
 
         i {

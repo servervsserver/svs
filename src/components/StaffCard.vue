@@ -1,81 +1,67 @@
 <template>
-  <div class="staff-card flex-container">
-    <div class="avatar-container">
-      <img
-        class="avatar"
-        :src="staff.avatarUrl"
-        alt="Avatar"
-      >
-    </div>
-    <div>
-      <div class="side-by-side">
-        <h2 class="name">
-          {{ staff.name }}
-        </h2>
-        <p> {{ staff.pronouns }} </p>
+  <div class="staff-card">
+
+    <div class="columns">
+      <!-- Left region -->
+      <div class="column is-narrow avatar-container has-text-centered">
+        <img
+          class="avatar"
+          :src="staff.avatarUrl"
+          alt="Avatar"
+        >
       </div>
-      <h5> {{ staff.role }} </h5>
-      <p class="bodytext">
-        {{ staff.description }}
-      </p>
 
-      <div class="center-side-by-side">
-        <div>
-          <p class="socials-icon-text">
-            <i
-              class="fab fa-discord"
-              style="font-size: 1.5em; padding-right: 5px;"
-            />
-            {{ staff.discordTag }}
-          </p>
-        </div>
+      <!-- Right region -->
+      <div class="column">
 
-        <div v-if="staff.extraSocialsLinks.twitch">
-          <p class="socials-icon-text">
-            <i
-              class="fab fa-twitch"
-              style="font-size: 1.5em; padding-right: 5px;"
-            />
-            <a
-              :href="'https://twitch.com/' + staff.extraSocialsLinks.twitch"
-            >
-              @{{ staff.extraSocialsLinks.twitch }}
-            </a>
-          </p>
+        <div class="side-by-side">
+          <h2 class="name">{{ staff.name }} </h2>
+          <p> {{ staff.pronouns }} </p>
         </div>
+        <h5> {{ staff.role }} </h5>
+        <p class="bodytext">
+          {{ staff.description }}
+        </p>
 
-        <div v-if="staff.extraSocialsLinks.twitter">
-          <p class="socials-icon-text">
-            <i
-              class="fab fa-twitter"
-              style="font-size: 1.5em; padding-right: 5px;"
-            />
-            <a
-              :href="'https://twitter.com/' + staff.extraSocialsLinks.twitter"
-            >
-              @{{ staff.extraSocialsLinks.twitter }}
-            </a>
-          </p>
-        </div>
+        <div class="center-side-by-side">
+          <div>
+            <p class="socials-text">
+              <i
+                class="fab fa-discord"
+                style="font-size: 1.5em;"
+              />
+              {{ staff.discordTag }}
+            </p>
+          </div>
 
-        <div v-if="staff.extraSocialsLinks.instagram">
-          <p class="socials-icon-text">
-            <i
-              class="fab fa-instagram"
-              style="font-size: 1.5em; padding-right: 5px;"
-            />
-            <a
-              :href="'https://instagram.com/' + staff.extraSocialsLinks.instagram"
-            >
-              @{{ staff.extraSocialsLinks.instagram }}
-            </a>
-          </p>
+          <div v-if="staff.extraSocialsLinks.twitter">
+            <p class="socials-text">
+              <i
+                class="fab fa-twitter"
+                style="font-size: 1.5em;"
+              />
+              <a
+                :href="'https://twitter.com/' + staff.extraSocialsLinks.twitter"
+              >
+                @{{ staff.extraSocialsLinks.twitter }}
+              </a>
+            </p>
+          </div>
+
+          <div v-if="staff.extraSocialsLinks.instagram">
+            <p class="socials-text">
+              <i
+                class="fab fa-instagram"
+                style="font-size: 1.5em;"
+              />
+              <a
+                :href="'https://instagram.com/' + staff.extraSocialsLinks.instagram"
+              >
+                @{{ staff.extraSocialsLinks.instagram }}
+              </a>
+            </p>
+          </div>
         </div>
-        <!-- <i
-          class="fab fa-twitter"
-          style="font-size: 1.5em;"
-        />
-        <p class="socials-icon-text"> @cutealicem </p> -->
       </div>
     </div>
   </div>
@@ -96,26 +82,32 @@ export default {
 
 <style scoped lang='scss'>
 
+/* &.flex-container {
+  display: flex;
+  color: #FFFADE;
+  align-items: center;
+} */
 .staff-card {
-  border-radius: 5px;
 
-  &.flex-container {
+  border-radius: 5px;
+  padding: 10px;
+
+  .avatar-container {
+    padding: 20px;
     display: flex;
     color: #FFFADE;
     align-items: center;
+    justify-content: center;
+
+    .avatar {
+      border-radius: 50%;
+      border: 2px solid #FFFADE;
+      /* box-shadow: 0px 0px 3px 3px #00000040; */
+      max-width: 130px;
+    }
+
   }
 
-  .avatar-container {
-    padding-right: 20px;
-  }
-
-  .avatar {
-    border-radius: 50%;
-    border: 2px solid #FFFADE;
-    /* box-shadow: 0px 0px 1px 1px #FFFADE; */
-    /* margin-right: 20px; */
-    max-width: 100px;
-  }
 
   .side-by-side {
     display: flex;
@@ -136,27 +128,27 @@ export default {
     margin: 0px;
     font-weight: normal;
     color: #FFBA5E;
+    text-transform: capitalize;
   }
 
   .bodytext {
     margin: 0px;
-    padding-top: 10px;
-    font-size: 14px;
+    padding-top: 1em;
+    font-size: 1em;
+    min-height: 10em;
   }
 
   .name {
     padding-right: 6px;
   }
 
-  .socials-icon-text {
+  .socials-text {
+    padding-left: 5px;
     padding-right: 20px;
     font-size: 12px;
-    display: flex;
-    align-items: center;
 
     a {
       text-decoration: none;
-      font-weight: normal;
     }
   }
 }

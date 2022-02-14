@@ -95,7 +95,16 @@ export default {
           "Simiux#8008",
           "/staff/simiux/avatar.jpg",
           { instagram: 'simiux'},
-        )
+        ),
+        new StaffCard(
+          "Tim",
+          "he/him",
+          "Web Development",
+          "Self appointed creative genius, king of profile pictures, and hater of repetition. and hater of repetition.",
+          "timceharris#7942",
+          "/staff/tim/avatar.png",
+          { twitter: 'timceharris'},
+        ),
       ]
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="staff-card flex-container shadow-depth-1 flat-background">
+  <div class="staff-card flex-container">
     <div class="avatar-container">
       <img
         class="avatar"
@@ -21,30 +21,48 @@
 
       <div class="center-side-by-side">
         <div>
-          <p class="socials-text">
+          <p class="socials-icon-text">
             <i
               class="fab fa-discord"
-              style="font-size: 1.5em;"
+              style="font-size: 1.5em; padding-right: 5px;"
             />
             {{ staff.discordTag }}
           </p>
         </div>
 
+        <div v-if="staff.extraSocialsLinks.twitch">
+          <p class="socials-icon-text">
+            <i
+              class="fab fa-twitch"
+              style="font-size: 1.5em; padding-right: 5px;"
+            />
+            <a
+              :href="'https://twitch.com/' + staff.extraSocialsLinks.twitch"
+            >
+              @{{ staff.extraSocialsLinks.twitch }}
+            </a>
+          </p>
+        </div>
+
         <div v-if="staff.extraSocialsLinks.twitter">
-          <p class="socials-text">
+          <p class="socials-icon-text">
             <i
               class="fab fa-twitter"
-              style="font-size: 1.5em;"
+              style="font-size: 1.5em; padding-right: 5px;"
             />
-            @{{ staff.extraSocialsLinks.twitter }}
+            <a
+              :href="'https://twitter.com/' + staff.extraSocialsLinks.twitter"
+            >
+              @{{ staff.extraSocialsLinks.twitter }}
+            </a>
           </p>
         </div>
 
         <div v-if="staff.extraSocialsLinks.instagram">
-          <p class="socials-text">
+          <p class="socials-icon-text">
             <i
               class="fab fa-instagram"
-              style="font-size: 1.5em;"
+              style="font-size: 1.5em; padding-right: 5px;"
             />
             <a
               :href="'https://instagram.com/' + staff.extraSocialsLinks.instagram"
@@ -57,7 +75,7 @@
           class="fab fa-twitter"
           style="font-size: 1.5em;"
         />
-        <p class="socials-text"> @cutealicem </p> -->
+        <p class="socials-icon-text"> @cutealicem </p> -->
       </div>
     </div>
   </div>
@@ -88,13 +106,13 @@ export default {
   }
 
   .avatar-container {
-    padding: 10px;
+    padding-right: 20px;
   }
 
   .avatar {
     border-radius: 50%;
-    border: 0px solid #FFFADE;
-    box-shadow: 0px 0px 1px 1px #FFFADE;
+    border: 2px solid #FFFADE;
+    /* box-shadow: 0px 0px 1px 1px #FFFADE; */
     /* margin-right: 20px; */
     max-width: 100px;
   }
@@ -118,7 +136,6 @@ export default {
     margin: 0px;
     font-weight: normal;
     color: #FFBA5E;
-    text-transform: capitalize;
   }
 
   .bodytext {
@@ -131,13 +148,15 @@ export default {
     padding-right: 6px;
   }
 
-  .socials-text {
-    padding-left: 5px;
+  .socials-icon-text {
     padding-right: 20px;
     font-size: 12px;
+    display: flex;
+    align-items: center;
 
     a {
       text-decoration: none;
+      font-weight: normal;
     }
   }
 }

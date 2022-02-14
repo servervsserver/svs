@@ -7,9 +7,9 @@
       About Us
     </h1>
     <p>
-      <brand-name-short />  is  a  Discord-based  music-making  event  that  began  Spring 2020 in response to the COVID-19 pandemic. Our objective  is  to  unite  the  rich  variety  of  online  music  communities  that  have  been  growing  on  Discord  through  the  simple shared goal of making music. By the end of the festival, each  server  that  participates  ends  with  purely  collaborative  work showcasing the skills and creativity of all the musicians who  contributed  their  time  and  effort.  Their  work  is  then  shared with all participants in a live Twitch festival at the end of  the  event,  which  also  acts  as  a  charity  fundraiser  event.
+      <brand-name-short />  is a Discord-based music-making competition that began in the spring of 2020 in response to the COVID-19 pandemic. Our objective  is  to  unite  the  rich  variety  of  online  music  communities  that  have  been  growing  on  Discord  through  the  simple shared goal of making music. By the end of the festival, each  server  that  participates has purely collaborative work showcasing the skills and creativity of all the musicians who  contributed  their  time  and  effort.  Their  work  is  then  played for all participants in a live Twitch festival at the end of  the  event. These streams, and more streams that take place within the competition, act as a charity fundraiser event as well.
     </p>
-    <h1>Who are the peps?</h1>
+    <h1>Meet our team</h1>
     <div class="columns is-multiline">
       <div
         v-for="member in staffMembers"
@@ -34,24 +34,68 @@ export default {
     return {
       staffMembers: [
         new StaffCard(
+          "Ask the Storyteller",
+          "he/him",
+          "Head of Web Development and Event Coordination",
+          "HI I'm Story. I founded SvS back in 2020. Since then I've seen it grow way past anything I could've imagined and I'm excited to help it grow.",
+          "ask the storyteller#8411",
+          "/staff/storyteller/avatar.jpg",
+          { instagram: '__askthestoryteller'},
+        ),
+        new StaffCard(
+          "Nyco",
+          "she/her",
+          "Head of Social Media, Branding and Design",
+          "\"knee-co\", singer/songwriter, music producer and visual artist. I do a lot of the dirty work for our design team, if anything’s not centered right, it was probably me.",
+          "nycomusic#7942",
+          "/staff/nyco/avatar.jpg",
+          { instagram: 'zhnyco'},
+        ),
+        new StaffCard(
+          "trash.man",
+          "he/him",
+          "Head of Moderation",
+          "Mod team lead. Music producer and sing-man. PhD in catching feelings. I made the highlight reels. My bad mixes are stylistic, I promise.",
+          "trash.man#6716",
+          "/staff/trashman/avatar.webp",
+          { instagram: 'trash.m4n', twitter: 'trashdotman'},
+        ),
+        new StaffCard(
           "Benji",
           "he/they",
-          "Event coordination",
+          "Web Design",
           "Hi! I'm Benji and I'm a music composer. I've been helping out with SvS since SvS II, and I enjoy helping run a competition many people enjoy.",
-          "Benji#7542",
-          null,
+          "Benji#7528",
+          "/staff/benji/avatar.png",
           { twitter: 'cutealicem' }
+        ),
+        new StaffCard(
+          "DewKlaw",
+          "she/her",
+          "Branding and Design, Moderation",
+          "Hey! I'm Dew, an audio engineer, artist, and photographer. I've been helping with SvS since the end of SvS II and I enjoy my craft. <3",
+          "DewKlaw#1568",
+          "/staff/dewklaw/avatar.png",
+          { twitter: 'DewKlaw', twitch: 'DewKlaw' },
         ),
         new StaffCard(
           "Jiway",
           "he/him",
-          "Tech",
+          "Web Development",
           "What's up slappers?",
           "Jiway#7289",
           "/staff/jiway/avatar.jpg",
           { instagram: 'jiway_jy' }
         ),
-        new StaffCard()
+        new StaffCard(
+          "Simiux",
+          "he/him",
+          "Branding and Design, Social Media",
+          "Was poppin, I'm Simi, Artist, Producer, and multimedia creative. I basically make sure that we stay on track, and that you stay entertained.",
+          "Simiux#8008",
+          "/staff/simiux/avatar.jpg",
+          { instagram: 'simiux'},
+        )
       ]
     }
   }

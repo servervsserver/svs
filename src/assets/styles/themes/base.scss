@@ -13,6 +13,10 @@
   @include svs.timeline($color-theme);
   @include svs.button($color-theme);
 
+  .flat-background {
+    background-color: palette.map-get($color-theme, "bg");
+  }
+
   .navbar-brand-image {
     background-image: url("/icons/svs/svs_square_light_icon.svg");
   }

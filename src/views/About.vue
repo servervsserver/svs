@@ -39,7 +39,7 @@ export default {
           "Head of Web Development and Event Coordination",
           "HI I'm Story. I founded SvS back in 2020. Since then I've seen it grow way past anything I could've imagined and I'm excited to help it grow.",
           "ask the storyteller#8411",
-          "https://b.catgirlsare.sexy/Pt7HaQazGnEs.jpg",
+          "/staff/storyteller/avatar.jpg",
           { instagram: '__askthestoryteller'},
         ),
         new StaffCard(
@@ -48,7 +48,7 @@ export default {
           "Head of Social Media, Branding and Design",
           "\"knee-co\", singer/songwriter, music producer and visual artist. I do a lot of the dirty work for our design team, if anything’s not centered right, it was probably me.",
           "nycomusic#7942",
-          "https://b.catgirlsare.sexy/38fIZsy7tMkW.jpg",
+          "/staff/nyco/avatar.jpg",
           { instagram: 'zhnyco'},
         ),
         new StaffCard(
@@ -57,7 +57,7 @@ export default {
           "Head of Moderation",
           "Mod team lead. Music producer and sing-man. PhD in catching feelings. I made the highlight reels. My bad mixes are stylistic, I promise.",
           "trash.man#6716",
-          "https://b.catgirlsare.sexy/qGHUpRF_czyV.webp",
+          "/staff/trashman/avatar.webp",
           { instagram: 'trash.m4n', twitter: 'trashdotman'},
         ),
         new StaffCard(
@@ -66,7 +66,7 @@ export default {
           "Web Design",
           "Hi! I'm Benji and I'm a music composer. I've been helping out with SvS since SvS II, and I enjoy helping run a competition many people enjoy.",
           "Benji#7528",
-          "https://avatars.githubusercontent.com/u/63879236?v=4",
+          "/staff/benji/avatar.png",
           { twitter: 'cutealicem' }
         ),
         new StaffCard(
@@ -75,7 +75,7 @@ export default {
           "Branding and Design, Moderation",
           "Hey! I'm Dew, an audio engineer, artist, and photographer. I've been helping with SvS since the end of SvS II and I enjoy my craft. <3",
           "DewKlaw#1568",
-          "https://b.catgirlsare.sexy/yEZq-WtEoP3Q.png",
+          "/staff/dewklaw/avatar.png",
           { twitter: 'DewKlaw', twitch: 'DewKlaw' },
         ),
         new StaffCard(
@@ -93,7 +93,7 @@ export default {
           "Branding and Design, Social Media",
           "Was poppin, I'm Simi, Artist, Producer, and multimedia creative. I basically make sure that we stay on track, and that you stay entertained.",
           "Simiux#8008",
-          "https://b.catgirlsare.sexy/l93YxxiG_EsZ.jpg",
+          "/staff/simiux/avatar.jpg",
           { instagram: 'simiux'},
         )
       ]

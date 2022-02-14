@@ -185,7 +185,8 @@ export default new Vuex.Store({
       return process.env.VUE_APP_BYPASS_COMINGSOON
     },
     isPreOpening: state => {
-      return process.env.VUE_APP_COMING_SOON
+      console.log(process.env.VUE_APP_COMING_SOON)
+      return process.env.VUE_APP_COMING_SOON == 'true'
     }
   },
   mutations: {

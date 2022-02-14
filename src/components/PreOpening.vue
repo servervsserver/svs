@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      v-if="!$store.getters.isPreOpening"
+      v-if="$store.getters.isPreOpening"
       class="app-container"
     >
       <div
@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <slot v-if="$store.getters.isPreOpening" />
+    <slot v-if="!$store.getters.isPreOpening" />
   </div>
 </template>
 

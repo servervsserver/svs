@@ -136,7 +136,6 @@ export default {
     margin: 0px;
     font-weight: normal;
     color: #FFBA5E;
-    text-transform: capitalize;
   }
 
   .bodytext {
@@ -151,7 +150,6 @@ export default {
   }
 
   .socials-text {
-    padding-left: 5px;
     padding-right: 20px;
     font-size: 12px;
     text-align: center;
@@ -161,8 +159,13 @@ export default {
       font-size: 1.5em;
     }
 
+    .fab {
+      padding-right: 5px;
+    }
+
     a {
       text-decoration: none;
+      font-weight: normal;
     }
   }
 

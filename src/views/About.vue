@@ -45,7 +45,7 @@ export default {
         new StaffCard(
           "Nyco",
           "she/her",
-          "Head of Social Media, Branding and Design",
+          "Head of Social Media Management, Branding and Design",
           "\"knee-co\", singer/songwriter, music producer and visual artist. I do a lot of the dirty work for our design team, if anything’s not centered right, it was probably me.",
           "nycomusic#7942",
           "/staff/nyco/avatar.jpg",
@@ -58,7 +58,16 @@ export default {
           "Mod team lead. Music producer and sing-man. PhD in catching feelings. I made the highlight reels. My bad mixes are stylistic, I promise.",
           "trash.man#6716",
           "/staff/trashman/avatar.webp",
-          { instagram: 'trash.m4n', twitter: 'trashdotman'},
+          { instagram: 'trash.m4n'},
+        ),
+        new StaffCard(
+          "Blue",
+          "he/him",
+          "Head of Fundraising and Sponsorship, Stream Host, Development, Charity Outreach",
+          "Vocalist, Songwriter, Producer, Engineer, and part-time Wallaby. I jumped in to the very first SvS and have helped organize as well as hosted our livestreams ever since. SvS is something special and we're going somewhere amazing.",
+          "BlueAudioBen#0832",
+          "/staff/blue/avatar.jpg",
+          { twitter: 'blueben' }
         ),
         new StaffCard(
           "Benji",
@@ -66,8 +75,7 @@ export default {
           "Web Design",
           "Hi! I'm Benji and I'm a music composer. I've been helping out with SvS since SvS II, and I enjoy helping run a competition many people enjoy.",
           "Benji#7528",
-          "/staff/benji/avatar.png",
-          { twitter: 'cutealicem' }
+          "/staff/benji/avatar.png"
         ),
         new StaffCard(
           "DewKlaw",
@@ -88,9 +96,18 @@ export default {
           { instagram: 'jiway_jy' }
         ),
         new StaffCard(
+          "Patrick Cline II",
+          "he/him",
+          "Fundraising and Sponsorship",
+          "general svs helper. charity guy. tiny creative man. american living in germany. etc.",
+          "patrhetoric#0653",
+          "/staff/patrick/avatar.jpg",
+          { instagram: 'patrhetoric' }
+        ),
+        new StaffCard(
           "Simiux",
           "he/him",
-          "Branding and Design, Social Media",
+          "Stream Host, Branding and Design, Social Media Management",
           "Was poppin, I'm Simi, Artist, Producer, and multimedia creative. I basically make sure that we stay on track, and that you stay entertained.",
           "Simiux#8008",
           "/staff/simiux/avatar.jpg",

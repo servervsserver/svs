@@ -18,7 +18,8 @@ $color-theme: palette.generateCompletePalette(
     background: url("/backgrounds/bg_dark.png") fixed;
   }
 
-  .app-container {
-    background-image: url("/backgrounds/bg_dark.png");
+  .home {
+    background: url("/backgrounds/bg_dark.png") fixed;
+    background-size: cover;
   }
 }

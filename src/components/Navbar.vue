@@ -115,10 +115,10 @@
 
       <div class="navbar-end">
         <div class="navbar-item">
-          <theme-switch @themeChanged="onThemeChanged" />
+          <coming-soon><theme-switch @themeChanged="onThemeChanged" /></coming-soon>
         </div>
         <div class="navbar-item">
-          <login />
+          <coming-soon><login /></coming-soon>
         </div>
       </div>
     </div>

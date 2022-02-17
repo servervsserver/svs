@@ -3,7 +3,7 @@
     :class="[theme]"
   >
     <pre-opening>
-      <CookieBanner />
+      <!-- <CookieBanner /> -->
       <div id="top" />
       <div class="app-container">
         <svs-navbar />
@@ -28,14 +28,14 @@
 <script>
 // @ is an alias to /src
 
-import CookieBanner from '@/components/cookie/CookieBanner.vue'
+// import CookieBanner from '@/components/cookie/CookieBanner.vue'
 
 import Navbar from "@/components/Navbar.vue"
 import Footer from "@/components/Footer.vue"
 
 export default {
   components: {
-    CookieBanner,
+    // CookieBanner,
     'svs-navbar': Navbar,
     'svs-footer': Footer
   },

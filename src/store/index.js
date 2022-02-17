@@ -182,10 +182,12 @@ export default new Vuex.Store({
       return state.svsMainEventInformations.nextMilestone
     },
     isComingSoonBypassed: state => {
-      return process.env.VUE_APP_BYPASS_COMINGSOON
+      return process.env.VUE_APP_BYPASS_COMINGSOON == 'true'
+    },
+    isComingSoonBypassed: state => {
+      return process.env.VUE_APP_BYPASS_NOTOPENYET == 'true'
     },
     isPreOpening: state => {
-      console.log(process.env.VUE_APP_COMING_SOON)
       return process.env.VUE_APP_COMING_SOON == 'true'
     }
   },
@@ -195,10 +197,7 @@ export default new Vuex.Store({
     },
     set_profile(state,data){
       state.profile = data;
-    },
-    // setTheme(state, theme) {
-    //   state.theme = theme
-    // }
+    }
   },
   actions: {
   },

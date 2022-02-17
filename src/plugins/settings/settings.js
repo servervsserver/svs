@@ -223,9 +223,12 @@ export default class SettingsPlugin {
     })
 
     this._vue.$data.hasCookiePreference = !!this.cookiePreference
-    let cookieTheme = this._vue.$cookie.get('usertheme')
-    if (cookieTheme) {
-      this._vue.$data.theme = cookieTheme
+
+    if (this.canUseFunctionalCookies) {
+      let cookieTheme = this._vue.$cookie.get('usertheme')
+      if (cookieTheme) {
+        this._vue.$data.theme = cookieTheme
+      }
     }
 
   }
@@ -234,7 +237,9 @@ export default class SettingsPlugin {
 
   setTheme(theme) {
     this._vue.$data.theme = theme
-    this._vue.$cookie.set("usertheme", theme)
+
+    if (this.canUseFunctionalCookies)
+      this._vue.$cookie.set("usertheme", theme)
   }
 
   set theme(value) {
@@ -264,8 +269,13 @@ export default class SettingsPlugin {
     return this._vue.$data.hasCookiePreference
   }
 
+  get canUseFunctionalCookies() {
+    let cp = this.cookiePreference
+    if (!cp) return false
+    return cp.functional
+  }
+
   deleteCookiePereference () {
-    console.log(this._vue.$cookie)
     this._vue.$cookie.delete("cookiepreference")
     this._vue.$data.hasCookiePreference = false
   }

@@ -56,7 +56,7 @@ export default class BackendPlugin {
   constructor(Vue) {
 
     this.Vue = Vue
-    
+
     this._firebaseApp = initializeApp(firebaseConfig)
     this._firebaseDb = getDatabase(this._firebaseApp)
     this._firestoreDb = getFirestore(this._firebaseApp)
@@ -104,11 +104,9 @@ export default class BackendPlugin {
         })
 
     }).then(res => {
-      console.log(res)
       return setDoc( newServerRef, data )
     })
     .then(() => {
-      console.log("Successful firestore registration")
       return { uid, data }
     })
 
@@ -217,12 +215,12 @@ export default class BackendPlugin {
         ))
 
   return Promise.all(promises).then(() => {
-    console.log(data);return data;});      
+    console.log(data);return data;});
   }
-  
-  
-  
-  
+
+
+
+
   }
 
   // ======== Anonymous concerns

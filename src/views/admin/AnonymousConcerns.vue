@@ -38,7 +38,6 @@ export default {
   mounted () {
     this.$svsBackend.getAllAnonymousConcernsTickets()
       .then(res => {
-        console.log(res)
         this.anonymousConcernsTickers = res
       })
   },

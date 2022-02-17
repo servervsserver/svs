@@ -39,6 +39,12 @@ class SvSMainEventInformations {
 
   constructor() {
 
+    this.recapStream = new EventMilestone(
+      "Server vs Server III recap",
+      new Date(Date.UTC(2022, 1, 19, 19, 0, 0)),
+      "Tune in as we recap SvS III, enjoy some of our favorite tunes, our favorite moments, and funny tidbits."
+    )
+
     this.serverApplicationPhaseStart = new EventMilestone(
       "Server applications open",
       new Date(Date.UTC(2022, 1, 19, 0, 0, 0)),
@@ -71,7 +77,7 @@ class SvSMainEventInformations {
 
     this.midCompetitionStream3 = new EventMilestone(
       "End of Week #3 Catch Up Stream",
-      new Date(Date.UTC(2022, 3, 15, 21, 0, 0)),
+      new Date(Date.UTC(2022, 3, 16, 21, 0, 0)),
       "Third mid competition stream."
     )
 
@@ -134,6 +140,7 @@ class SvSMainEventInformations {
   get milestones() {
     return [
       this.serverApplicationPhaseStart,
+      this.recapStream,
       this.serverApplicationPhaseEnd,
       this.competitionStart,
       this.midCompetitionStream1,
@@ -164,7 +171,8 @@ export default new Vuex.Store({
   state: {
     _uid:undefined,
     profile:undefined,
-    svsMainEventInformations: new SvSMainEventInformations()
+    svsMainEventInformations: new SvSMainEventInformations(),
+    // theme: "dark-theme"
   },
   getters: {
     isAdmin: state => {
@@ -175,6 +183,10 @@ export default new Vuex.Store({
     },
     isComingSoonBypassed: state => {
       return process.env.VUE_APP_BYPASS_COMINGSOON
+    },
+    isPreOpening: state => {
+      console.log(process.env.VUE_APP_COMING_SOON)
+      return process.env.VUE_APP_COMING_SOON == 'true'
     }
   },
   mutations: {
@@ -182,9 +194,11 @@ export default new Vuex.Store({
       state._uid = uid;
     },
     set_profile(state,data){
-      console.log("set_data");
       state.profile = data;
-    }
+    },
+    // setTheme(state, theme) {
+    //   state.theme = theme
+    // }
   },
   actions: {
   },

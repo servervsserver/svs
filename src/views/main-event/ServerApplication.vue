@@ -2,18 +2,22 @@
   <div class="server-application container">
     <div v-if="isApplicationNotSent">
       <h1>
-        Wanna join the event?
+        Want to join the event?
       </h1>
-      <p>
-        If you are in a lead position in a discord server, fill out this form and we will get back to you!
-      </p>
+      <div class="columns">
+        <div class="column is-6">
+          <p>
+            If you are in a lead position in a discord server that wants to compete in SvS IV, fill out this form and we will get back to you!
+          </p>
+        </div>
+      </div>
 
       <div>
         <div>
           <div class="columns">
             <div class="column is-half">
               <div class="field">
-                <label>Name of the Discord server</label>
+                <label>Name of your Discord server</label>
                 <div class="control has-icons-left">
                   <input
                     v-model="serverName"
@@ -92,8 +96,8 @@
                 >
                   <!-- <template v-slot:title>Yep'</template> -->
                   <template v-slot:message>
-                    If your server is only accessible through direct invites<br>
-                    (Patreon Discords, Closed crews,...)
+                    If your server is only accessible through direct invites
+                    (Patreon Discords, Closed crews, ect.), toggle this on.
                   </template>
                   <span class="icon is-small is-left">
                     <i class="fas fa-info-circle" />
@@ -223,7 +227,7 @@
                   >
                     <template v-slot:message>
                       List of people we should contact to confirm your server's participation.<br>
-                      Until we reach out, do not change your discord tags to ease the application process.
+                      Until we reach out, please do not change your discord tags to ease the application process.
                     </template>
                     <span class="icon is-small is-left">
                       <i class="fas fa-info-circle" />
@@ -517,7 +521,6 @@ export default {
       this.$svsBackend.createServerApplicationToSvSIV(serverApplication)
       .then( res => {
         this.status = ApplicationStatus.SENT
-        console.log(res)
       })
       .catch( err => {
         this.status = ApplicationStatus.FAILURE

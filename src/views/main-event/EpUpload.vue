@@ -3,11 +3,15 @@
     <h1>
       Submit your EP
     </h1>
-    <p>
-      You are happy with what your server has produced and think it's ready to submit?<br>
-      Submit your server's EP by filling out this form! <br>
-      Only one submission per server allowed. You cannot change your submission afterwards, so make sure everything meets your standards and our competition rules.
-    </p>
+    <div class="columns">
+      <div class="column is-6">
+        <p>
+          Are you happy with what your server has produced and think it's ready to be submitted?
+          Submit your server's EP by filling out this form!
+          Only one submission is allowed per server. You cannot change your submission afterwards, so make sure everything meets your standards and our competition rules.
+        </p>
+      </div>
+    </div>
 
     <div>
       <div class="form">
@@ -18,7 +22,7 @@
         <div class="columns">
           <div class="column is-5">
             <div class="field">
-              <label>Name of the EP</label>
+              <label>EP title</label>
               <div class="control has-icons-left">
                 <input
                   v-model="epName"
@@ -144,7 +148,7 @@
                 <div
                   class="field"
                 >
-                  <label>Name of the track</label>
+                  <label>Track title</label>
                   <div class="control has-icons-left">
                     <input
                       v-model="track.name"
@@ -179,7 +183,7 @@
                       :mode="'hover'"
                     >
                       <template v-slot:message>
-                        The audio file should be an mp3, 320kbps.<br>
+                        The audio file should be a 320kbps mp3.<br>
                         Aim for -14 integrated LUFS for mastering.
                       </template>
                       <span class="icon is-small is-left">
@@ -254,10 +258,10 @@
                       >
                         <!-- <template v-slot:title>Yep'</template> -->
                         <template v-slot:message>
-                          It is explicit if your lyrics contains words or expressions that could fall under the
+                          Your track is explicit if your lyrics contains words or expressions that could fall under the
                           <strong>Parental&nbsp;Advisory&nbsp;Label&nbsp;</strong>
                           <em>(PAL)</em><br>
-                          (Violence, sexe, drugs,...)
+                          (Violence, sex, drugs, ect.). If this is the case, toggle this on.
                         </template>
                         <span class="icon is-small is-left">
                           <i class="fas fa-info-circle" />
@@ -365,7 +369,7 @@
                           v-model="ce.discordTag"
                           class="input"
                           type="text"
-                          placeholder="TheArtist#0420"
+                          placeholder="TheArtist#1234"
                         >
                         <span class="icon is-small is-left">
                           <i class="fab fa-discord" />
@@ -401,7 +405,7 @@
                       >
                         <!-- <template v-slot:title>Yep'</template> -->
                         <template v-slot:message>
-                          If this person doesn't want to appear in the credits.
+                          If this person doesn't want to appear in the credits, toggle this on.
                         </template>
                         <span class="icon is-small is-left">
                           <i class="fas fa-info-circle" />
@@ -616,14 +620,12 @@ export default {
       const [file] = input.files
       this.coverArtFile = file
       this.coverArtUrl = URL.createObjectURL(file)
-      console.log(file)
     },
     onTrackFileChange (evt, track) {
       let input = evt.target
       const [file] = input.files
       track.audioFile = file
       track.audioUrl = URL.createObjectURL(file)
-      console.log(file)
     },
     addTrack() {
       let track = new Track()

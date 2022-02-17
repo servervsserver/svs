@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
-      <h1>Dashboard</h1>
-      <ToggleVoting />
-    </div>
+  <div class="container">
+    <h1>Dashboard</h1>
+    <ToggleVoting />
+  </div>
 </template>
 
 <script>

@@ -1,7 +1,16 @@
 <template>
   <!-- Render if user has voted -->
 
-  <div v-if="typeof this.$store.state._uid == 'undefined'">
+  <div v-if="isOpen == false">
+    <div class="login">
+      <h1>
+        <i class="fa fa-thin fa-lock" /><br>
+        Sorry, voting is currently closed
+      </h1>
+    </div>
+  </div>  
+
+  <div v-else-if="typeof this.$store.state._uid == 'undefined'">
     <div class="login">
       <h1>
         <i class="fa-brands fa-discord" /><br>
@@ -9,6 +18,7 @@
       </h1>
     </div>
   </div>
+
 
   <div v-else-if="hasvoted">
     <h1> Thank you for voting ! </h1>
@@ -209,6 +219,8 @@ export default ({
           {name: 'EP 5', server : 'server 5'}
         ],
 
+        isOpen : true,
+
         //Pool users vote goes to -> Can be server or community -> If > 1 in array, prompt user to choose pool
         pool: ['server1','server2'],
 
@@ -347,7 +359,7 @@ h1 {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 0;
+    margin-top: 30px;
     text-align: center;
     margin-bottom: 30px;
 }

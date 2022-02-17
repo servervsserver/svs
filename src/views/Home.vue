@@ -2,14 +2,8 @@
   <div class="container home">
     <div class="front-container">
       <h1 class="main-title">
-        <!-- Welcome to <span style="color: #FFBA5E"> Server Versus Server</span> -->
         Welcome to <brand-name style="color: #ffba5e" />
       </h1>
-      <!-- <p> -->
-      <!-- <brand-name-short/>&nbsp;IV - Main event <br> -->
-      <!-- {{ $store.getters.nextMilestone.name }} - -->
-      <!-- {{ $store.getters.nextMilestone.date | date('dd MONTH yyyy at hour:min', false, false) }} UTC -->
-      <!-- </p> -->
 
       <event-countdown
         :title="$store.getters.nextMilestone.name"

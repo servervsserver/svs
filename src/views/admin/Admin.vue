@@ -1,20 +1,26 @@
 <template>
-  <div id="admin-container" class="admin-container">
+  <div
+    id="admin-container"
+    class="admin-container"
+  >
     <button
       class="menu-button-1 button svs-button-transparent"
       style="font-size: 1.5em;"
       @click="toggleDrawer()"
-      >
-      <span><i class="fas fa-angle-right"/><i class="fas fa-angle-right"/><i class="fas fa-angle-right"/></span>
+    >
+      <span><i class="fas fa-angle-right" /><i class="fas fa-angle-right" /><i class="fas fa-angle-right" /></span>
     </button>
     <button
       class="menu-button-2 button svs-button-transparent"
       style="font-size: 1.5em;"
       @click="toggleDrawer()"
-      >
-      <span><i class="fas fa-angle-right"/><i class="fas fa-angle-right"/><i class="fas fa-angle-right"/></span>
+    >
+      <span><i class="fas fa-angle-right" /><i class="fas fa-angle-right" /><i class="fas fa-angle-right" /></span>
     </button>
-    <drawer ref="sidenav" class="admin-drawer">
+    <drawer
+      ref="sidenav"
+      class="admin-drawer"
+    >
       <template v-slot:aside>
         <div
           class="menu"
@@ -24,8 +30,14 @@
             General
           </p>
           <ul class="menu-list">
-            <li v-for="route in routes" :key="route.name" @click="toggleDrawer()">
-              <router-link :to="'/admin/' + route.path" >{{ route.meta.title }}</router-link>
+            <li
+              v-for="route in routes"
+              :key="route.name"
+              @click="toggleDrawer()"
+            >
+              <router-link :to="'/admin/' + route.path">
+                {{ route.meta.title }}
+              </router-link>
             </li>
             <!-- <li><router-link to="dashboard">Dashboard</router-link></li>
             <li><router-link to="servers">Servers</router-link></li>

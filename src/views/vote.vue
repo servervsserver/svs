@@ -205,7 +205,7 @@ export default ({
         isOpen : true,
 
         //Pool users vote goes to -> Can be server or community -> If > 1 in array, prompt user to choose pool
-        pool: ['server1','server2'],
+        pool: ['dsg','dsgdsg'],
 
         //User's Vote
         ballot: [false,false,false,false,false,false],
@@ -235,6 +235,9 @@ updated() {
         console.error(error)
       })
   }
+},
+mounted () {
+  if (this.$data.pool.length < 1) {this.$data.pool = ['community']}
 },
   methods: {
     validateVoteData : function (_data_, availableOptions) {

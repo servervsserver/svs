@@ -26,7 +26,7 @@ export default ({
 
 .choose-pool-button {
     transition: 0.5s;
-    background-color: inherit;
+    background-color: white;
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.094);
     width: 80%;
     margin: auto;
@@ -36,6 +36,7 @@ export default ({
     align-items: center;
     display: flex;
     cursor: pointer;
+    color: #333366;
 
     div {
         font-size: 16px;
@@ -53,6 +54,7 @@ export default ({
 .choose-pool-button:hover {
     width: 82%;
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.211);
+    cursor: pointer;
 }
 
 </style>

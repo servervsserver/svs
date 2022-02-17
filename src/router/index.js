@@ -15,7 +15,7 @@ import EpUpload from "../views/main-event/EpUpload.vue"
 
 import ServerProfile from '../views/server/ServerProfile.vue'
 
-
+import ProfileTest from '../views/Profile.vue'
 
 import PageNotFound from '../views/PageNotFound.vue'
 
@@ -94,6 +94,11 @@ const routes = [
     path: '/about',
     name: 'About',
     component: About
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: ProfileTest
   }
 ]
 

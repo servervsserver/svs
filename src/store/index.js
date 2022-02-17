@@ -168,7 +168,6 @@ export default new Vuex.Store({
   },
   getters: {
     isAdmin: state => {
-      console.log(process.env)
       return process.env.VUE_APP_IS_ADMIN
     },
     nextMilestone: state => {

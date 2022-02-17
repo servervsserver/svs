@@ -34,7 +34,9 @@ export default {
     },
     mounted(){
          this.$nextTick(() => {
-        this.pullData();
+       setTimeout(() => {
+         this.pullData();
+       }, 1000); 
       });
     },
     methods:{
@@ -46,7 +48,7 @@ let storedProfile = this.$store.state.profile;
             }
             else if(uid != undefined){
                  axios
-        .get(`http://localhost:3000/users/${uid}`)
+        .get(process.env.VUE_APP_SVS_BACKEND_SERVER+`/users/${uid}`)
         .then( (response)=>{
         this.$store.commit("set_profile", response.data);
         this.profile = response.data;

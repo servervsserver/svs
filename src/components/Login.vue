@@ -6,13 +6,14 @@
       @click="login"
     >
       Log in with Discord
-    </a> 
-    <button
-      v-if="$auth.isAuthenticated"
-      class="button is-dark"
-    >
-      {{ $auth.user.name }}
-    </button>
+    </a>  <router-link to="/profile" v-if="$auth.isAuthenticated"
+      class="button is-dark is-inverted"
+    >    <span class="icon is-small">
+      <i class="fas fa-user"></i>
+    </span> <span>
+      {{ $auth.user.name }}</span>
+
+    </router-link>
     <button
       v-if="$auth.isAuthenticated"
       class="button is-dark"
@@ -62,7 +63,7 @@ onAuthStateChanged(auth, (user) => {
 
     fAuth: function (uid) {
       axios
-        .get("http://localhost:3000/authenticate", {
+        .get(process.env.VUE_APP_SVS_BACKEND_SERVER+"/authenticate", {
           params: { uid: uid },
         })
         .then( (response) => {
@@ -87,7 +88,7 @@ onAuthStateChanged(auth, (user) => {
         this.$store.commit("set_profile",undefined);
         this.$store.commit("set_uid",undefined);
       this.$auth.logout({
-        returnTo: "http://localhost:8080",
+        returnTo: window.location.origin,
       });
 
 

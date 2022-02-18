@@ -7,9 +7,30 @@
       About Us
     </h1>
     <p>
-      <brand-name-short /> is a Discord-based music-making competition that began in the spring of 2020 in response to the COVID-19 pandemic. Our objective  is  to  unite  the  rich  variety  of  online  music  communities  that  have  been  growing  on  Discord  through  the  simple shared goal of making music. By the end of the festival, each  server  that  participates has purely collaborative work showcasing the skills and creativity of all the musicians who  contributed  their  time  and  effort.  Their  work  is  then  played for all participants in a live Twitch festival at the end of  the  event.
+      <brand-name-short /> SvS started in a Discord-based community called Artistry in April 2020. It started off as an idea to have a fun competition to work on during what was the early days of quarantine for most countries: 4 teams from different online music communities would be mandated to create an EP of original music during a set time period, concluding with a listening party / online festival to showcase all the completed music to all the communities involved. The nature of the event being between online communities based in different Discord Servers gave rise to the name Server versus Server.
     </p>
-    <h1>Meet our team</h1>
+    <p>
+      As more servers were contacted to take part, this small-scale idea quickly exploded in popularity, quickly growing into what was at the time Discord's largest inter-server event - 16 communities spent 3 weeks to craft a 12 minute EP within their servers. The output of all the hard work was celebrated with a 2 day festival held on Twitch and thus a tradition was born. 
+    </p>
+    <p>
+      A few months passed and the music communities that had taken part in the first competition were itching for a second round: in July 2020 we kicked off our second edition of SvS - this time with 18 servers competing, this time each making 15 minute eps. SvS was becoming too big for a single community to run it so we formed a coalition of servers that would work to run cross-community events for the foreseeable future. 
+    </p>
+    <p>
+      SvS II was a big success but the team wasn’t satisfied yet. After a recovery period the team got to work on the third installment of SvS. This time getting 30 servers involved. By this time communities were reaching out to us to join the event. Recognising the reach and audience SvS was developing, we strove to direct that energy and engagement towards social good, with the introduction of charity fundraising to our livestreams. 
+    </p>
+    <p>
+      We set out with the goal of raising one thousand dollars for charity. Across the span of the event , this number quickly grew to 2 thousand, and then 3 thousand. We reached a whopping $3,275.58 cents raised for charity. We were also able to get Splice involved with SvS III to provide our audience with voucher codes for their website.
+    </p>
+    <p>
+      In October of 2021 we were approached by Lucid Monday to help run a competitive event - a bracket tournament consisting of 16 10-member teams  who would face off in a series of beat battles (similar in nature to Versuz on IG) in the ultimate goal to win $1000 dollars. The event was a great success garnering thousands of views across the tournament. 
+    </p>
+    <p>
+      In parallel our newly expanded team started plans to kick off SvS IV slated for a March 26th start date, after establishing a comprehensive Code of Conduct fitting of the scale of the event to firmly set expected behaviour within the event.
+    </p>
+    <h1>Meet our Team</h1>
+      <p>
+        Don't be afraid to message the SvS team members if you have questions about the event!
+      </p>
     <div class="columns is-multiline is-6">
       <div
         v-for="member in staffMembers"

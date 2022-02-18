@@ -15,9 +15,9 @@ import {
 import {
   collection, doc,
   setDoc, addDoc,
-  getDoc, getDocs
+  getDoc, getDocs, getAll
 } from "firebase/firestore";
-import { push, ref } from "firebase/database";
+import { push, ref, child, get } from "firebase/database";
 
 /*
 * Firebase config
@@ -56,7 +56,7 @@ export default class BackendPlugin {
   constructor(Vue) {
 
     this.Vue = Vue
-    
+
     this._firebaseApp = initializeApp(firebaseConfig)
     this._firebaseDb = getDatabase(this._firebaseApp)
     this._firestoreDb = getFirestore(this._firebaseApp)
@@ -104,11 +104,9 @@ export default class BackendPlugin {
         })
 
     }).then(res => {
-      console.log(res)
       return setDoc( newServerRef, data )
     })
     .then(() => {
-      console.log("Successful firestore registration")
       return { uid, data }
     })
 
@@ -124,10 +122,27 @@ export default class BackendPlugin {
   }
 
   /**
+  * Returns a list from Realtime Database given key
+  * @return promise to the document ref in firebase of the application
+  */
+   _getList(key) {
+    const appRef = ref(this._firebaseDb, key)
+    return get(appRef).then(snapshot => {
+      if (snapshot.exists()) {
+        return (snapshot.val());
+      } else {
+        return ("No data available");
+      }
+    }).catch((error) => {
+      return (error);
+    });
+  }
+
+  /**
   * Adds a server to the svs 4 event applications
   */
   addServerToSvSIVApplications(serverId) {
-    return this.addServerToEventApplication(serverId, "applications-svs-iv")
+    return this.addServerToEventApplication(serverId, "applied-svs-iv")
   }
 
   /**
@@ -149,18 +164,64 @@ export default class BackendPlugin {
   * This has no impact now, but once we get some new events, going on it needs to be changed
   *
   */
-  getAllServerApplications() {
+  getAllServers() {
     const colSnap = getDocs(collection(this._firestoreDb, "servers"))
     return colSnap.then(snappedDocs => {
       let data = []
       snappedDocs.forEach(doc => {
         data.push(ServerApplicationConverter.fromFirestore(doc.data()))
       })
-      return data
+      return data;
     })
   }
 
+  /**
+  * Returns a list from Realtime Database given key
+  * @return promise to the document ref in firebase of the application
+  */
+   getAppServers(state) {
+    const serverStateKey = ["applied_svs_iv","accepted_svs_iv","denied_svs_iv"];
+    this._getList(serverStateKey[state]).then(server_ids => {
+      this._getServersById(server_ids).then(
+         servers => {return servers;}
+      )
+    })
 
+
+  }
+
+
+
+
+/**
+  * Gets all the servers
+  * @returns An array of all the ServerApplication
+  * TODO: it actually disreguards the list in firebase of the submissions for this Event.
+  * This has no impact now, but once we get some new events, going on it needs to be changed
+  *
+  */
+  _getServersById(servers) {
+    let server_id = (Object.values(servers));
+    let promises = [];
+    let data = {};
+    const refs = server_id.map(id => doc(this._firestoreDb,`servers/${id}`))
+    for(let si in server_id ){
+        promises.push(getDoc(refs[si]).then(
+          document => {
+            data[si] = document.data();
+            console.log(data);
+            return document;
+          }
+        ))
+
+  return Promise.all(promises).then(() => {
+    console.log(data);return data;});
+  }
+
+
+
+
+  }
 
   // ======== Anonymous concerns
 

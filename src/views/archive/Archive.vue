@@ -1,5 +1,5 @@
 <template>
-  <coming-soon>
+  <coming-soon :type="'page'">
     <div class="archive">
       <h1> <brand-name-short /> Archive: </h1>
       <h2> Past EPs: </h2>

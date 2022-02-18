@@ -117,8 +117,8 @@ export default {
         new StaffCard(
           "Jiway",
           "he/him",
-          "Web Development",
-          "What's up slappers?",
+          "Front web Lead dev",
+          "What's up slappers? Me slappin' lines of code almost as much as I slap the bass. If the site bugs, I'm guilty, if it's sleek, thank the team!",
           "Jiway#7289",
           "/staff/jiway/avatar.jpg",
           { instagram: 'jiway_jy' }

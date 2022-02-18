@@ -7,10 +7,12 @@ import { BackendPlugin, SettingsPlugin } from "./plugins/all"
 
 import PreOpening from "./components/PreOpening.vue"
 import ComingSoon from "./components/ComingSoon.vue"
+import NotOpenYet from "./components/NotOpenYet.vue"
 import BrandName from './components/branding/BrandName.vue'
 import BrandNameShort from './components/branding/BrandNameShort.vue'
 Vue.component('pre-opening', PreOpening)
 Vue.component('coming-soon', ComingSoon)
+Vue.component('not-open-yet', NotOpenYet)
 Vue.component('brand-name', BrandName)
 Vue.component('brand-name-short', BrandNameShort)
 

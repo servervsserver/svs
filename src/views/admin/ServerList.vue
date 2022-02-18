@@ -19,6 +19,8 @@
                 Submission date
               </button>
             </th>
+            
+            <th>Accept?</th>
           </tr>
         </thead>
         <tbody>
@@ -51,6 +53,11 @@
             <th class="has-text-centered">
               {{ sa.submission_date | date('dd/mm/yyyy hour:min') }}
             </th>
+             <th class="has-text-centered">
+             <button class="button is-primary">Accept</button>
+             
+             <button class="button is-warning">Decline</button>
+            </th>
           </tr>
         </tbody>
       </table>
@@ -62,8 +69,9 @@
 export default {
   data: function () {
     return {
-      serverApplications: [],
-      ascending: false
+      pendingApplications: [],
+      ascending: false,
+      serverApplications:[]
     }
   },
   mounted () {

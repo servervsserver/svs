@@ -69,21 +69,16 @@
           </ul>
         </div>
 
-        <div class="column">
+        <!-- <div class="column">
           <h4>Cookies</h4>
           <ul>
-            <li>
-              <!-- <a @click="deletecookiesettings">
-                Revoke Cookie Consent
-              </a> -->
-            </li>
             <li>
               <router-link to="/cookie-policy">
                 Cookie Policy
               </router-link>
             </li>
           </ul>
-        </div>
+        </div> -->
       </div>
 
 

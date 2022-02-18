@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1><brand-name /> IV Overview</h1>
+    <h1>Server vs Server IV Overview</h1>
 
     <div class="columns is-8 is-variable">
       <div class="column is-8">

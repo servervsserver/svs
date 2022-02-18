@@ -8,7 +8,7 @@
       <p>
           Coming soon...
       </p>
-      <img src="/placeholders/uwu_colored_svs.jpg" width="200" />
+      <img src="/placeholders/uwu_colored_svs_transparent.png" width="200" />
     </div>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" >
     <h1>Anonymous Concerns</h1>
     <section v-if="isWriting">
       <p>

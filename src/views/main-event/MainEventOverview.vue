@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container ">
     <h1><brand-name /> overview</h1>
 
     <div class="columns is-8 is-variable">

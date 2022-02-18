@@ -1,5 +1,4 @@
 <template>
-
   <div class="container-fluid home">
     <div class="front-container">
       <h1 class="main-title">

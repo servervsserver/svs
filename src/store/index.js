@@ -39,100 +39,100 @@ class SvSMainEventInformations {
 
   constructor() {
 
+    this.serverApplicationPhaseStart = new EventMilestone(
+      "Server applications open",
+      new Date(Date.UTC(2022, 1, 19, 19, 0, 0)),
+      "Applications open on our website for servers to take part in the Server vs Server IV competition!"
+    )
+
     this.recapStream = new EventMilestone(
       "Server vs Server III recap",
       new Date(Date.UTC(2022, 1, 19, 19, 0, 0)),
-      "Tune in as we recap SvS III, enjoy some of our favorite tunes, our favorite moments, and funny tidbits."
-    )
-
-    this.serverApplicationPhaseStart = new EventMilestone(
-      "Server applications open",
-      new Date(Date.UTC(2022, 1, 19, 0, 0, 0)),
-      "If you want to participate in the competition, you apply now!"
+      "We run our first big stream in a while, recapping the moments and music of SvS III with some highlights before formally announcing our timeline for SvS IV!"
     )
 
     this.serverApplicationPhaseEnd = new EventMilestone(
       "Server applications close",
       new Date(Date.UTC(2022, 2, 19, 23, 59, 0)),
-      "Application is closed and we finish reviewing the participants until next week."
+      "Applications for servers to join the competition close (don’t miss it!). Reviewing and accepting applications concludes over the following week."
     )
 
     this.competitionStart = new EventMilestone(
       "Competition begins and kick off stream",
       new Date(Date.UTC(2022, 2, 26, 19, 0, 0)),
-      "The competition starts! You have a month to produce the masterpiece we know you will produce!"
+      "Join us on Twitch as we kick off the start of the month of music making with the selection of the competition’s theme by a live vote!"
     )
 
     this.midCompetitionStream1 = new EventMilestone(
-      "End of Week #1 Catch Up Stream",
+      "End of Week #1 Check in stream",
       new Date(Date.UTC(2022, 3, 2, 21, 0, 0)),
-      "First mid competition stream."
+      "Our first check-in stream where we’ll give advice and resources to participants on how they can make the most out of taking part; and of course, raise money for charity."
     )
 
     this.midCompetitionStream2 = new EventMilestone(
-      "End of Week #2 Catch Up Stream",
+      "End of Week #2 Check in stream",
       new Date(Date.UTC(2022, 3, 9, 21, 0, 0)),
-      "Second mid competition stream."
+      "Our second check-in stream to keep you motivated, see how communities are doing and hopefully smash some donation goals. Details TBA"
     )
 
     this.midCompetitionStream3 = new EventMilestone(
-      "End of Week #3 Catch Up Stream",
+      "End of Week #3 Check in stream",
       new Date(Date.UTC(2022, 3, 16, 21, 0, 0)),
-      "Third mid competition stream."
+      "Our final check-in stream to hopefully take some of the pressure of (or put it on…) before the submissions close the following week. Details TBA"
     )
 
     this.competitionEnd = new EventMilestone(
       "Competition submissions close",
       new Date(Date.UTC(2022, 3, 23, 23, 59, 0)),
-      "The EP submissions are now closed."
+      "The one and only final deadline for servers to submit their completed EPs through our website."
     )
 
     this.competitionEndStream = new EventMilestone(
       "Competition end stream",
       new Date(Date.UTC(2022, 3, 24, 21, 0, 0)),
-      "First mid competition stream."
+      "Join us on Twitch to reflect on how the music-making period has gone, before we launch into our full-blown EP festival just a few days after."
     )
 
     this.epFestival1 = new EventMilestone(
       "EP Festival - Day 1",
       new Date(Date.UTC(2022, 3, 29, 21, 0, 0)),
-      "First day of the EP festival."
+      "The first day of our EP festival, where we’ll be playing and celebrating the music, art, and even visualizers/video that participating servers have produced; complete with live interviews with server leaders/representatives!"
     )
 
     this.epFestival2 = new EventMilestone(
       "EP Festival - Day 2",
       new Date(Date.UTC(2022, 3, 30, 21, 0, 0)),
-      "Second day of the EP festival."
+      ""
     )
 
     this.epFestival3 = new EventMilestone(
       "EP Festival - Day 3",
       new Date(Date.UTC(2022, 3, 31, 19, 0, 0)),
-      "Third day of the EP festival."
+      ""
     )
 
     this.epFestival4 = new EventMilestone(
       "EP Festival - Day 4",
       new Date(Date.UTC(2022, 4, 6, 21, 0, 0)),
-      "Fourth day of the EP festival."
+      ""
     )
 
     this.epFestival5 = new EventMilestone(
       "EP Festival - Day 5",
       new Date(Date.UTC(2022, 4, 7, 21, 0, 0)),
-      "Fifth day of the EP festival."
+      ""
     )
 
     this.epFestival6 = new EventMilestone(
       "EP Festival - Day 6",
       new Date(Date.UTC(2022, 4, 8, 19, 0, 0)),
-      "Sixth day of the EP festival."
+      ""
     )
 
     this.awardsCeremony = new EventMilestone(
       "Awards Ceremony",
       new Date(Date.UTC(2022, 4, 14, 21, 0, 0)),
-      "The Server vs Server Awards Ceremony."
+      "Our awards ceremony, with the winners of each category decided by you and your vote!"
     )
 
   }
@@ -188,7 +188,7 @@ export default new Vuex.Store({
       return process.env.VUE_APP_BYPASS_NOTOPENYET == 'true'
     },
     isPreOpening: state => {
-      return process.env.VUE_APP_COMING_SOON == 'true'
+      return state.svsMainEventInformations.serverApplicationPhaseStart.isIncoming
     }
   },
   mutations: {

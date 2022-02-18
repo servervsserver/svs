@@ -1,5 +1,5 @@
 <template>
-  <div class='fourofour'>
+  <div class="fourofour">
     <h1>404 - Page not found!</h1>
     <p class="zoom-area">
       <b>We recommend the following cheese to accompany your dissapointment:</b>

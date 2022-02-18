@@ -5,11 +5,13 @@
       v-if="!(isNotOpenYetBypassed || isFinallyOpen)"
       class="front-container"
     >
-        <p class="main-title ">Not open yet!</p>
-        <event-countdown
-          :title="message"
-          :time="time"
-        />
+      <p class="main-title ">
+        Not open yet!
+      </p>
+      <event-countdown
+        :title="message"
+        :time="time"
+      />
     </div>
   </div>
 </template>

@@ -167,7 +167,20 @@
                 <div class="columns">
                   <div class="column">
                     <div class="field ">
-                      <label>Server image</label>
+                      <label>
+                        Server image
+                        <tooltip
+                          :vertical="'top'"
+                          :mode="'hover'"
+                        >
+                          <template v-slot:message>
+                          The server icon should be a square and under {{ MAX_SIZE | fileSize }}
+                          </template>
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-info-circle" />
+                          </span>
+                        </tooltip>
+                      </label>
                       <div class="has-text-centered">
                         <div class="file has-name is-boxed">
                           <label class="file-label">
@@ -191,6 +204,7 @@
                           </label>
                         </div>
                       </div>
+                      <p class="help">{{ imageSize | fileSize }}</p>
                     </div>
                   </div>
                   <div class="column">
@@ -208,6 +222,12 @@
                   class="help is-danger"
                 >
                   You must provide a square image.
+                </p>
+                <p
+                  v-if="imageTooBig"
+                  class="help is-danger"
+                >
+                  This is image is too big! It should be under {{ MAX_SIZE | fileSize }}
                 </p>
                 <p
                   v-if="hasImage && !hasSquaredImage"
@@ -358,24 +378,33 @@
           </div>
         </div>
       </div>
+      <!-- Application sending -->
       <div v-if="isApplicationSending">
         <h1>Sending your application</h1>
         <p>
           You application is being sent, depending on our servers and your connexion it can take a few seconds!
         </p>
       </div>
+      <!-- Application sent -->
       <div v-if="isApplicationSent">
         <h1>Here you go!</h1>
         <p>
           Thank you for your application, we will review it and come back to one of the people you listed to validate the application!
         </p>
       </div>
+      <!-- Application failure -->
       <div v-if="isApplicationFailure">
         <h1>Hugh... something went wrong!</h1>
         <p>
           Your application didn't go through. It may just be a server shortage so try again later. <br>
           If it persists, contact us directly.
         </p>
+        <button class="button" @click="recover">
+          <span>Go back to the application</span>
+          <span class="icon">
+            <i class="fas fa-rotate-left" />
+          </span>
+        </button>
       </div>
     </div>
   </not-open-yet>
@@ -408,7 +437,8 @@ export default {
       userName: "",
       adminNames: [],
       serverDescription: "",
-      status: ApplicationStatus.NOT_SENT
+      status: ApplicationStatus.NOT_SENT,
+      MAX_SIZE: 2 * 1024 * 1024
     }
   },
   computed: {
@@ -465,10 +495,20 @@ export default {
         && (this.serverIconDims.width > 0 && this.serverIconDims.height > 0)
         && (this.serverIconDims.width == this.serverIconDims.height)
     },
+    imageSize () {
+      if (!this.hasImage) return undefined
+      return this.serverIcon.size
+    },
+    imageTooBig () {
+      if (!this.hasImage) return false
+      return !Validators.max(this.MAX_SIZE)(this.imageSize)
+    },
     hasValidImage () {
       return Validate([
           Validators.required
-        ])(this.serverIcon) && this.hasSquaredImage
+        ])(this.serverIcon)
+        && this.hasSquaredImage
+        && !this.imageTooBig
     },
     canSubmit() {
       return this.validServerLink
@@ -532,6 +572,9 @@ export default {
         console.error(err)
       })
 
+    },
+    recover: function() {
+      this.status = ApplicationStatus.NOT_SENT
     }
   }
 }

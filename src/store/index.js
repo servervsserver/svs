@@ -184,11 +184,11 @@ export default new Vuex.Store({
     isComingSoonBypassed: state => {
       return process.env.VUE_APP_BYPASS_COMINGSOON == 'true'
     },
-    isComingSoonBypassed: state => {
+    isNotOpenYetBypassed: state => {
       return process.env.VUE_APP_BYPASS_NOTOPENYET == 'true'
     },
-    isPreOpening: state => {
-      return state.svsMainEventInformations.serverApplicationPhaseStart.isIncoming
+    isPreOpening: (state, getters) => {
+      return state.svsMainEventInformations.serverApplicationPhaseStart.isIncoming && !getters.isNotOpenYetBypassed
     }
   },
   mutations: {

@@ -19,7 +19,7 @@
                 Submission date
               </button>
             </th>
-            
+
             <th>Accept?</th>
           </tr>
         </thead>
@@ -57,7 +57,7 @@
               <button class="button is-primary">
                 Accept
               </button>
-             
+
               <button class="button is-warning">
                 Decline
               </button>
@@ -79,7 +79,7 @@ export default {
     }
   },
   mounted () {
-    this.$svsBackend.getAllServerApplications()
+    this.$svsBackend.getAllServers()
       .then(res => {
         this.serverApplications = res
       })

@@ -1,12 +1,15 @@
 <template>
   <div :class="klass">
     <slot v-if="isComingSoonBypassed" />
-    <p
+    <div
       v-if="!isComingSoonBypassed && isPage"
       class="coming-soon-message"
     >
-        Coming soon...
-    </p>
+      <p>
+          Coming soon...
+      </p>
+      <img src="/placeholders/uwu_colored_svs.jpg" width="200" />
+    </div>
   </div>
 </template>
 

@@ -55,6 +55,19 @@
             </p>
           </div>
 
+          <div v-if="staff.extraSocialsLinks.twitch">
+            <p class="socials-text">
+              <i
+                class="fab fa-twitch"
+              />
+              <a
+                :href="'https://twitch.com/' + staff.extraSocialsLinks.twitch"
+              >
+                {{ staff.extraSocialsLinks.twitch }}
+              </a>
+            </p>
+          </div>
+
           <div v-if="staff.extraSocialsLinks.twitter">
             <p class="socials-text">
               <i

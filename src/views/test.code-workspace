@@ -26,6 +26,9 @@
 		},
 		{
 			"path": "..\\..\\..\\kennyBingo"
+		},
+		{
+			"path": "..\\..\\..\\svs-server-dev"
 		}
 	],
 	"settings": {}

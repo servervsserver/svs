@@ -75,9 +75,7 @@ export default {
     }
   },
   mounted () {
-<<<<<<< HEAD
 
-    
     this.$svsBackend.getAppServers(0).then(
       res => {
         console.log("TEST" + res)
@@ -88,12 +86,6 @@ export default {
 
     );
 
-=======
-    this.$svsBackend.getAllServerApplications()
-      .then(res => {
-        this.serverApplications = res
-      })
->>>>>>> fa040668f5a61b169987a83e84d585385a759141
   },
   methods: {
     orderByDate () {

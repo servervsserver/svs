@@ -39,35 +39,7 @@
                 {{ route.meta.title }}
               </router-link>
             </li>
-            <!-- <li><router-link to="dashboard">Dashboard</router-link></li>
-            <li><router-link to="servers">Servers</router-link></li>
-            <li><router-link to="servers">Servers</router-link></li> -->
           </ul>
-          <!-- <p class="menu-label">
-            Administration
-          </p>
-          <ul class="menu-list">
-            <li><a>Team Settings</a></li>
-            <li>
-              <a class="is-active">Manage Your Team</a>
-              <ul>
-                <li><a>Members</a></li>
-                <li><a>Plugins</a></li>
-                <li><a>Add a member</a></li>
-              </ul>
-            </li>
-            <li><a>Invitations</a></li>
-            <li><a>Cloud Storage Environment Settings</a></li>
-            <li><a>Authentication</a></li>
-          </ul>
-          <p class="menu-label">
-            Transactions
-          </p>
-          <ul class="menu-list">
-            <li><a>Payments</a></li>
-            <li><a>Transfers</a></li>
-            <li><a>Balance</a></li>
-          </ul> -->
         </div>
       </template>
       <template v-slot:content>
@@ -100,14 +72,15 @@ export default {
 
 <style scoped lang='scss'>
   #admin-container.admin-container {
-    height: calc(100vh);
+    height: calc(100vh - 49px);
     position: relative;
     padding: 0px;
     padding-top: 49px;
     padding-bottom: 0px;
 
+
     .admin-drawer {
-        height: 100%;
+      height: 100%;
     }
   }
 
@@ -126,8 +99,13 @@ export default {
   }
 
 
-  .admin-router-view > * {
-    padding: 20px 10px;
+  .admin-router-view {
+    overflow-y: scroll;
+    max-height: calc(100vh - 49px);
+
+    & > * {
+      padding: 20px 10px;
+    }
   }
 
   .menu {

@@ -1,7 +1,10 @@
 <template>
   <!-- Render if user has voted -->
 
-  <div v-if="isOpen == false">
+  <div
+    v-if="isOpen == false"
+    class="vote_page"
+  >
     <div class="login">
       <h1>
         <i class="fa fa-thin fa-lock" /><br>
@@ -10,7 +13,10 @@
     </div>
   </div>  
 
-  <div v-else-if="typeof this.$store.state._uid == 'undefined'">
+  <div
+    v-else-if="typeof this.$store.state._uid == 'undefined'"
+    class="vote_page"
+  >
     <div class="login">
       <h1>
         <i class="fa-brands fa-discord" /><br>
@@ -20,7 +26,10 @@
   </div>
 
 
-  <div v-else-if="hasvoted">
+  <div
+    v-else-if="hasvoted"
+    class="vote_page"
+  >
     <h1> Thank you for voting ! </h1>
   </div>
 
@@ -166,40 +175,26 @@
     </div>
   </div>
 
-  <div v-else>
+  <div
+    v-else
+    class="vote_page"
+  >
     <h1> Loading... </h1>
   </div>
 </template>
 
 <script>
-import { initializeApp } from 'firebase/app'
-import { getDatabase, ref, get, child, set} from 'firebase/database'
+import {ref, get, child, set} from 'firebase/database'
 import ChoosePool from '../components/ChoosePoolButton.vue'
+import {rtdb} from "@/assets/db.js"
+
+//Create Reference for Database
+const dbRef = ref(rtdb);
+
 const bcrypt = require('bcryptjs');
 
 
 const saltRounds = 10;
-
-//Config Firebase
-const firebaseConfig = {
-  apiKey: process.env.VUE_APP_apiKey,
-  authDomain: process.env.VUE_APP_authDomain,
-  databaseURL: process.env.VUE_APP_databaseURL,
-  projectId: process.env.VUE_APP_projectId,
-  storageBucket: process.env.VUE_APP_storageBucket,
-  messagingSenderId: process.env.VUE_APP_messagingSenderId,
-  appId: process.env.VUE_APP_appId,
-  measurementId: process.env.VUE_APP_measurementId
-}
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig)
-
-//Get Database
-const db = getDatabase(app)
-
-//Create Reference for Database
-const dbRef = ref(db);
 
 export default ({
   components: {
@@ -222,7 +217,7 @@ export default ({
         isOpen : true,
 
         //Pool users vote goes to -> Can be server or community -> If > 1 in array, prompt user to choose pool
-        pool: ['server1','server2'],
+        pool: ['dsg','dsgdsg'],
 
         //User's Vote
         ballot: [false,false,false,false,false,false],
@@ -231,9 +226,10 @@ export default ({
       }
     )
   },
-  mounted () {
-    
-        //Get Value of "Voters" -> List of discord IDs who have voted
+updated() {
+  console.log (this.$store.state._uid)
+  if (typeof this.$store.state._uid != 'undefined') {
+            //Get Value of "Voters" -> List of discord IDs who have voted
     get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
       console.log('here')
       if (snapshot.exists()) {
@@ -248,8 +244,13 @@ export default ({
       }
       }
       ).catch((error) => {
-      });
-  },
+        console.error(error)
+      })
+  }
+},
+mounted () {
+  if (this.$data.pool.length < 1) {this.$data.pool = ['community']}
+},
   methods: {
     validateVoteData : function (_data_, availableOptions) {
   //Check for no empty boxes & Checkbox ticked

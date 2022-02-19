@@ -19,7 +19,7 @@
                 Submission date
               </button>
             </th>
-            
+
             <th>Accept?</th>
           </tr>
         </thead>
@@ -53,10 +53,14 @@
             <th class="has-text-centered">
               {{ sa.submission_date | date('dd/mm/yyyy hour:min') }}
             </th>
-             <th class="has-text-centered">
-             <button class="button is-primary">Accept</button>
-             
-             <button class="button is-warning">Decline</button>
+            <th class="has-text-centered">
+              <button class="button is-primary">
+                Accept
+              </button>
+
+              <button class="button is-warning">
+                Decline
+              </button>
             </th>
           </tr>
         </tbody>
@@ -75,8 +79,7 @@ export default {
     }
   },
   mounted () {
-
-    this.$svsBackend.getAppServers(0).then(
+ this.$svsBackend.getAppServers(0).then(
       res => {
         console.log("TEST" + res)
         this.serverApplications = res;

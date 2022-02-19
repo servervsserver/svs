@@ -3,7 +3,7 @@
     :class="[theme]"
   >
     <pre-opening>
-      <CookieBanner />
+      <!-- <CookieBanner /> -->
       <div id="top" />
       <div class="app-container">
         <svs-navbar />
@@ -11,7 +11,7 @@
         <!-- Router view -->
         <div
           id="main-router-view"
-          class="router-view"
+          class="router-view gradient_bg_wrapper"
         >
           <Transition name="pageTransition">
             <router-view />
@@ -28,14 +28,14 @@
 <script>
 // @ is an alias to /src
 
-import CookieBanner from '@/components/cookie/CookieBanner.vue'
+// import CookieBanner from '@/components/cookie/CookieBanner.vue'
 
 import Navbar from "@/components/Navbar.vue"
 import Footer from "@/components/Footer.vue"
 
 export default {
   components: {
-    CookieBanner,
+    // CookieBanner,
     'svs-navbar': Navbar,
     'svs-footer': Footer
   },
@@ -79,6 +79,7 @@ export default {
 .pageTransition-enter-active,
 .pageTransition-leave-active {
   transition: opacity 0.15s ease;
+  background: inherit;
 }
 
 .pageTransition-enter-from,

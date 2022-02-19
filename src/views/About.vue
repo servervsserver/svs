@@ -34,13 +34,30 @@ export default {
     return {
       staffMembers: [
         new StaffCard(
+          "Aeobe",
+          "he/him",
+          "Head of Participant Outreach",
+          "Ello, I'm Aeobe. I head the Participant Outreach here at SvS. I also do music stuff :jubilant:. AKA Yeffs.",
+          "trash.man#6716",
+          "/staff/aeobe/avatar.webp",
+          { instagram: 'aobsinceme', twitter:"aobsinceme "},
+        ),
+        new StaffCard(
           "Ask the Storyteller",
           "he/him",
-          "Head of Web Development and Event Coordination",
+          "Head of Development and Event Coordination",
           "HI I'm Story. I founded SvS back in 2020. Since then I've seen it grow way past anything I could've imagined and I'm excited to help it grow.",
           "ask the storyteller#8411",
           "/staff/storyteller/avatar.jpg",
           { instagram: '__askthestoryteller'},
+        ), new StaffCard(
+          "Ben",
+          "he/him",
+          "Head of Event Coordination and Fundraising and Sponsorship Coordination",
+          "Hi, I'm Ben, I’ve been helping here since SvS II. I love bringing the world of online music-making a little closer together to achieve social good (and have some fun along the way, of course).",
+          "Bean#5677",
+          "/staff/ben/avatar.jpg",
+          { twitch: 'SirVCS3'},
         ),
         new StaffCard(
           "Nyco",
@@ -63,7 +80,7 @@ export default {
         new StaffCard(
           "Blue",
           "he/him",
-          "Head of Fundraising and Sponsorship, Stream Host, Development, Charity Outreach",
+          "Fundraising and Sponsorship, Stream Host, Development, Charity Outreach",
           "Vocalist, Songwriter, Producer, Engineer, and part-time Wallaby. I jumped in to the very first SvS and have helped organize as well as hosted our livestreams ever since. SvS is something special and we're going somewhere amazing.",
           "BlueAudioBen#0832",
           "/staff/blue/avatar.jpg",
@@ -89,8 +106,8 @@ export default {
         new StaffCard(
           "Jiway",
           "he/him",
-          "Web Development",
-          "What's up slappers?",
+          "Front-End Web Dev Lead",
+          "What's up slappers? Me slappin' lines of code almost as much as I slap the bass. If the site bugs, I'm guilty, if it's sleek, thank the team!",
           "Jiway#7289",
           "/staff/jiway/avatar.jpg",
           { instagram: 'jiway_jy' }
@@ -121,6 +138,24 @@ export default {
           "timceharris#7942",
           "/staff/tim/avatar.png",
           { twitter: 'timceharris'},
+        ),
+        new StaffCard(
+          "DVN",
+          "he/him",
+          "Branding and Design",
+          "Hi, I'm DVN, I am a visual artist who specializes in 3D software such as Blender or Unreal Engine. I have been working for a year with these software.",
+          "DVN#4328",
+          "/staff/dvn/avatar.png",
+          { instagram: 'dvngraphix'},
+        ),
+        new StaffCard(
+          "Taran",
+          "he/him",
+          "Outreach",
+          "Hi I'm Taran, I'm a 23 yr old music producer from Minnesota focusing on alternative rap and boom bap.  Super excited to be a part of the svs team and looking forward to the competition this year!",
+          "Taran#8662",
+          "/staff/taran/avatar.png",
+          { instagram: 'taran.flp'},
         ),
       ]
     }

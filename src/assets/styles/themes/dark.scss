@@ -18,7 +18,15 @@ $color-theme: palette.generateCompletePalette(
     background: url("/backgrounds/bg_dark.png") fixed;
   }
 
-  .app-container {
-    background-image: url("/backgrounds/bg_dark.png");
+  .gradient_bg_wrapper,
+  .home,
+  .pre-opening {
+    background: url("/backgrounds/bg_dark.png") fixed;
+    background-size: cover;
   }
+
+  .gradient_bg_wrapper {
+    width: 100%;
+  }
+
 }

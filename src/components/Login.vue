@@ -6,13 +6,15 @@
       @click="login"
     >
       Log in with Discord
-    </a>  <router-link to="/profile" v-if="$auth.isAuthenticated"
+    </a>  <router-link
+      v-if="$auth.isAuthenticated"
+      to="/profile"
       class="button is-dark is-inverted"
-    >    <span class="icon is-small">
-      <i class="fas fa-user"></i>
-    </span> <span>
-      {{ $auth.user.name }}</span>
-
+    >
+      <span class="icon is-small">
+        <i class="fas fa-user" />
+      </span> <span>
+        {{ $auth.user.name }}</span>
     </router-link>
     <button
       v-if="$auth.isAuthenticated"

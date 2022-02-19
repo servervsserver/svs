@@ -46,7 +46,8 @@ const amazonS3Config = {
 
 
 /**
-* Backend plugin DO NOT instantiate, just plug it in Vue
+* Backend plugin DO NOT instantiate, just plug it in Vue.
+* Firebase/Firestore collections use snake_case conventions
 */
 export default class BackendPlugin {
 
@@ -56,7 +57,7 @@ export default class BackendPlugin {
   constructor(Vue) {
 
     this.Vue = Vue
-    
+
     this._firebaseApp = initializeApp(firebaseConfig)
     this._firebaseDb = getDatabase(this._firebaseApp)
     this._firestoreDb = getFirestore(this._firebaseApp)
@@ -104,11 +105,9 @@ export default class BackendPlugin {
         })
 
     }).then(res => {
-      console.log(res)
       return setDoc( newServerRef, data )
     })
     .then(() => {
-      console.log("Successful firestore registration")
       return { uid, data }
     })
 
@@ -144,7 +143,7 @@ export default class BackendPlugin {
   * Adds a server to the svs 4 event applications
   */
   addServerToSvSIVApplications(serverId) {
-    return this.addServerToEventApplication(serverId, "applied-svs-iv")
+    return this.addServerToEventApplication(serverId, "applied_svs_iv")
   }
 
   /**
@@ -181,7 +180,7 @@ export default class BackendPlugin {
   * Returns a list from Realtime Database given key
   * @return promise to the document ref in firebase of the application
   */
-   getAppServers(state) {
+  getAppServers(state) {
     const serverStateKey = ["applied_svs_iv","accepted_svs_iv","denied_svs_iv"];
     this._getList(serverStateKey[state]).then(server_ids => {
       this._getServersById(server_ids).then(
@@ -217,12 +216,12 @@ export default class BackendPlugin {
         ))
 
   return Promise.all(promises).then(() => {
-    console.log(data);return data;});      
+    console.log(data);return data;});
   }
-  
-  
-  
-  
+
+
+
+
   }
 
   // ======== Anonymous concerns
@@ -234,7 +233,7 @@ export default class BackendPlugin {
   createAnonymousConcernsTicket(message) {
     const anonyConDocRef
       = addDoc(
-          collection(this._firestoreDb, "anonymous-concerns"),
+          collection(this._firestoreDb, "anonymous_concerns"),
           { message: message, date: new Date(), answer: "" }
         )
 
@@ -246,7 +245,7 @@ export default class BackendPlugin {
   * @returns A promise on an array of AnonymousConcernsTicket
   */
   getAllAnonymousConcernsTickets() {
-    const colSnap = getDocs(collection(this._firestoreDb, "anonymous-concerns"))
+    const colSnap = getDocs(collection(this._firestoreDb, "anonymous_concerns"))
 
     return colSnap.then(snappedDocs => {
       let data = []
@@ -262,7 +261,7 @@ export default class BackendPlugin {
   * @returns A promise on the AnonymousConcernsTicket of the corresponding id. null if not found
   */
   getAnonymousConcernsTicketById(id) {
-    return getDoc(doc(this._firestoreDb, "anonymous-concerns", id))
+    return getDoc(doc(this._firestoreDb, "anonymous_concerns", id))
       .then(snappedDoc => {
         if (!snappedDoc.exists()) return null
         return AnonymousConcernsTicket.fromFirestoreDoc(snappedDoc)

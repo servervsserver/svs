@@ -7,10 +7,12 @@ import { BackendPlugin, SettingsPlugin } from "./plugins/all"
 
 import PreOpening from "./components/PreOpening.vue"
 import ComingSoon from "./components/ComingSoon.vue"
+import NotOpenYet from "./components/NotOpenYet.vue"
 import BrandName from './components/branding/BrandName.vue'
 import BrandNameShort from './components/branding/BrandNameShort.vue'
 Vue.component('pre-opening', PreOpening)
 Vue.component('coming-soon', ComingSoon)
+Vue.component('not-open-yet', NotOpenYet)
 Vue.component('brand-name', BrandName)
 Vue.component('brand-name-short', BrandNameShort)
 
@@ -40,11 +42,13 @@ Vue.component('squared-image-box', SquaredImageContainer)
 // Global imports of filters
 // =================================================
 
+import { fileSize } from "./filters/file"
 import { date } from "./filters/date"
 import { discordInviteHandle } from "./filters/discord"
 
 Vue.filter('date', date)
 Vue.filter('discordInviteHandle', discordInviteHandle)
+Vue.filter('fileSize', fileSize)
 
 // =================================================
 // Global import directives

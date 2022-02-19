@@ -1,458 +1,463 @@
 <template>
-  <div class="container ep-upload">
-    <h1>
-      Submit your EP
-    </h1>
-    <div class="columns">
-      <div class="column is-6">
-        <p>
-          Are you happy with what your server has produced and think it's ready to be submitted?
-          Submit your server's EP by filling out this form!
-          Only one submission is allowed per server. You cannot change your submission afterwards, so make sure everything meets your standards and our competition rules.
-        </p>
-      </div>
-    </div>
-
-    <div>
-      <div class="form">
-        <!-- EP info start -->
-
-        <h2>EP Information</h2>
-
-        <div class="columns">
-          <div class="column is-5">
-            <div class="field">
-              <label>EP title</label>
-              <div class="control has-icons-left">
-                <input
-                  v-model="epName"
-                  class="input"
-                  type="text"
-                  placeholder="My awesome server EP"
-                >
-                <span class="icon is-small is-left">
-                  <i class="fas fa-compact-disc" />
-                </span>
-              </div>
-            </div>
-            <!-- Cover art form  -->
-            <div class="field ">
-              <label>
-                EP Cover Art
-                <tooltip
-                  :vertical="'top'"
-                  :mode="'hover'"
-                >
-                  <template v-slot:message>
-                    The cover art should be square, preferably 3000x3000 pixels— the same standard used by distribution platforms.
-                  </template>
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-info-circle" />
-                  </span>
-                </tooltip>
-              </label>
-              <div class="has-text-centered">
-                <div class="file has-name is-boxed">
-                  <label class="file-label">
-                    <input
-                      accept="image/*"
-                      class="file-input"
-                      type="file"
-                      @change="onCoverArtChange"
-                    >
-                    <span class="file-cta">
-                      <span class="file-icon">
-                        <i class="fas fa-upload" />
-                      </span>
-                      <span class="file-label">
-                        Choose a file…
-                      </span>
-                    </span>
-                    <span class="file-name">
-                      {{ coverArtFilename }}
-                    </span>
-                  </label>
-                </div>
-              </div>
-            </div>
-            <!-- Streaming link -->
-            <div class="field">
-              <label>
-                Public streaming link
-                <tooltip
-                  :vertical="'top'"
-                  :mode="'hover'"
-                >
-                  <template v-slot:message>
-                    A link where people can listen to your EP<br>
-                    (Youtube, Soundcloud, etc.)
-                  </template>
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-info-circle" />
-                  </span>
-                </tooltip>
-              </label>
-              <div class="control has-icons-left">
-                <input
-                  v-model="epStreamingLink"
-                  class="input"
-                  type="text"
-                  placeholder="https://soundcloud.com/my-server/my-awesome-ep-link"
-                >
-                <span class="icon is-small is-left"><i class="fas fa-link" /></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="column is-offset-2 is-5">
-            <squared-image-box style="max-width: 300px">
-              <img
-                ref="serverIconEl"
-                class="shadow-depth-2"
-                :src="coverArtUrl"
-              >
-            </squared-image-box>
-            <!-- <img
-              :src="coverArtUrl"
-              width="100%"
-              class="shadow-depth-2"
-            > -->
-          </div>
+  <not-open-yet
+    :message="'EP Submissions opens in'"
+    :time="$store.state.svsMainEventInformations.competitionStart.timeRemaining"
+  >
+    <div class="container ep-upload">
+      <h1>
+        Submit your EP
+      </h1>
+      <div class="columns">
+        <div class="column is-6">
+          <p>
+            Are you happy with what your server has produced and think it's ready to be submitted?
+            Submit your server's EP by filling out this form!
+            Only one submission is allowed per server. You cannot change your submission afterwards, so make sure everything meets your standards and our competition rules.
+          </p>
         </div>
+      </div>
 
-        <!-- EP info end -->
-        <!-- Track info start -->
+      <div>
+        <div class="form">
+          <!-- EP info start -->
 
-        <h2>Tracks</h2>
+          <h2>EP Information</h2>
 
-        <div class="columns is-multiline">
-          <section
-            v-for="(track, index) in tracks"
-            :key="track.vueId"
-            class="column is-full track-section shadow-depth-2 gradient-bg"
-          >
-            <button
-              class="button svs-button-transparent delete-track-button"
-              @click="dropTrack(track)"
-            >
-              <span class="icon">
-                <i class="fas fa-trash-alt" />
-              </span>
-            </button>
-            <h3>
-              Track {{ index + 1 }}
-            </h3>
-            <div class="columns is-multiline">
-              <div class="column is-7">
-                <!-- Track name -->
-                <div
-                  class="field"
-                >
-                  <label>Track title</label>
-                  <div class="control has-icons-left">
-                    <input
-                      v-model="track.name"
-                      class="input"
-                      type="text"
-                      :placeholder="'My awesome track #' + (index + 1)"
-                    >
-                    <span class="icon is-small is-left"><i class="fas fa-play" /></span>
-                  </div>
-                </div>
-                <!-- Lyrics -->
-                <div
-                  class="field"
-                >
-                  <label>Lyrics</label>
-                  <textarea
-                    v-model="track.lyrics"
-                    class="textarea lyrics"
-                    :class="{ 'no-lyrics': !track.hasLyrics }"
-                    :disabled="!track.hasLyrics"
-                  />
+          <div class="columns">
+            <div class="column is-5">
+              <div class="field">
+                <label>EP title</label>
+                <div class="control has-icons-left">
+                  <input
+                    v-model="epName"
+                    class="input"
+                    type="text"
+                    placeholder="My awesome server EP"
+                  >
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-compact-disc" />
+                  </span>
                 </div>
               </div>
-
-              <div class="column is-5">
-                <!-- Audio file -->
-                <div class="field has-text-centered-on-mobile">
-                  <label>
-                    Audio file
-                    <tooltip
-                      :vertical="'top'"
-                      :mode="'hover'"
-                    >
-                      <template v-slot:message>
-                        The audio file should be a 320kbps mp3.<br>
-                        Aim for -14 integrated LUFS for mastering.
-                      </template>
-                      <span class="icon is-small is-left">
-                        <i class="fas fa-info-circle" />
-                      </span>
-                    </tooltip>
-                  </label>
-                  <!-- <div class="has-text-centered"> -->
-                  <div class="file has-name">
+              <!-- Cover art form  -->
+              <div class="field ">
+                <label>
+                  EP Cover Art
+                  <tooltip
+                    :vertical="'top'"
+                    :mode="'hover'"
+                  >
+                    <template v-slot:message>
+                      The cover art should be square, preferably 3000x3000 pixels— the same standard used by distribution platforms.
+                    </template>
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-info-circle" />
+                    </span>
+                  </tooltip>
+                </label>
+                <div class="has-text-centered">
+                  <div class="file has-name is-boxed">
                     <label class="file-label">
                       <input
-                        accept=".mp3"
+                        accept="image/*"
                         class="file-input"
                         type="file"
-                        @change="onTrackFileChange($event, track)"
+                        @change="onCoverArtChange"
                       >
                       <span class="file-cta">
                         <span class="file-icon">
-                          <i class="fas fa-file-audio" />
+                          <i class="fas fa-upload" />
                         </span>
                         <span class="file-label">
                           Choose a file…
                         </span>
-                        <span class="file-name">
-                          {{ track.audioFilename }}
-                        </span>
+                      </span>
+                      <span class="file-name">
+                        {{ coverArtFilename }}
                       </span>
                     </label>
                   </div>
-                  <!-- </div> -->
                 </div>
-
-                <div class="columns is-vcentered">
-                  <!-- Music genre -->
-                  <div class="column is-half is-mobile has-text-right-on-desktop has-text-centered-on-mobile">
-                    <label>Music genre</label>
-                  </div>
-                  <div class="column is-half is-mobile has-text-left-on-desktop has-text-centered-on-mobile">
-                    <div class="control has-icons-left">
-                      <div class="select">
-                        <select v-model="track.genre">
-                          <option
-                            disabled
-                            value=""
-                          >
-                            Unclassified
-                          </option>
-                          <option
-                            v-for="genre in musicGenres"
-                            :key="genre"
-                          >
-                            {{ genre }}
-                          </option>
-                          <!-- <option>With options</option> -->
-                        </select>
-                        <span class="icon is-left">
-                          <i class="fas fa-music" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="columns is-vcentered">
-                  <!-- Parental Advisory -->
-                  <div class="column is-half is-mobile has-text-right-on-desktop has-text-centered-on-mobile">
-                    <label>
-                      Explicit?
-                      <tooltip
-                        :vertical="'top'"
-                        :mode="'hover'"
-                      >
-                        <!-- <template v-slot:title>Yep'</template> -->
-                        <template v-slot:message>
-                          Your track is explicit if your lyrics contains words or expressions that could fall under the
-                          <strong>Parental&nbsp;Advisory&nbsp;Label&nbsp;</strong>
-                          <em>(PAL)</em><br>
-                          (Violence, sex, drugs, ect.). If this is the case, toggle this on.
-                        </template>
-                        <span class="icon is-small is-left">
-                          <i class="fas fa-info-circle" />
-                        </span>
-                      </tooltip>
-                    </label>
-                  </div>
-                  <div class="column is-half is-mobile has-text-left-on-desktop has-text-centered-on-mobile">
-                    <div class="field">
-                      <input
-                        :id="'explicit-track-' + index"
-                        v-model="track.explicit"
-                        type="checkbox"
-                        name="ce-anonymous"
-                        class="switch is-rounded"
-                      >
-                      <label :for="'explicit-track-' + index" />
-                    </div>
-                  </div>
-                </div>
-
-                <div class="columns is-vcentered">
-                  <!-- Instrumental or vocal -->
-                  <div class="column is-half is-mobile has-text-right-on-desktop has-text-centered-on-mobile">
-                    <label>
-                      Has vocals?
-                    </label>
-                    <tooltip
-                      :vertical="'top'"
-                      :mode="'hover'"
-                    >
-                      <!-- <template v-slot:title>Yep'</template> -->
-                      <template v-slot:message>
-                        If your track has a vocal performance, toggle this on. <br>
-                        Beatboxing is considered an instrument.
-                      </template>
-                      <span class="icon is-small is-left">
-                        <i class="fas fa-info-circle" />
-                      </span>
-                    </tooltip>
-                  </div>
-                  <div class="column is-half is-mobile has-text-left-on-desktop has-text-centered-on-mobile">
-                    <div class="field">
-                      <input
-                        :id="'lyrics-track-' + index"
-                        v-model="track.hasLyrics"
-                        type="checkbox"
-                        name="ce-anonymous"
-                        class="switch is-rounded"
-                      >
-                      <label :for="'lyrics-track-' + index" />
-                    </div>
-                  </div>
-                </div>
-
-                <!-- <div class="columns is-vcentered">
-                  <div class="column is-half is-mobile has-text-right" />
-                  <div class="column is-half is-mobile" />
-                </div> -->
               </div>
-
-              <div class="column is-12">
-                <!-- Credits -->
-                <label>Credits</label>
-                <div
-                  v-for="(ce, ceidx) in track.credits"
-                  :key="ce.vueId"
-                  class="columns is-vcentered"
-                >
-                  <div class="column is-narrow has-text-centered">
-                    <span class="credit-index">{{ ceidx + 1 }}</span>
-                    <!-- &nbsp; -->
-                    <button
-                      class="button svs-button-transparent"
-                      @click="track.removeCreditEntry(ce)"
-                    >
-                      <span class="icon is-small">
-                        <i class="fas fa-user-minus" />
-                      </span>
-                    </button>
-                  </div>
-                  <!-- Artist name -->
-                  <div class="column is-3">
-                    <div class="field">
-                      <label>Artist name</label>
-                      <div class="control has-icons-left">
-                        <input
-                          v-model="ce.artistName"
-                          class="input"
-                          type="text"
-                          placeholder="The artist"
-                        >
-                        <span class="icon is-small is-left">
-                          <i class="fas fa-user" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Discord tag -->
-                  <div class="column is-3">
-                    <div class="field">
-                      <label>Discord tag</label>
-                      <div class="control has-icons-left">
-                        <input
-                          v-model="ce.discordTag"
-                          class="input"
-                          type="text"
-                          placeholder="TheArtist#1234"
-                        >
-                        <span class="icon is-small is-left">
-                          <i class="fab fa-discord" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Role(s) -->
-                  <div class="column is-3">
-                    <div class="field">
-                      <label>Role(s)</label>
-                      <div class="control has-icons-left">
-                        <input
-                          v-model="ce.description"
-                          class="input"
-                          type="text"
-                          placeholder="Mixing, mastering, bass"
-                        >
-                        <span class="icon is-small is-left">
-                          <i class="fas fa-user-tag" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Anonymous -->
-                  <div class="column">
-                    <label>
-                      Stay anonymous
-                      <tooltip
-                        :vertical="'top'"
-                        :horizontal="'left'"
-                        :mode="'hover'"
-                      >
-                        <!-- <template v-slot:title>Yep'</template> -->
-                        <template v-slot:message>
-                          If this person doesn't want to appear in the credits, toggle this on.
-                        </template>
-                        <span class="icon is-small is-left">
-                          <i class="fas fa-info-circle" />
-                        </span>
-                      </tooltip>
-                    </label>
-                    <div class="field">
-                      <input
-                        :id="'ce-anonymous-track-' + index + '-ce-' + ceidx"
-                        v-model="ce.anonymous"
-                        type="checkbox"
-                        name="ce-anonymous"
-                        class="switch is-rounded"
-                      >
-                      <label :for="'ce-anonymous-track-' + index + '-ce-' + ceidx" />
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <button
-                    class="button"
-                    @click="track.addCreditEntry()"
+              <!-- Streaming link -->
+              <div class="field">
+                <label>
+                  Public streaming link
+                  <tooltip
+                    :vertical="'top'"
+                    :mode="'hover'"
                   >
-                    <span class="icon is-small">
-                      <i class="fas fa-user-plus" />
+                    <template v-slot:message>
+                      A link where people can listen to your EP<br>
+                      (Youtube, Soundcloud, etc.)
+                    </template>
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-info-circle" />
                     </span>
-                    <span>Add credit</span>
-                  </button>
+                  </tooltip>
+                </label>
+                <div class="control has-icons-left">
+                  <input
+                    v-model="epStreamingLink"
+                    class="input"
+                    type="text"
+                    placeholder="https://soundcloud.com/my-server/my-awesome-ep-link"
+                  >
+                  <span class="icon is-small is-left"><i class="fas fa-link" /></span>
                 </div>
               </div>
             </div>
-          </section>
-          <section class="track-section has-text-centered">
-            <button
-              class="button is-medium "
-              @click="addTrack"
-            >
-              <span class="icon"><i class="fas fa-headphones" /></span>
-              <span>Add track</span>
-            </button>
-          </section>
-        </div>
 
-        <!-- Track info end -->
+            <div class="column is-offset-2 is-5">
+              <squared-image-box style="max-width: 300px">
+                <img
+                  ref="serverIconEl"
+                  class="shadow-depth-2"
+                  :src="coverArtUrl"
+                >
+              </squared-image-box>
+              <!-- <img
+                :src="coverArtUrl"
+                width="100%"
+                class="shadow-depth-2"
+              > -->
+            </div>
+          </div>
+
+          <!-- EP info end -->
+          <!-- Track info start -->
+
+          <h2>Tracks</h2>
+
+          <div class="columns is-multiline">
+            <section
+              v-for="(track, index) in tracks"
+              :key="track.vueId"
+              class="column is-full track-section shadow-depth-2 gradient-bg"
+            >
+              <button
+                class="button svs-button-transparent delete-track-button"
+                @click="dropTrack(track)"
+              >
+                <span class="icon">
+                  <i class="fas fa-trash-alt" />
+                </span>
+              </button>
+              <h3>
+                Track {{ index + 1 }}
+              </h3>
+              <div class="columns is-multiline">
+                <div class="column is-7">
+                  <!-- Track name -->
+                  <div
+                    class="field"
+                  >
+                    <label>Track title</label>
+                    <div class="control has-icons-left">
+                      <input
+                        v-model="track.name"
+                        class="input"
+                        type="text"
+                        :placeholder="'My awesome track #' + (index + 1)"
+                      >
+                      <span class="icon is-small is-left"><i class="fas fa-play" /></span>
+                    </div>
+                  </div>
+                  <!-- Lyrics -->
+                  <div
+                    class="field"
+                  >
+                    <label>Lyrics</label>
+                    <textarea
+                      v-model="track.lyrics"
+                      class="textarea lyrics"
+                      :class="{ 'no-lyrics': !track.hasLyrics }"
+                      :disabled="!track.hasLyrics"
+                    />
+                  </div>
+                </div>
+
+                <div class="column is-5">
+                  <!-- Audio file -->
+                  <div class="field has-text-centered-on-mobile">
+                    <label>
+                      Audio file
+                      <tooltip
+                        :vertical="'top'"
+                        :mode="'hover'"
+                      >
+                        <template v-slot:message>
+                          The audio file should be a 320kbps mp3.<br>
+                          Aim for -14 integrated LUFS for mastering.
+                        </template>
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-info-circle" />
+                        </span>
+                      </tooltip>
+                    </label>
+                    <!-- <div class="has-text-centered"> -->
+                    <div class="file has-name">
+                      <label class="file-label">
+                        <input
+                          accept=".mp3"
+                          class="file-input"
+                          type="file"
+                          @change="onTrackFileChange($event, track)"
+                        >
+                        <span class="file-cta">
+                          <span class="file-icon">
+                            <i class="fas fa-file-audio" />
+                          </span>
+                          <span class="file-label">
+                            Choose a file…
+                          </span>
+                          <span class="file-name">
+                            {{ track.audioFilename }}
+                          </span>
+                        </span>
+                      </label>
+                    </div>
+                    <!-- </div> -->
+                  </div>
+
+                  <div class="columns is-vcentered">
+                    <!-- Music genre -->
+                    <div class="column is-half is-mobile has-text-right-on-desktop has-text-centered-on-mobile">
+                      <label>Music genre</label>
+                    </div>
+                    <div class="column is-half is-mobile has-text-left-on-desktop has-text-centered-on-mobile">
+                      <div class="control has-icons-left">
+                        <div class="select">
+                          <select v-model="track.genre">
+                            <option
+                              disabled
+                              value=""
+                            >
+                              Unclassified
+                            </option>
+                            <option
+                              v-for="genre in musicGenres"
+                              :key="genre"
+                            >
+                              {{ genre }}
+                            </option>
+                            <!-- <option>With options</option> -->
+                          </select>
+                          <span class="icon is-left">
+                            <i class="fas fa-music" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="columns is-vcentered">
+                    <!-- Parental Advisory -->
+                    <div class="column is-half is-mobile has-text-right-on-desktop has-text-centered-on-mobile">
+                      <label>
+                        Explicit?
+                        <tooltip
+                          :vertical="'top'"
+                          :mode="'hover'"
+                        >
+                          <!-- <template v-slot:title>Yep'</template> -->
+                          <template v-slot:message>
+                            Your track is explicit if your lyrics contains words or expressions that could fall under the
+                            <strong>Parental&nbsp;Advisory&nbsp;Label&nbsp;</strong>
+                            <em>(PAL)</em><br>
+                            (Violence, sex, drugs, ect.). If this is the case, toggle this on.
+                          </template>
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-info-circle" />
+                          </span>
+                        </tooltip>
+                      </label>
+                    </div>
+                    <div class="column is-half is-mobile has-text-left-on-desktop has-text-centered-on-mobile">
+                      <div class="field">
+                        <input
+                          :id="'explicit-track-' + index"
+                          v-model="track.explicit"
+                          type="checkbox"
+                          name="ce-anonymous"
+                          class="switch is-rounded"
+                        >
+                        <label :for="'explicit-track-' + index" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="columns is-vcentered">
+                    <!-- Instrumental or vocal -->
+                    <div class="column is-half is-mobile has-text-right-on-desktop has-text-centered-on-mobile">
+                      <label>
+                        Has vocals?
+                      </label>
+                      <tooltip
+                        :vertical="'top'"
+                        :mode="'hover'"
+                      >
+                        <!-- <template v-slot:title>Yep'</template> -->
+                        <template v-slot:message>
+                          If your track has a vocal performance, toggle this on. <br>
+                          Beatboxing is considered an instrument.
+                        </template>
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-info-circle" />
+                        </span>
+                      </tooltip>
+                    </div>
+                    <div class="column is-half is-mobile has-text-left-on-desktop has-text-centered-on-mobile">
+                      <div class="field">
+                        <input
+                          :id="'lyrics-track-' + index"
+                          v-model="track.hasLyrics"
+                          type="checkbox"
+                          name="ce-anonymous"
+                          class="switch is-rounded"
+                        >
+                        <label :for="'lyrics-track-' + index" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- <div class="columns is-vcentered">
+                    <div class="column is-half is-mobile has-text-right" />
+                    <div class="column is-half is-mobile" />
+                  </div> -->
+                </div>
+
+                <div class="column is-12">
+                  <!-- Credits -->
+                  <label>Credits</label>
+                  <div
+                    v-for="(ce, ceidx) in track.credits"
+                    :key="ce.vueId"
+                    class="columns is-vcentered"
+                  >
+                    <div class="column is-narrow has-text-centered">
+                      <span class="credit-index">{{ ceidx + 1 }}</span>
+                      <!-- &nbsp; -->
+                      <button
+                        class="button svs-button-transparent"
+                        @click="track.removeCreditEntry(ce)"
+                      >
+                        <span class="icon is-small">
+                          <i class="fas fa-user-minus" />
+                        </span>
+                      </button>
+                    </div>
+                    <!-- Artist name -->
+                    <div class="column is-3">
+                      <div class="field">
+                        <label>Artist name</label>
+                        <div class="control has-icons-left">
+                          <input
+                            v-model="ce.artistName"
+                            class="input"
+                            type="text"
+                            placeholder="The artist"
+                          >
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-user" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Discord tag -->
+                    <div class="column is-3">
+                      <div class="field">
+                        <label>Discord tag</label>
+                        <div class="control has-icons-left">
+                          <input
+                            v-model="ce.discordTag"
+                            class="input"
+                            type="text"
+                            placeholder="TheArtist#1234"
+                          >
+                          <span class="icon is-small is-left">
+                            <i class="fab fa-discord" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Role(s) -->
+                    <div class="column is-3">
+                      <div class="field">
+                        <label>Role(s)</label>
+                        <div class="control has-icons-left">
+                          <input
+                            v-model="ce.description"
+                            class="input"
+                            type="text"
+                            placeholder="Mixing, mastering, bass"
+                          >
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-user-tag" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Anonymous -->
+                    <div class="column">
+                      <label>
+                        Stay anonymous
+                        <tooltip
+                          :vertical="'top'"
+                          :horizontal="'left'"
+                          :mode="'hover'"
+                        >
+                          <!-- <template v-slot:title>Yep'</template> -->
+                          <template v-slot:message>
+                            If this person doesn't want to appear in the credits, toggle this on.
+                          </template>
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-info-circle" />
+                          </span>
+                        </tooltip>
+                      </label>
+                      <div class="field">
+                        <input
+                          :id="'ce-anonymous-track-' + index + '-ce-' + ceidx"
+                          v-model="ce.anonymous"
+                          type="checkbox"
+                          name="ce-anonymous"
+                          class="switch is-rounded"
+                        >
+                        <label :for="'ce-anonymous-track-' + index + '-ce-' + ceidx" />
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <button
+                      class="button"
+                      @click="track.addCreditEntry()"
+                    >
+                      <span class="icon is-small">
+                        <i class="fas fa-user-plus" />
+                      </span>
+                      <span>Add credit</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="track-section has-text-centered">
+              <button
+                class="button is-medium "
+                @click="addTrack"
+              >
+                <span class="icon"><i class="fas fa-headphones" /></span>
+                <span>Add track</span>
+              </button>
+            </section>
+          </div>
+
+          <!-- Track info end -->
+        </div>
       </div>
     </div>
-  </div>
+  </not-open-yet>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container home">
+  <div class="container-fluid home">
     <div class="front-container">
       <h1 class="main-title">
         Welcome to <brand-name style="color: #ffba5e" />
@@ -44,7 +44,7 @@ export default {
   justify-content: center;
 
   .front-container {
-    align-self: flex;
+    /* align-self: flex; */
   }
 
   h1 {

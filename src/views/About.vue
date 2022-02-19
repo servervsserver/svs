@@ -176,7 +176,7 @@ export default {
           "Happy to be part of the community :)",
           "alyssa#9629",
           "/staff/lyss/avatar.jpg",
-          { instagram: 'jiway_jy' }
+          {}
         ),
         new StaffCard(
           "Patrick Cline II",

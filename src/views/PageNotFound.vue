@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="fourofour">
     <h1>404 - Page not found!</h1>
     <p class="zoom-area">
       <b>We recommend the following cheese to accompany your dissapointment:</b>
@@ -34,6 +34,13 @@ export default {
 <style scoped lang='scss'>
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
 @import url('https://fonts.googleapis.com/css?family=Catamaran:400,800');
+
+.fourofour {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto
+}
+
 .error-container {
   text-align: center;
   font-size: 106px;

@@ -1,7 +1,10 @@
 <template>
   <!-- Render if user has voted -->
 
-  <div v-if="isOpen == false">
+  <div
+    v-if="isOpen == false"
+    class="vote_page"
+  >
     <div class="login">
       <h1>
         <i class="fa fa-thin fa-lock" /><br>
@@ -10,7 +13,10 @@
     </div>
   </div>  
 
-  <div v-else-if="typeof this.$store.state._uid == 'undefined'">
+  <div
+    v-else-if="typeof this.$store.state._uid == 'undefined'"
+    class="vote_page"
+  >
     <div class="login">
       <h1>
         <i class="fa-brands fa-discord" /><br>
@@ -20,7 +26,10 @@
   </div>
 
 
-  <div v-else-if="hasvoted">
+  <div
+    v-else-if="hasvoted"
+    class="vote_page"
+  >
     <h1> Thank you for voting ! </h1>
   </div>
 
@@ -166,7 +175,10 @@
     </div>
   </div>
 
-  <div v-else>
+  <div
+    v-else
+    class="vote_page"
+  >
     <h1> Loading... </h1>
   </div>
 </template>

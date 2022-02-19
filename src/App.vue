@@ -11,7 +11,7 @@
         <!-- Router view -->
         <div
           id="main-router-view"
-          class="router-view"
+          class="router-view gradient_bg_wrapper"
         >
           <Transition name="pageTransition">
             <router-view />
@@ -79,6 +79,7 @@ export default {
 .pageTransition-enter-active,
 .pageTransition-leave-active {
   transition: opacity 0.15s ease;
+  background: inherit;
 }
 
 .pageTransition-enter-from,

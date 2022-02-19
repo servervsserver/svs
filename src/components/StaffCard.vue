@@ -1,6 +1,5 @@
 <template>
   <div class="staff-card">
-
     <div class="columns">
       <div class="column is-narrow avatar-container is-hidden-mobile">
         <img
@@ -10,19 +9,25 @@
         >
       </div>
       <div class="column">
-
         <div class="header is-hidden-mobile">
           <div class="side-by-side">
-            <h2 class="name">{{ staff.name }} </h2>
+            <h2 class="name">
+              {{ staff.name }}
+            </h2>
             <p> {{ staff.pronouns }} </p>
           </div>
           <h5> {{ staff.role }} </h5>
         </div>
 
-        <div class="columns is-mobile is-hidden-tablet" style="margin-bottom: 0px;">
+        <div
+          class="columns is-mobile is-hidden-tablet"
+          style="margin-bottom: 0px;"
+        >
           <div class="column is-8">
             <div class="side-by-side">
-              <h2 class="name">{{ staff.name }} </h2>
+              <h2 class="name">
+                {{ staff.name }}
+              </h2>
               <p> {{ staff.pronouns }} </p>
             </div>
             <h5> {{ staff.role }} </h5>

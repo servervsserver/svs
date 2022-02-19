@@ -205,6 +205,15 @@ export default {
           "/staff/tiwonku/avatar.jpg",
           { instagram: 'tiwonku'},
         ),
+        new StaffCard(       
+          "You",
+          "???",
+          "Apply Now",
+          `Apply now at: https://svs-signup.vercel.app`,
+          "https://discord.gg/8wsGFwxT5S",
+          "/staff/you/profile.png",
+          { },
+        ),
       ]
     }
   }

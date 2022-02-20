@@ -21,9 +21,9 @@ export function fileSize(value, targetUnit, digits) {
       } else if(value > kio) {
         return Math.round(value / kio) + " Ko"
       } else {
-        return value + " o"
+        return value + " B"
       }
   }
 
-  return value + " o"
+  return value + " B"
 }

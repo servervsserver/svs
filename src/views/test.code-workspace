@@ -29,6 +29,9 @@
 		},
 		{
 			"path": "..\\..\\..\\svs-server-dev"
+		},
+		{
+			"path": "..\\..\\..\\svs_app\\omni"
 		}
 	],
 	"settings": {}

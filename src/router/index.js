@@ -99,6 +99,13 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: ProfileTest
+  },
+  {
+  path:'/invite',
+  component: null,
+    beforeEnter(to, from, next) {
+      window.location.href = "https://discord.gg/8wsGFwxT5S";
+    }
   }
 ]
 

@@ -13,17 +13,17 @@ export function fileSize(value, targetUnit, digits) {
   switch(targetUnit) {
     case "nearest":
       if (value > tio) {
-        return Math.round(value / tio) + " To"
+        return Math.round(value / tio) + " TB"
       } else if(value > gio) {
-        return Math.round(value / gio) + " Go"
+        return Math.round(value / gio) + " GB"
       } else if(value > mio) {
-        return Math.round(value / mio) + " Mo"
+        return Math.round(value / mio) + " MB"
       } else if(value > kio) {
-        return Math.round(value / kio) + " Ko"
+        return Math.round(value / kio) + " KB"
       } else {
-        return value + " o"
+        return value + " B"
       }
   }
 
-  return value + " o"
+  return value + " B"
 }

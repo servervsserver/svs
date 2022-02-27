@@ -182,8 +182,8 @@ export default class BackendPlugin {
   */
   getAppServers(state) {
     const serverStateKey = ["applied_svs_iv","accepted_svs_iv","denied_svs_iv"];
-    this._getList(serverStateKey[state]).then(server_ids => {
-      this._getServersById(server_ids).then(
+    return this._getList(serverStateKey[state]).then(server_ids => {
+      return this._getServersById(server_ids).then(
          servers => {return servers;}
       )
     })
@@ -205,21 +205,24 @@ export default class BackendPlugin {
     let server_id = (Object.values(servers));
     let promises = [];
     let data = {};
-    const refs = server_id.map(id => doc(this._firestoreDb,`servers/${id}`))
+    const refs = server_id.map(id => doc(this._firestoreDb,`servers/${id}`));
+    
     for(let si in server_id ){
         promises.push(getDoc(refs[si]).then(
           document => {
             data[si] = document.data();
-            console.log(data);
+           // console.log(data);
             return document;
           }
         ))
 
-  return Promise.all(promises).then(() => {
-    console.log(data);return data;});
   }
 
 
+  return Promise.all(promises).then(() => {
+   // console.log(data);
+   
+   return data;});
 
 
   }

@@ -59,6 +59,11 @@ const routes = [
     component: ServerProfile
   },
   {
+    path: '/svs-iv',
+    name: 'svsiv',
+    component: MainEventOverview
+  },
+  {
     path: '/main-event',
     name: 'MainEvent',
     component: MainEvent,

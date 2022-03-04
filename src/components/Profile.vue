@@ -41,21 +41,17 @@ export default {
     },
     methods:{
         pullData(){
-let storedProfile = this.$store.state.profile;
-            let uid = this.$store.state._uid;
+let storedProfile = this.$svsAuth.getData();
+  console.log(storedProfile);
             if(storedProfile){
-                this.$set(profile,storedProfile);
+              let obj = {};
+              let keys = Object.keys(storedProfile);
+              let vals = Object.values(storedProfile);
+              for(let key in keys){
+                this.profile[keys[key]] = vals[key];
+              }
             }
-            else if(uid != undefined){
-                 axios
-        .get(process.env.VUE_APP_SVS_BACKEND_SERVER+`/users/${uid}`)
-        .then( (response)=>{
-        this.$store.commit("set_profile", response.data);
-        this.profile = response.data;
-
- });
-
-            }}
+            }
 
 
     },

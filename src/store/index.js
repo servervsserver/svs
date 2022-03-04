@@ -170,11 +170,17 @@ class SvSMainEventInformations {
 export default new Vuex.Store({
   state: {
     _uid:undefined,
-    profile:undefined,
     svsMainEventInformations: new SvSMainEventInformations(),
+    user: {
+      loggedIn: false,
+      data: null
+    },
     // theme: "dark-theme"
   },
   getters: {
+    user: state => {
+      return state.user
+    },
     isAdmin: state => {
       return process.env.VUE_APP_IS_ADMIN
     },
@@ -195,11 +201,22 @@ export default new Vuex.Store({
     set_uid(state,uid){
       state._uid = uid;
     },
-    set_profile(state,data){
-      state.profile = data;
+    SET_LOGGED_IN(state, value) {
+      state.user.loggedIn = value;
+    },
+    SET_USER(state, data) {
+      state.user.data = data;
     }
   },
   actions: {
+    loginUser({commit}, data){
+      commit("SET_LOGGED_IN", data !== null);
+      if (data) {
+        commit("SET_USER", data);
+      } else {
+        commit("SET_USER", null);
+      }
+    },
   },
   modules: {
   }

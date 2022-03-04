@@ -19,12 +19,13 @@ import ProfileTest from '../views/Profile.vue'
 
 import PageNotFound from '../views/PageNotFound.vue'
 
+import LoginCallback from '@/components/LoginCallback.vue'
 /* ===== Test vues ===== */
 
 import { addTestBlockToRoutes } from "./router.dev.js"
 import { addAdminBlockToRoutes } from "./admin-router.js"
 import { addArchiveBlockToRoutes } from "./archive-router.js"
-
+const CALLBACK_PATH = '/login/callback'
 
 Vue.use(VueRouter)
 
@@ -62,6 +63,10 @@ const routes = [
     path: '/svs-iv',
     name: 'svsiv',
     component: MainEventOverview
+  }, {
+    path: CALLBACK_PATH,
+    name: 'callback',
+    component:LoginCallback
   },
   {
     path: '/main-event',

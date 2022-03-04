@@ -215,6 +215,15 @@ export default {
           { instagram: 'tiwonku'},
         ),
         new StaffCard(       
+          "Vank",
+          "they/them",
+          "Site development",
+          "I'm a new media designer and installation artist! New to the SvS team, excited to be here and help build the livestream rig. Every1 is kin.",
+          "tiwonku#1576",
+          "/staff/tiwonku/avatar.jpg",
+          { instagram: 'tiwonku'},
+        ),
+        new StaffCard(       
           "You",
           "???",
           "Apply Now",

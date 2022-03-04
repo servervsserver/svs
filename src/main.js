@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import { BackendPlugin, SettingsPlugin, AuthPlugin } from "./plugins/all"
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import PreOpening from "./components/PreOpening.vue"
 import ComingSoon from "./components/ComingSoon.vue"
@@ -62,6 +63,27 @@ Vue.config.productionTip = false
 Vue.use(BackendPlugin)
 Vue.use(SettingsPlugin)
 Vue.use(AuthPlugin);
+
+const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const uid = user.uid;
+    if (store.state.user.loggedIn) {
+      return;
+    }
+    else {
+      fetch(`https://svs4-327921.ew.r.appspot.com/users/${uid}`)
+        .then((response) => response.json())
+        .then((data) => {
+          store.dispatch("loginUser", data);
+        })
+        .catch(console.error);
+    }
+  } else {
+      store.dispatch("loginUser",null);
+      router.push({name:"Home"});
+  }
+});
 
 new Vue({
   router,

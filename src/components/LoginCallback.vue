@@ -49,14 +49,8 @@ export default {
                 fetch(`https://svs4-327921.ew.r.appspot.com/users/${uid}`)
                   .then((response) => response.json())
                   .then((data) => {
-                    if (!data.isStaff) {
-                console.log(data);
-                  }
-                    else{
                         this.$store.dispatch("loginUser",data);
                         this.$router.push({name:"Profile"});
-
-                    }
 
 
                   })

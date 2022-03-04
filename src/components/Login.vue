@@ -29,6 +29,7 @@
 <script>
 const discord_client_id = process.env.VUE_APP_DISCORD_ID;
 const url = encodeURIComponent(process.env.VUE_APP_CALLBACK_URL);
+
 export default {
   name: "Login",
   data:function(){return {
@@ -39,6 +40,7 @@ export default {
   updated : function() {
   },
   mounted: function () {
+    
   },
   methods: {
     logout: function () {

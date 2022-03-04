@@ -42,14 +42,9 @@ export default {
     methods:{
         pullData(){
 let storedProfile = this.$svsAuth.getData();
-  console.log(storedProfile);
+console.log(storedProfile);
             if(storedProfile){
-              let obj = {};
-              let keys = Object.keys(storedProfile);
-              let vals = Object.values(storedProfile);
-              for(let key in keys){
-                this.profile[keys[key]] = vals[key];
-              }
+              this.profile = storedProfile;
             }
             }
 

@@ -45,10 +45,30 @@ export default class AuthPlugin {
 
   }
 
+  checkAuth(){
+    let user = this._auth.currentUser;
+
+    if (user) {
+      console.log(user);
+        } else {
+          console.log('AAAAAAAAAAAAAAAAAAAAAAAAAH');
+    }
+
+
+  }
 
   getData(){
-    console.log(this._store.state.user.loggedIn);
-    return this._store.state.user.data
+   let data = (this._store.state.user.data);
+   if(data){
+   let obj = {};
+    let keys = Object.keys(data);
+    let vals = Object.values(data);
+    for(let key in keys){
+      obj[keys[key]] = vals[key];
+    }
+    
+        return obj;}
+    return undefined;
   } 
 
   isAuthenticated(){
@@ -67,8 +87,6 @@ export default class AuthPlugin {
   logout(){
     signOut(this._auth).then(() => {
       
-    this._store.dispatch("loginUser",null);
-    this.$router.push({name:"Home"});
     }).catch((error) => {
       return error
     });

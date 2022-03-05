@@ -72,15 +72,20 @@ onAuthStateChanged(auth, (user) => {
       return;
     }
     else {
+      let stored_data = JSON.parse(localStorage.getItem("userdata"));
+      if(!stored_data){
       fetch(`https://svs4-327921.ew.r.appspot.com/users/${uid}`)
         .then((response) => response.json())
         .then((data) => {
+          localStorage.setItem("userdata", JSON.stringify(data));
           store.dispatch("loginUser", data);
         })
-        .catch(console.error);
+        .catch(console.error);}
+        else store.dispatch("loginUser", stored_data);
     }
   } else {
       store.dispatch("loginUser",null);
+      localStorage.removeItem("userdata");
       router.push({name:"Home"});
   }
 });

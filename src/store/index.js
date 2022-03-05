@@ -175,14 +175,13 @@ export default new Vuex.Store({
       loggedIn: false,
       data: null
     },
-    // theme: "dark-theme"
   },
   getters: {
     user: state => {
       return state.user
     },
     isAdmin: state => {
-      return process.env.VUE_APP_IS_ADMIN
+      return state.user.data ? state.user.data.isStaff : false;
     },
     nextMilestone: state => {
       return state.svsMainEventInformations.nextMilestone

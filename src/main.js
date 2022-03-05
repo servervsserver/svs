@@ -86,7 +86,7 @@ onAuthStateChanged(auth, (user) => {
   } else {
       store.dispatch("loginUser",null);
       localStorage.removeItem("userdata");
-      router.push({name:"Home"});
+      // router.push({name:"Home"});
   }
 });
 

@@ -23,6 +23,7 @@
     "firebase": "^9.6.5",
     "sass": "^1.32.8",
     "sass-loader": "^10.0.0",
+    "tiltify-api-client": "^1.1.2",
     "twitter-widgets": "^2.0.0",
     "uuid": "^8.3.2",
     "vercel": "^23.1.2",

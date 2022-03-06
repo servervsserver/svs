@@ -1,20 +1,17 @@
 <template>
   <div class="buttons">
-    <a
-      v-if="!$svsAuth.isAuthenticated()"
-      class="button is-dark"
-      :href="url"
-    >
+    <a v-if="!$svsAuth.isAuthenticated()" class="button is-dark" :href="url">
       Log in with Discord
-    </a>  <router-link
+    </a>
+    <router-link
       v-if="$svsAuth.isAuthenticated()"
       to="/profile"
       class="button is-dark is-inverted"
     >
       <span class="icon is-small">
         <i class="fas fa-user" />
-      </span> <span>
-        {{ $svsAuth.getData().name }}</span>
+      </span>
+      <span> {{ $svsAuth.getData().name }}</span>
     </router-link>
     <button
       v-if="$svsAuth.isAuthenticated()"
@@ -32,25 +29,20 @@ const url = encodeURIComponent(process.env.VUE_APP_CALLBACK_URL);
 
 export default {
   name: "Login",
-  data:function(){return {
-    test:"",
-    url: `https://discord.com/api/oauth2/authorize?response_type=token&client_id=${discord_client_id}&scope=identify&state=15773059ghq9183habn&redirect_uri=${url}&prompt=consent`
-       
-  }},
-  updated : function() {
+  data: function () {
+    return {
+      test: "",
+      url: `https://discord.com/api/oauth2/authorize?response_type=token&client_id=${discord_client_id}&scope=identify&state=15773059ghq9183habn&redirect_uri=${url}&prompt=consent`,
+    };
   },
-  mounted: function () {
-    
-  },
+  updated: function () {},
+  mounted: function () {},
   methods: {
     logout: function () {
-   // Handle Logouts
-      
+      // Handle Logouts
     },
   },
 };
-
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -70,6 +62,3 @@ a {
   color: #42b983;
 }
 </style>
-
-
-// TODO: AUTOROUTE TO PROFILE

@@ -19,6 +19,8 @@ import ProfileTest from '../views/Profile.vue'
 
 import PageNotFound from '../views/PageNotFound.vue'
 
+import Charities from '@/components/Charities.vue'
+
 import LoginCallback from '@/components/LoginCallback.vue'
 /* ===== Test vues ===== */
 
@@ -104,6 +106,11 @@ const routes = [
     path: '/about',
     name: 'About',
     component: About
+  },
+  {
+    path: '/charity',
+    name: 'Charity',
+    component: Charities
   },
   {
     path: '/profile',

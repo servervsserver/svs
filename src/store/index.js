@@ -18,19 +18,19 @@ class EventMilestone {
     this.description = description || ""
   }
 
-  get timeRemaining () {
+  get timeRemaining() {
     return this.date.getTime() - Date.now()
   }
 
-  get timeFrom () {
+  get timeFrom() {
     return - this.timeRemaining
   }
 
-  get isPast () {
+  get isPast() {
     return this.timeRemaining < 0
   }
 
-  get isIncoming () {
+  get isIncoming() {
     return this.timeRemaining > 0
   }
 }
@@ -169,7 +169,7 @@ class SvSMainEventInformations {
 
 export default new Vuex.Store({
   state: {
-    _uid:undefined,
+    _uid: undefined,
     svsMainEventInformations: new SvSMainEventInformations(),
     user: {
       loggedIn: false,
@@ -180,8 +180,14 @@ export default new Vuex.Store({
     user: state => {
       return state.user
     },
+    isLoggedIn: state => {
+      return state.user.loggedIn
+    },
     isAdmin: state => {
       return state.user.data ? state.user.data.isStaff : false;
+    },
+    isLeader: state => {
+      return state.user.data ? state.user.data.isLeader : false;
     },
     nextMilestone: state => {
       return state.svsMainEventInformations.nextMilestone
@@ -197,7 +203,7 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    set_uid(state,uid){
+    set_uid(state, uid) {
       state._uid = uid;
     },
     SET_LOGGED_IN(state, value) {
@@ -208,7 +214,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    loginUser({commit}, data){
+    loginUser({ commit }, data) {
       commit("SET_LOGGED_IN", data !== null);
       if (data) {
         commit("SET_USER", data);

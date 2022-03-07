@@ -1,6 +1,6 @@
 <template>
   <not-open-yet
-    :message="'Server applications opens in'"
+    :message="'Server applications open in'"
     :time="$store.state.svsMainEventInformations.serverApplicationPhaseStart.timeRemaining"
   >
     <div class="server-application container">

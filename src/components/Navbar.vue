@@ -118,7 +118,7 @@
           <coming-soon><theme-switch @themeChanged="onThemeChanged" /></coming-soon>
         </div>
         <div class="navbar-item">
-          <coming-soon><login /></coming-soon>
+          <login />
         </div>
       </div>
     </div>

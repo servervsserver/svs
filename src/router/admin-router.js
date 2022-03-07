@@ -13,40 +13,25 @@ export const ADMIN_ROUTES = [
     name: 'DashboardAdmin',
     component: Dashboard,
     meta: {
-      title: "Dashboard"
-    },
-    beforeEnter: (to, from, next) => {
-      let isAdmin = store.getters.isAdmin;
-      if (isAdmin) { next() }
-        else { return { name: 'Home' } }
-  }
+      title: "Dashboard",
+    }
   },
-{
-  path: 'servers',
+  {
+    path: 'servers',
     name: 'ServerListAdmin',
-      component: ServerList,
-        meta: {
-    title: "Servers"
+    component: ServerList,
+    meta: {
+      title: "Servers"
+    }
   },
-  beforeEnter: (to, from, next) => {
-    let isAdmin = store.getters.isAdmin;
-    if (isAdmin) { next() }
-      else { return { name: 'Home' } }
-  }
-},
-{
-  path: 'anonymous-concerns',
+  {
+    path: 'anonymous-concerns',
     name: 'AnonymousConcernsAdmin',
-      component: AnonymousConcerns,
-        meta: {
-    title: "Anonymous Concerns"
-  },
-  beforeEnter: (to, from, next) => {
-    let isAdmin = store.getters.isAdmin;
-     if (isAdmin) { next() }
-      else { return { name: 'Home' } }
+    component: AnonymousConcerns,
+    meta: {
+      title: "Anonymous Concerns"
+    }
   }
-}
 ]
 
 function createAdminBlockRouter(path) {
@@ -54,7 +39,10 @@ function createAdminBlockRouter(path) {
     path: path,
     name: "Admin",
     component: Admin,
-    children: ADMIN_ROUTES
+    children: ADMIN_ROUTES,
+    meta: {
+      requiresAdmin: true
+    }
   }
 }
 

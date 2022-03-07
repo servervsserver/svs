@@ -174,7 +174,7 @@
                           :mode="'hover'"
                         >
                           <template v-slot:message>
-                          The server icon should be a square and under {{ MAX_SIZE | fileSize }}
+                            The server icon should be a square and under {{ MAX_SIZE | fileSize }}
                           </template>
                           <span class="icon is-small is-left">
                             <i class="fas fa-info-circle" />
@@ -204,7 +204,9 @@
                           </label>
                         </div>
                       </div>
-                      <p class="help">{{ imageSize | fileSize }}</p>
+                      <p class="help">
+                        {{ imageSize | fileSize }}
+                      </p>
                     </div>
                   </div>
                   <div class="column">
@@ -399,7 +401,10 @@
           Your application didn't go through. It may just be a server shortage so try again later. <br>
           If it persists, contact us directly.
         </p>
-        <button class="button" @click="recover">
+        <button
+          class="button"
+          @click="recover"
+        >
           <span>Go back to the application</span>
           <span class="icon">
             <i class="fas fa-rotate-left" />

@@ -147,32 +147,41 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
-    if (!auth.loggedIn()) {
-      next({
-        path: '/login',
-        query: { redirect: to.fullPath }
-      })
-    } else {
-      next()
-    }
-  } else {
-    next() // make sure to always call next()!
+
+  if (!to.matched.some(record => record.meta.requiresAuth)) {
+    next();
+    return;
   }
+
+  if (router.app.$svsAuth.isAuthenticated) {
+    next();
+    return;
+  }
+
+  next({
+    path: '/login',
+    query: { redirect: to.fullPath }
+  })
+
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAdmin)) {
-    if (!admin) {
-      next()
-    } else {
-      next()
-    }
-  } else {
-    next()
+
+  if (!to.matched.some(record => record.meta.requiresAdmin)) {
+    next();
+    return;
   }
+
+  if (router.app.$svsAuth.isAdmin) {
+    next();
+    return;
+  }
+
+  next({
+    path: '/login',
+    query: { redirect: to.fullPath }
+  })
+
 })
 
 

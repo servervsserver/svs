@@ -84,7 +84,7 @@
         </div>
         <!-- Admin menu  -->
         <div
-          v-if="$store.getters.isAdmin"
+          v-if="isAdmin"
           :key="$route.fullPath + '@madmin'"
           class="navbar-item has-dropdown is-hoverable"
         >
@@ -141,6 +141,9 @@
     computed: {
       transparentNavbar () {
         return !(this.scrolled || this.$route.name != "Home" || this.isActive)
+      },
+      isAdmin() {
+        return this.$svsAuth.isAdmin
       }
     },
     mounted () {

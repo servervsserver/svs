@@ -1,18 +1,32 @@
 <template>
   <div>
-    <Profile />
+    <profile :user="user" />
   </div>
 </template>
 
 
 
 <script>
+import { User } from "@/models/dto/user"
 import Profile from "@/components/Profile.vue"
+
+const user = new User()
+console.log(user)
 export default {
   components: {
-    Profile
+    'profile': Profile
   },
-} 
+  computed: {
+    user() {
+      return this.$svsAuth.user
+    }
+  },
+  watch: {
+    user (newUser, oldUser) {
+      console.log(newUser)
+    }
+  }
+}
 </script>
 
 

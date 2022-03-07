@@ -1,22 +1,26 @@
 <template>
   <div class="buttons">
-    <a v-if="!$svsAuth.isAuthenticated()" class="button is-dark" :href="url">
+    <a
+      v-if="!isAuthenticated"
+      :href="url"
+      class="button is-dark"
+    >
       Log in with Discord
     </a>
     <router-link
-      v-if="$svsAuth.isAuthenticated()"
+      v-if="isAuthenticated"
       to="/profile"
       class="button is-dark is-inverted"
     >
       <span class="icon is-small">
         <i class="fas fa-user" />
       </span>
-      <span> {{ $svsAuth.getData().name }}</span>
+      <span> {{ user.name }}</span>
     </router-link>
     <button
-      v-if="$svsAuth.isAuthenticated()"
+      v-if="isAuthenticated"
       class="button is-dark"
-      @click="$svsAuth.logout()"
+      @click="logout()"
     >
       Log out
     </button>
@@ -35,11 +39,19 @@ export default {
       url: `https://discord.com/api/oauth2/authorize?response_type=token&client_id=${discord_client_id}&scope=identify&state=15773059ghq9183habn&redirect_uri=${url}&prompt=consent`,
     };
   },
+  computed: {
+    isAuthenticated() {
+      return this.$svsAuth.isAuthenticated
+    },
+    user() {
+      return this.$svsAuth.user
+    }
+  },
   updated: function () {},
   mounted: function () {},
   methods: {
-    logout: function () {
-      // Handle Logouts
+    logout() {
+      $svsAuth.logout()
     },
   },
 };

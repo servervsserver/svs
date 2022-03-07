@@ -2,8 +2,11 @@
   <div class="container">
     <h1>
       Servers
-      <button @click="downloadData" class="button">
-        <span class="icon"><i class="fa fa-download"></i></span>
+      <button
+        class="button"
+        @click="downloadData"
+      >
+        <span class="icon"><i class="fa fa-download" /></span>
         <span>Download</span>
       </button>
     </h1>
@@ -11,25 +14,42 @@
       <table class="table is-striped is-hoverable">
         <thead>
           <tr>
-            <th @click="sortBy('icon_url')">Icon</th>
-            <th @click="sortBy('name')">Server name</th>
-            <th @click="sortBy('discord_invite')">Discord Invite</th>
-            <th @click="sortBy('is_private')">Private?</th>
-            <th @click="sortBy('admins')">Admins</th>
-            <th @click="sortBy('description')">Descriptions</th>
-            <th @click="sortBy('submission_date')">Submission date</th>
+            <th @click="sortBy('icon_url')">
+              Icon
+            </th>
+            <th @click="sortBy('name')">
+              Server name
+            </th>
+            <th @click="sortBy('discord_invite')">
+              Discord Invite
+            </th>
+            <th @click="sortBy('is_private')">
+              Private?
+            </th>
+            <th @click="sortBy('admins')">
+              Admins
+            </th>
+            <th @click="sortBy('description')">
+              Descriptions
+            </th>
+            <th @click="sortBy('submission_date')">
+              Submission date
+            </th>
 
             <th>Accept?</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="sa in sorted(serverApplications)" :key="sa.vueId">
+          <tr
+            v-for="sa in sorted(serverApplications)"
+            :key="sa.vueId"
+          >
             <th>
               <!-- {{sa.iconExt}} -->
               <img
                 :src="'https://' + sa.icon_url"
                 style="min-width: 140px; max-width: 160px"
-              />
+              >
             </th>
             <th>{{ sa.name }}</th>
             <th>
@@ -39,7 +59,11 @@
             </th>
             <th>{{ sa.isPrivate ? "Yes" : "no" }}</th>
             <th>
-              <span v-for="a in sa.admins" :key="a" class="tag">
+              <span
+                v-for="a in sa.admins"
+                :key="a"
+                class="tag"
+              >
                 {{ a }}
               </span>
             </th>
@@ -48,9 +72,13 @@
               {{ sa.submission_date.toDate() | date("dd/mm/yyyy hour:min") }}
             </th>
             <th class="has-text-centered">
-              <button class="button is-primary">Accept</button>
+              <button class="button is-primary">
+                Accept
+              </button>
 
-              <button class="button is-warning">Decline</button>
+              <button class="button is-warning">
+                Decline
+              </button>
             </th>
           </tr>
         </tbody>
@@ -84,6 +112,7 @@ export default {
       serverApplications: [],
     };
   },
+  computed: {},
   mounted() {
     this.$svsBackend.getAppServers(0).then((res) => {
       console.log(res);
@@ -92,7 +121,6 @@ export default {
       console.log(this.pendingApplications);
     });
   },
-  computed: {},
   methods: {
     sorted(arr) {
       return arr;

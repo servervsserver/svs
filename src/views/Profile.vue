@@ -10,8 +10,6 @@
 import { User } from "@/models/dto/user"
 import Profile from "@/components/Profile.vue"
 
-const user = new User()
-console.log(user)
 export default {
   components: {
     'profile': Profile
@@ -19,11 +17,6 @@ export default {
   computed: {
     user() {
       return this.$svsAuth.user
-    }
-  },
-  watch: {
-    user (newUser, oldUser) {
-      console.log(newUser)
     }
   }
 }

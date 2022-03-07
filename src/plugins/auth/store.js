@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+import { User } from "@/models/dto/user"
+
 export default new Vuex.Store({
   state: {
     user: {
@@ -32,6 +34,14 @@ export default new Vuex.Store({
       state.user.loggedIn = value;
     },
     SET_USER(state, data) {
+      if (!data) {
+        state.user.data = null
+        return
+      }
+
+      if (!(data instanceof User)) {
+        data = User.fromPlainObject(data)
+      }
       state.user.data = data;
     }
   },

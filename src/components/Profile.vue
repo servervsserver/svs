@@ -6,7 +6,7 @@
     >
       <div class="column is-three-quarters">
         <img
-          :src="user.picture"
+          :src="user.icon"
           width="180"
         >
         <h2 class="server-name">
@@ -20,26 +20,12 @@
           >
             Staff
           </span>
-
-          <span
-            v-if="!user.isStaff"
-            class="tag"
-          >
-            Not Staff
-          </span>
-
+          &#160;
           <span
             v-if="user.isServerLeader"
             class="tag"
           >
             Server leader
-          </span>
-
-          <span
-            v-if="!user.isServerLeader"
-            class="tag"
-          >
-            Not Server Leader
           </span>
         </div>
       </div>
@@ -50,67 +36,21 @@
       No user
     </div>
   </section>
-  <!-- <div>
-    <img
-      :src="profile.icon"
-      alt=""
-      class="image"
-    >
-
-    {{ profile.name }} |
-    {{ profile.tag }} |
-    {{ profile.isStaff }} |
-    {{ profile.isLeaders }} |
-    <button
-      class="button"
-      @click="pullData"
-    >
-      <span class="icon">
-        <i class="fas fa-sync" />
-      </span> <span> Re-sync Profile</span>
-    </button>
-  </div> -->
 </template>
 
 
 
 <script>
+import { User } from "@/models/dto/user"
 
 export default {
   props: {
     user: {
+      type: User,
       required: true
     }
   }
 }
-
-// const axios = require("axios");
-//
-// export default {
-//     data(){
-//         return{
-//             profile:{icon:"https://i.pravatar.cc/150"}
-//         }
-//     },
-//     mounted(){
-//          this.$nextTick(() => {
-//        setTimeout(() => {
-//          this.pullData();
-//        }, 1000);
-//       });
-//     },
-//     methods:{
-//         pullData(){
-// let storedProfile = this.$svsAuth.getData();
-// console.log(storedProfile);
-//             if(storedProfile){
-//               this.profile = storedProfile;
-//             }
-//             }
-//
-//
-//     },
-// }
 </script>
 
 

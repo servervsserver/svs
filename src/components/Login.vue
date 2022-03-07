@@ -15,7 +15,7 @@
       <span class="icon is-small">
         <i class="fas fa-user" />
       </span>
-      <span> {{ user.name }}</span>
+      <span> {{ user.nickname }}</span>
     </router-link>
     <button
       v-if="isAuthenticated"
@@ -51,7 +51,7 @@ export default {
   mounted: function () {},
   methods: {
     logout() {
-      $svsAuth.logout()
+      this.$svsAuth.logout()
     },
   },
 };

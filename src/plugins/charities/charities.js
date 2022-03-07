@@ -4,7 +4,7 @@ const TiltifyClient = require("tiltify-api-client")
 export default class CharityPlugin {
 
     constructor(Vue) {
-        this.Vue = Vue        
+        this.Vue = Vue
         this._client = new TiltifyClient(process.env.VUE_APP_TILTIFY_ACCESS_TOKEN);
         this._campaigns = { sfs1: 159701, svs3: 100671 };
     }
@@ -28,10 +28,10 @@ export default class CharityPlugin {
             return allData;
         });
     }
-    
+
     getCause(name) {
         let id = this._campaigns [name];
-        console.log(id);
+        // console.log(id);
         this._client.Campaigns.get(id, function (data) {
             return data;
         });

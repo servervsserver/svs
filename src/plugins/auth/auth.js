@@ -4,6 +4,8 @@ import store from './store'
 import router from '@/router'
 const axios = require("axios");
 
+import { User } from "@/models/dto/user"
+
 /*
 * Firebase config
 */
@@ -44,7 +46,7 @@ export default class AuthPlugin {
       }
 
       const uid = user.uid;
-      let stored_data = JSON.parse(localStorage.getItem("userdata"));
+      let stored_data = User.fromJsonString(localStorage.getItem("userdata"));
       if (stored_data) {
 
         store.dispatch("loginUser", stored_data);
@@ -54,8 +56,9 @@ export default class AuthPlugin {
         fetch(`https://svs4-327921.ew.r.appspot.com/users/${uid}`)
           .then((response) => response.json())
           .then((data) => {
-            localStorage.setItem("userdata", JSON.stringify(data));
-            store.dispatch("loginUser", data);
+            let user = User.fromAuthServData(data)
+            localStorage.setItem("userdata", user.stringify());
+            store.dispatch("loginUser", user);
           })
           .catch(console.error);
 
@@ -66,7 +69,6 @@ export default class AuthPlugin {
 
 //#region Private functions
   async _grabDiscordProfile(tokenType, accessToken) {
-    console.log(tokenType, accessToken);
     return axios.get("https://discord.com/api/users/@me", {
       headers: {
         authorization: `${tokenType} ${accessToken}`,
@@ -115,8 +117,9 @@ export default class AuthPlugin {
       })
       .then((uid) => this.fetchData(uid))
       .then(data => {
-        store.dispatch("loginUser", data);
-        console.log(data)
+        let user = User.fromAuthServData(data)
+        localStorage.setItem("userdata", user.stringify());
+        store.dispatch("loginUser", user);
         router.push({ name: "Profile" });
       });
 
@@ -125,9 +128,9 @@ export default class AuthPlugin {
   checkAuth() {
     let user = this._auth.currentUser;
     if (user) {
-      console.log(user);
+      // console.log(user);
     } else {
-      console.log('AAAAAAAAAAAAAAAAAAAAAAAAAH');
+      // console.log('AAAAAAAAAAAAAAAAAAAAAAAAAH');
     }
   }
 

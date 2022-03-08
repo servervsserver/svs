@@ -10,21 +10,36 @@
 
 export class ArchiveTrack {
 
-  constructor() {
+  constructor(id, title, trackUrl) {
 
-    this.id       = "123456789"
-    this.title    = "Default track name"
-    this.order    = 0
+    this.id       = id || null
+    this.title    = title || ""
+    this.trackUrl = trackUrl || ""
     this.credits  = []
 
   }
 
 }
 
+export class ArchiveEp {
+
+  constructor(id, serverId, title, coverArtUri, epStreamLink) {
+
+    this.id           = id || null
+    this.serverId     = serverId || null
+    this.title        = title || ""
+    this.coverArtUri  = coverArtUri || ""
+    this.epStreamLink = epStreamLink ||null
+    this.trackIds     = []
+  }
+
+}
+
+/* The numbers are arbitrary, may change based on the choices for the back */
 export const ArchiveAccoladeType = Object.freeze({
-  EP,
-  TRACK,
-  COVER_ART
+  EP: 0,
+  TRACK: 1,
+  COVER_ART: 2
 })
 
 export class ArchiveAccoladeEntry {

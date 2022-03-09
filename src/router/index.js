@@ -31,7 +31,7 @@ const CALLBACK_PATH = '/login/callback'
 
 Vue.use(VueRouter)
 
-const routes = [
+export const routes = [
   {
     path: '/',
     name: 'Home',
@@ -62,17 +62,33 @@ const routes = [
     component: ServerProfile
   },
   {
-    path: '/svs-iv',
-    name: 'svsiv',
-    component: MainEventOverview
-  }, {
+    path: '/main-event',
+    redirect: '/svs-iv',
+  },
+  {
+    path: '/main-event/overview',
+    redirect: '/svs-iv/overview',
+  },
+  {
+    path: '/main-event/server-application',
+    redirect: '/svs-iv/server-application',
+  },
+  {
+    path: '/main-event/rules',
+    redirect: '/svs-iv/rules',
+  },
+  {
+    path: '/main-event/ep-upload',
+    redirect: '/svs-iv/ep-upload',
+  },
+  {
     path: CALLBACK_PATH,
     name: 'callback',
     component:LoginCallback
   },
   {
-    path: '/main-event',
-    name: 'MainEvent',
+    path: '/svs-iv',
+    name: 'SvS IV',
     component: MainEvent,
     children: [
       {
@@ -130,6 +146,11 @@ addArchiveBlockToRoutes(routes)
 addAdminBlockToRoutes(routes)
 addTestBlockToRoutes(routes)
 
+export const navbarContent = [
+  {
+    display: 'SvS'
+  }
+]
 
 routes.push({ path: '*', name: '404', component: PageNotFound })
 

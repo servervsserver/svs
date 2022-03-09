@@ -17,7 +17,7 @@
         class="navbar-burger"
         aria-label="menu"
         aria-expanded="false"
-        data-target="navbarBasicExample"
+        data-target="navbar"
         :class="{ 'is-active': isActive }"
         @click="isActive = !isActive"
       >
@@ -28,7 +28,7 @@
     </div>
 
     <div
-      id="navbarBasicExample"
+      id="navbar"
       class="navbar-menu"
       :class="{ 'is-active': isActive }"
     >
@@ -72,16 +72,12 @@
             </router-link>
           </div>
         </div>
-        <div
+        <router-link
           class="navbar-item"
+          to="/archives"
         >
-          <router-link
-            class="navbar-item"
-            to="/archives"
-          >
-            Archives
-          </router-link>
-        </div>
+          Archives
+        </router-link>
         <!-- Admin menu  -->
         <div
           v-if="isAdmin"

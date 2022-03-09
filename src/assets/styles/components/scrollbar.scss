@@ -1,0 +1,41 @@
+@use 'sass:map';
+@use '../theming/palette';
+@use 'sass:color';
+
+/* Scrollbar styling */
+
+@mixin scrollbar($color-theme) {
+
+  $half-size: 6px;
+  $size: $half-size * 2;
+  $thumb-padding: 2px;
+  $thumb-size: $size - ($thumb-padding * 2);
+  $track-color: palette.map-get($color-theme, "scrollbar", "track");
+  $thumb-color: palette.map-get($color-theme, "scrollbar", "thumb");
+  // &::-webkit-scrollbar {
+  //   background: transparent;
+  //   width: 0px;
+  // }
+  &::-webkit-scrollbar-track
+  {
+  	// -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  	background-color: $track-color;
+  }
+
+  &::-webkit-scrollbar
+  {
+  	width: $size;
+  	background-color: $track-color;
+  }
+
+  &::-webkit-scrollbar-thumb
+  {
+    border-radius: 3px;
+  	background-color: $thumb-color;
+    box-shadow: 0 0 1px 1px $track-color inset;
+  }
+
+  // & {
+  //   scrollbar-gutter: stable;
+  // }
+}

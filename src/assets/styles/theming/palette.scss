@@ -1,5 +1,6 @@
 @forward "util";
 @use 'sass:map';
+@use 'sass:color';
 /*
 
 Example minimap palette:
@@ -47,6 +48,11 @@ $minimal-color-palette: (
     "bg": map.get($minimal-color-palette, "tertiary")
   );
 
+  $scrollbar: (
+    "thumb": map.get($minimal-color-palette, "tertiary"),
+    "track": color.adjust(map.get($minimal-color-palette, "back"))
+  );
+
   @return (
     "fg": map.get($minimal-color-palette, "primary"),
     "bg": map.get($minimal-color-palette, "back"),
@@ -59,6 +65,7 @@ $minimal-color-palette: (
     "footer": $footer,
     "tooltip": $tooltip,
     "timeline": $timeline,
-    "button": $button
+    "button": $button,
+    "scrollbar": $scrollbar
   )
 }

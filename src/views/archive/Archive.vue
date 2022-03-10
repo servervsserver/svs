@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { ARCHIVE_ROUTES } from "@/router/archive-router"
+import { ARCHIVE_ROUTES } from "@/router/routes"
 
 export default {
   data: function() {

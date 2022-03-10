@@ -1,8 +1,8 @@
-import Admin from '../views/admin/Admin.vue'
-import Dashboard from '../views/admin/Dashboard.vue'
+import Admin from '@/views/admin/Admin.vue'
 
-import AnonymousConcerns from "../views/admin/AnonymousConcerns.vue"
-import ServerList from "../views/admin/ServerList.vue"
+import Dashboard from '@/views/admin/Dashboard.vue'
+import AnonymousConcerns from "@/views/admin/AnonymousConcerns.vue"
+import ServerList from "@/views/admin/ServerList.vue"
 
 
 import store from '@/store'

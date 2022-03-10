@@ -54,7 +54,7 @@
 
 <script>
 
-import { ADMIN_ROUTES } from "../../router/admin-router"
+import { ADMIN_ROUTES } from "@/router/routes"
 
 export default {
   data: function() {

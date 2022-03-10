@@ -12,6 +12,8 @@ export { ADMIN_ROUTES } from "./admin.routes.js"
 
 addArchiveBlockToRoutes(routes)
 addAdminBlockToRoutes(routes)
-addTestBlockToRoutes(routes)
+
+if(process.env.VUE_APP_SHOW_DEVNAVBAR == "true")
+  addTestBlockToRoutes(routes)
 
 routes.push({ path: '*', name: '404', component: PageNotFound })

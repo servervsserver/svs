@@ -29,6 +29,7 @@
 
     <div
       id="navbar"
+      :key="$route.fullPath"
       class="navbar-menu"
       :class="{ 'is-active': isActive }"
     >

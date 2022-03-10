@@ -27,4 +27,23 @@ export const navbarContent = [
   }
 ]
 
+if (process.env.VUE_APP_SHOW_DEVNAVBAR == "true") {
+
+  navbarContent.push(
+    {
+      name: 'Dev',
+      children: [
+        { name: 'Track Dev' },
+        { name: 'Toggle Voting Dev' },
+        { name: 'Profile Dev' },
+        { name: 'Validator Dev' },
+        { name: 'ColorPaletteTest Dev' }
+      ]
+    }
+  )
+
+}
+
+
+
 export { populateNavbar } from "./utils.js"

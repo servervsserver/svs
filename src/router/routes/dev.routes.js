@@ -9,30 +9,32 @@ import OpenVoting from '@/components/OpenVoting.vue'
 const DEV_ROUTES = [
   {
     path: 'track',
-    name: 'Track',
+    name: 'Track Dev',
     component: TractTest
   },
   {
     path: 'togglevoting',
+    name: 'Toggle Voting Dev',
     component : OpenVoting
   },
   {
     path: 'profile',
-    name: 'Profile',
+    name: 'Profile Dev',
     component: ProfileTest
   },
   {
     path: 'validator',
-    name: 'Validator',
+    name: 'Validator Dev',
     component: ValidatorTest
   },
   {
     path: 'color-palette',
-    name: 'ColorPaletteTest',
+    name: 'ColorPaletteTest Dev',
     component: ColorPaletteTest
   },
   {
     path: 'cookie-banner',
+    name: 'Cookie Banner Dev',
     component: CookieBanner
   }
 ]
@@ -40,7 +42,7 @@ const DEV_ROUTES = [
 function createTestBlockRouter(path) {
   return {
       path: path,
-      name: 'Test',
+      name: 'Dev',
       component: MainTest,
       children: DEV_ROUTES
     }

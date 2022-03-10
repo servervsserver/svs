@@ -54,7 +54,7 @@
 
 <script>
 
-import { ADMIN_ROUTES } from "../../router/admin-router"
+import { ADMIN_ROUTES } from "@/router/routes"
 
 export default {
   data: function() {
@@ -64,6 +64,7 @@ export default {
   },
   methods: {
     toggleDrawer () {
+      console.log(this.$refs.sidenav.opened)
       this.$refs.sidenav.toggle()
     }
   }

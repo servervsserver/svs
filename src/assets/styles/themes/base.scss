@@ -13,6 +13,10 @@
   @include svs.timeline($color-theme);
   @include svs.button($color-theme);
 
+  * {
+    @include svs.scrollbar($color-theme);
+  }
+
   .flat-background {
     background-color: palette.map-get($color-theme, "bg");
   }

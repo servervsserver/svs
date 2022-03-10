@@ -8,14 +8,14 @@
     </h1>
     <h2>What is Server vs Server?</h2>
     <p>
-    Server vs Server is a Discord-based music-making event that began Spring 2020, in response to the COVID-19 pandemic. Our objective is to unite the rich variety of online music communities that have been growing on Discord by our simple shared goal: making music! The core of the event is that each server produces their own collaborative EP based on the same theme/prompt, over a set competition period. A server can organise to create an EP however they like, as long as a minimum of three different people contribute to each track- the spirit of the competition is to bring your server together to collaborate on one big project.
+      Server vs Server is a Discord-based music-making event that began Spring 2020, in response to the COVID-19 pandemic. Our objective is to unite the rich variety of online music communities that have been growing on Discord by our simple shared goal: making music! The core of the event is that each server produces their own collaborative EP based on the same theme/prompt, over a set competition period. A server can organise to create an EP however they like, as long as a minimum of three different people contribute to each track- the spirit of the competition is to bring your server together to collaborate on one big project.
     </p>
     <p>
-    After the music-making period (this time around it’s an entire month, for flexibility) is complete, we hold a live listening festival on Twitch where everyone gets to hear each server’s submission, along with interviews of leaders from each server. This is our third time running the competition, and this is going to be our biggest yet: we’re planning to include fundraising for charity as part of the event.
+      After the music-making period (this time around it’s an entire month, for flexibility) is complete, we hold a live listening festival on Twitch where everyone gets to hear each server’s submission, along with interviews of leaders from each server. This is our third time running the competition, and this is going to be our biggest yet: we’re planning to include fundraising for charity as part of the event.
     </p>
     <h2>Why should my community take part?</h2>
     <p>
-    We’ve found taking part in this competition brings out something really special in the communities that participate. The stakes boil down to bragging rights, so the element of friendly competition combined with the push for your server to produce an entire EP together (within a time limit) sends community spirit through the roof as well as giving you and your community something to be incredibly proud of afterwards. 
+      We’ve found taking part in this competition brings out something really special in the communities that participate. The stakes boil down to bragging rights, so the element of friendly competition combined with the push for your server to produce an entire EP together (within a time limit) sends community spirit through the roof as well as giving you and your community something to be incredibly proud of afterwards. 
     </p>
     <h2>How did Server vs Server Begin?</h2>
     <p>

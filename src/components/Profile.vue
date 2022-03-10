@@ -1,64 +1,31 @@
 <template>
-  <div class="container">
-    <div class="card">
-      <div class="card-content">
-        <div class="media">
-          <div class="media-left">
-            <figure class="image">
-              <img :src="profile.icon" alt="Placeholder image" />
-            </figure>
-          </div>
-          <div class="media-content">
-            <p class="title is-4">{{ profile.name }}</p>
-            <p class="subtitle is-6">{{ profile.tag }}</p>
-            <span class="tag" v-if="profile.isStaff">#Staff </span>
-            <span class="tag" v-if="profile.isLeader">#Leader </span>
-          </div>
-        </div>
+  <section class="profile">
+    <div v-if="user" class="columns">
+      <div class="column is-three-quarters">
+        <img :src="user.icon" width="180" />
+        <h2 class="server-name">{{ user.nickname }} | {{ user.discordTag }}</h2>
 
-        <div class="content">Member of :</div>
+        <div>
+          <span v-if="user.isStaff" class="tag"> Staff </span>
+          &#160;
+          <span v-if="user.isServerLeader" class="tag"> Server leader </span>
+        </div>
       </div>
     </div>
-
-    <button class="button" @click="pullData">
-      <span class="icon">
-        <i class="fas fa-sync" />
-      </span>
-      <span> Re-sync Profile</span>
-    </button>
-  </div>
+    <div v-if="!user">No user</div>
+  </section>
 </template>
 
 
 
 <script>
-const axios = require("axios");
+import { User } from "@/models/dto/user";
 
 export default {
-  data() {
-    return {
-      profile: {
-        icon: "https://i.pravatar.cc/150",
-        name: "Loading...",
-        tag: "One moment pls.",
-      },
-    };
-  },
-  mounted() {
-    this.$nextTick(() => {
-      setTimeout(() => {
-        this.profile.name = "Any Moment now...";
-        this.pullData();
-      }, 2500);
-    });
-  },
-  methods: {
-    pullData() {
-      let storedProfile = this.$svsAuth.getData();
-      console.log(storedProfile);
-      if (storedProfile) {
-        this.profile = storedProfile;
-      }
+  props: {
+    user: {
+      type: User,
+      required: true,
     },
   },
 };

@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     isComingSoonBypassed() {
-      return true;
+      return this.$store.getters.isComingSoonBypassed
     },
     isPage() {
       return this.type == 'page'

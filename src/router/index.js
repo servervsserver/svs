@@ -1,137 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import CodeOfConduct from '../views/CodeOfConduct.vue'
-import Vote from '../views/vote.vue'
-import AnonymousConcerns from "../views/AnonymousConcerns.vue"
-import About from '../views/About.vue'
-import CookiePolicy from '../views/CookiePolicy.vue'
 
-import MainEvent from '../views/main-event/MainEvent.vue'
-import MainEventOverview from "../views/main-event/MainEventOverview.vue"
-import Rules from '../views/main-event/Rules.vue'
-import ServerApplication from '../views/main-event/ServerApplication.vue'
-import EpUpload from "../views/main-event/EpUpload.vue"
+import createAdminGuard from "./guards/admin.guard.js"
+import createAuthGuard from "./guards/auth.guard.js"
 
-import ServerProfile from '../views/server/ServerProfile.vue'
+import { routes } from "./routes"
+import { navbarContent, populateNavbar } from "./navbar"
 
-import ProfileTest from '../views/Profile.vue'
+export { routes } from "./routes"
+export { navbarContent } from "./navbar"
 
-import PageNotFound from '../views/PageNotFound.vue'
-
-import Charities from '@/components/Charities.vue'
-
-import LoginCallback from '@/components/LoginCallback.vue'
-/* ===== Test vues ===== */
-
-import { addTestBlockToRoutes } from "./router.dev.js"
-import { addAdminBlockToRoutes } from "./admin-router.js"
-import { addArchiveBlockToRoutes } from "./archive-router.js"
-const CALLBACK_PATH = '/login/callback'
-
-Vue.use(VueRouter)
-
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/home',
-    redirect: '/'
-  },
-  {
-    path: '/cookie-policy',
-    name: 'CookiePolicy',
-    component: CookiePolicy
-  },
-  {
-    path: '/vote',
-    name: 'Vote',
-    component: Vote
-  },
-  {
-    path: '/code-of-conduct',
-    name: 'CodeOfConduct',
-    component: CodeOfConduct
-  },
-  {
-    path: '/server/:id',
-    name: 'ServerProfile',
-    component: ServerProfile
-  },
-  {
-    path: '/svs-iv',
-    name: 'svsiv',
-    component: MainEventOverview
-  }, {
-    path: CALLBACK_PATH,
-    name: 'callback',
-    component:LoginCallback
-  },
-  {
-    path: '/main-event',
-    name: 'MainEvent',
-    component: MainEvent,
-    children: [
-      {
-        path: 'overview',
-        name: 'MainEventOverview',
-        component: MainEventOverview
-      },
-      {
-        path: 'server-application',
-        name: 'ServerApplication',
-        component: ServerApplication
-      },
-      {
-        path: 'rules',
-        name: 'Rules',
-        component: Rules
-      },
-      {
-        path: 'ep-upload',
-        name: 'EpUpload',
-        component: EpUpload
-      }
-    ]
-  },
-  {
-    path: '/anonymous-concerns/:id?',
-    name: 'AnonymousConcerns',
-    component: AnonymousConcerns
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: About
-  },
-  {
-    path: '/charity',
-    name: 'Charity',
-    component: Charities
-  },
-  {
-    path: '/profile',
-    name: 'Profile',
-    component: ProfileTest
-  },
-  {
-  path:'/invite',
-  component: null,
-    beforeEnter(to, from, next) {
-      window.location.href = "https://discord.gg/8wsGFwxT5S";
-    }
-  }
-]
-
-addArchiveBlockToRoutes(routes)
-addAdminBlockToRoutes(routes)
-addTestBlockToRoutes(routes)
-
-
-routes.push({ path: '*', name: '404', component: PageNotFound })
+populateNavbar(routes, navbarContent)
 
 const router = new VueRouter({
   mode: 'history',
@@ -146,34 +25,9 @@ const router = new VueRouter({
   }
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
-    if (!auth.loggedIn()) {
-      next({
-        path: '/login',
-        query: { redirect: to.fullPath }
-      })
-    } else {
-      next()
-    }
-  } else {
-    next() // make sure to always call next()!
-  }
-})
+Vue.use(VueRouter)
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAdmin)) {
-    if (!admin) {
-      next()
-    } else {
-      next()
-    }
-  } else {
-    next()
-  }
-})
-
+router.beforeEach(createAuthGuard(router))
+router.beforeEach(createAdminGuard(router))
 
 export default router

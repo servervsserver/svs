@@ -1,8 +1,10 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithCustomToken, signOut } from "firebase/auth";
-import store from '@/store'
+import { getAuth, signInWithCustomToken, signOut, onAuthStateChanged } from "firebase/auth";
+import store from './store'
 import router from '@/router'
 const axios = require("axios");
+
+import { User } from "@/models/dto/user"
 
 /*
 * Firebase config
@@ -29,10 +31,44 @@ export default class AuthPlugin {
     this._firebaseApp = initializeApp(firebaseConfig);
     this._auth = getAuth();
 
+    onAuthStateChanged(this._auth , (user) => {
+
+      /* If no user, dipatch a null user and exit */
+      if (!user) {
+        store.dispatch("loginUser", null);
+        localStorage.removeItem("userdata");
+        return;
+      }
+
+      /* if already logged in, do not proceed further */
+      if (store.getters.isLoggedIn) {
+        return;
+      }
+
+      const uid = user.uid;
+      let stored_data = User.fromJsonString(localStorage.getItem("userdata"));
+      if (stored_data) {
+
+        store.dispatch("loginUser", stored_data);
+
+      } else {
+
+        fetch(`https://svs4-327921.ew.r.appspot.com/users/${uid}`)
+          .then((response) => response.json())
+          .then((data) => {
+            let user = User.fromAuthServData(data)
+            localStorage.setItem("userdata", user.stringify());
+            store.dispatch("loginUser", user);
+          })
+          .catch(console.error);
+
+      }
+    });
+
   }
 
+//#region Private functions
   async _grabDiscordProfile(tokenType, accessToken) {
-    console.log(tokenType, accessToken);
     return axios.get("https://discord.com/api/users/@me", {
       headers: {
         authorization: `${tokenType} ${accessToken}`,
@@ -57,7 +93,6 @@ export default class AuthPlugin {
     })
   }
 
-
   async fetchData(uid) {
     try {
       const response = await fetch(`https://svs4-327921.ew.r.appspot.com/users/${uid}`);
@@ -68,27 +103,39 @@ export default class AuthPlugin {
     }
   }
 
+//#endregion Private functions
+
   login(tokenType, accessToken) {
-    this._grabDiscordProfile(tokenType, accessToken).then((response) => {
-      const uid = response.data.id;
-      return this._authenticate(uid);
-    }).then((response) => {
-      let token = response.data;
-      return this._fAuth(token);
-    }).then((uid) => this.fetchData(uid)).then(data => {
-      store.dispatch("loginUser", data);
-      router.push({ name: "Profile" });
-    });
+    this._grabDiscordProfile(tokenType, accessToken)
+      .then((response) => {
+        const uid = response.data.id;
+        return this._authenticate(uid);
+      })
+      .then((response) => {
+        let token = response.data;
+        return this._fAuth(token);
+      })
+      .then((uid) => this.fetchData(uid))
+      .then(data => {
+        let user = User.fromAuthServData(data)
+        localStorage.setItem("userdata", user.stringify());
+        store.dispatch("loginUser", user);
+        router.push({ name: "Profile" });
+      });
 
   }
 
   checkAuth() {
     let user = this._auth.currentUser;
     if (user) {
-      console.log(user);
+      // console.log(user);
     } else {
-      console.log('AAAAAAAAAAAAAAAAAAAAAAAAAH');
+      // console.log('AAAAAAAAAAAAAAAAAAAAAAAAAH');
     }
+  }
+
+  get user() {
+    return this._store.getters.user.data
   }
 
   getData() {
@@ -106,11 +153,11 @@ export default class AuthPlugin {
     return undefined;
   }
 
-  isAuthenticated() {
+  get isAuthenticated() {
     return this._store.getters.isLoggedIn
   }
 
-  isAdmin() {
+  get isAdmin() {
     return this._store.getters.isAdmin
   }
 

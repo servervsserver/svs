@@ -33,82 +33,35 @@
       :class="{ 'is-active': isActive }"
     >
       <div class="navbar-start">
-        <!-- Main event menu -->
         <div
-          :key="$route.fullPath + '@mainevent'"
-          class="navbar-item has-dropdown is-hoverable"
+          v-for="item in navbarItems"
+          :key="item._vueid"
+          class="navbar-item is-hoverable"
+          :class="{ 'has-dropdown': item.children }"
         >
           <router-link
-            class="navbar-item"
-            to="/main-event/overview"
+            :class="{ 'navbar-item': item.children }"
+            :to="item.to"
           >
-            <brand-name-short />&nbsp;IV
+          {{ item.display }}
           </router-link>
 
-          <div class="navbar-dropdown">
+          <div
+            v-if="item.children"
+            class="navbar-dropdown"
+          >
             <router-link
+              v-for="child in item.children"
+              :key="child._vueid"
               class="navbar-item"
-              to="/main-event/overview"
+              :to="child.to"
             >
-              Overview
-            </router-link>
-            <router-link
-              class="navbar-item"
-              to="/main-event/rules"
-            >
-              Rules
-            </router-link>
-            <router-link
-              class="navbar-item"
-              to="/main-event/server-application"
-            >
-              Server application
-            </router-link>
-            <router-link
-              class="navbar-item"
-              to="/main-event/ep-upload"
-            >
-              EP Submission
+              {{ child.display }}
             </router-link>
           </div>
         </div>
-        <router-link
-          class="navbar-item"
-          to="/archives"
-        >
-          Archives
-        </router-link>
-        <!-- Admin menu  -->
-        <div
-          v-if="isAdmin"
-          :key="$route.fullPath + '@madmin'"
-          class="navbar-item has-dropdown is-hoverable"
-        >
-          <router-link
-            class="navbar-item"
-            to="/admin/dashboard"
-          >
-            Admin
-          </router-link>
-
-          <div class="navbar-dropdown">
-            <router-link
-              class="navbar-item"
-              to="/admin/dashboard"
-            >
-              Dashboard
-            </router-link>
-          </div>
-        </div>
-
-        <router-link
-          class="navbar-item"
-          to="/about"
-        >
-          About us
-        </router-link>
       </div>
-
+      <!-- Middle -->
       <div class="navbar-end">
         <div class="navbar-item">
           <coming-soon><theme-switch @themeChanged="onThemeChanged" /></coming-soon>
@@ -117,13 +70,16 @@
           <login />
         </div>
       </div>
+      <!-- End of navbar -->
     </div>
   </nav>
 </template>
 
 <script>
   import Login from '@/components/Login.vue'
+  import { routes, navbarContent } from '@/router'
 
+  console.log(routes, navbarContent)
   export default {
     components: {
       'login': Login
@@ -131,7 +87,8 @@
     data () {
       return {
         scrolled: false,
-        isActive: false
+        isActive: false,
+        navbarContent: navbarContent
       }
     },
     computed: {
@@ -140,6 +97,12 @@
       },
       isAdmin() {
         return this.$svsAuth.isAdmin
+      },
+      navbarItems() {
+        return navbarContent.filter(item => {
+          if (item.requiresAdmin && !this.isAdmin ) return false
+          return true
+        })
       }
     },
     mounted () {

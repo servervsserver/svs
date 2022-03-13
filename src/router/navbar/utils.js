@@ -15,7 +15,7 @@ function populateNavbarItem(routes, item, parent) {
   item._vueid = _vuid += 1
   const name = item.name
   const route = findRouteMatchingName(name, routes)
-  console.log(route, item)
+
   item.to = route.path
   if (parent) {
     item.to = parent.to.replace(/[\\\/]+$/g) + "/" + item.to.replace(/^[\\\/]+/g)

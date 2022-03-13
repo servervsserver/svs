@@ -1,0 +1,70 @@
+<template>
+  <section class="ep-upload-form">
+    <div class="columns">
+      <div class="column is-5">
+        <text-input
+          v-model="epInfos.name"
+          :label="'Title'"
+          :placeholder="'The name of my awesome EP'"
+          :icon="'fas fa-compact-disc'"
+        />
+        <image-file-input
+          v-model="epInfos.covertArtFile"
+          :label="'Cover art file'"
+        >
+          <template v-slot:tooltip>
+            The cover art should be square, preferably 3000x3000 pixels. <br/> The same standard used by distribution platforms.
+          </template>
+        </image-file-input>
+        <text-input
+          :label="'Public streaming link'"
+          :icon="'fas fa-link'"
+          :placeholder="'https://soundcloud.com/my-server/my-awesome-ep-link'"
+        >
+          <template v-slot:tooltip>
+            A link where people can listen to your EP<br>
+            (Youtube, Soundcloud, etc.)
+          </template>
+        </text-input>
+      </div>
+
+      <div class="column is-offset-2 is-5">
+        <squared-image-box style="max-width: 300px">
+          <img
+            ref="serverIconEl"
+            class="shadow-depth-2"
+            :src="epInfos.coverArtUrl"
+          >
+        </squared-image-box>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script>
+import {
+  TextInput,
+  AudioFileInput,
+  ImageFileInput,
+  SelectInput,
+  SwitchInput
+} from "@/components/forms/fields"
+
+import EpInfos from "./ep-infos.js"
+
+export default {
+  components: {
+    'text-input': TextInput,
+    'image-file-input': ImageFileInput
+    // 'audio-file-input': AudioFileInput,
+    // 'switch-input': SwitchInput,
+    // 'select-input': SelectInput
+  },
+  props: {
+    epInfos: {
+      type: EpInfos,
+      default: () => new EpInfos()
+    }
+  }
+}
+</script>

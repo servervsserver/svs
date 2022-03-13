@@ -1,0 +1,5 @@
+export { default as AudioFileInput } from "./AudioFileInput.vue"
+export { default as TextInput } from "./TextInput.vue"
+export { default as SelectInput } from "./SelectInput.vue"
+export { default as SwitchInput } from "./Switch.vue"
+export { default as ImageFileInput } from "./ImageFileInput.vue"

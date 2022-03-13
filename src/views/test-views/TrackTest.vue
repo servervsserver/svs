@@ -1,7 +1,9 @@
 <template>
   <div>
     <h1>Track test</h1>
-    {{ track.name }}<br>
+    <ep-upload-form />
+    <!-- <track-upload-form :track="track"/> -->
+    <!-- {{ track.name }}<br>
     {{ track.credits }}<br>
     <textarea
       :value="track.lyrics"
@@ -11,23 +13,24 @@
     />
     <a :href="track.link">Track link</a><br>
     {{ track.serverId }}<br>
-    {{ track.epId }}
+    {{ track.epId }} -->
   </div>
 </template>
 
 <script>
 
-import { Track } from '../../models/dto/track'
+import {
+  EpUploadFormComponent,
+  Track,
+  CreditEntry
+} from "@/components/forms/ep-upload"
 
-const track = new Track()
-track.name = 'Default test name'
-track.credits = {}
-track.lyrics = `I\'m just random lyrics\nDivided in multiple lines\nNobodies gonna read it\nI can tell you why`
-track.link = 'https://youtu.be/_6uHui2mZns'
-track.serverId = '123456789'
-track.epId = '123456789'
+let track = new Track()
 
 export default {
+  components: {
+    'ep-upload-form': EpUploadFormComponent
+  },
   data: function () {
     return {
       track: track

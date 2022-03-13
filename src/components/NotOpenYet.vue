@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { Validators, Validate } from '../models/properties/validators'
+import { Validators, Validate } from '@/modules/cdk/validators'
 
 export default {
   props: {

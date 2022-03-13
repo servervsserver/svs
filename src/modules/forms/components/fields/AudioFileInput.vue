@@ -30,12 +30,14 @@
           </span>
           <span
             v-if="!fileName"
-            class="file-label">
+            class="file-label"
+          >
             Choose a file…
           </span>
           <span
             v-if="fileName"
-            class="file-name">
+            class="file-name"
+          >
             {{ fileName }}
           </span>
         </span>
@@ -45,10 +47,11 @@
       v-if="showMetaData"
       class="audio-file-meta-data"
     >
-    <progress
-      v-if="isLoadingMetaData"
-      class="progress is-small" max="100">
-    </progress>
+      <progress
+        v-if="isLoadingMetaData"
+        class="progress is-small"
+        max="100"
+      />
       <span
         v-if="isLoadedMetaData"
       >Duration: {{ duration | duration }}</span>
@@ -67,6 +70,10 @@ const MetaDataState = Object.freeze({
 })
 
 export default {
+  model: {
+    prop: 'file',
+    event: 'change'
+  },
   props: {
     file: File,
     label: {
@@ -76,6 +83,12 @@ export default {
     showMetaData: {
       type: Boolean,
       default: true
+    }
+  },
+  data: function() {
+    return {
+      metaDataState: MetaDataState.NONE,
+      duration: null
     }
   },
   computed: {
@@ -89,10 +102,6 @@ export default {
     isLoadedMetaData() {
       return this.metaDataState == MetaDataState.LOADED
     }
-  },
-  model: {
-    prop: 'file',
-    event: 'change'
   },
   methods: {
     onFileChange(evt) {
@@ -109,12 +118,6 @@ export default {
           this.metaDataState = MetaDataState.NONE
           this.duration = null
         })
-    }
-  },
-  data: function() {
-    return {
-      metaDataState: MetaDataState.NONE,
-      duration: null
     }
   }
 }

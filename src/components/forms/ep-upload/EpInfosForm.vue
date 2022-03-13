@@ -14,7 +14,7 @@
           :label="'Cover art file'"
         >
           <template v-slot:tooltip>
-            The cover art should be square, preferably 3000x3000 pixels. <br/> The same standard used by distribution platforms.
+            The cover art should be square, preferably 3000x3000 pixels. <br> The same standard used by distribution platforms.
           </template>
         </image-file-input>
         <text-input
@@ -46,20 +46,20 @@
 
 <script>
 import {
-  TextInput,
-  AudioFileInput,
-  ImageFileInput,
-  SelectInput,
-  SwitchInput
-} from "@/components/forms/fields"
+  TextInputComponent,
+  ImageFileInputComponent
+} from "@/modules/forms"
+
+import {
+  ValidatorWithMessage
+} from "@/modules/cdk/validators"
 
 import EpInfos from "./ep-infos.js"
-import { ValidatorWithMessage } from "@/models/properties/validator-with-message.js"
 
 export default {
   components: {
-    'text-input': TextInput,
-    'image-file-input': ImageFileInput
+    'text-input': TextInputComponent,
+    'image-file-input': ImageFileInputComponent
   },
   props: {
     epInfos: {

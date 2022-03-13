@@ -1,7 +1,7 @@
 <template>
   <section>
     <h2>EP Information</h2>
-    <ep-infos-form :epInfos="ep.infos"/>
+    <ep-infos-form :ep-infos="ep.infos" />
     <h2>Tracks</h2>
     <div
       v-for="(track, index) in ep.tracks"
@@ -47,15 +47,15 @@ import {
 } from "@/components/forms/track-upload"
 
 export default {
+  components: {
+    'ep-infos-form': EpInfosFormComponent,
+    'track-upload-form': TrackUploadFormComponent
+  },
   props: {
     ep: {
       type: Ep,
       required: true
     }
-  },
-  components: {
-    'ep-infos-form': EpInfosFormComponent,
-    'track-upload-form': TrackUploadFormComponent
   },
   // data() {
   //   return {

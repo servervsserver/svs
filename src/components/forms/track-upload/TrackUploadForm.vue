@@ -29,7 +29,7 @@
           v-model="track.audioFile"
           :label="'Track audio file'"
         />
-        <br/>
+        <br>
         <div class="columns is-vcentered">
           <!-- Music genre -->
           <div class="column is-4 is-mobile has-text-right-on-desktop has-text-centered-on-mobile">
@@ -66,7 +66,7 @@
           </div>
           <div class="column is-8 is-mobile has-text-left-on-desktop has-text-centered-on-mobile">
             <switch-input
-              v-model='track.explicit'
+              v-model="track.explicit"
             />
           </div>
         </div>
@@ -93,7 +93,7 @@
           <div class="column is-8 is-mobile has-text-left-on-desktop has-text-centered-on-mobile">
             <div class="field">
               <switch-input
-                v-model='track.hasLyrics'
+                v-model="track.hasLyrics"
               />
             </div>
           </div>
@@ -187,11 +187,11 @@
 
 <script>
 import {
-  TextInput,
-  AudioFileInput,
-  SelectInput,
-  SwitchInput
-} from "@/components/forms/fields"
+  TextInputComponent,
+  AudioFileInputComponent,
+  SelectInputComponent,
+  SwitchInputComponent
+} from "@/modules/forms"
 
 import Track from "./track.js"
 import CreditEntry from "./credits.js"
@@ -200,10 +200,10 @@ import MusicGenres from "@/assets/music-genres.json"
 
 export default {
   components: {
-    'text-input': TextInput,
-    'audio-file-input': AudioFileInput,
-    'switch-input': SwitchInput,
-    'select-input': SelectInput
+    'text-input': TextInputComponent,
+    'audio-file-input': AudioFileInputComponent,
+    'switch-input': SwitchInputComponent,
+    'select-input': SelectInputComponent
   },
   props: {
     track: {
@@ -211,17 +211,17 @@ export default {
       default: () => new Track()
     }
   },
-  mounted() {
-    // console.log(this)
+  data: function() {
+    return {
+    }
   },
   computed: {
     musicGenres () {
       return MusicGenres.sort()
     }
   },
-  data: function() {
-    return {
-    }
+  mounted() {
+    // console.log(this)
   }
 }
 </script>

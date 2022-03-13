@@ -3,10 +3,10 @@
     <input
       :id="id"
       :checked="checked"
-      @change="$emit('change', $event.target.checked)"
       type="checkbox"
       name="ce-anonymous"
       class="switch is-rounded"
+      @change="$emit('change', $event.target.checked)"
     >
     <label :for="id" />
   </div>
@@ -15,12 +15,12 @@
 <script>
 import { v4 as generateUuid } from "uuid"
 export default {
-  props: {
-    checked: Boolean
-  },
   model: {
     prop: 'checked',
     event: 'change'
+  },
+  props: {
+    checked: Boolean
   },
   data() {
     return {

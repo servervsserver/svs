@@ -8,7 +8,7 @@
         :mode="'hover'"
       >
         <template v-slot:message>
-          <slot name="tooltip"></slot>
+          <slot name="tooltip" />
         </template>
         <span class="icon is-small is-left">
           <i class="fas fa-info-circle" />
@@ -48,7 +48,8 @@ export default {
   },
   props: {
     value: {
-      type: String
+      type: String,
+      default: null
     },
     label: {
       type: String,

@@ -21,10 +21,10 @@
     >
       <input
         :value="text"
-        @input="onChange($event)"
         class="input"
         type="text"
         :placeholder="placeholder"
+        @input="onChange($event)"
       >
       <span
         v-if="icon"
@@ -45,14 +45,13 @@
         {{ message }}
       </span>
     </p>
-
   </div>
 </template>
 
 <script>
 import {
   ValidatorWithMessage
-} from "@/models/properties/validator-with-message.js"
+} from "@/modules/cdk/validators"
 
 export default {
   model: {
@@ -61,7 +60,8 @@ export default {
   },
   props: {
     text: {
-      type: String
+      type: String,
+      default: null
     },
     label: {
       type: String,
@@ -78,6 +78,11 @@ export default {
     validators: {
       type: Array,
       default: () => []
+    }
+  },
+  data: function() {
+    return {
+      validatorEvaluation: null
     }
   },
   mounted() {
@@ -98,11 +103,6 @@ export default {
     onChange(event) {
       this.updateValidation(event.target.value)
       this.$emit('change', event.target.value)
-    }
-  },
-  data: function() {
-    return {
-      validatorEvaluation: null
     }
   }
 }

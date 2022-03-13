@@ -8,7 +8,7 @@
         :mode="'hover'"
       >
         <template v-slot:message>
-          <slot name="tooltip"></slot>
+          <slot name="tooltip" />
         </template>
         <span class="icon is-small is-left">
           <i class="fas fa-info-circle" />
@@ -43,16 +43,16 @@
 
 <script>
 export default {
+  model: {
+    prop: 'file',
+    event: 'change'
+  },
   props: {
     file: File,
     label: {
       type: String,
       default: null
     }
-  },
-  model: {
-    prop: 'file',
-    event: 'change'
   },
   computed: {
     fileName() {

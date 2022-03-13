@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Track test</h1>
-    <ep-upload-form :ep="ep"/>
+    <ep-upload-form :ep="ep" />
   </div>
 </template>
 

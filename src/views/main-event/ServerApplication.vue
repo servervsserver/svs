@@ -416,8 +416,8 @@
 </template>
 
 <script>
-import { Validators, Validate } from "../../models/properties/validators"
-import { ServerApplication } from "../../models/dto/server-application"
+import { Validators, Validate } from "@/modules/cdk/validators"
+import { ServerApplication } from "@/models/dto/server-application"
 
 const ApplicationStatus = Object.freeze({
   NOT_SENT: 0,

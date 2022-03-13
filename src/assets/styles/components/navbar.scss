@@ -37,7 +37,7 @@
   $active-menu-hover: palette.map-get($color-theme, "navbar", "active-item", "bg");
 
   .navbar {
-    background-color: color.adjust($background-color, $alpha: -0.1);
+    background-color: color.adjust($background-color, $alpha: -0);
     color: $text-color;
     transition: background-color 0.5s;
   }

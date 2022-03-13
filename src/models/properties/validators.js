@@ -1,7 +1,3 @@
-// export OneOf function(array) {
-//
-// }
-
 /**
 * Collection of common validator functions
 */
@@ -15,11 +11,11 @@ export class Validators {
   }
 
   /**
-  * Check if a value is provided. Only undefined is considered not provided
+  * Check if a value is provided. Only undefined and null are considered not provided
   */
   static get required () {
     return (value) => {
-      return value !== undefined
+      return value !== undefined && value !== null
     }
   }
 
@@ -117,6 +113,10 @@ export class Validators {
     }
   }
 
+  static get url() {
+    return Validators.pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)
+  }
+
   static get discordUserName() {
     return Validators.pattern(/^.{3,32}#[0-9]{4}$/)
   }
@@ -125,6 +125,7 @@ export class Validators {
     return Validators.pattern(/^(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|com)|discordapp\.com\/invite)\/.+[a-zA-Z0-9]$/)
   }
 }
+
 
 /**
 * Generates a validator function that will validate all the validators given in parameter

@@ -7,6 +7,7 @@
           :label="'Title'"
           :placeholder="'The name of my awesome EP'"
           :icon="'fas fa-compact-disc'"
+          :validators="titleValidators"
         />
         <image-file-input
           v-model="epInfos.covertArtFile"
@@ -17,9 +18,11 @@
           </template>
         </image-file-input>
         <text-input
+          v-model="epInfos.streamingLink"
           :label="'Public streaming link'"
           :icon="'fas fa-link'"
           :placeholder="'https://soundcloud.com/my-server/my-awesome-ep-link'"
+          :validators="streamLinkValidators"
         >
           <template v-slot:tooltip>
             A link where people can listen to your EP<br>
@@ -51,19 +54,28 @@ import {
 } from "@/components/forms/fields"
 
 import EpInfos from "./ep-infos.js"
+import { ValidatorWithMessage } from "@/models/properties/validator-with-message.js"
 
 export default {
   components: {
     'text-input': TextInput,
     'image-file-input': ImageFileInput
-    // 'audio-file-input': AudioFileInput,
-    // 'switch-input': SwitchInput,
-    // 'select-input': SelectInput
   },
   props: {
     epInfos: {
       type: EpInfos,
       default: () => new EpInfos()
+    },
+  },
+  data() {
+    return {
+      titleValidators: [
+        ValidatorWithMessage.minCharCount(1),
+        ValidatorWithMessage.maxCharCount(100)
+      ],
+      streamLinkValidators: [
+        ValidatorWithMessage.url()
+      ]
     }
   }
 }

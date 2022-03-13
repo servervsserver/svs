@@ -2,7 +2,7 @@ export default class EpInfos {
 
   constructor() {
 
-    this.name = ""
+    this.name = null
 
     this.streamingLink = ""
 

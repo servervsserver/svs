@@ -21,7 +21,7 @@
     >
       <input
         :value="text"
-        @change="$emit('change', $event.target.value)"
+        @input="onChange($event)"
         class="input"
         type="text"
         :placeholder="placeholder"
@@ -33,10 +33,27 @@
         <i :class="icon" />
       </span>
     </div>
+    <p
+      v-if="validatorEvaluation"
+      class="help is-danger"
+    >
+      <span
+        v-for="(message,index) in validatorEvaluation.invalidMessages"
+        :key="index"
+        style="display: block;"
+      >
+        {{ message }}
+      </span>
+    </p>
+
   </div>
 </template>
 
 <script>
+import {
+  ValidatorWithMessage
+} from "@/models/properties/validator-with-message.js"
+
 export default {
   model: {
     prop: 'text',
@@ -57,10 +74,36 @@ export default {
     placeholder: {
       type: String,
       default: null
+    },
+    validators: {
+      type: Array,
+      default: () => []
+    }
+  },
+  mounted() {
+    this.updateValidation(this.text)
+  },
+  methods: {
+    updateValidation(value) {
+      let prevEval = this.validatorEvaluation
+      let currentEval = ValidatorWithMessage.evaluateAll(this.validators, value)
+
+      let hasChanged = prevEval === null || prevEval === undefined || (prevEval.validated != currentEval.validated)
+      this.validatorEvaluation = currentEval
+
+      if (hasChanged) {
+        this.$emit('validationChange', currentEval.validated)
+      }
+    },
+    onChange(event) {
+      this.updateValidation(event.target.value)
+      this.$emit('change', event.target.value)
     }
   },
   data: function() {
-    return {}
+    return {
+      validatorEvaluation: null
+    }
   }
 }
 </script>

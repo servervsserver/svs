@@ -35,6 +35,28 @@
     box-shadow: 0 0 1px 1px $track-color inset;
   }
 
+  .transparent-scrollbar {
+    &::-webkit-scrollbar-thumb {
+      box-shadow: 0 0 1px 1px #0004 inset;
+      background-color: color.adjust($thumb-color, $alpha: -0.2%);
+    }
+
+    &::-webkit-scrollbar
+    {
+      width: 8px;
+      background: #0002;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: color.adjust($track-color, $alpha: -0.8%);
+    }
+
+    &:disabled {
+      height: 4em;
+      opacity: 0.5;
+    }
+  }
+
   // & {
   //   scrollbar-gutter: stable;
   // }

@@ -11,17 +11,11 @@
           :icon="'fas fa-play'"
         />
         <!-- Lyrics -->
-        <div
-          class="field"
-        >
-          <label>Lyrics</label>
-          <textarea
-            v-model="track.lyrics"
-            class="textarea lyrics"
-            :class="{ 'no-lyrics': !track.hasLyrics }"
-            :disabled="!track.hasLyrics"
-          />
-        </div>
+        <textarea-input
+          v-model="track.lyrics"
+          :label="'Lyrics'"
+          :disabled="!track.hasLyrics"
+        />
       </div>
       <div class="column is-5">
         <!-- Audio file -->
@@ -190,7 +184,8 @@ import {
   TextInputComponent,
   AudioFileInputComponent,
   SelectInputComponent,
-  SwitchInputComponent
+  SwitchInputComponent,
+  TextAreaInputComponent
 } from "@/modules/forms"
 
 import Track from "./track.js"
@@ -203,7 +198,8 @@ export default {
     'text-input': TextInputComponent,
     'audio-file-input': AudioFileInputComponent,
     'switch-input': SwitchInputComponent,
-    'select-input': SelectInputComponent
+    'select-input': SelectInputComponent,
+    'textarea-input': TextAreaInputComponent
   },
   props: {
     track: {
@@ -227,20 +223,6 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-.textarea.lyrics {
-  transition: 0.25s all;
-  height: 18em;
-  resize: none;
-
-  min-height: 4em;
-
-  &.no-lyrics {
-    height: 4em;
-    opacity: 0.5;
-    /* filter: blur(2px); */
-  }
-}
-
 .credit-index {
   color: inherit;
   background-color: transparent;

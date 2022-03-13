@@ -19,6 +19,7 @@
       <div class="select">
         <select
           :value="value"
+          class="transparent-scrollbar"
           @change="$emit('change', $event.target.value)"
         >
           <option

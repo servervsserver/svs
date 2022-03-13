@@ -1,8 +1,8 @@
 
-const kio = 1024
-const mio = 1024 * kio
-const gio = 1024 * mio
-const tio = 1024 * gio
+const kiB = 1024
+const miB = 1024 * kiB
+const giB = 1024 * miB
+const tiB = 1024 * giB
 
 export function fileSize(value, targetUnit, digits) {
   if (value === undefined || value === null) return ""
@@ -11,18 +11,29 @@ export function fileSize(value, targetUnit, digits) {
   if (targetUnit === undefined) targetUnit = "nearest"
 
   switch(targetUnit) {
+
     case "nearest":
-      if (value > tio) {
-        return Math.round(value / tio) + " TB"
-      } else if(value > gio) {
-        return Math.round(value / gio) + " GB"
-      } else if(value > mio) {
-        return Math.round(value / mio) + " MB"
-      } else if(value > kio) {
-        return Math.round(value / kio) + " KB"
+    {
+      let amount = 0
+      let prefix = ""
+      if (value > tiB) {
+        amount = Math.round(value / tiB)
+        prefix = "T"
+      } else if(value > giB) {
+        amount = Math.round(value / giB)
+        prefix = "G"
+      } else if(value > miB) {
+        amount = Math.round(value / miB)
+        prefix = "M"
+      } else if(value > kiB) {
+        amount = Math.round(value / kiB)
+        prefix = "K"
       } else {
-        return value + " B"
+        amount = value
+        prefix = ""
       }
+      return `${amount} ${prefix}B`
+    }
   }
 
   return value + " B"

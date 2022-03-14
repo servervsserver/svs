@@ -1,12 +1,12 @@
 <template>
   <div class="buttons">
-    <a
+    <router-link
       v-if="!isAuthenticated"
-      :href="url"
+      to="/login"
       class="button is-dark"
     >
       Log in with Discord
-    </a>
+    </router-link>
     <router-link
       v-if="isAuthenticated"
       to="/profile"
@@ -28,17 +28,8 @@
 </template>
 
 <script>
-const discord_client_id = process.env.VUE_APP_DISCORD_ID;
-const url = encodeURIComponent(process.env.VUE_APP_CALLBACK_URL);
-
 export default {
   name: "Login",
-  data: function () {
-    return {
-      test: "",
-      url: `https://discord.com/api/oauth2/authorize?response_type=token&client_id=${discord_client_id}&scope=identify&state=15773059ghq9183habn&redirect_uri=${url}&prompt=consent`,
-    };
-  },
   computed: {
     isAuthenticated() {
       return this.$svsAuth.isAuthenticated
@@ -47,8 +38,6 @@ export default {
       return this.$svsAuth.user
     }
   },
-  updated: function () {},
-  mounted: function () {},
   methods: {
     logout() {
       this.$svsAuth.logout()
@@ -59,18 +48,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 </style>

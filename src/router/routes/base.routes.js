@@ -13,13 +13,15 @@ import EpUpload from "@/views/main-event/EpUpload.vue"
 
 import ServerProfile from '@/views/server/ServerProfile.vue'
 
-import ProfileTest from '@/views/Profile.vue'
+import Profile from '@/views/Profile.vue'
 
 import Charities from '@/components/Charities.vue'
 
 import LoginCallback from '@/components/LoginCallback.vue'
 
 const CALLBACK_PATH = '/login/callback'
+const discord_client_id = process.env.VUE_APP_DISCORD_ID;
+const url = encodeURIComponent(process.env.VUE_APP_CALLBACK_URL);
 
 export const routes = [
   {
@@ -74,7 +76,7 @@ export const routes = [
   {
     path: CALLBACK_PATH,
     name: 'callback',
-    component:LoginCallback
+    component: LoginCallback
   },
   {
     path: '/svs-iv',
@@ -122,13 +124,23 @@ export const routes = [
   {
     path: '/profile',
     name: 'Profile',
-    component: ProfileTest
+    component: Profile,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path:'/invite',
     component: null,
     beforeEnter(to, from, next) {
       window.location.href = "https://discord.gg/8wsGFwxT5S";
+    }
+  },
+  {
+    path: '/login',
+    component: null,
+    beforeEnter(to, from, next) {
+      window.location.href = `https://discord.com/api/oauth2/authorize?response_type=token&client_id=${discord_client_id}&scope=identify&state=15773059ghq9183habn&redirect_uri=${url}&prompt=consent`
     }
   }
 ]

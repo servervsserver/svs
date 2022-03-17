@@ -26,7 +26,7 @@
 
 <script>
 
-import { Validate, Validators } from '../../models/properties/validators'
+import { Validate, Validators } from '@/modules/cdk/validators'
 
 
 

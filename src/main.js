@@ -42,10 +42,11 @@ Vue.component('squared-image-box', SquaredImageContainer)
 // =================================================
 
 import { fileSize } from "./filters/file"
-import { date } from "./filters/date"
+import { date, duration } from "./filters/date"
 import { discordInviteHandle } from "./filters/discord"
 
 Vue.filter('date', date)
+Vue.filter('duration', duration)
 Vue.filter('discordInviteHandle', discordInviteHandle)
 Vue.filter('fileSize', fileSize)
 

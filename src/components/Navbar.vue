@@ -44,7 +44,7 @@
             :class="{ 'navbar-item': item.children }"
             :to="item.to"
           >
-          {{ item.display }}
+            {{ item.display }}
           </router-link>
 
           <div
@@ -80,7 +80,6 @@
   import Login from '@/components/Login.vue'
   import { routes, navbarContent } from '@/router'
 
-  console.log(routes, navbarContent)
   export default {
     components: {
       'login': Login

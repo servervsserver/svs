@@ -9,16 +9,22 @@
       >
         <div class="ep-block-content">
           <!-- <squared-image-box> -->
-            <img class="cover-art" :src="ep.coverArtUri" />
+          <img
+            class="cover-art"
+            :src="ep.coverArtUri"
+          >
           <!-- </squared-image-box> -->
           <div class="ep-infos">
-            <div class="ep-name">{{ ep.title }}</div>
-            <div class="ep-server-name">{{ ep.serverId }}</div>
+            <div class="ep-name">
+              {{ ep.title }}
+            </div>
+            <div class="ep-server-name">
+              {{ ep.serverId }}
+            </div>
           </div>
         </div>
       </div>
     </section>
-
   </section>
 </template>
 

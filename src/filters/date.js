@@ -67,3 +67,31 @@ export function date(date, format, local, specialTimes) {
   result = result.replace(/sec/g, (""+s).padStart(2, '0'))
   return result
 }
+
+export function duration(totalSeconds, showMilliseconds) {
+  if (!totalSeconds || totalSeconds < 0) return ""
+
+  let ms = 0
+  let s = 0
+  let m = 0
+  let h = 0
+
+  if (showMilliseconds) {
+    ms = Math.floor((totalSeconds % 1) * 1000)
+  }
+  totalSeconds = Math.floor(totalSeconds)
+  s = totalSeconds % 60
+  totalSeconds -= s
+  totalSeconds /= 60
+  m = totalSeconds % 60
+  totalSeconds -= m
+  totalSeconds /= 60
+  h = totalSeconds
+
+  let values = []
+  if (h) values.push(h)
+  values.push(m)
+  values.push(s)
+  if (showMilliseconds) values.push(` ${ms}ms`)
+  return values.join(":")
+}

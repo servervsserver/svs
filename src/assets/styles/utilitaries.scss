@@ -1,0 +1,13 @@
+@media(min-width: 768px) {
+  .has-text-right-on-desktop {
+    text-align: right;
+  }
+  .has-text-left-on-desktop {
+    text-align: left;
+  }
+}
+@media(max-width: 768px) {
+  .has-text-centered-on-mobile {
+    text-align: center;
+  }
+}

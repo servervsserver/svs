@@ -18,21 +18,7 @@
       livestreams raising money for a music charity- our last event, SvS III
       raised $3,275.58 for Mr Holland’s Opus through Tiltify!
     </p>
-    <p>
-      After the music-making period is complete, we hold a live listening
-      festival on Twitch where everyone gets to hear each server’s submission,
-      along with interviews of leaders from each server. This is our fourth time
-      running the competition, and this is going to be our biggest yet!
-    </p>
 
-    <p>
-      After the music-making period (this time around it’s an entire month, for
-      flexibility) is complete, we hold a live listening festival on Twitch
-      where everyone gets to hear each server’s submission, along with
-      interviews of leaders from each server. This is our third time running the
-      competition, and this is going to be our biggest yet: we’re planning to
-      include fundraising for charity as part of the event.
-    </p>
     <h2>Why should my community take part?</h2>
     <p>
       We’ve found taking part in this competition brings out something really

@@ -105,11 +105,11 @@ export default class BackendPlugin {
         })
 
     }).then(res => {
-      return setDoc( newServerRef, data )
+      return setDoc(newServerRef, data)
     })
-    .then(() => {
-      return { uid, data }
-    })
+      .then(() => {
+        return { uid, data }
+      })
 
   }
 
@@ -126,7 +126,7 @@ export default class BackendPlugin {
   * Returns a list from Realtime Database given key
   * @return promise to the document ref in firebase of the application
   */
-   _getList(key) {
+  _getList(key) {
     const appRef = ref(this._firebaseDb, key)
     return get(appRef).then(snapshot => {
       if (snapshot.exists()) {
@@ -153,7 +153,7 @@ export default class BackendPlugin {
   */
   createServerApplicationToSvSIV(serverApplication) {
     return this.createServer(serverApplication)
-      .then( res => {
+      .then(res => {
         return this.addServerToSvSIVApplications(res.uid)
       })
   }
@@ -181,10 +181,10 @@ export default class BackendPlugin {
   * @return promise to the document ref in firebase of the application
   */
   getAppServers(state) {
-    const serverStateKey = ["applied_svs_iv","accepted_svs_iv","denied_svs_iv"];
+    const serverStateKey = ["applied_svs_iv", "accepted_svs_iv", "denied_svs_iv"];
     return this._getList(serverStateKey[state]).then(server_ids => {
       return this._getServersById(server_ids).then(
-         servers => {return servers;}
+        servers => { return servers; }
       )
     })
 
@@ -194,35 +194,36 @@ export default class BackendPlugin {
 
 
 
-/**
-  * Gets all the servers
-  * @returns An array of all the ServerApplication
-  * TODO: it actually disreguards the list in firebase of the submissions for this Event.
-  * This has no impact now, but once we get some new events, going on it needs to be changed
-  *
-  */
+  /**
+    * Gets all the servers
+    * @returns An array of all the ServerApplication
+    * TODO: it actually disreguards the list in firebase of the submissions for this Event.
+    * This has no impact now, but once we get some new events, going on it needs to be changed
+    *
+    */
   _getServersById(servers) {
     let server_id = (Object.values(servers));
     let promises = [];
     let data = {};
-    const refs = server_id.map(id => doc(this._firestoreDb,`servers/${id}`));
-    
-    for(let si in server_id ){
-        promises.push(getDoc(refs[si]).then(
-          document => {
-            data[si] = document.data();
-           // console.log(data);
-            return document;
-          }
-        ))
+    const refs = server_id.map(id => doc(this._firestoreDb, `servers/${id}`));
 
-  }
+    for (let si in server_id) {
+      promises.push(getDoc(refs[si]).then(
+        document => {
+          data[si] = document.data();
+          // console.log(data);
+          return document;
+        }
+      ))
+
+    }
 
 
-  return Promise.all(promises).then(() => {
-   // console.log(data);
-   
-   return data;});
+    return Promise.all(promises).then(() => {
+      // console.log(data);
+
+      return data;
+    });
 
 
   }
@@ -236,12 +237,34 @@ export default class BackendPlugin {
   createAnonymousConcernsTicket(message) {
     const anonyConDocRef
       = addDoc(
-          collection(this._firestoreDb, "anonymous_concerns"),
-          { message: message, date: new Date(), answer: "" }
-        )
+        collection(this._firestoreDb, "anonymous_concerns"),
+        { message: message, date: new Date(), answer: "" }
+      )
 
     return anonyConDocRef
   }
+
+  getThemeSuggestions() {
+    const appRef = ref(this._firebaseDb, "theme_suggestions")
+
+    return get(appRef)
+
+  }
+
+
+  submitThemeSuggestion(message) {
+
+    const appRef = ref(this._firebaseDb, "theme_suggestions")
+
+    const suggestion
+      = push(appRef, message);
+
+    return suggestion
+
+  }
+
+
+
 
   /**
   * Gets all the tickets
@@ -273,7 +296,7 @@ export default class BackendPlugin {
 
 
 
-  static install (Vue, options) {
+  static install(Vue, options) {
     Vue.prototype.$svsBackend = new BackendPlugin(Vue)
   }
 

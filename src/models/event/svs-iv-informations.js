@@ -24,7 +24,7 @@ export class SvSIVInformations {
 
     this.competitionStart = new EventMilestone(
       "Competition begins and kick off stream",
-      new Date(Date.UTC(2022, 2, 26, 19, 0, 0)),
+      new Date(Date.UTC(2022, 2, 26, 18, 0, 0)),
       "Join us on Twitch as we kick off the start of the month of music making with the selection of the competition’s theme by a live vote!"
     )
 

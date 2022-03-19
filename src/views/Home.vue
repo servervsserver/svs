@@ -24,13 +24,25 @@
     <section class="sample-pack-section shadow-depth-3">
       <div class="sample-pack-section-inner">
         <div class="columns">
-          <div class="column is-4">
+          <div class="column is-5">
             <div class="cover-art-container has-text-right-on-desktop has-text-centered-on-mobile">
-              <img class="sample-pack-cover-art"
-                src="/sample-pack/cover_art.jpg" width="200" height="200" />
+              <flip-album
+                :size="300"
+                :image="'/sample-pack/cover_art.jpg'">
+                <p>
+                  1 GB worth of samples of all types <br>
+                  provided by the community!
+                </p>
+                <a class="button svs-evolving-gradient is-small" style="text-decoration: none" href="https://servervsserver.gumroad.com/l/sfs1">
+                  Get the pack!
+                </a>&nbsp;
+                <a class="button svs-evolving-gradient is-small" style="text-decoration: none" href="https://tiltify.com/@svs/samples-for-solidarity">
+                  Donate to Project Hope
+                </a>
+              </flip-album>
             </div>
           </div>
-          <div class="column is-2"></div>
+          <div class="column is-1"></div>
           <div class="column is-4 has-text-centered">
             <h2>Samples for Solidarity</h2>
             <div class="sfs-logos">
@@ -60,9 +72,13 @@
 </template>
 
 <script>
+import FlipAlbum from "@/components/FlipAlbum.vue"
 
 export default {
   name: 'Home',
+  components: {
+    'flip-album': FlipAlbum
+  },
   mounted () {
 
   }
@@ -103,7 +119,7 @@ export default {
 }
 
 .sample-pack-section {
-  padding: 100px 0px;
+  padding: 60px 0px;
   background-color: #edcd99;
   background-image: url("/backgrounds/bg_light.png");
 
@@ -114,20 +130,11 @@ export default {
   }
 
   .cover-art-container {
-    perspective: 400px;
+
 
   }
 
-  .sample-pack-cover-art {
-    transform-origin: center;
-    transform: scale(1.4) rotateY(5deg);
-    transition: 0.5s transform;
-    box-shadow: 0 24px 38px 3px rgb(0 0 0 / 14%), 0 9px 46px 8px rgb(0 0 0 / 12%), 0 11px 15px -7px rgb(0 0 0 / 40%);
 
-    &:hover {
-      transform: scale(1.5) rotateY(15deg);
-    }
-  }
 
   .sfs-logos {
     $logos-height: 60px;

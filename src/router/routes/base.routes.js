@@ -5,11 +5,13 @@ import AnonymousConcerns from "@/views/AnonymousConcerns.vue"
 import About from '@/views/About.vue'
 import CookiePolicy from '@/views/CookiePolicy.vue'
 
+
 import MainEvent from '@/views/main-event/MainEvent.vue'
 import MainEventOverview from "@/views/main-event/MainEventOverview.vue"
 import Rules from '@/views/main-event/Rules.vue'
 import ServerApplication from '@/views/main-event/ServerApplication.vue'
 import EpUpload from "@/views/main-event/EpUpload.vue"
+import ThemeSubmit from "@/views/ThemeSubmit.vue"
 
 import ServerProfile from '@/views/server/ServerProfile.vue'
 
@@ -130,7 +132,12 @@ export const routes = [
     }
   },
   {
-    path:'/invite',
+    path: '/theme',
+    component: ThemeSubmit,
+    name: "ThemeSubmit"
+  },
+  {
+    path: '/invite',
     component: null,
     beforeEnter(to, from, next) {
       window.location.href = "https://discord.gg/8wsGFwxT5S";

@@ -1,5 +1,5 @@
 <template>
-  <div class="container dhms-countdown">
+  <div class="dhms-countdown">
     <h4>{{ title }}</h4>
     <div>
       <ul>

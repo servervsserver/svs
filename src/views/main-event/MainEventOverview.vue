@@ -45,8 +45,20 @@
                 {{ milestone.name }}
               </h2>
               <div class="subheading">
-                {{ milestone.date | date("DAY, dd MONTH yyyy") }}
-                - {{ milestone.date | date("hour:min") }}
+                <tooltip
+                  :vertical="'top'"
+                  :mode="'hover'"
+                >
+                  {{ milestone.date | date("DAY, dd MONTH yyyy") }}
+                  - {{ milestone.date | date("hour:min") }} UTC
+                  <template v-slot:message>
+                    <p>
+                      Local time: <br>
+                      {{ milestone.date | date("DAY, dd MONTH yyyy", true) }} <br/>
+                      {{ milestone.date | date("hour:min", true) }}
+                    </p>
+                  </template>
+                </tooltip>
               </div>
               <p>{{ milestone.description }}</p>
             </div>

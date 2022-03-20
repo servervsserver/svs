@@ -76,6 +76,10 @@ export const routes = [
     redirect: '/svs-iv/ep-upload',
   },
   {
+    path: '/theme',
+    redirect: 'svs-iv/theme'
+  },
+  {
     path: CALLBACK_PATH,
     name: 'callback',
     component: LoginCallback
@@ -91,11 +95,11 @@ export const routes = [
         name: 'SvS IV Overview',
         component: MainEventOverview
       },
-      {
-        path: 'server-application',
-        name: 'SvS IV Server Application',
-        component: ServerApplication
-      },
+      // {
+      //   path: 'server-application',
+      //   name: 'SvS IV Server Application',
+      //   component: ServerApplication
+      // },
       {
         path: 'rules',
         name: 'SvS IV Rules',
@@ -105,7 +109,12 @@ export const routes = [
         path: 'ep-upload',
         name: 'SvS IV EP Submission',
         component: EpUpload
-      }
+      },
+      {
+        path: 'theme',
+        component: ThemeSubmit,
+        name: "SvS IV Theme Submission"
+      },
     ]
   },
   {
@@ -130,11 +139,6 @@ export const routes = [
     meta: {
       requiresAuth: true
     }
-  },
-  {
-    path: '/theme',
-    component: ThemeSubmit,
-    name: "ThemeSubmit"
   },
   {
     path: '/invite',

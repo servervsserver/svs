@@ -8,6 +8,7 @@ export const navbarContent = [
       { name: 'SvS IV Overview', display: 'Overview' },
       { name: 'SvS IV Rules', display: 'Rules' },
       { name: 'SvS IV Server Application', display: 'Server Application' },
+      { name: 'SvS IV Theme Submission', display: 'Propose a theme!' },
       { name: 'SvS IV EP Submission', display: 'EP Submission'}
     ]
   },

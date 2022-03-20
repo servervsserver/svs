@@ -23,7 +23,7 @@
     </section>
     <section class="sample-pack-section shadow-depth-3">
       <div class="sample-pack-section-inner">
-        <div class="columns">
+        <div class="columns" style="margin: 0">
           <div class="column is-5">
             <div
               class="

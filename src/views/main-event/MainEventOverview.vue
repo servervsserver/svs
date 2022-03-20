@@ -2,8 +2,8 @@
   <div class="container">
     <h1><brand-name /> overview</h1>
 
-    <div class="columns is-8 is-variable">
-      <div class="column is-8">
+    <div class="columns">
+      <div class="column is-7">
         <h2>Timeline</h2>
 
         <div class="timeline">
@@ -41,22 +41,26 @@
               </span>
             </div>
             <div class="timeline-content">
-              <h2 class="heading">
-                {{ milestone.name }}
-              </h2>
-              <div class="subheading">
+              <div class="heading-section">
                 <tooltip
                   :vertical="'top'"
+                  :horizontal="'right'"
                   :mode="'hover'"
                 >
-                  {{ milestone.date | date("DAY, dd MONTH yyyy") }}
-                  - {{ milestone.date | date("hour:min") }} UTC
+                  <h2 class="heading">
+                    {{ milestone.name }}
+                  </h2>
+                  <div class="subheading">
+
+                      {{ milestone.date | date("DAY, dd MONTH yyyy") }}
+                      - {{ milestone.date | date("hour:min") }} UTC
+                  </div>
                   <template v-slot:message>
-                    <p>
-                      Local time: <br>
+                    <span>
+                      Your local time: <br>
                       {{ milestone.date | date("DAY, dd MONTH yyyy", true) }} <br/>
                       {{ milestone.date | date("hour:min", true) }}
-                    </p>
+                    </span>
                   </template>
                 </tooltip>
               </div>
@@ -76,6 +80,7 @@
           <strong>TBA</strong> stands for To Be Announced
         </blockquote>
       </div>
+      <div class="column is-1"></div>
       <div class="column is-4">
         <h2>News!</h2>
         <section class="news-section">

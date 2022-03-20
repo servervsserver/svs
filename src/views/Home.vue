@@ -15,9 +15,9 @@
         <router-link
           class="button svs-evolving-gradient is-large"
           style="text-decoration: none"
-          to="/main-event/server-application"
+          to="/theme"
         >
-          Apply here!
+          Submit Theme Suggestions!
         </router-link>
       </div>
     </div>
@@ -25,14 +25,13 @@
 </template>
 
 <script>
-
 export default {
-  name: 'Home'}
+  name: "Home",
+};
 </script>
 
 <style scoped lang='scss'>
 .home {
-
   height: 100%;
   display: flex;
   flex-flow: column wrap;
@@ -53,12 +52,12 @@ export default {
     text-transform: uppercase;
     font-family: "Montserrat", "Jost", sans-serif;
     font-size: 3em;
-    &, * { font-weight: 500 !important; }
+    &,
+    * {
+      font-weight: 500 !important;
+    }
     letter-spacing: 5px;
     text-shadow: 3px 4px 0px rgb(255, 186, 94, 0.2);
   }
-
 }
-
-
 </style>

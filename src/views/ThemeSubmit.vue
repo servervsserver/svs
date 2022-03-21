@@ -25,7 +25,10 @@
           />
         </div>
         <div class="field">
-          <button class="button" type="submit">
+          <button
+            class="button"
+            type="submit"
+          >
             Submit&nbsp;<i class="fas fa-paper-plane" />
           </button>
         </div>
@@ -43,7 +46,7 @@
       </p>
       <p class="help is-danger">
         <strong>Problem:</strong>
-        <br />{{ errorMessage }}
+        <br>{{ errorMessage }}
       </p>
 
       <h4>Your original message</h4>

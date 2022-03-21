@@ -1,6 +1,9 @@
 <template>
   <div class="container-fluid callback-page">
-    <section class="error-section has-text-centered" v-if="errorType">
+    <section
+      v-if="errorType"
+      class="error-section has-text-centered"
+    >
       <h2>
         Error: {{ errorType }}
       </h2>
@@ -23,6 +26,12 @@ export default {
   name: "LoginCallback",
   components: {
     'spinner': Spinner,
+  },
+  data() {
+    return {
+      errorType: "",
+      errorMessage: ""
+    }
   },
   mounted() {
     var hash = window.location.hash.substring(1);
@@ -52,12 +61,6 @@ export default {
     }
 
     this.$svsAuth.login(tokenType, accessToken);
-  },
-  data() {
-    return {
-      errorType: "",
-      errorMessage: ""
-    }
   }
 };
 </script>

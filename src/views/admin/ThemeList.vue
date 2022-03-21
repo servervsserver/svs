@@ -4,7 +4,10 @@
     <div class="table-container">
       <table class="table is-striped is-hoverable">
         <tbody>
-          <tr v-for="(theme, ind) in themes" :key="ind">
+          <tr
+            v-for="(theme, ind) in themes"
+            :key="ind"
+          >
             <th>{{ theme }}</th>
           </tr>
         </tbody>
@@ -30,7 +33,12 @@ export default {
   computed: {},
   mounted() {
     this.$svsBackend.getThemeSuggestions().then((res) => {
-      this.themes = res.val();
+      let ofi = res.val()
+      let fio = []
+      Object.keys(ofi).forEach(element => {
+        fio.push(ofi[element])
+      });
+      this.themes = fio.sort();
     });
   },
   methods: {},

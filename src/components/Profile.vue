@@ -1,18 +1,34 @@
 <template>
   <section class="profile">
-    <div v-if="user" class="columns">
+    <div
+      v-if="user"
+      class="columns"
+    >
       <div class="column is-three-quarters">
-        <img :src="user.icon" width="180" />
-        <h2 class="server-name">{{ user.nickname }} | {{ user.discordTag }}</h2>
+        <img
+          :src="user.icon"
+          width="180"
+        >
+        <h2 class="server-name">
+          {{ user.nickname }} | {{ user.discordTag }}
+        </h2>
 
         <div>
-          <span v-if="user.isStaff" class="tag"> Staff </span>
+          <span
+            v-if="user.isStaff"
+            class="tag"
+          > Staff </span>
           &#160;
-          <span v-if="user.isServerLeader" class="tag"> Server leader </span>
+          <span
+            v-if="user.isServerLeader"
+            class="tag"
+          > Server leader </span>
         </div>
       </div>
     </div>
-    <div v-if="!user">No user</div>
+    <div v-if="!user">
+      No user
+    </div>
   </section>
 </template>
 

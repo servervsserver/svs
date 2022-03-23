@@ -41,8 +41,12 @@
 </template>
 
 <script>
+import {
+  InputValidationMixin
+} from "../../mixins/input-validation.mixin"
 
 export default {
+  mixins: [InputValidationMixin],
   model: {
     prop: 'value',
     event: 'change'

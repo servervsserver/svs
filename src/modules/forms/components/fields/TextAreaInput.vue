@@ -20,7 +20,7 @@
       :class="{ 'has-icons-left': !!icon }"
     >
       <textarea
-        :value="text"
+        :value="value"
         class="textarea transparent-scrollbar"
         :disabled="disabled"
         @input="onChange($event)"
@@ -49,16 +49,17 @@
 
 <script>
 import {
-  ValidatorWithMessage
-} from "@/modules/cdk/validators"
+  InputValidationMixin
+} from "../../mixins/input-validation.mixin"
 
 export default {
+  mixins: [InputValidationMixin],
   model: {
-    prop: 'text',
+    prop: 'value',
     event: 'change'
   },
   props: {
-    text: {
+    value: {
       type: String,
       default: null
     },
@@ -77,32 +78,15 @@ export default {
     disabled: {
       type: Boolean,
       default: false
-    },
-    validators: {
-      type: Array,
-      default: () => []
     }
   },
   data: function() {
-    return {
-      validatorEvaluation: null
-    }
+    return {}
   },
   mounted() {
-    this.updateValidation(this.text)
+    this.updateValidation(this.value)
   },
   methods: {
-    updateValidation(value) {
-      let prevEval = this.validatorEvaluation
-      let currentEval = ValidatorWithMessage.evaluateAll(this.validators, value)
-
-      let hasChanged = prevEval === null || prevEval === undefined || (prevEval.validated != currentEval.validated)
-      this.validatorEvaluation = currentEval
-
-      if (hasChanged) {
-        this.$emit('validationChange', currentEval.validated)
-      }
-    },
     onChange(event) {
       this.updateValidation(event.target.value)
       this.$emit('change', event.target.value)

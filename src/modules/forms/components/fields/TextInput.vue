@@ -20,7 +20,7 @@
       :class="{ 'has-icons-left': !!icon }"
     >
       <input
-        :value="text"
+        :value="value"
         class="input"
         type="text"
         :placeholder="placeholder"
@@ -50,16 +50,17 @@
 
 <script>
 import {
-  ValidatorWithMessage
-} from "@/modules/cdk/validators"
+  InputValidationMixin
+} from "../../mixins/input-validation.mixin"
 
 export default {
+  mixins: [InputValidationMixin],
   model: {
-    prop: 'text',
+    prop: 'value',
     event: 'change'
   },
   props: {
-    text: {
+    value: {
       type: String,
       default: null
     },
@@ -74,35 +75,16 @@ export default {
     placeholder: {
       type: String,
       default: null
-    },
-    validators: {
-      type: Array,
-      default: () => []
     }
   },
   data: function() {
-    return {
-      validatorEvaluation: null
-    }
+    return {}
   },
   mounted() {
-    this.updateValidation(this.text)
+    this.updateValidation(this.value)
   },
-  emits: [
-    'validation-change' // Emitted when the validation changes state
-  ],
+
   methods: {
-    updateValidation(value) {
-      let prevEval = this.validatorEvaluation
-      let currentEval = ValidatorWithMessage.evaluateAll(this.validators, value)
-
-      let hasChanged = prevEval === null || prevEval === undefined || (prevEval.validated != currentEval.validated)
-      this.validatorEvaluation = currentEval
-
-      if (hasChanged) {
-        this.$emit('validation-change', currentEval.validated)
-      }
-    },
     onChange(event) {
       this.updateValidation(event.target.value)
       this.$emit('change', event.target.value)

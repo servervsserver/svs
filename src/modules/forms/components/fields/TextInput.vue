@@ -88,6 +88,9 @@ export default {
   mounted() {
     this.updateValidation(this.text)
   },
+  emits: [
+    'validation-change' // Emitted when the validation changes state
+  ],
   methods: {
     updateValidation(value) {
       let prevEval = this.validatorEvaluation
@@ -97,7 +100,7 @@ export default {
       this.validatorEvaluation = currentEval
 
       if (hasChanged) {
-        this.$emit('validationChange', currentEval.validated)
+        this.$emit('validation-change', currentEval.validated)
       }
     },
     onChange(event) {

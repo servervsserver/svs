@@ -16,7 +16,16 @@
           </p>
         </div>
       </div>
-      <ep-upload-form :ep="ep" />
+      <ep-upload-form
+        :ep="ep"
+        @validation-change="onEpValidationChange"
+        />
+      <button class="button" :disabled="!canSubmit">
+        <span class="icon">
+          <i class="fas fa-paper-plane"></i>
+        </span>
+        <span>Submit</span>
+      </button>
     </div>
   </not-open-yet>
 </template>
@@ -34,7 +43,13 @@ export default {
   },
   data() {
     return {
-      ep: new Ep()
+      ep: new Ep(),
+      canSubmit: false
+    }
+  },
+  methods: {
+    onEpValidationChange(evt) {
+      this.canSubmit = evt
     }
   }
 }

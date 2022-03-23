@@ -8,6 +8,7 @@
           :placeholder="'The name of my awesome EP'"
           :icon="'fas fa-compact-disc'"
           :validators="titleValidators"
+          @validation-change="onTitleValidationChange"
         />
         <image-file-input
           v-model="epInfos.covertArtFile"
@@ -23,6 +24,7 @@
           :icon="'fas fa-link'"
           :placeholder="'https://soundcloud.com/my-server/my-awesome-ep-link'"
           :validators="streamLinkValidators"
+          @validation-change="onStreamLinkValidationChange"
         >
           <template v-slot:tooltip>
             A link where people can listen to your EP<br>
@@ -75,8 +77,36 @@ export default {
       ],
       streamLinkValidators: [
         ValidatorWithMessage.url()
-      ]
+      ],
+      validations: {
+        title: false,
+        streamLink: false
+      }
     }
+  },
+  emits: [
+    'validation-change' // Emitted when the validation changes state
+  ],
+  methods: {
+    onTitleValidationChange(evt) {
+      this.validations.title = evt
+      this.onValidationChange()
+    },
+    onStreamLinkValidationChange(evt) {
+      this.validations.streamLink = evt
+      this.onValidationChange()
+    },
+    onValidationChange: (function() {
+      let lastState = false
+      return function() {
+        let valid = Object.values(this.validations)
+          .reduce((agr, a) => agr && a, true)
+        if (lastState == valid) return
+
+        lastState = valid
+        this.$emit("validation-change", valid)
+      }
+    })()
   }
 }
 </script>

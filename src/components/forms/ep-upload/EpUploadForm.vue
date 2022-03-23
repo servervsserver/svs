@@ -1,7 +1,10 @@
 <template>
   <section>
     <h2>EP Information</h2>
-    <ep-infos-form :ep-infos="ep.infos" />
+    <ep-infos-form
+      :ep-infos="ep.infos"
+      @validation-change="onEpInfosValidationChange"
+      />
     <h2>Tracks</h2>
     <div
       v-for="(track, index) in ep.tracks"
@@ -57,18 +60,38 @@ export default {
       required: true
     }
   },
-  // data() {
-  //   return {
-  //     ep: new Ep()
-  //   }
-  // },
+  data() {
+    return {
+      validations: {
+        epInfos: false
+      }
+    }
+  },
+  emits: [
+    'validation-change' // Emitted when the validation changes state
+  ],
   methods: {
     addTrack() {
       return this.ep.addTrack()
     },
     dropTrack(track) {
       return this.ep.removeTrack(track)
-    }
+    },
+    onEpInfosValidationChange(evt) {
+      this.validations.epInfos = evt
+      this.onValidationChange()
+    },
+    onValidationChange: (function() {
+      let lastState = false
+      return function() {
+        let valid = Object.values(this.validations)
+          .reduce((agr, a) => agr && a, true)
+        if (lastState == valid) return
+
+        lastState = valid
+        this.$emit("validation-change", valid)
+      }
+    })()
   }
 }
 </script>

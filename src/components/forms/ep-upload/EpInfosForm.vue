@@ -56,9 +56,16 @@ import {
   ValidatorWithMessage
 } from "@/modules/cdk/validators"
 
+import {
+  FormValidationMixin
+} from "@/modules/forms/mixins/form-validation.mixin"
+
 import EpInfos from "./ep-infos.js"
 
 export default {
+  mixins: [
+    FormValidationMixin.forValidators(['title', 'stream-Link'])
+  ],
   components: {
     'text-input': TextInputComponent,
     'image-file-input': ImageFileInputComponent
@@ -77,36 +84,13 @@ export default {
       ],
       streamLinkValidators: [
         ValidatorWithMessage.url()
-      ],
-      validations: {
-        title: false,
-        streamLink: false
-      }
+      ]
     }
   },
-  emits: [
-    'validation-change' // Emitted when the validation changes state
-  ],
+  mounted() {
+    console.log(this)
+  },
   methods: {
-    onTitleValidationChange(evt) {
-      this.validations.title = evt
-      this.onValidationChange()
-    },
-    onStreamLinkValidationChange(evt) {
-      this.validations.streamLink = evt
-      this.onValidationChange()
-    },
-    onValidationChange: (function() {
-      let lastState = false
-      return function() {
-        let valid = Object.values(this.validations)
-          .reduce((agr, a) => agr && a, true)
-        if (lastState == valid) return
-
-        lastState = valid
-        this.$emit("validation-change", valid)
-      }
-    })()
   }
 }
 </script>

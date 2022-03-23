@@ -188,12 +188,19 @@ import {
   TextAreaInputComponent
 } from "@/modules/forms"
 
+import {
+  FormValidationMixin
+} from "@/modules/forms/mixins/form-validation.mixin"
+
 import Track from "./track.js"
 import CreditEntry from "./credits.js"
 
 import MusicGenres from "@/assets/music-genres.json"
 
 export default {
+  mixins: [
+    FormValidationMixin.forValidators(['title', 'stream-Link'])
+  ],
   components: {
     'text-input': TextInputComponent,
     'audio-file-input': AudioFileInputComponent,

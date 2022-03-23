@@ -1,6 +1,7 @@
 <template>
   <section>
     <h1>Catalog</h1>
+    <audio-player />
     <section class="ep-collection columns is-multiline is-mobile">
       <div
         v-for="ep of allEps"
@@ -29,6 +30,7 @@
 </template>
 
 <script>
+import AudioPlayer from "@/components/player/AudioPlayer.vue"
 
 import {
   ArchiveCatalog,
@@ -49,6 +51,9 @@ catalog.addEp(new ArchiveEp("15","Server name","Title of EP", "https://picsum.ph
 
 
 export default {
+  components: {
+    'audio-player': AudioPlayer
+  },
   data() {
     return {
       catalog: catalog

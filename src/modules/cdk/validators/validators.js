@@ -11,11 +11,12 @@ export class Validators {
   }
 
   /**
-  * Check if a value is provided. Only undefined and null are considered not provided
+  * Check if a value is provided. 
+  * Only undefined, null and empty strings are considered not provided
   */
   static get required () {
     return (value) => {
-      return value !== undefined && value !== null
+      return (value !== undefined) && (value !== null) && (value !== "")
     }
   }
 
@@ -79,6 +80,7 @@ export class Validators {
   static maxCharCount(max) {
     return (value) => {
       if (max === 0) return false
+      if (!value) return true
       if (typeof value !== "string") return false
       return value.length <= max
     }

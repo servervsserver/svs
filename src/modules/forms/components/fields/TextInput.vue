@@ -83,7 +83,6 @@ export default {
   mounted() {
     this.updateValidation(this.value)
   },
-
   methods: {
     onChange(event) {
       this.updateValidation(event.target.value)

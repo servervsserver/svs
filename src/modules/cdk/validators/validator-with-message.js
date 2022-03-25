@@ -60,7 +60,6 @@ export class ValidatorWithMessage {
     return new MustBeTrueValidatorWithMessage(invalidMessage)
   }
 
-
   static min(min, invalidMessage) {
     return new MinValidatorWithMessage(min, invalidMessage)
   }

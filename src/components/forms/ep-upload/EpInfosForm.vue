@@ -79,7 +79,7 @@ export default {
   data() {
     return {
       titleValidators: [
-        ValidatorWithMessage.minCharCount(1),
+        ValidatorWithMessage.required(),
         ValidatorWithMessage.maxCharCount(100)
       ],
       streamLinkValidators: [
@@ -88,7 +88,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this)
+    this.onValidationChange()
   },
   methods: {
   }

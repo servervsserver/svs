@@ -9,6 +9,18 @@
       @change="onChange"
     >
     <label :for="id" />
+    <p
+      v-if="validatorEvaluation"
+      class="help is-danger"
+    >
+      <span
+        v-for="(message,index) in validatorEvaluation.invalidMessages"
+        :key="index"
+        style="display: block;"
+      >
+        {{ message }}
+      </span>
+    </p>
   </div>
 </template>
 

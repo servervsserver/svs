@@ -12,13 +12,14 @@
 
       <div class="has-text-centered">
         <!-- <h2>Wanna join the fourth edition?</h2> -->
-        <router-link
+        <!-- <router-link
           class="button svs-evolving-gradient is-large"
           style="text-decoration: none"
           to="/theme"
         >
           Submit Theme Suggestions!
-        </router-link>
+        </router-link> -->
+        <p class="main-message">The theme of SvS IV <br><strong class="theme">SECRETS</strong></p>
       </div>
     </section>
     <section class="sample-pack-section shadow-depth-3">
@@ -139,6 +140,16 @@ export default {
     text-align: center;
   }
 
+  
+  .main-message {
+    font-size: 2em;
+    .theme {
+      letter-spacing: 5px;
+      font-size: 1.5em;
+      text-shadow: 3px 4px 0px rgb(255, 186, 94, 0.2);
+    }
+  }
+
   .main-title {
     text-transform: uppercase;
     font-family: "Montserrat", "Jost", sans-serif;
@@ -162,9 +173,6 @@ export default {
     position: relative;
     box-shadow: 0 24px 38px 3px rgb(0 0 0 / 14%),
       0 9px 46px 8px rgb(0 0 0 / 12%), 0 11px 15px -7px rgb(0 0 0 / 40%);
-  }
-
-  .cover-art-container {
   }
 
   .sfs-logos {

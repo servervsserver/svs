@@ -1,7 +1,7 @@
 <template>
   <not-open-yet
     :message="'EP Submissions opens in'"
-    :time="$store.state.timeTillEpSubmission"
+    :time="$store.getters.timeTillEpSubmission"
   >
     <div class="container ep-upload">
       <h1>

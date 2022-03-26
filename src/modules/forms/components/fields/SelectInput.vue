@@ -16,7 +16,10 @@
       </tooltip>
     </label>
     <div class="control has-icons-left">
-      <div class="select">
+      <div 
+        class="select" 
+        :class="{ 'is-danger': !isValidated }"
+      >
         <select
           :value="value"
           class="transparent-scrollbar"

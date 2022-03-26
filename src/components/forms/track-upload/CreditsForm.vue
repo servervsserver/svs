@@ -1,5 +1,5 @@
 <template>
-    <div class="credit-line">
+    <div class="credit-line" :class="{ 'is-not-validated': !isFormValidated }">
         <div
           class="columns"
         >
@@ -82,8 +82,6 @@ import {
 
 import CreditEntry from "./credits.js"
 
-console.log(FormValidationMixin.forValidators(['artist name', 'role']))
-
 export default {
   components: {
     'text-input': TextInputComponent,
@@ -120,6 +118,45 @@ export default {
 
 <style scoped lang='scss'>
 .credit-line {
+
   width: 100%;
+  position: relative;
+  
+  &.is-not-validated {
+    position: relative;
+
+    @media(min-width: 769px) {
+      &::after {
+        position: absolute;
+        height: calc(100% - 4em);
+        width: 1px;
+        border-radius: 1px;
+        top: 2em;
+        left: 0;
+        background-color: #f14668;
+        box-shadow: 2px 0 1px 0px #f1466880;
+        content: "";
+      }  
+    }
+
+    // NO STYLE FOR MOBILE
+    // TODO: Add style for mobile
+
+    // @media(min-width: 769px) {
+    //   &::after {
+    //     position: absolute;
+    //     height: calc(100% - 4em);
+    //     width: 1px;
+    //     border-radius: 1px;
+    //     top: 2em;
+    //     left: 0;
+    //     background-color: #f14668;
+    //     box-shadow: 2px 0 1px 0px #f1466880;
+    //     content: "";
+    //   }  
+    // }
+  }
+
 }
+
 </style>

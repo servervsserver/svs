@@ -22,6 +22,7 @@
       <textarea
         :value="value"
         class="textarea transparent-scrollbar"
+        :class="{ 'is-danger': !isValidated }"
         :disabled="disabled"
         @input="onChange($event)"
       />

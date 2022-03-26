@@ -7,7 +7,7 @@ export class Validators {
   * Always true (mainly for test)
   */
   static get validated () {
-    return (value) => { return true }
+    return (_) => { return true }
   }
 
   /**

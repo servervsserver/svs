@@ -1,5 +1,11 @@
 <template>
   <section class="track-upload-form">
+    <p v-if="!isFormValidated" class="help is-danger">
+      This track form has invalid fields.
+    </p>
+    <p v-if="isFormValidated" class="help is-danger">
+      &nbsp;
+    </p>
     <div class="columns is-multiline">
       <div class="column is-7">
         <!-- Track name -->
@@ -109,16 +115,16 @@
         <label>Credits</label>
         <credits-form
           v-for="(ce, ceidx) in track.credits"
-          :key="ceidx"
+          :key="ce.vueId"
           :credits="ce"
-          @validation-change="onCreditsValidationChange($event, ceidx)"
+          @validation-change="onCreditsValidationChange($event, ce.vueId)"
         >
           <template v-slot:left>
             <br>
             <span class="credit-index">{{ ceidx + 1 }}</span>
             <button
               class="button svs-button-transparent"
-              @click="removeCreditEntry(ce, ceidx)"
+              @click="removeCreditEntry(ce, ce.vueId)"
             >
               <span class="icon is-small">
                 <i class="fas fa-user-minus" />
@@ -232,5 +238,11 @@ export default {
   justify-content: center;
   vertical-align: baseline;
   line-height: 2.2em;
+}
+
+.track-upload-form {
+  width: 100%;
+  position: relative;
+
 }
 </style>

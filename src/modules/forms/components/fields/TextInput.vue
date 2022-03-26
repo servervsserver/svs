@@ -22,6 +22,7 @@
       <input
         :value="value"
         class="input"
+        :class="{ 'is-danger': !isValidated }"
         type="text"
         :placeholder="placeholder"
         @input="onChange($event)"

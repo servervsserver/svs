@@ -1,6 +1,12 @@
 <template>
   <section>
     <h2>EP Information</h2>
+    <p v-if="!isFormValidated" class="help is-danger">
+      This ep form has invalid fields.
+    </p>
+    <p v-if="isFormValidated" class="help is-danger">
+      &nbsp;
+    </p>
     <ep-infos-form
       :ep-infos="ep.infos"
       @validation-change="onEpInfosValidationChange"
@@ -8,13 +14,13 @@
     <h2>Tracks</h2>
     <div
       v-for="(track, index) in ep.tracks"
-      :key="index"
+      :key="track.vueId"
       class="track-section shadow-depth-2"
-      @validation-change="onTracksValidationChange($event, ceidx)"
+      @validation-change="_onTracksValidationChange($event, track.vueId)"
     >
       <button
         class="button svs-button-transparent delete-track-button"
-        @click="dropTrack(track, index)"
+        @click="dropTrack(track, track.vueId)"
       >
         <span class="icon">
           <i class="fas fa-trash-alt" />
@@ -80,6 +86,10 @@ export default {
     dropTrack(track, index) {
       this.ep.removeTrack(track)
       this.onTracksValidationDeleted(index)
+    },
+    _onTracksValidationChange(evt, index) {
+      console.log(evt, index)
+      this.onTracksValidationChange(evt, index)
     }
     // onEpInfosValidationChange(evt) {
     //   this.validations.epInfos = evt

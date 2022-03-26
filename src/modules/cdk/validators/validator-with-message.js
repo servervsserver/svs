@@ -2,12 +2,38 @@ import { Validators } from "./validators.js"
 
 export class ValidatorWithMessageEvaluation {
 
+  /**
+   * 
+   * @param {Array<ValidatorWithMessage>} validatorsWithMessage 
+   * @param {*} value 
+   */
   constructor(validatorsWithMessage, value) {
+
+    /** 
+     * @type {Array<ValidatorWithMessage>} the validators to evaluate
+     * */
     this.validatorsWithMessage = validatorsWithMessage || []
-    this.invalidMessages = []
+
+    /**
+     * @type {Array<boolean>} The state of validations of the validators in the same order
+     */
     this.validations = []
+
+    /**
+     * @type {Array<string>} the messages of validators that failed
+     */
+    this.invalidMessages = []
+
+    /**
+     * @type {boolean} True if all the validator passed or if there are no valdiators at all.
+     */
     this.validated = false
+
+    /**
+     * @type {any} The value to test against the validators
+     */
     this.value = value
+    
     this._evaluate()
   }
 

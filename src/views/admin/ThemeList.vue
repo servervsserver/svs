@@ -1,12 +1,25 @@
 <template>
   <div class="container">
-    <article class="panel is-primary">
+    <h1>Themes</h1>
+    <div class="table-container">
+      <table class="table is-striped is-hoverable">
+        <tbody>
+          <tr
+            v-for="(theme, ind) in themes"
+            :key="ind"
+          >
+            <th>{{ theme }}</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- <article class="panel is-primary">
       <p class="panel-heading">Themes</p>
 
       <a v-for="(theme, ind) in themes" :key="ind" class="panel-block">
         {{ theme }}
       </a>
-    </article>
+    </article> -->
   </div>
 </template>
 
@@ -20,7 +33,12 @@ export default {
   computed: {},
   mounted() {
     this.$svsBackend.getThemeSuggestions().then((res) => {
-      this.themes = res.val();
+      let ofi = res.val()
+      let fio = []
+      Object.keys(ofi).forEach(element => {
+        fio.push(ofi[element])
+      });
+      this.themes = fio.sort();
     });
   },
   methods: {},

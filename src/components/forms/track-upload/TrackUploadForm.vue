@@ -1,6 +1,11 @@
 <template>
   <section class="track-upload-form">
-    {{ track.name }}
+    <p v-if="!isFormValidated" class="help is-danger">
+      This track form has invalid fields.
+    </p>
+    <p v-if="isFormValidated" class="help is-danger">
+      &nbsp;
+    </p>
     <div class="columns is-multiline">
       <div class="column is-7">
         <!-- Track name -->
@@ -9,6 +14,8 @@
           :label="'Track title'"
           :placeholder="'My awesome track name'"
           :icon="'fas fa-play'"
+          :validators="titleValidators"
+          @validation-change="onTitleValidationChange"
         />
         <!-- Lyrics -->
         <textarea-input
@@ -27,12 +34,22 @@
         <div class="columns is-vcentered">
           <!-- Music genre -->
           <div class="column is-4 is-mobile has-text-right-on-desktop has-text-centered-on-mobile">
-            <label>Music genre</label>
+            <label>Music genre(s)</label>
           </div>
           <div class="column is-8 is-mobile has-text-left-on-desktop has-text-centered-on-mobile">
             <select-input
               v-model="track.genre"
+              :label="'Main genre'"
               :icon="'fas fa-music'"
+              :options="musicGenres"              
+              :validators="genreValidators"
+              @validation-change="onMainGenreValidationChange"
+            />
+            <select-input
+              v-model="track.secondGenre"
+              :label="'Second genre'"
+              :icon="'fas fa-music'"
+              :unselectedText="'-'"
               :options="musicGenres"
             />
           </div>
@@ -96,73 +113,25 @@
       <div class="column is-12">
         <!-- Credits -->
         <label>Credits</label>
-        <div
+        <credits-form
           v-for="(ce, ceidx) in track.credits"
           :key="ce.vueId"
-          class="columns is-vcentered"
+          :credits="ce"
+          @validation-change="onCreditsValidationChange($event, ce.vueId)"
         >
-          <div class="column is-narrow has-text-centered">
+          <template v-slot:left>
+            <br>
             <span class="credit-index">{{ ceidx + 1 }}</span>
-            <!-- &nbsp; -->
             <button
               class="button svs-button-transparent"
-              @click="track.removeCreditEntry(ce)"
+              @click="removeCreditEntry(ce, ce.vueId)"
             >
               <span class="icon is-small">
                 <i class="fas fa-user-minus" />
               </span>
             </button>
-          </div>
-          <!-- Artist name -->
-          <div class="column is-3">
-            <text-input
-              v-model="ce.artistName"
-              :label="'Artist name'"
-              :placeholder="'The artist'"
-              :icon="'fas fa-user'"
-            />
-          </div>
-          <!-- Discord tag -->
-          <div class="column is-3">
-            <text-input
-              v-model="ce.discordTag"
-              :label="'Discord tag'"
-              :placeholder="'TheArtist#1234'"
-              :icon="'fab fa-discord'"
-            />
-          </div>
-          <!-- Role(s) -->
-          <div class="column is-3">
-            <text-input
-              v-model="ce.description"
-              :label="'Role(s)'"
-              :placeholder="'Mixing, mastering, bass'"
-              :icon="'fas fa-user-tag'"
-            />
-          </div>
-          <!-- Anonymous -->
-          <div class="column">
-            <label>
-              Stay anonymous
-              <tooltip
-                :vertical="'top'"
-                :horizontal="'left'"
-                :mode="'hover'"
-              >
-                <!-- <template v-slot:title>Yep'</template> -->
-                <template v-slot:message>
-                  If this person doesn't want to appear in the credits, toggle this on.
-                </template>
-                <span class="icon is-small is-left">
-                  <i class="fas fa-info-circle" />
-                </span>
-              </tooltip>
-            </label>
-            <switch-input
-              v-model="ce.anonymous"
-            />
-          </div>
-        </div>
+          </template>
+        </credits-form>
         <div>
           <button
             class="button"
@@ -188,19 +157,32 @@ import {
   TextAreaInputComponent
 } from "@/modules/forms"
 
+import CreditsFormComponent from "./CreditsForm.vue"
+
+import {
+  FormValidationMixin
+} from "@/modules/forms/mixins/form-validation.mixin"
+
+import {
+  ValidatorWithMessage
+} from "@/modules/cdk/validators"
+
 import Track from "./track.js"
-import CreditEntry from "./credits.js"
 
 import MusicGenres from "@/assets/music-genres.json"
 
 export default {
   components: {
     'text-input': TextInputComponent,
-    'audio-file-input': AudioFileInputComponent,
     'switch-input': SwitchInputComponent,
+    'audio-file-input': AudioFileInputComponent,
     'select-input': SelectInputComponent,
-    'textarea-input': TextAreaInputComponent
+    'textarea-input': TextAreaInputComponent,
+    'credits-form': CreditsFormComponent
   },
+  mixins: [
+    FormValidationMixin.forValidators(['title', 'main genre'], ['Credits'])
+  ],
   props: {
     track: {
       type: Track,
@@ -209,15 +191,33 @@ export default {
   },
   data: function() {
     return {
+      titleValidators: [
+        ValidatorWithMessage.required(),
+        ValidatorWithMessage.maxCharCount(100)
+      ],
+      genreValidators: [
+        ValidatorWithMessage.required()
+      ]
     }
   },
   computed: {
     musicGenres () {
-      return MusicGenres.sort()
+      let sorted = MusicGenres.sort()
+      return sorted
     }
   },
   mounted() {
-    // console.log(this)
+    this.onValidationChange()
+  },
+  methods: {
+    removeCreditEntry(creditEntry, index) {
+      this.track.removeCreditEntry(creditEntry)
+      this.onCreditsValidationDeleted(index)
+    }
+    // onCreditValidationChange(event, index) {
+    //   console.log("HEYA")
+    //   console.log(event, index)
+    // }
   }
 }
 </script>
@@ -238,5 +238,11 @@ export default {
   justify-content: center;
   vertical-align: baseline;
   line-height: 2.2em;
+}
+
+.track-upload-form {
+  width: 100%;
+  position: relative;
+
 }
 </style>

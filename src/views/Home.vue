@@ -12,18 +12,22 @@
 
       <div class="has-text-centered">
         <!-- <h2>Wanna join the fourth edition?</h2> -->
-        <router-link
+        <!-- <router-link
           class="button svs-evolving-gradient is-large"
           style="text-decoration: none"
           to="/theme"
         >
           Submit Theme Suggestions!
-        </router-link>
+        </router-link> -->
+        <p class="main-message">The theme of SvS IV <br><strong class="theme">SECRETS</strong></p>
       </div>
     </section>
     <section class="sample-pack-section shadow-depth-3">
       <div class="sample-pack-section-inner">
-        <div class="columns">
+        <div
+          class="columns"
+          style="margin: 0"
+        >
           <div class="column is-5">
             <div
               class="
@@ -31,9 +35,12 @@
                 has-text-right-on-desktop has-text-centered-on-mobile
               "
             >
-              <flip-album :size="300" :image="'/sample-pack/cover_art.jpg'">
+              <flip-album
+                :size="300"
+                :image="'/sample-pack/cover_art.jpg'"
+              >
                 <p>
-                  1 GB worth of samples of all types <br />
+                  1 GB worth of samples of all types <br>
                   provided by the community!
                 </p>
                 <a
@@ -41,8 +48,7 @@
                   style="text-decoration: none"
                   href="https://servervsserver.gumroad.com/l/sfs1"
                 >
-                  Get the pack! </a
-                >&nbsp;
+                  Get the pack! </a>&nbsp;
                 <a
                   class="button svs-evolving-gradient is-small"
                   style="text-decoration: none"
@@ -53,30 +59,30 @@
               </flip-album>
             </div>
           </div>
-          <div class="column is-1"></div>
+          <div class="column is-1" />
           <div class="column is-4 has-text-centered">
             <h2>Samples for Solidarity</h2>
             <div class="sfs-logos">
-              <hr />
+              <hr>
               <img
                 class="sfs-logo sfs-svs"
                 src="/icons/svs/svs_square_light_icon.svg"
-              />
+              >
               <img
                 class="sfs-logo sfs-churchgrimart"
                 src="/icons/churchgrimart/small_white.png"
-              />
+              >
               <img
                 class="sfs-logo sfs-projecthope"
                 src="/icons/projecthope/small_blue.png"
-              />
+              >
             </div>
 
             <!--<script src="https://gumroad.com/js/gumroad.js"></script>
             <a class="gumroad-button" href="https://app.gumroad.com/l/demo">Buy on</a>-->
             <p>
-              Our community and ChurchGrim Art have teamed up to <br />build a
-              sample pack to raise money for Project Hope.<br />
+              Our community and ChurchGrim Art have teamed up to <br>build a
+              sample pack to raise money for Project Hope.<br>
               You can also directly donate to Project Hope to support civilians
               in Ukraine.
             </p>
@@ -85,8 +91,7 @@
               style="text-decoration: none"
               href="https://servervsserver.gumroad.com/l/sfs1"
             >
-              Get the pack! </a
-            >&nbsp;
+              Get the pack! </a>&nbsp;
             <a
               class="button svs-evolving-gradient"
               style="text-decoration: none"
@@ -135,6 +140,16 @@ export default {
     text-align: center;
   }
 
+  
+  .main-message {
+    font-size: 2em;
+    .theme {
+      letter-spacing: 5px;
+      font-size: 1.5em;
+      text-shadow: 3px 4px 0px rgb(255, 186, 94, 0.2);
+    }
+  }
+
   .main-title {
     text-transform: uppercase;
     font-family: "Montserrat", "Jost", sans-serif;
@@ -158,9 +173,6 @@ export default {
     position: relative;
     box-shadow: 0 24px 38px 3px rgb(0 0 0 / 14%),
       0 9px 46px 8px rgb(0 0 0 / 12%), 0 11px 15px -7px rgb(0 0 0 / 40%);
-  }
-
-  .cover-art-container {
   }
 
   .sfs-logos {

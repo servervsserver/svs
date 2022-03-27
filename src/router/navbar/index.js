@@ -7,12 +7,14 @@ export const navbarContent = [
     children: [
       { name: 'SvS IV Overview', display: 'Overview' },
       { name: 'SvS IV Rules', display: 'Rules' },
-      { name: 'SvS IV Server Application', display: 'Server Application' },
-      { name: 'SvS IV EP Submission', display: 'EP Submission'}
+      // { name: 'SvS IV Server Application', display: 'Server Application' },
+      // { name: 'SvS IV Theme Submission', display: 'Propose a theme!' },
+      { name: 'SvS IV Participants', display: 'SvS IV Servers' },
+      { name: 'SvS IV EP Submission', display: 'EP Submission' }
     ]
   },
   {
-    name:'Archives'
+    name: 'Archives'
   },
   {
     name: 'Admin',

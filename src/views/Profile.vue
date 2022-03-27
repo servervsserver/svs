@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    <div class="spacer"></div>
+    <div class="spacer" />
     <profile :user="user" />
   </section>
 </template>

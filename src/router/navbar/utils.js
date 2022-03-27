@@ -15,6 +15,12 @@ function populateNavbarItem(routes, item, parent) {
   item._vueid = _vuid += 1
   const name = item.name
   const route = findRouteMatchingName(name, routes)
+  if (!route) {
+    if (process.env.NODE_ENV === "development") {
+      console.warn("The route", name, "doesn't exist")
+    }
+    return
+  }
 
   item.to = route.path
   if (parent) {
@@ -31,6 +37,12 @@ function populateNavbarItem(routes, item, parent) {
   if (!item.children) return
   for (let child of item.children) {
     populateNavbarItem(routes, child, item)
+  }
+
+  while(true) {
+    let idx = item.children.findIndex((elem) => !elem.to)
+    if (idx < 0) break
+    item.children.splice(idx, 1)
   }
 }
 

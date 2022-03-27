@@ -16,12 +16,22 @@
       </tooltip>
     </label>
     <div class="control has-icons-left">
-      <div class="select">
+      <div 
+        class="select" 
+        :class="{ 'is-danger': !isValidated }"
+      >
         <select
           :value="value"
           class="transparent-scrollbar"
-          @change="$emit('change', $event.target.value)"
+          @change="onChange"
         >
+          <option
+            v-if="unselectedText"
+            value=""
+            style="display: block;"
+          >
+            {{ unselectedText }}
+          </option>
           <option
             v-for="option in options"
             :key="option"
@@ -37,12 +47,28 @@
         </span>
       </div>
     </div>
+    <p
+      v-if="validatorEvaluation"
+      class="help is-danger"
+    >
+      <span
+        v-for="(message,index) in validatorEvaluation.invalidMessages"
+        :key="index"
+        style="display: block;"
+      >
+        {{ message }}
+      </span>
+    </p>
   </div>
 </template>
 
 <script>
+import {
+  InputValidationMixin
+} from "../../mixins/input-validation.mixin"
 
 export default {
+  mixins: [InputValidationMixin],
   model: {
     prop: 'value',
     event: 'change'
@@ -60,6 +86,10 @@ export default {
       type: String,
       default: null
     },
+    unselectedText: {
+      type: [String, null],
+      default: null
+    },
     options: {
       type: Array,
       default: () => []
@@ -67,6 +97,15 @@ export default {
   },
   data: function() {
     return {}
+  },
+  mounted() {
+    this.updateValidation(this.value)
+  },
+  methods: {
+    onChange(event) {
+      this.updateValidation(event.target.value)
+      this.$emit('change', event.target.value)
+    }
   }
 }
 </script>

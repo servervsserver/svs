@@ -5,8 +5,12 @@
   >
     <div class="flip-album">
       <div class="flip-album-recto">
-        <img class="cover-art"
-          :src="image" width="250" height="250" />
+        <img
+          class="cover-art"
+          :src="image"
+          width="250"
+          height="250"
+        >
       </div>
       <div class="flip-album-verso">
         <slot />

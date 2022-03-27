@@ -42,7 +42,7 @@ export default {
     },
     mode: {
       type: String,
-      default: 'always',
+      default: 'hover',
       validator: Validate(
         Validators.oneOf(['hover', 'toggle', 'click', 'always'])
       )

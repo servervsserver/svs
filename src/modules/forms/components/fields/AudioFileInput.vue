@@ -60,7 +60,9 @@
 </template>
 
 <script>
-
+import {
+  InputValidationMixin
+} from "../../mixins/input-validation.mixin"
 import { getAudioFileDuration } from "@/models/file-manipulation/audio-file"
 
 const MetaDataState = Object.freeze({
@@ -71,11 +73,11 @@ const MetaDataState = Object.freeze({
 
 export default {
   model: {
-    prop: 'file',
+    prop: 'value',
     event: 'change'
   },
   props: {
-    file: File,
+    value: File,
     label: {
       type: String,
       default: null
@@ -91,10 +93,13 @@ export default {
       duration: null
     }
   },
+  emits: [
+    'validation-change' // Emitted when the validation changes state
+  ],
   computed: {
     fileName() {
-      if (!this.file) return ""
-      return this.file.name
+      if (!this.value) return ""
+      return this.value.name
     },
     isLoadingMetaData() {
       return this.metaDataState == MetaDataState.LOADING

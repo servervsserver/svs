@@ -50,16 +50,18 @@ export default {
       serverApplications: [],
     };
   },
-  computed: {
+  methods: {
     sortBy(arr, key) {
+      arr = Object.values(arr);
       if (arr.length > 0) {
-        arr = arr.serverApplications;
-        console.log(arr);
-        return arr.sort((a, b) => a[key].localeCompare(b[key]));
+        let arr2 = arr.sort((a, b) => a[key].localeCompare(b[key]));
+        return arr2;
+      } else {
+        return arr;
       }
-      return arr;
     },
   },
+  computed: {},
   mounted() {
     this.$svsBackend.getAppServers(1).then((res) => {
       this.serverApplications = res;

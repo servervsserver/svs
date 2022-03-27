@@ -16,7 +16,7 @@
       </tooltip>
     </label>
     <div class="has-text-centered">
-      <div class="file has-name is-boxed">
+      <div class="file has-name is-boxed" :class="{ 'is-danger': !isValidated }">
         <label class="file-label">
           <input
             accept="image/*"
@@ -42,13 +42,18 @@
 </template>
 
 <script>
+import {
+  InputValidationMixin
+} from "../../mixins/input-validation.mixin"
+
 export default {
+  mixins: [InputValidationMixin],
   model: {
-    prop: 'file',
+    prop: 'value',
     event: 'change'
   },
   props: {
-    file: File,
+    value: File,
     label: {
       type: String,
       default: null
@@ -56,25 +61,19 @@ export default {
   },
   computed: {
     fileName() {
-      if (!this.file) return ""
-      return this.file.name
+      if (!this.value) return ""
+      return this.value.name
     }
+  },
+  mounted() {
+    this.updateValidation(this.value)
   },
   methods: {
     onFileChange(evt) {
       let input = evt.target
       const [file] = input.files
+      this.updateValidation(file)
       this.$emit('change', file)
-      // this.metaDataState = MetaDataState.LOADING
-      // getAudioFileDuration(file)
-      //   .then(res => {
-      //     this.duration = res
-      //     this.metaDataState = MetaDataState.LOADED
-      //   })
-      //   .catch(err => {
-      //     this.metaDataState = MetaDataState.NONE
-      //     this.duration = null
-      //   })
     }
   }
 }

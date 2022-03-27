@@ -42,9 +42,16 @@ export default class Track {
     /**
     * {string} the genre of the track
     */
-    this.genre = ""
+    this.genre = null
 
+    /**
+    * {string} An other genre that could fit the track
+    */
+    this.secondGenre = null
 
+    /**
+    * {Array<CreditEntry>} Collection of credits
+    */
     this._credits = []
   }
 

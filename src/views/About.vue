@@ -1,5 +1,8 @@
 <template>
-  <div id="about" class="about container">
+  <div
+    id="about"
+    class="about container"
+  >
     <h1>About Us</h1>
     <h2>What is Server vs Server?</h2>
     <p>

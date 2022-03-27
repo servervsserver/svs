@@ -1,7 +1,7 @@
 <template>
   <not-open-yet
     :message="'EP Submissions opens in'"
-    :time="$store.state.svsMainEventInformations.competitionStart.timeRemaining"
+    :time="$store.getters.timeTillEpSubmission"
   >
     <div class="container ep-upload">
       <h1>
@@ -16,12 +16,34 @@
           </p>
         </div>
       </div>
-      <ep-upload-form :ep="ep" />
+      <ep-upload-form
+        :ep="ep"
+        @validation-change="onEpValidationChange"
+        />
+      <button class="button" :disabled="!canSubmit" @click="submit">
+        <span class="icon">
+          <i class="fas fa-paper-plane"></i>
+        </span>
+        <span>Submit</span>
+      </button>
     </div>
+    <modal ref="submitmodal">
+      <template v-slot:header>
+        <strong>EP Submission can't finish because</strong>
+      </template>
+      <template v-slot:default>
+        <ul>
+        <li v-for="(m,i) of modalSubmissionErrorMessages" :key="i">
+          {{m}}
+        </li>
+        </ul>
+      </template>
+    </modal>
   </not-open-yet>
 </template>
 
 <script>
+import ModalComponent from "@/components/Modal.vue"
 
 import {
   EpUploadFormComponent,
@@ -30,201 +52,44 @@ import {
 
 export default {
   components: {
+    'modal': ModalComponent,
     'ep-upload-form': EpUploadFormComponent
   },
   data() {
     return {
-      ep: new Ep()
+      ep: new Ep(),
+      modalSubmissionErrorMessages: [],
+      canSubmit: false
+    }
+  },
+  computed: {
+    canShowSubmissionErrorModal() {
+      return !!this.modalSubmissionErrorMessages.length
+    }
+  },
+  methods: {
+    onEpValidationChange(evt) {
+      this.canSubmit = evt
+    },
+    submit() {
+      let additionalMessages = []
+      if (this.ep.tracks.length < 3) {
+        additionalMessages.push("En EP must have at least 3 tracks")
+      }
+      for (let trackIndex in this.ep.tracks) {
+        console.log(trackIndex, this.ep.tracks)
+        let track = this.ep.tracks[trackIndex]
+        if (track.credits.length < 3) {
+          additionalMessages.push(`The track #${+trackIndex+1} must have at least 3 credited people`)
+        }
+      }
+      this.modalSubmissionErrorMessages = additionalMessages
+      if (this.modalSubmissionErrorMessages.length) {
+        this.$refs.submitmodal.open()
+      }
     }
   }
 }
-// import { v4 as generateUuid } from "uuid"
-// import MusicGenres from "../../assets/music-genres.json"
-
-// export class CreditEntry {
-//
-//   constructor() {
-//     /**
-//     * {string} uuid generated on instanciation to help vue identify objects
-//     */
-//     this._vueId = generateUuid()
-//
-//     /**
-//     * {string} Artist name if applicable
-//     */
-//     this.artistName = ""
-//
-//     /**
-//     * {string} Discord tag of the person
-//     */
-//     this.discordTag = ""
-//
-//     /**
-//     * {string} Short description of what they did
-//     */
-//     this.description = ""
-//
-//     /**
-//     * {boolean} If true, the person will be listed as anonymous publicly
-//     */
-//     this.anonymous = false
-//   }
-//
-//   get vueId() {
-//     return this._vueId
-//   }
-// }
-//
-// export class Track {
-//
-//   constructor() {
-//     /**
-//     * {string} uuid generated on instanciation to help vue identify objects
-//     */
-//     this._vueId = generateUuid()
-//
-//     /**
-//     * {string} name of the track
-//     */
-//     this.name = ""
-//
-//     /**
-//     * {File} track file
-//     */
-//     this.audioFile = null
-//
-//     /**
-//     * {string} url to the track file
-//     */
-//     this.audioUrl = null
-//
-//     /**
-//     * {string} lyrics of the track
-//     */
-//     this.lyrics = ""
-//
-//     /**
-//     * {string} whether it has lyrics or not (do not send the lyrics if its false)
-//     */
-//     this.hasLyrics = false
-//
-//     /**
-//     * {string} the music contains profanity and must be labeled Parental Advisory
-//     */
-//     this.explicit = false
-//
-//     /**
-//     * {string} the genre of the track
-//     */
-//     this.genre = ""
-//
-//
-//     this._credits = []
-//   }
-//
-//   get vueId() {
-//     return this._vueId
-//   }
-//
-//   /**
-//   * Gets the track filename
-//   */
-//   get audioFilename () {
-//     if (!this.audioFile) return ""
-//     return this.audioFile.name
-//   }
-//
-//   /**
-//   * {Array[CreditEntry]} Credits
-//   */
-//   get credits() {
-//     return this._credits
-//   }
-//
-//   /**
-//   * Creates and add an entry to the credits
-//   * @return The credits entry created
-//   */
-//   addCreditEntry () {
-//     let creditEntry = new CreditEntry()
-//     this._credits.push(creditEntry)
-//     return creditEntry
-//   }
-//
-//   /**
-//   * Removes a credit entry
-//   */
-//   removeCreditEntry (creditEntry) {
-//     let idx = this._credits.indexOf(creditEntry)
-//     if (idx == -1) return null
-//     this._credits.splice(idx, 1)
-//     return creditEntry
-//   }
-//
-// }
-//
-// let testTrack = null
-// let testTracks = []
-
-// testTrack = new Track()
-// testTrack.name = "My insane first track"
-// testTrack.lyrics = "I saw pollen at a grocery store in Ohio yesterday. \n I told her how cool it was to meet her in person,  \n but I didn’t want to be a douche and bother her and ask her for photos or anything.  \n\n She said, \n “Oh, like you’re doing now?” \n \nI was taken aback, and all I could say was  \n“Huh?” but she kept cutting me off and going  \n“huh? huh? huh?”  \nand closing her hand shut in f ront of my face. "
-// testTrack.hasLyrics = true
-// testTrack.addCreditEntry()
-// testTrack.addCreditEntry()
-// testTrack.addCreditEntry()
-// testTracks.push(testTrack)
-
-
-// export default {
-//   data: function () {
-//     return {
-//       epName: "",
-//       coverArtUrl: /*"/placeholders/ep_cover_art_placeholder_icon.jpg"*/"",
-//       coverArtFile: null,
-//       epStreamingLink: "",
-//       tracks: testTracks
-//     }
-//   },
-//   computed: {
-//     coverArtFilename () {
-//       if (!this.coverArtFile) return "..."
-//       return this.coverArtFile.name
-//     },
-//     musicGenres () {
-//       return MusicGenres.sort()
-//     }
-//   },
-//   methods: {
-//     onCoverArtChange (evt) {
-//       let input = evt.target
-//       const [file] = input.files
-//       this.coverArtFile = file
-//       this.coverArtUrl = URL.createObjectURL(file)
-//     },
-//     onTrackFileChange (evt, track) {
-//       let input = evt.target
-//       const [file] = input.files
-//       track.audioFile = file
-//       track.audioUrl = URL.createObjectURL(file)
-//     },
-//     addTrack() {
-//       let track = new Track()
-//       // Prefil with 3 credits entry
-//       track.addCreditEntry()
-//       track.addCreditEntry()
-//       track.addCreditEntry()
-//       this.tracks.push(track)
-//       return track
-//     },
-//     dropTrack(track) {
-//       let index = this.tracks.indexOf(track)
-//       if (index == -1) return null
-//       this.tracks.splice(index, 1)
-//       return track
-//     }
-//   }
-// }
 
 </script>
 

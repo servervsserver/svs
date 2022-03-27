@@ -16,6 +16,7 @@ import ThemeSubmit from "@/views/ThemeSubmit.vue"
 import ServerProfile from '@/views/server/ServerProfile.vue'
 
 import Profile from '@/views/Profile.vue'
+import Servers from '@/components/Servers.vue'
 
 import Charities from '@/components/Charities.vue'
 
@@ -111,10 +112,10 @@ export const routes = [
         component: EpUpload
       },
       {
-        path: 'theme',
-        component: ThemeSubmit,
-        name: "SvS IV Theme Submission"
-      },
+        path: 'servers',
+        name: 'SvS IV Participants',
+        component: Servers
+      }
     ]
   },
   {

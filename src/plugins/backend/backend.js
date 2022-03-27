@@ -366,10 +366,12 @@ export default class BackendPlugin {
   */
   getAppServers(state) {
     const serverStateKey = ["applied_svs_iv", "accepted_svs_iv", "denied_svs_iv"];
-    return this._getList(serverStateKey[state]).then(server_ids => {
-      return this._getServersById(server_ids).then(
-        servers => { return servers; }
-      )
+    return this._getList(serverStateKey[state])
+      .then(server_ids => {
+        return this._getServersById(server_ids)
+          .then(
+            servers => { return servers; }
+          )
     })
 
 
@@ -403,6 +405,10 @@ export default class BackendPlugin {
     return this.firestoreGetDocData(FirestoreModel.Ep, id)
   }
 
+  /**
+   * Get all the eps in a dictionary index by id
+   * @returns {Object}
+   */
   async getAllEps() {
     return this.firestoreGetCollectionData(FirestoreModel.Ep)
   }
@@ -443,6 +449,14 @@ export default class BackendPlugin {
    */
   async getTrackById(id) {
     return this.firestoreGetDocData(FirestoreModel.Track, id)
+  }
+
+  /**
+   * Get all the tracks in a dictionary index by id
+   * @returns {Object}
+   */
+  async getAllTracks() {
+    return this.firestoreGetCollectionData(FirestoreModel.Track)
   }
 
   /**

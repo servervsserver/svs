@@ -14,12 +14,24 @@ export class ArchiveCatalog {
 
   constructor() {
 
+    /**
+     * @type {Map<string, ArchiveEp>} All the eps in the catalog
+     */
     this.eps        = new Map()
+
+    /**
+     * @type {Map<string, ArchiveTrack>}
+     */
     this.tracks     = new Map()
     this.accolades  = new Map()
 
   }
 
+  /**
+   * 
+   * @param {ArchiveTrack} track 
+   * @returns 
+   */
   addTrack(track) {
     if (!track) {
       console.error("You can't add a null track")

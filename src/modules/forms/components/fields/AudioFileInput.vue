@@ -56,6 +56,18 @@
         v-if="isLoadedMetaData"
       >Duration: {{ duration | duration }}</span>
     </div>
+    <p
+      v-if="validatorEvaluation"
+      class="help is-danger"
+    >
+      <span
+        v-for="(message,index) in validatorEvaluation.invalidMessages"
+        :key="index"
+        style="display: block;"
+      >
+        {{ message }}
+      </span>
+    </p>
   </div>
 </template>
 
@@ -65,6 +77,7 @@ import {
 } from "../../mixins/input-validation.mixin"
 import { getAudioFileDuration } from "@/models/file-manipulation/audio-file"
 
+
 const MetaDataState = Object.freeze({
   NONE: 0,
   LOADING: 1,
@@ -72,12 +85,16 @@ const MetaDataState = Object.freeze({
 })
 
 export default {
+  mixins: [InputValidationMixin],
   model: {
     prop: 'value',
     event: 'change'
   },
   props: {
-    value: File,
+    value: {
+      type: File,
+      default: null
+    },
     label: {
       type: String,
       default: null
@@ -92,6 +109,9 @@ export default {
       metaDataState: MetaDataState.NONE,
       duration: null
     }
+  },
+  mounted() {
+    this.updateValidation(this.value)
   },
   emits: [
     'validation-change' // Emitted when the validation changes state
@@ -114,6 +134,7 @@ export default {
       const [file] = input.files
       this.$emit('change', file)
       this.metaDataState = MetaDataState.LOADING
+      this.updateValidation(file)
       getAudioFileDuration(file)
         .then(res => {
           this.duration = res

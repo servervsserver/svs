@@ -16,7 +16,7 @@
       </tooltip>
     </label>
     <div class="has-text-centered">
-      <div class="file has-name is-boxed" :class="{ 'is-danger': !isValidated }">
+      <div class="file has-name is-boxed" >
         <label class="file-label">
           <input
             accept="image/*"
@@ -32,12 +32,24 @@
               Choose a file…
             </span>
           </span>
-          <span class="file-name">
-            {{ fileName }}
+          <span v-if="fileName" class="file-name">
+            <span>{{ fileName }}</span>
           </span>
         </label>
       </div>
     </div>
+    <p
+      v-if="validatorEvaluation"
+      class="help is-danger"
+    >
+      <span
+        v-for="(message,index) in validatorEvaluation.invalidMessages"
+        :key="index"
+        style="display: block;"
+      >
+        {{ message }}
+      </span>
+    </p>
   </div>
 </template>
 
@@ -53,16 +65,18 @@ export default {
     event: 'change'
   },
   props: {
-    value: File,
+    value: {
+      type: File,
+      default: null
+    },
     label: {
       type: String,
       default: null
     }
   },
-  computed: {
-    fileName() {
-      if (!this.value) return ""
-      return this.value.name
+  data() {
+    return {
+      fileName: "..."
     }
   },
   mounted() {
@@ -72,9 +86,16 @@ export default {
     onFileChange(evt) {
       let input = evt.target
       const [file] = input.files
-      this.updateValidation(file)
+      this.fileName = file ? file.name : "..."
       this.$emit('change', file)
+      this.updateValidation(file)
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .file-name > span {
+    font-size: 0.7em;
+  }
+</style>

@@ -29,6 +29,8 @@
         <audio-file-input
           v-model="track.audioFile"
           :label="'Track audio file'"
+          :validators="trackValidators"
+          @validation-change="onTrackFileValidationChange"
         />
         <br>
         <div class="columns is-vcentered">
@@ -181,7 +183,7 @@ export default {
     'credits-form': CreditsFormComponent
   },
   mixins: [
-    FormValidationMixin.forValidators(['title', 'main genre'], ['Credits'])
+    FormValidationMixin.forValidators(['title', 'main genre', 'track file'], ['Credits'])
   ],
   props: {
     track: {
@@ -196,6 +198,9 @@ export default {
         ValidatorWithMessage.maxCharCount(100)
       ],
       genreValidators: [
+        ValidatorWithMessage.required()
+      ],
+      trackValidators: [
         ValidatorWithMessage.required()
       ]
     }

@@ -11,8 +11,10 @@
           @validation-change="onTitleValidationChange"
         />
         <image-file-input
-          v-model="epInfos.covertArtFile"
+          v-model="coverArtFile"
           :label="'Cover art file'"
+          :validators="coverArtValidators"
+          @validation-change="onCoverArtValidationChange"
         >
           <template v-slot:tooltip>
             The cover art should be square, preferably 3000x3000 pixels. <br> The same standard used by distribution platforms.
@@ -38,7 +40,7 @@
           <img
             ref="serverIconEl"
             class="shadow-depth-2"
-            :src="epInfos.coverArtUrl"
+            :src="coverArtUrl"
           >
         </squared-image-box>
       </div>
@@ -64,7 +66,7 @@ import EpInfos from "./ep-infos.js"
 
 export default {
   mixins: [
-    FormValidationMixin.forValidators(['title', 'stream-Link'])
+    FormValidationMixin.forValidators(['title', 'stream-Link', 'cover art'])
   ],
   components: {
     'text-input': TextInputComponent,
@@ -73,7 +75,7 @@ export default {
   props: {
     epInfos: {
       type: EpInfos,
-      default: () => new EpInfos()
+      default: () => { new EpInfos(); console.warn("creation")}
     },
   },
   data() {
@@ -84,7 +86,22 @@ export default {
       ],
       streamLinkValidators: [
         ValidatorWithMessage.url()
-      ]
+      ],
+      coverArtValidators: [
+        ValidatorWithMessage.required()
+      ],
+      coverArtUrl: ""
+    }
+  },
+  computed: {
+    coverArtFile: {
+      get: function() {
+        return this.epInfos.coverArtFile
+      },
+      set: function(newVal) {
+        this.epInfos.coverArtFile = newVal
+        this.coverArtUrl = this.epInfos.coverArtUrl = newVal ? URL.createObjectURL(newVal) : ""
+      }
     }
   },
   mounted() {

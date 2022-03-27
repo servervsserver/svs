@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { FieldPath, Firestore, getFirestore } from "firebase/firestore"
+import { getFirestore, runTransaction, writeBatch } from "firebase/firestore"
 import { getDatabase } from "firebase/database";
 
 import { getExtension } from "./utils"
@@ -85,6 +85,7 @@ export default class BackendPlugin {
 
     this._amazonS3 = new AWS.S3(amazonS3Config)
     this._awsBucket = process.env.VUE_APP_AWS_BUCKET_NAME
+    this._useDevSubspace = process.env.VUE_APP_AWS_USE_DEV_SUBSPACE == "true"
     this._cloudfrontEndpoint = process.env.VUE_APP_CLOUDFRONT_ENDPOINT
 
   }
@@ -153,10 +154,26 @@ export default class BackendPlugin {
     return documentReference.id
   }
 
+  /**
+   * Deletes a documents of a given id
+   * @param {*} pathOrType FirestoreModel or path to the collection
+   * @param {string} docId Id of the document
+   * @returns {Promise<void>} A promise resolved upon deletion
+   */
   async firestoreDeleteDoc(pathOrType, docId) {
     return deleteDoc(this.firestoreDoc(pathOrType, docId))
   }
 
+  /**
+   * 
+   * @param {(transaction: Transaction) => Promise<any>} transactionFnc Transaction function
+   * @returns 
+   */
+  async firestoreTransaction(transactionFnc) {
+    throw Error("Not implemented")
+    // return runTransaction(this._firebaseDb, transactionFnc)
+  }
+  
   /**
    * Uploads a file to aws
    * @param {File} file Path to the 
@@ -183,7 +200,7 @@ export default class BackendPlugin {
     }
 
     const ext = getExtension(file)
-    const filePath = `${folderPath}/${nameWithoutExtension}${ext ? "." + ext : ""}`
+    const filePath = `${this._useDevSubspace ? "dev_test/" : ""}${folderPath}/${nameWithoutExtension}${ext ? "." + ext : ""}`
 
     const params = {
       Bucket: this._awsBucket,
@@ -344,7 +361,6 @@ export default class BackendPlugin {
     ep.coverart_url = await this.awsUploadFile(coverArtFile, 'albums/cover_arts', uid)
 
     const res = await this.firestoreWriteDoc(serverRef, ep);
-    console.log(res);
 
     return res
   }
@@ -365,7 +381,6 @@ export default class BackendPlugin {
   async deleteEp(epId) {
 
     await this.firestoreDeleteDoc(FirestoreModel.Ep, epId)
-    console.log("EP", epId, "deleted")
 
   }
   
@@ -384,7 +399,6 @@ export default class BackendPlugin {
     track.audiofile_url = await this.awsUploadFile(audioFile, 'tracks/audio_files', uid)
 
     const res = await this.firestoreWriteDoc(serverRef, track);
-    console.log(res);
 
     return res
   }
@@ -405,7 +419,6 @@ export default class BackendPlugin {
   async deleteTrack(trackId) {
 
     await this.firestoreDeleteDoc(FirestoreModel.Track, trackId)
-    console.log("Track", trackId, "deleted")
 
   }
 
@@ -422,7 +435,6 @@ export default class BackendPlugin {
     creditsEntry.id = uid
 
     const res = await this.firestoreWriteDoc(serverRef, creditsEntry);
-    console.log(res);
 
     return res
   }
@@ -443,7 +455,6 @@ export default class BackendPlugin {
   async deleteCreditsEntry(creditsEntryId) {
 
     await this.firestoreDeleteDoc(FirestoreModel.TrackCreditsEntry, creditsEntryId)
-    console.log("Credits", creditsEntryId, "deleted")
 
   }
 

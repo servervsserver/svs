@@ -1,7 +1,9 @@
 <template>
   <section>
     <h1>Catalog</h1>
-    <section class="ep-collection columns is-multiline is-mobile">
+    <section v-if="catalogLoading" class="ep-collection-loading">
+    </section>
+    <section v-if="!catalogLoading" class="ep-collection columns is-multiline is-mobile">
       <div
         v-for="ep of allEps"
         :key="ep.id"
@@ -39,13 +41,12 @@ import {
 export default {
   data() {
     return {
-      catalog: null
+      catalog: null,
+      catalogLoading: true
     }
   },
   computed: {
     allEps() {
-      console.log(catalog)
-      console.log("All eps", this.catalog.getAllEps())
       return this.catalog.getAllEps()
     }
   },
@@ -63,6 +64,14 @@ export default {
       catalog.addEp(new ArchiveEp("15","Server name","Title of EP", "https://picsum.photos/200?random=" + (Math.random() * 100000)))
 
       this.catalog = catalog
+      this.catalogLoading = false
+      this.getAllEps()
+  },
+  methods: {
+    async getAllEps() {
+      let fAllEpsMap = await this.$svsBackend.getAllEps()
+      console.log("get all eps", fAllEpsMap)
+    }
   }
 
 }

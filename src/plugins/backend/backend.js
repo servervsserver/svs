@@ -117,6 +117,16 @@ export default class BackendPlugin {
   }
 
   /**
+   * Gets a reference on a collection
+   * @param {*} pathOrType 
+   * @returns 
+   */
+  firestoreCollection(pathOrType) {
+    let path = resolvePathOrType(pathOrType)
+    return collection(this._firestoreDb, path)
+  }
+
+  /**
    * Gets a document. If possible, it will convert it to the true model object
    * @param {*} pathOrType 
    * @param {*} docId 
@@ -132,13 +142,32 @@ export default class BackendPlugin {
     let snap = await this.firestoreGetDocSnapshot(pathOrType, docId)
     if (!snap.exists()) return null
     let data = snap.data()
-    console.log(typeof pathOrType !== 'string' && !!pathOrType.fromFirestore && pathOrType.fromFirestore === 'function')
     if (typeof pathOrType !== 'string' 
       && !!pathOrType.fromFirestore 
       && typeof pathOrType.fromFirestore === 'function') {
       data = pathOrType.fromFirestore(data)
     }
     return data
+  }
+
+  async firestoreGetCollectionSnapshot(pathOrType) {
+    let snap = await getDocs(this.firestoreCollection(pathOrType))
+    return snap
+  }
+
+  async firestoreGetCollectionData(pathOrType) {
+    const snap = await this.firestoreGetCollectionSnapshot(pathOrType)
+    let res = {} 
+    snap.forEach((doc) => {
+      let data = doc.data()
+      if (typeof pathOrType !== 'string' 
+        && !!pathOrType.fromFirestore 
+        && typeof pathOrType.fromFirestore === 'function') {
+        data = pathOrType.fromFirestore(data)
+      }
+      res[doc.id] = data
+    })
+    return res
   }
 
   /**
@@ -372,6 +401,10 @@ export default class BackendPlugin {
    */
   async getEpById(id) {
     return this.firestoreGetDocData(FirestoreModel.Ep, id)
+  }
+
+  async getAllEps() {
+    return this.firestoreGetCollectionData(FirestoreModel.Ep)
   }
   
   /**

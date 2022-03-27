@@ -1,7 +1,12 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore"
+import { FieldPath, Firestore, getFirestore } from "firebase/firestore"
 import { getDatabase } from "firebase/database";
+
+import { getExtension } from "./utils"
+
 import AWS from 'aws-sdk';
+
+import * as FirestoreModel from "./firestore"
 
 import {
   ServerApplication,
@@ -15,7 +20,8 @@ import {
 import {
   collection, doc,
   setDoc, addDoc,
-  getDoc, getDocs, getAll
+  getDoc, getDocs, getAll,
+  deleteDoc
 } from "firebase/firestore";
 import { push, ref, child, get } from "firebase/database";
 
@@ -44,6 +50,21 @@ const amazonS3Config = {
   region: 'eu-central-1'
 };
 
+function resolvePathOrType(pathOrType) {
+  if (!pathOrType) {
+    throw Error("pathorType Cannot be null or empty")
+  } 
+
+  if (typeof pathOrType === 'string') {
+    return pathOrType
+  }
+  
+  if (pathOrType.collection === undefined || typeof pathOrType.collection !== 'string') {
+    throw Error("The type must have a class member named collection with the path to the collection in the store")
+  }
+
+  return pathOrType.collection
+}
 
 /**
 * Backend plugin DO NOT instantiate, just plug it in Vue.
@@ -64,7 +85,124 @@ export default class BackendPlugin {
 
     this._amazonS3 = new AWS.S3(amazonS3Config)
     this._awsBucket = process.env.VUE_APP_AWS_BUCKET_NAME
+    this._cloudfrontEndpoint = process.env.VUE_APP_CLOUDFRONT_ENDPOINT
 
+  }
+
+  // ==========================================
+  // Helpers
+  // ==========================================
+
+  /**
+   * Get a new doc reference
+   * @param {*} pathOrType 
+   * @returns 
+   */
+  firestoreNewDocReference(pathOrType) {
+    let path = resolvePathOrType(pathOrType)
+    return doc(collection(this._firestoreDb, path))
+  }
+
+  /**
+   * Gets a reference on a document
+   * @param {*} pathOrType 
+   * @param {string} docId 
+   * @returns 
+   */
+  firestoreDoc(pathOrType, docId) {
+    if (!docId) throw Error("docId cannot be null or empty")
+    let path = resolvePathOrType(pathOrType)
+    return doc(this._firestoreDb, path, docId)
+  }
+
+  /**
+   * Gets a document. If possible, it will convert it to the true model object
+   * @param {*} pathOrType 
+   * @param {*} docId 
+   * @returns 
+   */
+  async firestoreGetDocSnapshot(pathOrType, docId) {
+    if (!docId) throw Error("docId cannot be null or empty")
+    let doc = await getDoc(this.firestoreDoc(pathOrType, docId))
+    return doc
+  }
+
+  async firestoreGetDocData(pathOrType, docId) {
+    let snap = await this.firestoreGetDocSnapshot(pathOrType, docId)
+    if (!snap.exists()) return null
+    let data = snap.data()
+    console.log(typeof pathOrType !== 'string' && !!pathOrType.fromFirestore && pathOrType.fromFirestore === 'function')
+    if (typeof pathOrType !== 'string' 
+      && !!pathOrType.fromFirestore 
+      && typeof pathOrType.fromFirestore === 'function') {
+      data = pathOrType.fromFirestore(data)
+    }
+    return data
+  }
+
+  /**
+   * Writes a document
+   * @param {*} documentReference Document to write
+   * @param {*} data Data to write. If it's not firestore friendly but as a toFirestore function it will make the conversion  
+   * @returns {Promise<string>} A promise returning the id of the document
+   */
+  async firestoreWriteDoc(documentReference, data) {
+    if (data.toFirestore && typeof data.toFirestore === 'function') 
+      data = data.toFirestore()
+    await setDoc(documentReference, data)
+    return documentReference.id
+  }
+
+  async firestoreDeleteDoc(pathOrType, docId) {
+    return deleteDoc(this.firestoreDoc(pathOrType, docId))
+  }
+
+  /**
+   * Uploads a file to aws
+   * @param {File} file Path to the 
+   * @param {string} folderPath 
+   * @param {string} nameWithoutExtension 
+   */
+  async awsUploadFile(file, folderPath, nameWithoutExtension) {
+    if (!file) {
+      throw Error("File cannot be null")
+    }
+    if (!folderPath) {
+      throw Error("You must provide a folder path")
+    }
+    if (!nameWithoutExtension) {
+      throw Error("You must provide a name to the file")
+    }
+    folderPath = folderPath.replace(/\\/g, "/").replace(/(^\/+)|(\/+$)/g, "")
+    if (/[^A-Za-z0-9-_\/]/.test(folderPath)) {
+      throw Error("The folder path has invalid characters (must be alphanumerical, underscore, dash and forward slash")
+    }
+    nameWithoutExtension = nameWithoutExtension.replace(/\\/g, "/").replace(/(^\/+)|(\/+$)/g, "")
+    if (/[^A-Za-z0-9-_]/.test(nameWithoutExtension)) {
+      throw Error("The file name has invalid characters (must be alphanumerical, underscore or dash")
+    }
+
+    const ext = getExtension(file)
+    const filePath = `${folderPath}/${nameWithoutExtension}${ext ? "." + ext : ""}`
+
+    const params = {
+      Bucket: this._awsBucket,
+      Key: filePath,
+      Body: file
+    }
+
+    return new Promise((resolve, reject) => {
+      this._amazonS3.upload(
+        params,
+        (err, _) => {
+          if (err) { 
+            reject(err) 
+          }
+          else {
+            resolve(`${this._cloudfrontEndpoint}/${filePath}`)
+          }
+        })
+      })
   }
 
   /**
@@ -74,7 +212,7 @@ export default class BackendPlugin {
   */
   createServer(serverApplication) {
 
-    let data = new ServerApplicationConverter.toFirestore(serverApplication)
+    let data = ServerApplicationConverter.toFirestore(serverApplication)
 
     const newServerRef = doc(collection(this._firestoreDb, "servers"))
     let uid = newServerRef.id
@@ -191,7 +329,123 @@ export default class BackendPlugin {
 
   }
 
+  // E P
+  /**
+   * Creates an EP in the DB
+   * @param {FirestoreModel.Ep} ep Track
+   * @param {File} audioFile Audio file of the track
+   */
+  async createEp(ep, coverArtFile) {
 
+    const serverRef = this.firestoreNewDocReference(FirestoreModel.Ep)
+    let uid = serverRef.id
+    
+    ep.id = uid
+    ep.coverart_url = await this.awsUploadFile(coverArtFile, 'albums/cover_arts', uid)
+
+    const res = await this.firestoreWriteDoc(serverRef, ep);
+    console.log(res);
+
+    return res
+  }
+
+  /**
+   * Get an EP by its id
+   * @param {*} id 
+   * @returns The FirestoreModel.EP if it exists, null otherwise.
+   */
+  async getEpById(id) {
+    return this.firestoreGetDocData(FirestoreModel.Ep, id)
+  }
+  
+  /**
+   * Deletes a track in the DB
+   * @param {string} epId Id of the track to delete
+   */
+  async deleteEp(epId) {
+
+    await this.firestoreDeleteDoc(FirestoreModel.Ep, epId)
+    console.log("EP", epId, "deleted")
+
+  }
+  
+  // T R A C K
+  /**
+   * Creates a track in the DB
+   * @param {FirestoreModel.Track} track Track
+   * @param {File} audioFile Audio file of the track
+   */
+  async createTrack(track, audioFile) {
+
+    const serverRef = this.firestoreNewDocReference(FirestoreModel.Track)
+    let uid = serverRef.id
+    
+    track.id = uid
+    track.audiofile_url = await this.awsUploadFile(audioFile, 'tracks/audio_files', uid)
+
+    const res = await this.firestoreWriteDoc(serverRef, track);
+    console.log(res);
+
+    return res
+  }
+
+  /**
+   * Get a track by its id
+   * @param {*} id 
+   * @returns The FirestoreModel.Track if it exists, null otherwise.
+   */
+  async getTrackById(id) {
+    return this.firestoreGetDocData(FirestoreModel.Track, id)
+  }
+
+  /**
+   * Deletes a track in the DB
+   * @param {string} trackId Id of the track to delete
+   */
+  async deleteTrack(trackId) {
+
+    await this.firestoreDeleteDoc(FirestoreModel.Track, trackId)
+    console.log("Track", trackId, "deleted")
+
+  }
+
+  // C R E D I T S
+  /**
+   * Creates a credit entry in the DB
+   * @param {FirestoreModel.TrackCreditsEntry} creditsEntry Credit entry to create
+   * @returns A promise on the credits entry id
+   */
+  async createCreditsEntry(creditsEntry) {
+
+    const serverRef = this.firestoreNewDocReference(FirestoreModel.TrackCreditsEntry)
+    let uid = serverRef.id
+    creditsEntry.id = uid
+
+    const res = await this.firestoreWriteDoc(serverRef, creditsEntry);
+    console.log(res);
+
+    return res
+  }
+
+  /**
+   * Get a track credits entry by its id
+   * @param {*} id 
+   * @returns The FirestoreModel.Track if it exists, null otherwise.
+   */
+  async getTrackCreditsEntryById(id) {
+    return this.firestoreGetDocData(FirestoreModel.TrackCreditsEntry, id)
+  }
+
+  /**
+   * Deletes a crefdit entry from the DB
+   * @param {TrackCreditsEntry} creditsEntryId Id of the credits entry to delete
+   */
+  async deleteCreditsEntry(creditsEntryId) {
+
+    await this.firestoreDeleteDoc(FirestoreModel.TrackCreditsEntry, creditsEntryId)
+    console.log("Credits", creditsEntryId, "deleted")
+
+  }
 
 
   /**

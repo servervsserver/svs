@@ -88,7 +88,6 @@ let forValidators = function(validatorNames, dynamicValidatorNames) {
       dynamicValidations[lowerCamelCaseName] = {}
       generatedMethods[`on${UpperCamelCaseName}ValidationChange`]
         = function(evt, key) {
-          console.log(lowerCamelCaseName, key, evt)
           Vue.set(this.dynamicValidations[lowerCamelCaseName], key, evt)
           this.onValidationChange()
         }
@@ -152,7 +151,7 @@ let forValidators = function(validatorNames, dynamicValidatorNames) {
       'validation-change' // Emitted when the validation changes state
     ],
     created() {
-      console.log(this)
+      // console.log(this)
     },
     computed: {
       /**
@@ -160,7 +159,7 @@ let forValidators = function(validatorNames, dynamicValidatorNames) {
        */
       isFormValidated() {
         if (this.lastFormValidationState === null) {
-          console.warn("Hum, undefined state of validation? What's the hol'up?")
+          // console.warn("Hum, undefined state of validation? What's the hol'up?")
         }
         return !!this.lastFormValidationState
       }

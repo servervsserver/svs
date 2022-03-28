@@ -3,7 +3,7 @@
     <div class="columns">
       <div class="column is-5">
         <text-input
-          v-model="epInfos.name"
+          v-model="albumInfos.name"
           :label="'Title'"
           :placeholder="'The name of my awesome EP'"
           :icon="'fas fa-compact-disc'"
@@ -21,7 +21,7 @@
           </template>
         </image-file-input>
         <text-input
-          v-model="epInfos.streamingLink"
+          v-model="albumInfos.streamingLink"
           :label="'Public streaming link'"
           :icon="'fas fa-link'"
           :placeholder="'https://soundcloud.com/my-server/my-awesome-ep-link'"
@@ -62,7 +62,7 @@ import {
   FormValidationMixin
 } from "@/modules/forms/mixins/form-validation.mixin"
 
-import EpInfos from "./ep-infos.js"
+import AlbumInfos from "./album-infos.js"
 
 export default {
   mixins: [
@@ -73,9 +73,9 @@ export default {
     'image-file-input': ImageFileInputComponent
   },
   props: {
-    epInfos: {
-      type: EpInfos,
-      default: () => { new EpInfos(); console.warn("creation")}
+    albumInfos: {
+      type: AlbumInfos,
+      default: () => { new AlbumInfos(); console.warn("creation")}
     },
   },
   data() {
@@ -96,11 +96,11 @@ export default {
   computed: {
     coverArtFile: {
       get: function() {
-        return this.epInfos.coverArtFile
+        return this.albumInfos.coverArtFile
       },
       set: function(newVal) {
-        this.epInfos.coverArtFile = newVal
-        this.coverArtUrl = this.epInfos.coverArtUrl = newVal ? URL.createObjectURL(newVal) : ""
+        this.albumInfos.coverArtFile = newVal
+        this.coverArtUrl = this.albumInfos.coverArtUrl = newVal ? URL.createObjectURL(newVal) : ""
       }
     }
   },

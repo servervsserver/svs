@@ -1,9 +1,10 @@
-import EpInfos from "./ep-infos"
+import AlbumInfos from "./album-infos.js"
 import { Track } from "@/components/forms/track-upload"
 
-export default class Ep {
+export default class Album {
+  
   constructor() {
-    this.infos = new EpInfos()
+    this.infos = new AlbumInfos()
     this.tracks = []
   }
 

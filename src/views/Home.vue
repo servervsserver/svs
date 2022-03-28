@@ -19,7 +19,9 @@
         >
           Submit Theme Suggestions!
         </router-link> -->
-        <p class="main-message">The theme of SvS IV <br><strong class="theme">SECRETS</strong></p>
+        <p class="main-message">
+          The theme of SvS IV <br><strong class="theme">SECRETS</strong>
+        </p>
       </div>
     </section>
     <section class="sample-pack-section shadow-depth-3">

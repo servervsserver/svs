@@ -1,31 +1,20 @@
 <template>
   <section>
     <h1>Catalog</h1>
-    <section v-if="catalogLoading" class="ep-collection-loading">
-    </section>
-    <section v-if="!catalogLoading" class="ep-collection columns is-multiline is-mobile">
+    <section
+      v-if="catalogLoading"
+      class="ep-collection-loading"
+    />
+    <section
+      v-if="!catalogLoading"
+      class="ep-collection columns is-multiline is-mobile"
+    >
       <div
         v-for="ep of allEps"
         :key="ep.id"
-        class="ep-block column is-2-desktop is-3-tablet is-6-mobile"
+        class="column is-2-desktop is-3-tablet is-6-mobile"
       >
-        <div class="ep-block-content">
-          <!-- <squared-image-box> -->
-          <img
-            :src="ep.coverArtUri"
-            class="cover-art"
-            onerror="if (this.src != '/placeholders/uwu_colored_svs_transparent.png') this.src = '/placeholders/uwu_colored_svs_transparent.png';"
-          >
-          <!-- </squared-image-box> -->
-          <div class="ep-infos">
-            <div class="ep-name">
-              {{ ep.title }}
-            </div>
-            <div class="ep-server-name">
-              {{ ep.serverId }}
-            </div>
-          </div>
-        </div>
+        <album-block :album="ep" @onclick="onAlbumClick"/>
       </div>
     </section>
   </section>
@@ -34,8 +23,12 @@
 <script>
 
 import * as Archive from "@/modules/catalog/models"
+import AlbumBlockComponent from '@/modules/catalog/components/AlbumBlock.vue'
 
 export default {
+  components: {
+    'album-block': AlbumBlockComponent
+  },
   data() {
     return {
       catalog: null,
@@ -84,7 +77,7 @@ export default {
       }
       console.log("get all eps", fAllTracksMap)
     },
-    onImageError(evt) {
+    onAlbumClick(evt) {
       console.log(evt)
     }
   }
@@ -93,21 +86,21 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-.ep-block {
-  .cover-art {
-    border-radius: 3px;
-    background: #333366;
-    box-shadow: 1px 2px 5px 0px #0004;
-  }
-  .ep-infos {
-    font-family: 'Jost';
-    padding: 5px;
-    .ep-name {
-      font-weight: 500;
-    }
-    .ep-server-name {
-      font-weight: 200;
-    }
-  }
-}
+// .ep-block {
+//   .cover-art {
+//     border-radius: 3px;
+//     background: #333366;
+//     box-shadow: 1px 2px 5px 0px #0004;
+//   }
+//   .ep-infos {
+//     font-family: 'Jost';
+//     padding: 5px;
+//     .ep-name {
+//       font-weight: 500;
+//     }
+//     .ep-server-name {
+//       font-weight: 200;
+//     }
+//   }
+// }
 </style>

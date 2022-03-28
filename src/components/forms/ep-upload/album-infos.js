@@ -1,4 +1,4 @@
-export default class EpInfos {
+export default class AlbumInfos {
 
   constructor() {
 

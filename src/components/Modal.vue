@@ -1,23 +1,35 @@
 <template>
-<div class="modal svs-modal" :class="{'is-active': openedData}">
-  <div class="modal-background" @click="close"></div>
-  <div class="modal-card">
-    <header class="modal-card-head" v-if="$slots.header">
-      <slot name="header" />
-    </header>
-    <section class="modal-card-body">
-      <slot />
-    </section>
-    <footer class="modal-card-foot" v-if="$slots.footer">
-      <slot name="footer" />
-    </footer>
+  <div
+    class="modal svs-modal"
+    :class="{'is-active': openedData}"
+  >
+    <div
+      class="modal-background"
+      @click="close"
+    />
+    <div class="modal-card">
+      <header
+        v-if="$slots.header"
+        class="modal-card-head"
+      >
+        <slot name="header" />
+      </header>
+      <section class="modal-card-body">
+        <slot />
+      </section>
+      <footer
+        v-if="$slots.footer"
+        class="modal-card-foot"
+      >
+        <slot name="footer" />
+      </footer>
+    </div>
+    <button 
+      class="modal-close is-large" 
+      aria-label="close"
+      @click="close"
+    />
   </div>
-  <button 
-    class="modal-close is-large" 
-    aria-label="close"
-    @click="close"
-    ></button>
-</div>
 </template>
 
 <script>

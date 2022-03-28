@@ -1,67 +1,71 @@
 <template>
-    <div class="credit-line" :class="{ 'is-not-validated': !isFormValidated }">
-        <div
-          class="columns"
-        >
-          <div 
-            v-if="$slots.left"
-            class="column is-narrow has-text-centered">
-            <slot name="left" />
-          </div>
-          <!-- Artist name -->
-          <div class="column is-3">
-            <text-input
-              v-model="credits.artistName"
-              :label="'Artist name'"
-              :placeholder="'The artist'"
-              :icon="'fas fa-user'"
-              :validators="nameValidators"
-              @validation-change="onArtistNameValidationChange"
-            />
-          </div>
-          <!-- Discord tag -->
-          <div class="column is-3">
-            <text-input
-              v-model="credits.discordTag"
-              :label="'Discord tag'"
-              :placeholder="'TheArtist#1234'"
-              :icon="'fab fa-discord'"
-            />
-          </div>
-          <!-- Role(s) -->
-          <div class="column is-3">
-            <text-input
-              v-model="credits.description"
-              :label="'Role(s)'"
-              :placeholder="'Mixing, mastering, bass'"
-              :icon="'fas fa-user-tag'"
-              :validators="roleValidators"
-              @validation-change="onRoleValidationChange"
-            />
-          </div>
-          <!-- Anonymous -->
-          <div class="column is-wide">
-            <label>
-              Stay anonymous
-              <tooltip
-                :vertical="'top'"
-                :horizontal="'left'"
-                :mode="'hover'"
-              >
-                <span class="icon is-small is-left">
-                  <i class="fas fa-info-circle" />
-                </span>
-                <template v-slot:message>
-                  If this person doesn't want to appear in the credits, toggle this on.
-                </template>
-              </tooltip>
-            </label>
-            <switch-input
-              v-model="credits.anonymous"
-            />
-          </div>
-        </div>
+  <div
+    class="credit-line"
+    :class="{ 'is-not-validated': !isFormValidated }"
+  >
+    <div
+      class="columns"
+    >
+      <div 
+        v-if="$slots.left"
+        class="column is-narrow has-text-centered"
+      >
+        <slot name="left" />
+      </div>
+      <!-- Artist name -->
+      <div class="column is-3">
+        <text-input
+          v-model="credits.artistName"
+          :label="'Artist name'"
+          :placeholder="'The artist'"
+          :icon="'fas fa-user'"
+          :validators="nameValidators"
+          @validation-change="onArtistNameValidationChange"
+        />
+      </div>
+      <!-- Discord tag -->
+      <div class="column is-3">
+        <text-input
+          v-model="credits.discordTag"
+          :label="'Discord tag'"
+          :placeholder="'TheArtist#1234'"
+          :icon="'fab fa-discord'"
+        />
+      </div>
+      <!-- Role(s) -->
+      <div class="column is-3">
+        <text-input
+          v-model="credits.description"
+          :label="'Role(s)'"
+          :placeholder="'Mixing, mastering, bass'"
+          :icon="'fas fa-user-tag'"
+          :validators="roleValidators"
+          @validation-change="onRoleValidationChange"
+        />
+      </div>
+      <!-- Anonymous -->
+      <div class="column is-wide">
+        <label>
+          Stay anonymous
+          <tooltip
+            :vertical="'top'"
+            :horizontal="'left'"
+            :mode="'hover'"
+          >
+            <span class="icon is-small is-left">
+              <i class="fas fa-info-circle" />
+            </span>
+            <template v-slot:message>
+              If this person doesn't want to appear in the credits, toggle this on.
+            </template>
+          </tooltip>
+        </label>
+        <switch-input
+          v-model="credits.anonymous"
+        />
+      </div>
     </div>
+  </div>
 </template>
 
 <script>

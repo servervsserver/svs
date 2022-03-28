@@ -1,9 +1,15 @@
 <template>
   <section class="track-upload-form">
-    <p v-if="!isFormValidated" class="help is-danger">
+    <p
+      v-if="!isFormValidated"
+      class="help is-danger"
+    >
       This track form has invalid fields.
     </p>
-    <p v-if="isFormValidated" class="help is-danger">
+    <p
+      v-if="isFormValidated"
+      class="help is-danger"
+    >
       &nbsp;
     </p>
     <div class="columns is-multiline">
@@ -51,7 +57,7 @@
               v-model="track.secondGenre"
               :label="'Second genre'"
               :icon="'fas fa-music'"
-              :unselectedText="'-'"
+              :unselected-text="'-'"
               :options="musicGenres"
             />
           </div>

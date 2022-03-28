@@ -1,16 +1,22 @@
 <template>
   <section>
     <h2>EP Information</h2>
-    <p v-if="!isFormValidated" class="help is-danger">
+    <p
+      v-if="!isFormValidated"
+      class="help is-danger"
+    >
       This ep form has invalid fields.
     </p>
-    <p v-if="isFormValidated" class="help is-danger">
+    <p
+      v-if="isFormValidated"
+      class="help is-danger"
+    >
       &nbsp;
     </p>
     <ep-infos-form
-      :ep-infos="ep.infos"
+      :album-infos="ep.infos"
       @validation-change="onEpInfosValidationChange"
-      />
+    />
     <h2>Tracks</h2>
     <div
       v-for="(track, index) in ep.tracks"
@@ -51,7 +57,7 @@ import {
 } from "@/modules/forms/mixins/form-validation.mixin"
 
 import EpInfosFormComponent from "./EpInfosForm.vue"
-import Ep from "./ep.js"
+import Album from "./album.js"
 
 import {
   TrackUploadFormComponent,
@@ -69,7 +75,7 @@ export default {
   ],
   props: {
     ep: {
-      type: Ep,
+      type: Album,
       required: true
     }
   },

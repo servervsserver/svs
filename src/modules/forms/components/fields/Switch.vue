@@ -39,13 +39,13 @@ export default {
   props: {
     value: Boolean
   },
-  mounted() {
-    this.updateValidation(this.value)
-  },
   data() {
     return {
       id: generateUuid()
     }
+  },
+  mounted() {
+    this.updateValidation(this.value)
   },
   methods: {
     onChange(event) {

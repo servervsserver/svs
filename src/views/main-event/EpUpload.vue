@@ -19,10 +19,14 @@
       <ep-upload-form
         :ep="ep"
         @validation-change="onEpValidationChange"
-        />
-      <button class="button" :disabled="!canSubmit" @click="submit">
+      />
+      <button
+        class="button"
+        :disabled="!canSubmit"
+        @click="submit"
+      >
         <span class="icon">
-          <i class="fas fa-paper-plane"></i>
+          <i class="fas fa-paper-plane" />
         </span>
         <span>Submit</span>
       </button>
@@ -33,9 +37,12 @@
       </template>
       <template v-slot:default>
         <ul>
-        <li v-for="(m,i) of modalSubmissionErrorMessages" :key="i">
-          {{m}}
-        </li>
+          <li
+            v-for="(m,i) of modalSubmissionErrorMessages"
+            :key="i"
+          >
+            {{ m }}
+          </li>
         </ul>
       </template>
     </modal>
@@ -47,7 +54,7 @@ import ModalComponent from "@/components/Modal.vue"
 
 import {
   EpUploadFormComponent,
-  Ep
+  Album
 } from "@/components/forms/ep-upload"
 
 export default {
@@ -57,7 +64,7 @@ export default {
   },
   data() {
     return {
-      ep: new Ep(),
+      ep: new Album(),
       modalSubmissionErrorMessages: [],
       canSubmit: false
     }

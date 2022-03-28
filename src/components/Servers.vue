@@ -1,9 +1,9 @@
 <template>
   <div class="mt-4 columns is-multiline is-tablet">
     <div
-      class="column is-half is-full-mobile"
-      v-bind:key="server.name"
       v-for="server in sortBy(serverApplications, 'name')"
+      :key="server.name"
+      class="column is-half is-full-mobile"
     >
       <div class="card">
         <div class="card-content">
@@ -13,13 +13,19 @@
                 <img
                   :src="'https://' + server.icon_url"
                   alt="Placeholder image"
-                />
+                >
               </figure>
             </div>
             <div class="media-content">
-              <p class="title is-4">{{ server.name }}</p>
+              <p class="title is-4">
+                {{ server.name }}
+              </p>
               <p class="subtitle is-6 tags">
-                <span v-for="a in server.admins" :key="a" class="tag">
+                <span
+                  v-for="a in server.admins"
+                  :key="a"
+                  class="tag"
+                >
                   {{ a }}
                 </span>
               </p>
@@ -28,14 +34,15 @@
 
           <div class="content">
             {{ server.description }}
-            <br />
+            <br>
           </div>
         </div>
 
         <footer class="card-footer">
-          <a :href="server.discord_invite" class="card-footer-item"
-            >Join Server</a
-          >
+          <a
+            :href="server.discord_invite"
+            class="card-footer-item"
+          >Join Server</a>
         </footer>
       </div>
     </div>
@@ -50,6 +57,12 @@ export default {
       serverApplications: [],
     };
   },
+  computed: {},
+  mounted() {
+    this.$svsBackend.getAppServers(1).then((res) => {
+      this.serverApplications = res;
+    });
+  },
   methods: {
     sortBy(arr, key) {
       arr = Object.values(arr);
@@ -60,12 +73,6 @@ export default {
         return arr;
       }
     },
-  },
-  computed: {},
-  mounted() {
-    this.$svsBackend.getAppServers(1).then((res) => {
-      this.serverApplications = res;
-    });
   },
 };
 </script>

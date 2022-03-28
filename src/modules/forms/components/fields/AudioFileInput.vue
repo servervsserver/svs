@@ -110,12 +110,6 @@ export default {
       duration: null
     }
   },
-  mounted() {
-    this.updateValidation(this.value)
-  },
-  emits: [
-    'validation-change' // Emitted when the validation changes state
-  ],
   computed: {
     fileName() {
       if (!this.value) return ""
@@ -128,6 +122,12 @@ export default {
       return this.metaDataState == MetaDataState.LOADED
     }
   },
+  mounted() {
+    this.updateValidation(this.value)
+  },
+  emits: [
+    'validation-change' // Emitted when the validation changes state
+  ],
   methods: {
     onFileChange(evt) {
       let input = evt.target

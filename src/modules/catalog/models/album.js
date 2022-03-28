@@ -1,12 +1,12 @@
 
 export class Album {
 
-  constructor(id, serverId, title, coverArtUri, epStreamLink) {
+  constructor(id, serverId, title, coverArtUrl, epStreamLink) {
 
     this.id           = id || null
     this.serverId     = serverId || null
     this.title        = title || ""
-    this.coverArtUri  = coverArtUri || ""
+    this.coverArtUrl  = coverArtUrl || ""
     this.epStreamLink = epStreamLink ||null
     this.trackIds     = []
   }

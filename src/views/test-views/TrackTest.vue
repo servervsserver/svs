@@ -2,17 +2,29 @@
   <div>
     <h1>Track test</h1>
     <ep-upload-form :ep="ep" />
-    <button class="button" @click="submitEp">
+    <button
+      class="button"
+      @click="submitEp"
+    >
       Submit EP
     </button>
-    <button class="button" @click="submitTrack">
+    <button
+      class="button"
+      @click="submitTrack"
+    >
       Submit random track
     </button>
-    <text-input v-model="trackId" ></text-input>
-    <button class="button" @click="deleteTrack">
+    <text-input v-model="trackId" />
+    <button
+      class="button"
+      @click="deleteTrack"
+    >
       Delete track
     </button>
-    <button class="button" @click="getEp">
+    <button
+      class="button"
+      @click="getEp"
+    >
       Get EP
     </button>
   </div>
@@ -28,12 +40,12 @@ import {
   EpUploadFormComponent,
   Track,
   CreditEntry,
-  Ep
+  Album
 } from "@/components/forms/ep-upload"
 
 import * as FirestoreModel from "@/plugins/backend/firestore"
 
-let ep = new Ep()
+let ep = new Album()
 ep.infos.name = "EP Name"
 ep.infos.streamingLink = "stream.link"
 let track = new Track()
@@ -81,7 +93,7 @@ export default {
   methods: {
     async submitEp() {
       let ep = this.ep
-      let fEp             = new FirestoreModel.Ep()
+      let fEp             = new FirestoreModel.Album()
       fEp.name            = ep.infos.name
       fEp.streaminglink   = ep.infos.streamingLink
 

@@ -16,7 +16,7 @@
       </tooltip>
     </label>
     <div class="has-text-centered">
-      <div class="file has-name is-boxed" >
+      <div class="file has-name is-boxed">
         <label class="file-label">
           <input
             accept="image/*"
@@ -32,7 +32,10 @@
               Choose a file…
             </span>
           </span>
-          <span v-if="fileName" class="file-name">
+          <span
+            v-if="fileName"
+            class="file-name"
+          >
             <span>{{ fileName }}</span>
           </span>
         </label>

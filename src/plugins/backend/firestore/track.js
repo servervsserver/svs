@@ -1,8 +1,9 @@
-import { fromFirestore, toFirestore } from "./utils"
+import { Model } from "./model"
 
-export class Track {
+export class Track extends Model {
 
   constructor () {
+    super()
 
     /**
      * @type {string} Id of the track
@@ -46,60 +47,6 @@ export class Track {
  * @type {string} Collection of this model
  */
 Track.collection = "tracks"
-Track.prototype.toFirestore = function() {
-  return toFirestore(this)
-}
-Track.prototype.fromFirestore = function(firestoreObject) {
-  return fromFirestore(this, firestoreObject)
-}
 Track.fromFirestore = function(firestoreObject) {
   return new Track().fromFirestore(firestoreObject)
 }
-
-
-export class TrackCreditsEntry {
-
-  constructor() {
-
-    /**
-     * @type {string} Id of the credit
-     */
-    this.id = null
-
-    /**
-     * @type {string} Artist name if applicable
-     */
-    this.artist_name = ""
-    
-    /**
-    *  @type {string} Discord tag of the person
-    */
-    this.discord_tag = ""
-
-    /**
-    * @type {Array<string>} Roles the credited person had
-    */
-    this.roles = []
-
-    /**
-    * @type {boolean} If true, the person will be listed as anonymous publicly
-    */
-    this.anonymous = false
-  }
-}
-
-/**
- * @type {string} Collection of this model
- */
-TrackCreditsEntry.collection = "track_credits"
-TrackCreditsEntry.prototype.toFirestore = function() {
-  return toFirestore(this)
-}
-TrackCreditsEntry.prototype.fromFirestore = function(firestoreObject) {
-  return fromFirestore(this, firestoreObject)
-}
-TrackCreditsEntry.fromFirestore = function(firestoreObject) {
-  return new TrackCreditsEntry().fromFirestore(firestoreObject)
-}
-
-

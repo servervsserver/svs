@@ -385,7 +385,7 @@ export default class BackendPlugin {
    */
   async createEp(ep, coverArtFile) {
 
-    const serverRef = this.firestoreNewDocReference(FirestoreModel.Ep)
+    const serverRef = this.firestoreNewDocReference(FirestoreModel.Album)
     let uid = serverRef.id
     
     ep.id = uid
@@ -402,7 +402,7 @@ export default class BackendPlugin {
    * @returns The FirestoreModel.EP if it exists, null otherwise.
    */
   async getEpById(id) {
-    return this.firestoreGetDocData(FirestoreModel.Ep, id)
+    return this.firestoreGetDocData(FirestoreModel.Album, id)
   }
 
   /**
@@ -410,7 +410,7 @@ export default class BackendPlugin {
    * @returns {Object}
    */
   async getAllEps() {
-    return this.firestoreGetCollectionData(FirestoreModel.Ep)
+    return this.firestoreGetCollectionData(FirestoreModel.Album)
   }
   
   /**
@@ -419,7 +419,7 @@ export default class BackendPlugin {
    */
   async deleteEp(epId) {
 
-    await this.firestoreDeleteDoc(FirestoreModel.Ep, epId)
+    await this.firestoreDeleteDoc(FirestoreModel.Album, epId)
 
   }
   

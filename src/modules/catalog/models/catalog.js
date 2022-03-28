@@ -1,26 +1,26 @@
 import {
-  ArchiveTrack,
-  ArchiveEp,
-  ArchiveAccoladeEntry,
-  ArchiveAccoladeType,
-  ArchiveAccolade
+  Track,
+  Album,
+  // ArchiveAccoladeEntry,
+  // ArchiveAccoladeType,
+  // ArchiveAccolade
 } from "./archive-entry.js"
 
 
 /**
 * Archive catalog. It should be used as a cache for the catalogue
 */
-export class ArchiveCatalog {
+export class Catalog {
 
   constructor() {
 
     /**
-     * @type {Map<string, ArchiveEp>} All the eps in the catalog
+     * @type {Map<string, Album>} All the eps in the catalog
      */
     this.eps        = new Map()
 
     /**
-     * @type {Map<string, ArchiveTrack>}
+     * @type {Map<string, Track>}
      */
     this.tracks     = new Map()
     this.accolades  = new Map()
@@ -29,7 +29,7 @@ export class ArchiveCatalog {
 
   /**
    * 
-   * @param {ArchiveTrack} track 
+   * @param {Track} track 
    * @returns 
    */
   addTrack(track) {

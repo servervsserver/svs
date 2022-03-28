@@ -33,12 +33,7 @@
 
 <script>
 
-import {
-  ArchiveCatalog,
-  ArchiveEp,
-  ArchiveTrack
-} from "@/models/dto/archive"
-
+import * as Archive from "@/modules/catalog/models"
 
 export default {
   data() {
@@ -54,7 +49,7 @@ export default {
   //   }
   // },
   mounted() {
-      let catalog = new ArchiveCatalog()
+      let catalog = new Archive.Catalog()
       // catalog.addEp(new ArchiveEp("1","Server name","Title of EP", "https://picsum.photos/200?random=" + (Math.random() * 100000)))
       // catalog.addEp(new ArchiveEp("2","Server name","Title of EP", "https://picsum.photos/200?random=" + (Math.random() * 100000)))
       // catalog.addEp(new ArchiveEp("3","Server name","Title of EP", "https://picsum.photos/200?random=" + (Math.random() * 100000)))
@@ -75,7 +70,7 @@ export default {
     async getAllEps() {
       let fAllEpsMap = await this.$svsBackend.getAllEps()
       for (let [id,fEp] of Object.entries(fAllEpsMap)) {
-        let aEp = new ArchiveEp(id, "Server name not given", fEp.name, fEp.coverart_url)
+        let aEp = new Archive.Album(id, "Server name not given", fEp.name, fEp.coverart_url)
         this.catalog.addEp(aEp)
       }
       this.allEps = this.catalog.getAllEps()
@@ -83,7 +78,7 @@ export default {
     async getAllTracks() {
       let fAllTracksMap = await this.$svsBackend.getAllTracks()
       for (let [id,fTrack] of Object.entries(fAllTracksMap)) {
-        let aTrack = new ArchiveTrack(id, fTrack.name, fTrack.audiofile_url)
+        let aTrack = new Archive.Track(id, fTrack.name, fTrack.audiofile_url)
         this.catalog.addTrack(aTrack)
         console.log(aTrack, this.catalog)
       }

@@ -7,15 +7,11 @@
     />
     <section
       v-if="!catalogLoading"
-      class="ep-collection columns is-multiline is-mobile"
     >
-      <div
-        v-for="ep of allEps"
-        :key="ep.id"
-        class="column is-2-desktop is-3-tablet is-6-mobile"
-      >
-        <album-block :album="ep" @onclick="onAlbumClick"/>
-      </div>
+      <albums-list 
+        :albums="allEps" 
+        @album-click="onAlbumClick"
+      />
     </section>
   </section>
 </template>
@@ -23,11 +19,11 @@
 <script>
 
 import * as Archive from "@/modules/catalog/models"
-import AlbumBlockComponent from '@/modules/catalog/components/AlbumBlock.vue'
+import AlbumListComponent from "@/modules/catalog/components/AlbumsList.vue"
 
 export default {
   components: {
-    'album-block': AlbumBlockComponent
+    'albums-list': AlbumListComponent
   },
   data() {
     return {
@@ -36,11 +32,6 @@ export default {
       allEps: []
     }
   },
-  // computed: {
-  //   allEps() {
-  //     return this.catalog.getAllEps()
-  //   }
-  // },
   mounted() {
       let catalog = new Archive.Catalog()
       // catalog.addEp(new ArchiveEp("1","Server name","Title of EP", "https://picsum.photos/200?random=" + (Math.random() * 100000)))
@@ -78,7 +69,7 @@ export default {
       console.log("get all eps", fAllTracksMap)
     },
     onAlbumClick(evt) {
-      console.log(evt)
+      console.log("Hey", evt)
     }
   }
 

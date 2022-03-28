@@ -3,7 +3,8 @@
     <div class="album-block-content">
       <img
         :src="coverArtUrl"
-        class="cover-art"
+        class="cover-art clickable"
+        @click="onCoverArtClick"
         onerror="if (this.src != '/placeholders/uwu_colored_svs_transparent.png') this.src = '/placeholders/uwu_colored_svs_transparent.png';"
       >
       <div class="album-infos">
@@ -43,6 +44,14 @@ export default {
     albumServerName() {
       // return this.album.title
       return "Server name not provided"
+    }
+  },
+  emits: [
+    'album-click'
+  ],
+  methods: {
+    onCoverArtClick(evt) {
+      this.$emit('album-click', this.album)
     }
   }
 }

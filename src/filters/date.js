@@ -69,7 +69,7 @@ export function date(date, format, local, specialTimes) {
 }
 
 export function duration(totalSeconds, showMilliseconds) {
-  if (!totalSeconds || totalSeconds < 0) return ""
+  if (!totalSeconds || totalSeconds < 0) return "00:00"
 
   let ms = 0
   let s = 0
@@ -90,8 +90,8 @@ export function duration(totalSeconds, showMilliseconds) {
 
   let values = []
   if (h) values.push(h)
-  values.push(m)
-  values.push(s)
+  values.push((m < 10 ? "0":"") + m)
+  values.push((s < 10 ? "0":"") + s)
   if (showMilliseconds) values.push(` ${ms}ms`)
   return values.join(":")
 }

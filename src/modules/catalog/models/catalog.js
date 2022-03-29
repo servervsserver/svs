@@ -70,6 +70,14 @@ export class Catalog {
     return ep
   }
 
+  getTrackById(id) {
+    return this.tracks.get(id) || null
+  }
+
+  getAlbumById(id) {
+    return this.eps.get(id) || null
+  }
+
   getAllTracks() {
     let all = []
     for(let [id,track] of this.tracks) {

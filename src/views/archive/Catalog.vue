@@ -18,14 +18,14 @@
         :tracks="activeAlbumTracks"
         @track-click="onTrackClick"
       />
-      <audio-player ref="audioPlayer"/>
+      <!-- <audio-player :audio-player="$svsAudioPlayer.player"/> -->
     </section>
   </section>
 </template>
 
 <script>
 import AudioPlayer from "@/modules/audio-player/components/AudioPlayer.vue"
-import { AudioPlayerTrack } from "@/modules/audio-player/models"
+import * as AudioPlayerLogic from "@/modules/audio-player/models"
 
 import * as Archive from "@/modules/catalog/models"
 import AlbumListComponent from "@/modules/catalog/components/AlbumsList.vue"
@@ -35,7 +35,7 @@ export default {
   components: {
     'albums-list': AlbumListComponent,
     'album-content': AlbumContentComponent,
-    'audio-player': AudioPlayer
+    // 'audio-player': AudioPlayer
   },
   data() {
     return {
@@ -44,6 +44,11 @@ export default {
       activeAlbum: null,
       activeAlbumTracks: [],
       allEps: []
+    }
+  },
+  computed: {
+    audioPlayer() {
+      return this.$svsAudioPlayer.player
     }
   },
   mounted() {
@@ -63,7 +68,7 @@ export default {
           fAlbum.name, 
           fAlbum.coverart_url
         )
-        console.log(fAlbum, aAlbum)
+        // console.log(fAlbum, aAlbum)
         aAlbum.trackIds = [...fAlbum.tracks_ids]
         this.catalog.addEp(aAlbum)
       }
@@ -74,9 +79,9 @@ export default {
       for (let [id,fTrack] of Object.entries(fAllTracksMap)) {
         let aTrack = new Archive.Track(id, fTrack.name, fTrack.audiofile_url)
         this.catalog.addTrack(aTrack)
-        console.log(aTrack, this.catalog)
+        // console.log(aTrack, this.catalog)
       }
-      console.log("get all eps", fAllTracksMap)
+      // console.log("get all eps", fAllTracksMap)
     },
     onAlbumClick(evt) {
       this.activeAlbum = evt
@@ -88,8 +93,8 @@ export default {
     onTrackClick(evt) {
       console.log(this.$refs.audioPlayer, "what?")
       console.log(evt)
-      this.$refs.audioPlayer.audio
-        .setTrack(new AudioPlayerTrack(evt.title, this.activeAlbum.name, 'https://' + evt.trackUrl))
+      this.audioPlayer
+        .setTrack(new AudioPlayerLogic.Track(evt.title, this.activeAlbum.name, 'https://' + evt.trackUrl))
     }
   }
 

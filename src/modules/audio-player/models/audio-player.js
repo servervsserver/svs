@@ -1,7 +1,7 @@
 /**
  * Represents a track in the audio player
  */
-export class AudioPlayerTrack {
+export class Track {
 
   constructor(name, artist, source) {
     /**
@@ -33,7 +33,7 @@ export class AudioPlayerQueue {
 
   /**
    * Adds a track at the end of the queue
-   * @param {AudioPlayerTrack} track 
+   * @param {Track} track 
    */
   enqueue(track) {
     this._tracks.push(track)
@@ -90,32 +90,42 @@ export class AudioPlayerQueue {
     return this._tracks
   }
 
+  /**
+   * Get the list of played tracks in the queue
+   */
+  get playedTracks() {
+    return this._playedTracksStack
+  }
+
 }
 
 /**
  * The actual audioplayer
  */
-export class AudioPlayerLogic {
+export class AudioPlayer {
 
+  /***
+   * Creates a new audio player
+   */
   constructor() {
 
     this._queue = new AudioPlayerQueue()
     this._queue.enqueue(
-      new AudioPlayerTrack(
+      new Track(
         "Drum loop",
         "Jiway",
         "/placeholders/audio/drumloop.wav"
       )
     )
     this._queue.enqueue(
-      new AudioPlayerTrack(
+      new Track(
         "Stanky groovey",
         "Jiway",
         "/placeholders/audio/stankygroovy.wav"
       )
     )
     this._queue.enqueue(
-      new AudioPlayerTrack(
+      new Track(
         "Vesper Martini",
         "Jiway",
         "/placeholders/audio/vespermartini_jiway.mp3"
@@ -130,6 +140,7 @@ export class AudioPlayerLogic {
     this.init()
   }
 
+  
   init() {
     if (this._initialized) return
 
@@ -161,7 +172,7 @@ export class AudioPlayerLogic {
 
   /**
    * Sets the currently playing track
-   * @param {AudioPlayerTrack} track 
+   * @param {Track} track 
    */
   setTrack(track) {
     this._currentTrack  = track

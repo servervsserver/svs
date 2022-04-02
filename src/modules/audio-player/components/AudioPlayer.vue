@@ -54,60 +54,131 @@
         </div>
       </div>
     </section>
+
+    <section class="playlist">
+      <div class="buttons">
+        <button
+          class="button svs-button-transparent"
+          @mousedown="toggleListDisplay()"
+        >
+          <span class="icon">
+            <i class="fa-solid fa-list-ol"></i>
+            </span>
+        </button>
+      </div>
+    </section>
+
+    <modal ref="playlistModal">
+      <h3>Previous tracks</h3>
+      <ul >
+        <li 
+          v-for="(track, idx) of previousTracks"
+          :key="idx"
+        > 
+          <div class="track-base-metadatas">
+            <span class="track-name">
+              {{ track.name }}
+            </span>
+            <span class="artist-name">
+              {{ track.artist }}
+            </span>
+          </div>
+        </li>
+      </ul>
+      <h3>Next tracks</h3>
+      <ul >
+        <li 
+          v-for="(track, idx) of nextTracks"
+          :key="idx"
+        > 
+          <div class="track-base-metadatas">
+            <span class="track-name">
+              {{ track.name }}
+            </span>
+            <span class="artist-name">
+              {{ track.artist }}
+            </span>
+          </div>
+        </li>
+      </ul>
+    </modal>
   </div>
 </template>
 
 <script>
 
 import ProgressBar from "./ProgressBar.vue"
-
-import { AudioPlayerLogic } from "../models"
+import ModalComponent from "@/components/Modal.vue"
+import { AudioPlayer } from "../models"
 
 export default {
   name: 'AudioPlayer',
   components: {
-    'audio-progress-bar': ProgressBar
+    'audio-progress-bar': ProgressBar,
+    'modal': ModalComponent
   },
+  // props: {
+  //   audioPlayer: {
+  //     type: AudioPlayer,
+  //     default: () => new AudioPlayer()
+  //     // required: true
+  //   }
+  // },
   data() {
     return {
-      audio: new AudioPlayerLogic(),
-      advance: 8
+      audioPlayer: new AudioPlayer(),
+      tick: 0
     }
   },
   mounted() {
-    this.audio.onTimeUpdate = (evt) => {
+    this.audioPlayer.onTimeUpdate = (evt) => {
       this.$emit('timeupdate', event)
     }
+    console.log(this, this.$svsAudioPlayer)
+    // setInterval(() => {
+    //   this.forceRerender()
+    //   console.log(this.audioPlayer)
+    // }, 500)
   },
   computed: {
     isPlaying() {
-      return this.audio.isPlaying
+      return this.audioPlayer.isPlaying
     },
     duration() {
-      return this.audio.duration
+      return this.audioPlayer.duration
     },
     currentTime: {
       get: function() {
-        return this.audio.currentTime
+        return this.audioPlayer.currentTime
       },
       set: function(val) {
-        this.audio.currentTime = val
+        this.audioPlayer.currentTime = val
         // console.log(val)
       }
     },
     currentTrack() {
-      return this.audio.currentTrack
+      return this.audioPlayer.currentTrack
+    },
+    previousTracks() {
+      return this.audioPlayer.queue.playedTracks
+    },
+    nextTracks() {
+      return this.audioPlayer.queue.tracks
     }
   },
   methods: {
+    forceRerender() {
+      // console.log("Did you force my rerender?")
+      // this.tick += 1
+    },
     play() {
-      this.audio.play()
+      this.audioPlayer.play()
     },
     pause() {
-      this.audio.pause()
+      this.audioPlayer.pause()
     },
     togglePlayPause() {
-      if (this.audio.isPlaying) {
+      if (this.audioPlayer.isPlaying) {
         this.pause()
       } else {
         this.play()
@@ -116,20 +187,23 @@ export default {
     onMouseDownBackward() {
       let wasPlaying = this.isPlaying
       if (this.currentTime < 5) {
-        this.audio.previous()
+        this.audioPlayer.previous()
       }
-      this.audio.toStart()
+      this.audioPlayer.toStart()
       if (wasPlaying) this.play()
     },
     onMouseDownForward() {
       let wasPlaying = this.isPlaying
-      this.audio.next()
+      this.audioPlayer.next()
       if (wasPlaying) this.play()
+    },
+    toggleListDisplay() {
+      this.$refs.playlistModal.toggle()
     }
   },
   beforeDestroy() {
-    this.audio.destroy()
-    this.audio = null
+    this.audioPlayer.destroy()
+    this.audioPlayer = null
   }
 }
 </script>
@@ -137,9 +211,8 @@ export default {
 <style scoped lang='scss'>
 .audio-player-container {
   display: flex;
-  background: #333366;
   height: 60px;
-
+  justify-content: center;
   .below-bar {
     display: flex;
     justify-content: space-between;
@@ -166,6 +239,10 @@ export default {
     }
   }
 
+  .playlist {
+    display: flex;
+  }
+
   .progress-bar-section {
     display: block;
     width: 100%;
@@ -177,6 +254,11 @@ export default {
       font-variant-numeric: tabular-nums;
     }
   }
-
 }
+
+.audio-player-container {
+  color: #FFFADE;
+  background: #333366;
+}
+
 </style>

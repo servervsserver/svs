@@ -14,12 +14,24 @@ export default class AudioPlayerPlugin {
 
   }
 
-  get player() {
-    if (!this._player) {
-      this._player = new AudioPlayer.AudioPlayer()
+  set mainAudioPlayer(player) {
+    if (this._player) {
+      console.warn("There is already a main audio player that is bound to this plugin")
+      return
     }
+    this._player = player
+  }
+
+  get mainAudioPlayer() {
     return this._player
   }
+
+  // get player() {
+  //   if (!this._player) {
+  //     this._player = new AudioPlayer.AudioPlayer()
+  //   }
+  //   return this._player
+  // }
 
   static install(Vue, options) {
     Vue.prototype.$svsAudioPlayer = new AudioPlayerPlugin(Vue)

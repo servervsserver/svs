@@ -48,7 +48,7 @@ export default {
   },
   computed: {
     audioPlayer() {
-      return this.$svsAudioPlayer.player
+      return this.$svsAudioPlayer.mainAudioPlayer
     }
   },
   mounted() {
@@ -91,10 +91,11 @@ export default {
       console.log(this.activeAlbum, this.activeAlbumTracks)
     },
     onTrackClick(evt) {
-      console.log(this.$refs.audioPlayer, "what?")
-      console.log(evt)
-      this.audioPlayer
-        .setTrack(new AudioPlayerLogic.Track(evt.title, this.activeAlbum.name, 'https://' + evt.trackUrl))
+      console.log(this.$svsAudioPlayer, this.audioPlayer)
+      let track = new AudioPlayerLogic.Track(evt.id, evt.title, this.activeAlbum.name, 'https://' + evt.trackUrl)
+      this.audioPlayer.pushAsNextTrack(track)
+      // this.audioPlayer
+      //   .setTrack()
     }
   }
 

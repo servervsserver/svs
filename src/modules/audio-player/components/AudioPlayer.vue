@@ -63,67 +63,50 @@
         >
           <span class="icon">
             <i class="fa-solid fa-list-ol"></i>
-            </span>
+          </span>
         </button>
       </div>
     </section>
 
-    <modal ref="playlistModal">
-      <h3>Previous tracks</h3>
-      <ul >
-        <li 
-          v-for="(track, idx) of previousTracks"
-          :key="idx"
-        > 
-          <div class="track-base-metadatas">
-            <span class="track-name">
-              {{ track.name }}
-            </span>
-            <span class="artist-name">
-              {{ track.artist }}
-            </span>
-          </div>
-        </li>
-      </ul>
-      <h3>Next tracks</h3>
-      <ul >
-        <li 
-          v-for="(track, idx) of nextTracks"
-          :key="idx"
-        > 
-          <div class="track-base-metadatas">
-            <span class="track-name">
-              {{ track.name }}
-            </span>
-            <span class="artist-name">
-              {{ track.artist }}
-            </span>
-          </div>
-        </li>
-      </ul>
-    </modal>
+    <section class="extra">
+      <div class="buttons">
+        <button
+          class="button svs-button-transparent"
+          @mousedown="cyclePlayMode()"
+          >
+          <span v-if="isPlayModeStop" class="icon" >
+            <i class="fa-regular fa-circle-pause"></i>
+          </span>
+          <span v-if="isPlayModeLoopTrack" class="icon" >
+            <i class="fa-solid fa-repeat"></i>
+            <span>1</span>
+          </span>
+          <span v-if="isPlayModeLoopQueue" class="icon" >
+            <i class="fa-solid fa-repeat"></i>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <playlist-modal 
+      ref="playlistModal"
+      :queue="queue"
+      @track-click="onPlaylistTrackClick" />
   </div>
 </template>
 
 <script>
 
 import ProgressBar from "./ProgressBar.vue"
-import ModalComponent from "@/components/Modal.vue"
-import { AudioPlayer } from "../models"
+import PlaylistModalComponent from "./PlayListModal.vue"
+import { AudioPlayer, PlayMode } from "../models"
 
 export default {
   name: 'AudioPlayer',
   components: {
     'audio-progress-bar': ProgressBar,
-    'modal': ModalComponent
+    'playlist-modal': PlaylistModalComponent
   },
-  // props: {
-  //   audioPlayer: {
-  //     type: AudioPlayer,
-  //     default: () => new AudioPlayer()
-  //     // required: true
-  //   }
-  // },
   data() {
     return {
       audioPlayer: new AudioPlayer(),
@@ -134,7 +117,9 @@ export default {
     this.audioPlayer.onTimeUpdate = (evt) => {
       this.$emit('timeupdate', event)
     }
-    console.log(this, this.$svsAudioPlayer)
+    this.$svsAudioPlayer.mainAudioPlayer = this
+    
+    // console.log(this, this.$svsAudioPlayer)
     // setInterval(() => {
     //   this.forceRerender()
     //   console.log(this.audioPlayer)
@@ -159,11 +144,20 @@ export default {
     currentTrack() {
       return this.audioPlayer.currentTrack
     },
-    previousTracks() {
-      return this.audioPlayer.queue.playedTracks
+    queue() {
+      return this.audioPlayer.queue
     },
-    nextTracks() {
-      return this.audioPlayer.queue.tracks
+    playMode() {
+      return this.audioPlayer.playMode
+    },
+    isPlayModeStop() {
+      return this.playMode === PlayMode.STOP
+    },
+    isPlayModeLoopTrack() {
+      return this.playMode === PlayMode.LOOP_TRACK
+    },
+    isPlayModeLoopQueue() {
+      return this.playMode === PlayMode.LOOP_QUEUE
     }
   },
   methods: {
@@ -184,6 +178,15 @@ export default {
         this.play()
       }
     },
+    pushToQueue(track) {
+      this.audioPlayer.pushToQueue(track)
+    },
+    pushAsNextTrack(track) {
+      this.audioPlayer.pushAsNextTrack(track)
+    },
+    setTrack(track) {
+      this.audioPlayer.setTrack(track)
+    },
     onMouseDownBackward() {
       let wasPlaying = this.isPlaying
       if (this.currentTime < 5) {
@@ -199,7 +202,25 @@ export default {
     },
     toggleListDisplay() {
       this.$refs.playlistModal.toggle()
-    }
+    },
+    onPlaylistTrackClick(position, track) {
+      console.log(position, track)
+      this.audioPlayer.moveToPosition(position)
+    },
+    cyclePlayMode: (function() {
+      let availablePlayModes = [
+        PlayMode.STOP,
+        PlayMode.LOOP_TRACK,
+        PlayMode.LOOP_QUEUE,
+      ]
+      let currentPlayModeIdx = 0
+
+      return function() { 
+        currentPlayModeIdx += 1
+        currentPlayModeIdx %= availablePlayModes.length
+        this.audioPlayer.playMode = availablePlayModes[currentPlayModeIdx]
+      }
+    })()
   },
   beforeDestroy() {
     this.audioPlayer.destroy()
@@ -239,7 +260,8 @@ export default {
     }
   }
 
-  .playlist {
+  .playlist,
+  .extra {
     display: flex;
   }
 

@@ -183,7 +183,7 @@
 </template>
 
 <script>
-import {ref, get, child, set} from 'firebase/database'
+import {ref, get, child, set, push} from 'firebase/database'
 import ChoosePool from '../components/ChoosePoolButton.vue'
 import {rtdb} from "@/assets/db.js"
 
@@ -228,14 +228,13 @@ export default ({
     )
   },
 updated() {
-  console.log (this.$svsAuth.user.id)
   if (typeof this.$svsAuth.user.id != 'undefined') {
             //Get Value of "Voters" -> List of discord IDs who have voted
     get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
       console.log('here')
       if (snapshot.exists()) {
         var foreachresults = []
-        snapshot.val().forEach((element) => {
+        Object.values(snapshot.val()).forEach((element) => {
           foreachresults.push(bcrypt.compareSync(this.$svsAuth.user.id, element))
         })
         this.$data.hasvoted = foreachresults.includes(true)
@@ -308,18 +307,10 @@ mounted () {
       let voteData = this.$data.ballot
       if (this.validateVoteData(voteData,this.$data.EPs) && this.$data.hasvoted == false) {
 
-        get(child(dbRef, `realTimeVoting/voters`)).then((snapshot) => {
-        var tempvoterobject = snapshot.val()
-
-        set(child(dbRef, `realTimeVoting/voters/` + tempvoterobject.length ),bcrypt.hashSync(this.$svsAuth.user.id
+        push(child(dbRef, `realTimeVoting/voters/`),bcrypt.hashSync(this.$svsAuth.user.id
 , saltRounds))
         this.$data.hasvoted = true
 
-
-      }).catch((error) => {
-        console.error(error);
-      });
-      
        let ballot_location = `realTimeVoting/pools/` + this.$data.pool[0] + '/' + this.$svsAuth.user.id
 
 

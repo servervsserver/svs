@@ -1,6 +1,5 @@
 <template>
   <div class="audio-player-container">
-
     <!-- <progress class="progress is-small" value="20" max="100">20%</progress> -->
     <section class="progress-bar-section">
       <audio-progress-bar
@@ -8,7 +7,10 @@
         :max="duration"
       />
       <div class="below-bar">
-        <div class="track-base-metadatas" v-if="currentTrack">
+        <div
+          v-if="currentTrack"
+          class="track-base-metadatas"
+        >
           <div class="track-name">
             {{ currentTrack.name }}
           </div>
@@ -16,12 +18,14 @@
             {{ currentTrack.artist }}
           </div>
         </div>
-        <div class="track-base-metadatas" v-if="!currentTrack">
+        <div
+          v-if="!currentTrack"
+          class="track-base-metadatas"
+        >
           <div class="track-name">
             No track.
           </div>
-          <div class="artist-name">
-          </div>
+          <div class="artist-name" />
         </div>
 
         <div class="controls">
@@ -30,22 +34,28 @@
               class="button svs-button-transparent"
               @mousedown="onMouseDownBackward()"
             >
-              <span class="icon"><i class="fa-solid fa-backward"></i></span>
+              <span class="icon"><i class="fa-solid fa-backward" /></span>
             </button>
             <button
               class="button has-icon svs-button-transparent"
               @click="togglePlayPause()"
             >
               <span class="icon">
-                <i class="fa-solid fa-play" v-if="!isPlaying"></i>
-                <i class="fa-solid fa-pause" v-if="isPlaying"></i>
+                <i
+                  v-if="!isPlaying"
+                  class="fa-solid fa-play"
+                />
+                <i
+                  v-if="isPlaying"
+                  class="fa-solid fa-pause"
+                />
               </span>
             </button>
             <button
               class="button has-icon svs-button-transparent"
               @mousedown="onMouseDownForward()"
             >
-              <span class="icon"><i class="fa-solid fa-forward"></i></span>
+              <span class="icon"><i class="fa-solid fa-forward" /></span>
             </button>
           </div>
         </div>
@@ -62,7 +72,7 @@
           @mousedown="toggleListDisplay()"
         >
           <span class="icon">
-            <i class="fa-solid fa-list-ol"></i>
+            <i class="fa-solid fa-list-ol" />
           </span>
         </button>
       </div>
@@ -73,16 +83,25 @@
         <button
           class="button svs-button-transparent"
           @mousedown="cyclePlayMode()"
+        >
+          <span
+            v-if="isPlayModeStop"
+            class="icon"
           >
-          <span v-if="isPlayModeStop" class="icon" >
-            <i class="fa-regular fa-circle-pause"></i>
+            <i class="fa-regular fa-circle-pause" />
           </span>
-          <span v-if="isPlayModeLoopTrack" class="icon" >
-            <i class="fa-solid fa-repeat"></i>
+          <span
+            v-if="isPlayModeLoopTrack"
+            class="icon"
+          >
+            <i class="fa-solid fa-repeat" />
             <span>1</span>
           </span>
-          <span v-if="isPlayModeLoopQueue" class="icon" >
-            <i class="fa-solid fa-repeat"></i>
+          <span
+            v-if="isPlayModeLoopQueue"
+            class="icon"
+          >
+            <i class="fa-solid fa-repeat" />
           </span>
         </button>
       </div>
@@ -91,7 +110,8 @@
     <playlist-modal 
       ref="playlistModal"
       :queue="queue"
-      @track-click="onPlaylistTrackClick" />
+      @track-click="onPlaylistTrackClick"
+    />
   </div>
 </template>
 
@@ -112,18 +132,6 @@ export default {
       audioPlayer: new AudioPlayer(),
       tick: 0
     }
-  },
-  mounted() {
-    this.audioPlayer.onTimeUpdate = (evt) => {
-      this.$emit('timeupdate', event)
-    }
-    this.$svsAudioPlayer.mainAudioPlayer = this
-    
-    // console.log(this, this.$svsAudioPlayer)
-    // setInterval(() => {
-    //   this.forceRerender()
-    //   console.log(this.audioPlayer)
-    // }, 500)
   },
   computed: {
     isPlaying() {
@@ -160,6 +168,22 @@ export default {
       return this.playMode === PlayMode.LOOP_QUEUE
     }
   },
+  mounted() {
+    this.audioPlayer.onTimeUpdate = (evt) => {
+      this.$emit('timeupdate', event)
+    }
+    this.$svsAudioPlayer.mainAudioPlayer = this
+    
+    // console.log(this, this.$svsAudioPlayer)
+    // setInterval(() => {
+    //   this.forceRerender()
+    //   console.log(this.audioPlayer)
+    // }, 500)
+  },
+  beforeDestroy() {
+    this.audioPlayer.destroy()
+    this.audioPlayer = null
+  },
   methods: {
     forceRerender() {
       // console.log("Did you force my rerender?")
@@ -182,10 +206,17 @@ export default {
       this.audioPlayer.pushToQueue(track)
     },
     pushAsNextTrack(track) {
-      this.audioPlayer.pushAsNextTrack(track)
+      return this.audioPlayer.pushAsNextTrack(track)
     },
-    setTrack(track) {
-      this.audioPlayer.setTrack(track)
+    previous() {
+      let wasPlaying = this.isPlaying
+      this.audioPlayer.previous()
+      if (wasPlaying) this.play()
+    },
+    next() {
+      let wasPlaying = this.isPlaying
+      this.audioPlayer.next()
+      if (wasPlaying) this.play()
     },
     onMouseDownBackward() {
       let wasPlaying = this.isPlaying
@@ -196,9 +227,7 @@ export default {
       if (wasPlaying) this.play()
     },
     onMouseDownForward() {
-      let wasPlaying = this.isPlaying
-      this.audioPlayer.next()
-      if (wasPlaying) this.play()
+      this.next()
     },
     toggleListDisplay() {
       this.$refs.playlistModal.toggle()
@@ -221,10 +250,6 @@ export default {
         this.audioPlayer.playMode = availablePlayModes[currentPlayModeIdx]
       }
     })()
-  },
-  beforeDestroy() {
-    this.audioPlayer.destroy()
-    this.audioPlayer = null
   }
 }
 </script>

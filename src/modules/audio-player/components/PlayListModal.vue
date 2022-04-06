@@ -17,21 +17,21 @@
           @click="close"
         >
           <span class="icon">
-            <i class="fa-solid fa-circle-xmark"></i>
+            <i class="fa-solid fa-circle-xmark" />
           </span>
         </button>
       </header>
       <section class="modal-card-body">
         <!-- <h3>Previous tracks</h3> -->
-        <ul class="playlist-items" >
+        <ul class="playlist-items">
           <li
-            class="playlist-item clickable"
             v-for="(track, idx) of tracks"
+            :key="track.vueid"
+            class="playlist-item clickable"
             :class="{ 
               'track-played': idx < idxCurrentTrack , 
               'track-playing': idx == idxCurrentTrack,
               'track-toplay': idx > idxCurrentTrack }"
-            :key="track.vueid"
             @click="onTrackClick(idx - idxCurrentTrack, track)"
           > 
             <div

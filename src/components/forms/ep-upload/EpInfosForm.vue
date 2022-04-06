@@ -65,13 +65,13 @@ import {
 import AlbumInfos from "./album-infos.js"
 
 export default {
-  mixins: [
-    FormValidationMixin.forValidators(['title', 'stream-Link', 'cover art'])
-  ],
   components: {
     'text-input': TextInputComponent,
     'image-file-input': ImageFileInputComponent
   },
+  mixins: [
+    FormValidationMixin.forValidators(['title', 'stream-Link', 'cover art'])
+  ],
   props: {
     albumInfos: {
       type: AlbumInfos,

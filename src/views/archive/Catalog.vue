@@ -93,7 +93,8 @@ export default {
     onTrackClick(evt) {
       console.log(this.$svsAudioPlayer, this.audioPlayer)
       let track = new AudioPlayerLogic.Track(evt.id, evt.title, this.activeAlbum.name, 'https://' + evt.trackUrl)
-      this.audioPlayer.pushAsNextTrack(track)
+      if (this.audioPlayer.pushAsNextTrack(track))
+        this.audioPlayer.next()
       // this.audioPlayer
       //   .setTrack()
     }

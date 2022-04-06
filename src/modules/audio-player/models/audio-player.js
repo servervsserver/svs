@@ -117,7 +117,7 @@ export class AudioPlayerQueue {
    * Adds a track to the queue as the track playing after the current track
    * If noDuplicate is on, it won't be inserted if it is already in the list
    * @param {Track} track Track to add
-   * @returns True if inserted, false otherwise
+   * @returns {boolean} True if inserted, false otherwise
    */
   addAsNextTrack(track) {
     if (this.trackIsInQueue(track)) return false
@@ -612,6 +612,6 @@ export class AudioPlayer {
   }
 
   pushAsNextTrack(track) {
-    this._queue.addAsNextTrack(track)
+    return this._queue.addAsNextTrack(track)
   }
 }

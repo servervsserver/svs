@@ -8,19 +8,18 @@
       <div
         ref="trackAdvance"
         class="progress-bar-advance"
-        :style="{ width: percent + '%' }">
-      </div>
+        :style="{ width: percent + '%' }"
+      />
     </div>
     <div
       ref="thumb"
       class="progress-bar-thumb"
       :style="{ left: percent + '%' }"
-      >
+    >
       <div
         class="progress-bar-thumb-circle"
         @mousedown="onMouseDown($event)"
-      >
-      </div>
+      />
     </div>
   </div>
 </template>
@@ -28,6 +27,10 @@
 <script>
 export default {
   name: 'ProgressBar',
+  model: {
+    prop: 'value',
+    event: 'change'
+  },
   props: {
     min: {
       type: Number,
@@ -41,10 +44,6 @@ export default {
       type: Number,
       default: 100
     }
-  },
-  model: {
-    prop: 'value',
-    event: 'change'
   },
   computed: {
     range() {

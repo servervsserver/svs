@@ -40,8 +40,8 @@ import { User } from "@/models/dto/user";
 export default {
   props: {
     user: {
-
-      type: User
+      type: User,
+      required: true
     }
   }
 }

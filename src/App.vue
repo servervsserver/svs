@@ -25,13 +25,12 @@
       class="player"
     >
       <div class="player-container">
-        <div class="vertical-split"></div>
+        <div class="vertical-split" />
         <audio-player />
-        <div class="vertical-split"></div>
+        <div class="vertical-split" />
       </div>
-      <div class="vertical-split"></div>
+      <div class="vertical-split" />
     </section>
-
   </div>
 </template>
 

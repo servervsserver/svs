@@ -1,6 +1,5 @@
 <template>
   <div class="audio-player-container">
-
     <!-- <progress class="progress is-small" value="20" max="100">20%</progress> -->
     <section class="progress-bar-section">
       <audio-progress-bar
@@ -8,7 +7,10 @@
         :max="duration"
       />
       <div class="below-bar">
-        <div class="track-base-metadatas" v-if="currentTrack">
+        <div
+          v-if="currentTrack"
+          class="track-base-metadatas"
+        >
           <div class="track-name">
             {{ currentTrack.name }}
           </div>
@@ -16,12 +18,14 @@
             {{ currentTrack.artist }}
           </div>
         </div>
-        <div class="track-base-metadatas" v-if="!currentTrack">
+        <div
+          v-if="!currentTrack"
+          class="track-base-metadatas"
+        >
           <div class="track-name">
             No track.
           </div>
-          <div class="artist-name">
-          </div>
+          <div class="artist-name" />
         </div>
 
         <div class="controls">
@@ -30,22 +34,28 @@
               class="button svs-button-transparent"
               @mousedown="onMouseDownBackward()"
             >
-              <span class="icon"><i class="fa-solid fa-backward"></i></span>
+              <span class="icon"><i class="fa-solid fa-backward" /></span>
             </button>
             <button
               class="button has-icon svs-button-transparent"
               @click="togglePlayPause()"
             >
               <span class="icon">
-                <i class="fa-solid fa-play" v-if="!isPlaying"></i>
-                <i class="fa-solid fa-pause" v-if="isPlaying"></i>
+                <i
+                  v-if="!isPlaying"
+                  class="fa-solid fa-play"
+                />
+                <i
+                  v-if="isPlaying"
+                  class="fa-solid fa-pause"
+                />
               </span>
             </button>
             <button
               class="button has-icon svs-button-transparent"
               @mousedown="onMouseDownForward()"
             >
-              <span class="icon"><i class="fa-solid fa-forward"></i></span>
+              <span class="icon"><i class="fa-solid fa-forward" /></span>
             </button>
           </div>
         </div>
@@ -54,82 +64,192 @@
         </div>
       </div>
     </section>
+
+    <section class="playlist">
+      <div class="buttons">
+        <button
+          class="button svs-button-transparent"
+          @mousedown="toggleListDisplay()"
+        >
+          <span class="icon">
+            <i class="fa-solid fa-list-ol" />
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <section class="extra">
+      <div class="buttons">
+        <button
+          class="button svs-button-transparent"
+          @mousedown="cyclePlayMode()"
+        >
+          <span
+            v-if="isPlayModeStop"
+            class="icon"
+          >
+            <i class="fa-regular fa-circle-pause" />
+          </span>
+          <span
+            v-if="isPlayModeLoopTrack"
+            class="icon"
+          >
+            <i class="fa-solid fa-repeat" />
+            <span>1</span>
+          </span>
+          <span
+            v-if="isPlayModeLoopQueue"
+            class="icon"
+          >
+            <i class="fa-solid fa-repeat" />
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <playlist-modal 
+      ref="playlistModal"
+      :queue="queue"
+      @track-click="onPlaylistTrackClick"
+    />
   </div>
 </template>
 
 <script>
 
 import ProgressBar from "./ProgressBar.vue"
-
-import { AudioPlayerLogic } from "../models"
+import PlaylistModalComponent from "./PlayListModal.vue"
+import { AudioPlayer, PlayMode } from "../models"
 
 export default {
   name: 'AudioPlayer',
   components: {
-    'audio-progress-bar': ProgressBar
+    'audio-progress-bar': ProgressBar,
+    'playlist-modal': PlaylistModalComponent
   },
   data() {
     return {
-      audio: new AudioPlayerLogic(),
-      advance: 8
-    }
-  },
-  mounted() {
-    this.audio.onTimeUpdate = (evt) => {
-      this.$emit('timeupdate', event)
+      audioPlayer: new AudioPlayer(),
+      tick: 0
     }
   },
   computed: {
     isPlaying() {
-      return this.audio.isPlaying
+      return this.audioPlayer.isPlaying
     },
     duration() {
-      return this.audio.duration
+      return this.audioPlayer.duration
     },
     currentTime: {
       get: function() {
-        return this.audio.currentTime
+        return this.audioPlayer.currentTime
       },
       set: function(val) {
-        this.audio.currentTime = val
+        this.audioPlayer.currentTime = val
         // console.log(val)
       }
     },
     currentTrack() {
-      return this.audio.currentTrack
+      return this.audioPlayer.currentTrack
+    },
+    queue() {
+      return this.audioPlayer.queue
+    },
+    playMode() {
+      return this.audioPlayer.playMode
+    },
+    isPlayModeStop() {
+      return this.playMode === PlayMode.STOP
+    },
+    isPlayModeLoopTrack() {
+      return this.playMode === PlayMode.LOOP_TRACK
+    },
+    isPlayModeLoopQueue() {
+      return this.playMode === PlayMode.LOOP_QUEUE
     }
   },
+  mounted() {
+    this.audioPlayer.onTimeUpdate = (evt) => {
+      this.$emit('timeupdate', event)
+    }
+    this.$svsAudioPlayer.mainAudioPlayer = this
+    
+    // console.log(this, this.$svsAudioPlayer)
+    // setInterval(() => {
+    //   this.forceRerender()
+    //   console.log(this.audioPlayer)
+    // }, 500)
+  },
+  beforeDestroy() {
+    this.audioPlayer.destroy()
+    this.audioPlayer = null
+  },
   methods: {
+    forceRerender() {
+      // console.log("Did you force my rerender?")
+      // this.tick += 1
+    },
     play() {
-      this.audio.play()
+      this.audioPlayer.play()
     },
     pause() {
-      this.audio.pause()
+      this.audioPlayer.pause()
     },
     togglePlayPause() {
-      if (this.audio.isPlaying) {
+      if (this.audioPlayer.isPlaying) {
         this.pause()
       } else {
         this.play()
       }
     },
+    pushToQueue(track) {
+      this.audioPlayer.pushToQueue(track)
+    },
+    pushAsNextTrack(track) {
+      return this.audioPlayer.pushAsNextTrack(track)
+    },
+    previous() {
+      let wasPlaying = this.isPlaying
+      this.audioPlayer.previous()
+      if (wasPlaying) this.play()
+    },
+    next() {
+      let wasPlaying = this.isPlaying
+      this.audioPlayer.next()
+      if (wasPlaying) this.play()
+    },
     onMouseDownBackward() {
       let wasPlaying = this.isPlaying
       if (this.currentTime < 5) {
-        this.audio.previous()
+        this.audioPlayer.previous()
       }
-      this.audio.toStart()
+      this.audioPlayer.toStart()
       if (wasPlaying) this.play()
     },
     onMouseDownForward() {
-      let wasPlaying = this.isPlaying
-      this.audio.next()
-      if (wasPlaying) this.play()
-    }
-  },
-  beforeDestroy() {
-    this.audio.destroy()
-    this.audio = null
+      this.next()
+    },
+    toggleListDisplay() {
+      this.$refs.playlistModal.toggle()
+    },
+    onPlaylistTrackClick(position, track) {
+      console.log(position, track)
+      this.audioPlayer.moveToPosition(position)
+    },
+    cyclePlayMode: (function() {
+      let availablePlayModes = [
+        PlayMode.STOP,
+        PlayMode.LOOP_TRACK,
+        PlayMode.LOOP_QUEUE,
+      ]
+      let currentPlayModeIdx = 0
+
+      return function() { 
+        currentPlayModeIdx += 1
+        currentPlayModeIdx %= availablePlayModes.length
+        this.audioPlayer.playMode = availablePlayModes[currentPlayModeIdx]
+      }
+    })()
   }
 }
 </script>
@@ -137,9 +257,8 @@ export default {
 <style scoped lang='scss'>
 .audio-player-container {
   display: flex;
-  background: #333366;
   height: 60px;
-
+  justify-content: center;
   .below-bar {
     display: flex;
     justify-content: space-between;
@@ -166,6 +285,11 @@ export default {
     }
   }
 
+  .playlist,
+  .extra {
+    display: flex;
+  }
+
   .progress-bar-section {
     display: block;
     width: 100%;
@@ -177,6 +301,11 @@ export default {
       font-variant-numeric: tabular-nums;
     }
   }
-
 }
+
+.audio-player-container {
+  color: #FFFADE;
+  background: #333366;
+}
+
 </style>

@@ -4,8 +4,8 @@
       <img
         :src="coverArtUrl"
         class="cover-art clickable"
-        @click="onCoverArtClick"
         onerror="if (this.src != '/placeholders/uwu_colored_svs_transparent.png') this.src = '/placeholders/uwu_colored_svs_transparent.png';"
+        @click="onCoverArtClick"
       >
       <div class="album-infos">
         <div class="album-name">

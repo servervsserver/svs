@@ -8,19 +8,18 @@
       <div
         ref="trackAdvance"
         class="progress-bar-advance"
-        :style="{ width: percent + '%' }">
-      </div>
+        :style="{ width: percent + '%' }"
+      />
     </div>
     <div
       ref="thumb"
       class="progress-bar-thumb"
       :style="{ left: percent + '%' }"
-      >
+    >
       <div
         class="progress-bar-thumb-circle"
         @mousedown="onMouseDown($event)"
-      >
-      </div>
+      />
     </div>
   </div>
 </template>
@@ -28,6 +27,10 @@
 <script>
 export default {
   name: 'ProgressBar',
+  model: {
+    prop: 'value',
+    event: 'change'
+  },
   props: {
     min: {
       type: Number,
@@ -41,10 +44,6 @@ export default {
       type: Number,
       default: 100
     }
-  },
-  model: {
-    prop: 'value',
-    event: 'change'
   },
   computed: {
     range() {
@@ -109,7 +108,7 @@ export default {
 <style scoped lang='scss'>
 @use 'sass:color';
 
-$pb-height: 2px;
+$pb-height: 8px;
 /* $thumb-size: $pb-height * 1.5;
 $thumb-half-size: $thumb-size * 0.5; */
 $transi-duration: 0.25s;
@@ -123,7 +122,7 @@ $transi-duration: 0.25s;
       $transi-duration box-shadow;
   }
 
-  background: yellow;
+  // background: yellow;
   display: block;
   position: relative;
   width: 100%;
@@ -133,7 +132,8 @@ $transi-duration: 0.25s;
     position: relative;
     background: color.mix(#000, #f5816b, 50%);
     width: 100%;
-    height: 100%;
+    height: calc(var(--progress-bar-height) * 0.6);
+    top: calc(var(--progress-bar-height) * 0.2);
     box-shadow: 0px 0px 2px 0px #333366;
     border-radius: 2px;
 
@@ -179,7 +179,7 @@ $transi-duration: 0.25s;
   .progress-bar-thumb-circle:hover {
     box-shadow: 0px 0px 1px 1px #f5816b;
     .progress-bar-thumb-circle {
-      transform: scale(1.8);
+      transform: scale(1.4);
 
     }
   }

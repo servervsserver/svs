@@ -24,29 +24,29 @@
             v-for="(track, index) in tracks"
             :key="index"
             class="track-list-item clickable"
-            @click="onTrackClick(track)">
+            @click="onTrackClick(track)"
+          >
             <div class="track-number">
-              {{ index + 1}}
+              {{ index + 1 }}
             </div>
             <div class="track-title">
               {{ track.title }}
             </div>
-            <div class="track-duration">
-            </div>
+            <div class="track-duration" />
           </li>
           <li 
             v-for="(track, index) in tracks"
             :key="index"
             class="track-list-item"
-            @click="onTrackClick(track)">
+            @click="onTrackClick(track)"
+          >
             <div class="track-number">
-              {{ index + 1}}
+              {{ index + 1 }}
             </div>
             <div class="track-title">
               {{ track.title }}
             </div>
-            <div class="track-duration">
-            </div>
+            <div class="track-duration" />
           </li>
         </ul>
       </div>

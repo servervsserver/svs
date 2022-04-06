@@ -30,19 +30,19 @@ export class SvSIVInformations {
 
     this.midCompetitionStream1 = new EventMilestone(
       "End of Week #1 Check in stream",
-      new Date(Date.UTC(2022, 3, 2, 21, 0, 0)),
+      new Date(Date.UTC(2022, 3, 2, 18, 0, 0)),
       "Our first check-in stream where we’ll give advice and resources to participants on how they can make the most out of taking part; and of course, raise money for charity."
     )
 
     this.midCompetitionStream2 = new EventMilestone(
       "End of Week #2 Check in stream",
-      new Date(Date.UTC(2022, 3, 9, 21, 0, 0)),
+      new Date(Date.UTC(2022, 3, 9, 18, 0, 0)),
       "Our second check-in stream to keep you motivated, see how communities are doing and hopefully smash some donation goals. Details TBA"
     )
 
     this.midCompetitionStream3 = new EventMilestone(
       "End of Week #3 Check in stream",
-      new Date(Date.UTC(2022, 3, 16, 21, 0, 0)),
+      new Date(Date.UTC(2022, 3, 16, 18, 0, 0)),
       "Our final check-in stream to hopefully take some of the pressure of (or put it on…) before the submissions close the following week. Details TBA"
     )
 

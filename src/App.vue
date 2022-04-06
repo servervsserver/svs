@@ -21,16 +21,18 @@
       <svs-footer />
     </div>
 
-    <section 
-      class="player"
-    >
-      <div class="player-container">
+    <coming-soon>
+      <section 
+        class="player"
+      >
+        <div class="player-container">
+          <div class="vertical-split" />
+          <audio-player />
+          <div class="vertical-split" />
+        </div>
         <div class="vertical-split" />
-        <audio-player />
-        <div class="vertical-split" />
-      </div>
-      <div class="vertical-split" />
-    </section>
+      </section>
+    </coming-soon>
   </div>
 </template>
 

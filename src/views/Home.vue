@@ -94,7 +94,9 @@
               style="text-decoration: none"
               href="https://servervsserver.gumroad.com/l/sfs1"
             >
-              Get the pack! </a>&nbsp;
+              Get the pack! 
+            </a>
+            &nbsp;
             <a
               class="button svs-evolving-gradient"
               style="text-decoration: none"
@@ -102,6 +104,54 @@
             >
               Donate to Project Hope
             </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="charity-section shadow-depth-3">
+      <div class="charity-section-inner">
+        <div
+          class="columns"
+          style="margin: 0"
+        >
+          <div class="column is-2"></div>
+          <div class="column is-4 has-text-centered">
+            <h2>Give A Beat</h2>
+            <hr/>
+            <p>
+              Give a Beat’s mission is to use the power of music as a pathway to healing and opportunity for those impacted by the criminal justice system, 
+              while inspiring communities to take action. 
+            </p>
+            <p>
+              They use music education and mentoring programs in juvenile halls, schools, 
+              their Prison Electronic Music Program, and their Reentry Mentoring Program to fulfill their mission.
+            </p>
+            <p>
+              Give a Beat engages our industry to help widen the pathways for people to thrive, 
+              encourage empathy, reduce recidivism, and unite to contribute to the larger transformation of the USA's criminal justice system. 
+            </p>
+            <a
+              class="button svs-evolving-gradient"
+              style="text-decoration: none"
+              href="https://www.giveabeat.org"
+            >
+              To learn more or get involved
+            </a>
+            &nbsp;
+            <a
+              class="button svs-evolving-gradient"
+              style="text-decoration: none"
+              href="https://tiltify.com/@svs/svs-iv-gab"
+            >
+              Donate to help the cause!
+            </a>
+            
+          </div>
+          <div class="column is-1">
+          </div>
+          <div class="column is-4 icon-block">
+            <img src="/icons/giveabeat/GiveaBeat_Logo_shadow.png" width="400"/>
           </div>
         </div>
       </div>
@@ -134,10 +184,6 @@ export default {
   align-content: center;
   justify-content: center;
 
-  .front-container {
-    /* align-self: flex; */
-  }
-
   h1 {
     margin-top: 30px;
     text-align: center;
@@ -166,14 +212,40 @@ export default {
   }
 }
 
+.charity-section {
+  margin-top: 60px;
+  padding: 1px 0px;
+  background-color: #edcd99;
+  // background-image: url("/backgrounds/bg_light.png");
+
+  .charity-section-inner {
+    background-color: #333366;
+    position: relative;
+    box-shadow: 0 24px 38px 3px rgb(0 0 0 / 14%),
+      0 9px 46px 8px rgb(0 0 0 / 12%), 0 11px 15px -7px rgb(0 0 0 / 40%);
+  }
+
+  .icon-block {
+    display: flex;
+    align-items: center;
+  }
+
+  hr {
+    margin: 1rem auto;
+    height: 1px;
+    width: 60%;
+  }
+}
+
 .sample-pack-section {
-  padding: 60px 0px;
+  padding: 1px 0px;
   background-color: #edcd99;
   background-image: url("/backgrounds/bg_light.png");
 
   .sample-pack-section-inner {
     background-color: #333366;
     position: relative;
+    padding: 20px 0px;
     box-shadow: 0 24px 38px 3px rgb(0 0 0 / 14%),
       0 9px 46px 8px rgb(0 0 0 / 12%), 0 11px 15px -7px rgb(0 0 0 / 40%);
   }

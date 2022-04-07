@@ -44,8 +44,9 @@ export default {
 </script>
 
 <style scoped lang='scss'>
+  @use 'sass:math';
 
-$label-width: 25px;
+  $label-width: 25px;
   $label-height: 13px;
 
   .checkbox {
@@ -79,7 +80,7 @@ $label-width: 25px;
   }
 
   .checkbox:checked + .label .ball {
-    transform: translateX($label-width / 2);
+    transform: translateX(math.div($label-width, 2));
   }
 
   .label {

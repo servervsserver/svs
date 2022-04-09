@@ -128,7 +128,7 @@
               their Prison Electronic Music Program, and their Reentry Mentoring Program to fulfill their mission.
             </p>
             <p>
-              Give a Beat engages our industry to help widen the pathways for people to thrive, 
+              Give a Beat engages the music industry to help widen the pathways for people to thrive, 
               encourage empathy, reduce recidivism, and unite to contribute to the larger transformation of the USA's criminal justice system. 
             </p>
             <a
@@ -136,7 +136,7 @@
               style="text-decoration: none"
               href="https://www.giveabeat.org"
             >
-              To learn more or get involved
+              Learn more or get involved
             </a>
             &nbsp;
             <a

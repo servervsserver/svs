@@ -4,6 +4,7 @@ import Vote from '@/views/vote.vue'
 import AnonymousConcerns from "@/views/AnonymousConcerns.vue"
 import About from '@/views/About.vue'
 import CookiePolicy from '@/views/CookiePolicy.vue'
+import FAQ from '@/views/Faq.vue'
 
 
 import MainEvent from '@/views/main-event/MainEvent.vue'
@@ -132,6 +133,11 @@ export const routes = [
     path: '/charity',
     name: 'Charity',
     component: Charities
+  },
+  {
+    path: '/faq',
+    name: 'FAQ',
+    component: FAQ
   },
   {
     path: '/profile',

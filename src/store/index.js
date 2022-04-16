@@ -14,7 +14,7 @@ export default new Vuex.Store({
       return state.svsMainEventInformations.nextMilestone
     },
     timeTillEpSubmission: state => {
-      return state.svsMainEventInformations.midCompetitionStream3.timeRemaining
+      return state.svsMainEventInformations.midCompetitionStream3.timeRemaining + 60 * 60 * 1000 * 24 * 3
     },
     isComingSoonBypassed: state => {
       return process.env.VUE_APP_BYPASS_COMINGSOON == 'true'

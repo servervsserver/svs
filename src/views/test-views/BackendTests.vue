@@ -1,15 +1,16 @@
 <template>
-<div class="container">
-  <h1>Backend tests</h1>
-  <div>
-    Write the admins to server map in Firebase
-    <button
-      class="button"
-     @click="writeAdminServMap">
-     Update
-    </button>
+  <div class="container">
+    <h1>Backend tests</h1>
+    <div>
+      Write the admins to server map in Firebase
+      <button
+        class="button"
+        @click="writeAdminServMap"
+      >
+        Update
+      </button>
+    </div>
   </div>
-</div>
 </template>
 
 <script>

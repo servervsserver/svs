@@ -115,10 +115,10 @@
           class="columns"
           style="margin: 0"
         >
-          <div class="column is-2"></div>
+          <div class="column is-2" />
           <div class="column is-4 has-text-centered">
             <h2>Give A Beat</h2>
-            <hr/>
+            <hr>
             <p>
               Give a Beat’s mission is to use the power of music as a pathway to healing and opportunity for those impacted by the criminal justice system, 
               while inspiring communities to take action. 
@@ -146,12 +146,13 @@
             >
               Donate to help the cause!
             </a>
-            
           </div>
-          <div class="column is-1">
-          </div>
+          <div class="column is-1" />
           <div class="column is-4 icon-block">
-            <img src="/icons/giveabeat/GiveaBeat_Logo_shadow.png" width="400"/>
+            <img
+              src="/icons/giveabeat/GiveaBeat_Logo_shadow.png"
+              width="400"
+            >
           </div>
         </div>
       </div>

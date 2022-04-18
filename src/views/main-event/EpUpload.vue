@@ -27,15 +27,22 @@
         </blockquote>
       </div>
       <div v-if="isLeader">
-        <blockquote v-if="server" class="columns is-flex is-vcentered">
-          <img :src="'https://' + server.icon_url" width="100" height="20" />
-          <div>You are submitting for <strong>{{server.name}}</strong></div>
+        <blockquote
+          v-if="server"
+          class="columns is-flex is-vcentered"
+        >
+          <img
+            :src="'https://' + server.icon_url"
+            width="100"
+            height="20"
+          >
+          <div>You are submitting for <strong>{{ server.name }}</strong></div>
         </blockquote>
         <blockquote v-if="server === undefined">
           Loading your server...
         </blockquote>
         <blockquote v-if="server === null">
-          Sorry <strong>{{user.discordTag}}</strong>. <br/> 
+          Sorry <strong>{{ user.discordTag }}</strong>. <br> 
           We couldn't find a server in which you are a leader. 
         </blockquote>
         <div
@@ -58,7 +65,10 @@
           </button>
         </div>
       </div>
-      <modal ref="submitmodal" :open="true">
+      <modal
+        ref="submitmodal"
+        :open="true"
+      >
         <template v-slot:header>
           <strong v-if="isIdle">Nothing...</strong>
           <strong v-if="isCheckingValidity">Checking submission validity...</strong>
@@ -68,8 +78,8 @@
           <strong v-if="isSent">EP submitted!</strong>
         </template>
         <template v-slot:default>
-          <spinner v-if="isCheckingValidity"/>
-          <spinner v-if="isSending"/>
+          <spinner v-if="isCheckingValidity" />
+          <spinner v-if="isSending" />
           <div v-if="isReportingErrors">
             <ul>
               <li

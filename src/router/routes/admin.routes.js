@@ -19,11 +19,6 @@ export const ADMIN_ROUTES = [
     }
   },
   {
-    path: 'for-devs',
-    name: 'Administration For Devs',
-    component: AdminForDev
-  },
-  {
     path: 'servers',
     name: 'ServerListAdmin',
     component: ServerList,
@@ -46,7 +41,15 @@ export const ADMIN_ROUTES = [
     meta: {
       title: "Anonymous Concerns"
     }
-  }
+  },
+  {
+    path: 'for-devs',
+    name: 'Administration For Devs',
+    component: AdminForDev,
+    meta: {
+      title: "AdminForDev"
+    }
+  },
 ]
 
 function createAdminBlockRouter(path) {

@@ -37,6 +37,5 @@ export class Server extends Model {
  */
  Server.collection = "servers"
  Server.fromFirestore = function(firestoreObject) {
-  console.log(firestoreObject)
   return new Server().fromFirestore(firestoreObject)
 }

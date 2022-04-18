@@ -150,7 +150,9 @@ export default {
       return this.$svsAuth.isAuthenticated
     },
     isLeader() {
-      return this.$svsAuth.isLeader()
+      // return this.$svsAuth.isLeader()
+      if (!this.user) return false
+      return this.user.isServerLeader
     },
     isIdle() {
       return this.submissionState == SUBMISSION_STATE.IDLE

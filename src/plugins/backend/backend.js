@@ -286,13 +286,11 @@ export default class BackendPlugin {
     )
     return new Promise((resolve, reject) => {
       onValue(dbRef, (snapshot) => {
-        console.log(path)
         if (!snapshot.exists()) {
           reject("The item doesn't exist")
           return
         }
         const data = snapshot.val()
-        console.log(data)
         resolve(data)
         return
       })
@@ -653,12 +651,9 @@ export default class BackendPlugin {
     let data = await this.getAllServers()
 
     const updates = {}
-    console.log(data)
     data.forEach(sapp => {
-      console.log(sapp)
       sapp.admins.forEach(a => {
         a = a.replace(/[\$\#\.\/\[\] ]/g, '_').toLowerCase()
-        console.log(a)
         updates[['leaders', a].join('/')] = { server: sapp.id }
       })
     })
@@ -684,8 +679,7 @@ export default class BackendPlugin {
     for (let si in server_id) {
       promises.push(getDoc(refs[si]).then(
         document => {
-          data[si] = document.data();
-          // console.log(data);
+          data[si] = document.data();          
           return document;
         }
       ))
@@ -694,8 +688,6 @@ export default class BackendPlugin {
 
 
     return Promise.all(promises).then(() => {
-      // console.log(data);
-
       return data;
     });
 

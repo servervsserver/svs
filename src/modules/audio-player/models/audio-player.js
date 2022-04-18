@@ -419,7 +419,7 @@ export class AudioPlayer {
     /**
      * @type {boolean} If set to true, moving in the queue will start the next track directly
      */
-    this.autoPlay = true
+    this.autoPlay = false
 
     /**
      * @type {number} Defines the behavior when arriving at the end of a track

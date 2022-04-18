@@ -11,6 +11,11 @@ export class Album extends Model {
     this.id = null
 
     /**
+     * @type {string} Id of the server that created the Album
+     */
+    this.server_id = null
+
+    /**
      * @type {string} Name of the Album
      */
     this.name = ""

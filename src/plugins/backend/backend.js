@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, runTransaction, writeBatch } from "firebase/firestore"
+import { DocumentReference, getFirestore, runTransaction, writeBatch } from "firebase/firestore"
 import { getDatabase } from "firebase/database";
 
 import { getExtension } from "./utils"
@@ -184,6 +184,21 @@ export default class BackendPlugin {
   }
 
   /**
+   * Writes multiple documents in a single batch
+   * @param {{ref: DocumentReference<any>, data: FirestoreModel.Model}[]} documents 
+   */
+  async firestoreWriteDocs(documents) {
+    const batch = writeBatch(this._firestoreDb)
+
+    for(let doc of documents) {
+      let data = doc.data.toFirestore()
+      batch.set(doc.ref, data)
+    }
+
+    return await batch.commit()
+  }
+
+  /**
    * Deletes a documents of a given id
    * @param {*} pathOrType FirestoreModel or path to the collection
    * @param {string} docId Id of the document
@@ -205,9 +220,10 @@ export default class BackendPlugin {
   
   /**
    * Uploads a file to aws
-   * @param {File} file Path to the 
-   * @param {string} folderPath 
-   * @param {string} nameWithoutExtension 
+   * @param {File} file File to upload
+   * @param {string} folderPath Path to the file within the server
+   * @param {string} nameWithoutExtension Name of the file
+   * @return {Promise<string>} The full path to access the file
    */
   async awsUploadFile(file, folderPath, nameWithoutExtension) {
     if (!file) {
@@ -249,6 +265,16 @@ export default class BackendPlugin {
           }
         })
       })
+  }
+
+  /**
+   * 
+   * @param {{file: File, path: string, name: string}[]} filesToUpload 
+   * @returns 
+   */
+  async awsUploadFiles(filesToUpload) {
+    let promises = filesToUpload.map(ftu => this.awsUploadFile(ftu.file,ftu.path, ftu.name))
+    return Promise.all(promises)
   }
 
   /**
@@ -377,6 +403,87 @@ export default class BackendPlugin {
 
   }
 
+  // SvS IV submission
+
+  /**
+   * @param {string} serverId Id of the server submitting
+   * @param {FirestoreModel.Album} album 
+   * @param {FirestoreModel.Track[]} tracks 
+   * @param {FirestoreModel.TrackCreditsEntry[][]} credits 
+   * @param {File} coverArtFile 
+   * @param {File[]} trackAudioFiles 
+   */
+  async submitFullAlbum(serverId, album, tracks, credits, coverArtFile, trackAudioFiles) {
+
+    if (tracks.length != trackAudioFiles.length) {
+      throw Error("The number of tracks must be the same as audio files")
+    }
+
+    // Prepare what to write to firestore and AWS
+    const docsToWrite = []
+    let filesToUpload = []
+    
+    const albumServerRef = this.firestoreNewDocReference(FirestoreModel.Album)
+    let albumUid = albumServerRef.id
+    
+    album.server_id = serverId
+    album.id = albumUid
+    
+    for(let trackIdx in tracks) {
+      let track = tracks[trackIdx]
+      const trackServerRef = this.firestoreNewDocReference(FirestoreModel.Track)
+      let trackUid = trackServerRef.id
+      
+      track.id = trackUid
+      track.album_id = album.id
+      
+      album.tracks_ids.push(trackUid)
+      
+      
+      let trackCredits = credits[trackIdx]
+      
+      for (let creditsEntryIdx in trackCredits) {
+        let creditEntry = trackCredits[creditsEntryIdx]
+        const ceServerRef = this.firestoreNewDocReference(FirestoreModel.TrackCreditsEntry)
+        let ceUid = ceServerRef.id
+        
+        creditEntry.id = ceUid
+        creditEntry.track_id = track.id
+        
+        track.credits_ids.push(ceUid)
+        
+        docsToWrite.push({ ref: ceServerRef, data: creditEntry})
+      }
+      
+      filesToUpload.push({ file: trackAudioFiles[trackIdx], path: 'tracks/audio_files', name: trackUid })
+      docsToWrite.push({ ref: trackServerRef, data: track })
+    }
+    
+    filesToUpload.push({ file: coverArtFile, path: 'albums/cover_arts', name: albumUid })
+    docsToWrite.push({ ref: albumServerRef, data: album })
+
+    // Upload to aws
+    let awsRes = await this.awsUploadFiles(filesToUpload)
+
+    // Add the file urls to firestore data
+    let coverArtUrl = awsRes[awsRes.awsRes.length - 1]
+    album.coverart_url = coverArtUrl
+
+    for(let trackIdx in tracks) {
+      let track = tracks[trackIdx]
+      let audioUrl = awsRes[trackIdx]
+      track.audiofile_url = audioUrl
+    }
+
+    // Write firestore data
+
+    await this.firestoreWriteDocs(docsToWrite)
+    // for( let docToWrite of docsToWrite) {
+    //   this.firestoreWriteDoc(docToWrite.ref, docToWrite.data)
+    // }
+
+  }
+  
   // E P
   /**
    * Creates an EP in the DB
@@ -384,7 +491,7 @@ export default class BackendPlugin {
    * @param {File} audioFile Audio file of the track
    */
   async createEp(ep, coverArtFile) {
-
+    
     const serverRef = this.firestoreNewDocReference(FirestoreModel.Album)
     let uid = serverRef.id
     

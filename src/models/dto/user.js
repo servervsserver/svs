@@ -7,10 +7,12 @@ export class User {
     this.icon = "/placeholders/uwu_colored_svs.jpg"
     this.isStaff = true
     this.isServerLeader = true
+    
   }
 
   static fromAuthServData(data) {
 
+    console.log(data)
     if (data === "string") {
       try {
         data = JSON.parse(data)

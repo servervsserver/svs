@@ -150,7 +150,6 @@ export default {
       return this.$svsAuth.isAuthenticated
     },
     isLeader() {
-      // return this.$svsAuth.isLeader()
       if (!this.user) return false
       return this.user.isServerLeader
     },
@@ -177,6 +176,7 @@ export default {
     }
   },
   async mounted() {
+    // this.ep = Album.createRandomValidAlbum()
     await this.onUserChange()
   },
   methods: {
@@ -196,7 +196,6 @@ export default {
         return 
       }
       let discordTag = user.discordTag
-      this.ep = Album.createRandomValidAlbum()
       try {
         this.server = undefined
         this.server = await this.$svsBackend.getServerOfLeader(discordTag)    

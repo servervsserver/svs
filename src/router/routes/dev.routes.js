@@ -3,6 +3,8 @@ import ValidatorTest from '@/views/test-views/ValidatorTest.vue'
 import MainTest from '@/views/test-views/MainTest.vue'
 import ColorPaletteTest from '@/views/test-views/ColorPalette.vue'
 import ProfileTest from '@/views/test-views/ProfileTest.vue'
+import BackendTests from "@/views/test-views/BackendTests.vue"
+
 import CookieBanner from '@/components/cookie/CookieBanner.vue'
 import OpenVoting from '@/components/OpenVoting.vue'
 
@@ -36,6 +38,11 @@ const DEV_ROUTES = [
     path: 'cookie-banner',
     name: 'Cookie Banner Dev',
     component: CookieBanner
+  },
+  {
+    path: 'backend-tests',
+    name: 'Backend Tests Dev',
+    component: BackendTests
   }
 ]
 

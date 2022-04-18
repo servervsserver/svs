@@ -4,6 +4,7 @@ import Dashboard from '@/views/admin/Dashboard.vue'
 import AnonymousConcerns from "@/views/admin/AnonymousConcerns.vue"
 import ServerList from "@/views/admin/ServerList.vue"
 import ThemeList from "@/views/admin/ThemeList.vue"
+import AdminForDev from "@/views/admin/AdminForDev.vue"
 
 
 import store from '@/store'
@@ -16,6 +17,11 @@ export const ADMIN_ROUTES = [
     meta: {
       title: "Dashboard",
     }
+  },
+  {
+    path: 'for-devs',
+    name: 'Administration For Devs',
+    component: AdminForDev
   },
   {
     path: 'servers',

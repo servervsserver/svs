@@ -16,51 +16,79 @@
           </p>
         </div>
       </div>
-      <ep-upload-form
-        :ep="ep"
-        @validation-change="onEpValidationChange"
-      />
-      <button
-        class="button"
-        :disabled="!canSubmit"
-        @click="submit"
-      >
-        <span class="icon">
-          <i class="fas fa-paper-plane" />
-        </span>
-        <span>Submit</span>
-      </button>
+      <div v-if="!isAuthenticated">
+        <blockquote>
+          You must be authenticated to submit an EP
+        </blockquote>
+      </div>
+      <div v-if="isAuthenticated && !isLeader">
+        <blockquote>
+          You must be the leader of a server to submit an EP
+        </blockquote>
+      </div>
+      <div v-if="isLeader">
+        <blockquote v-if="server" class="columns is-flex is-vcentered">
+          <img :src="'https://' + server.icon_url" width="100" height="20" />
+          <div>You are submitting for <strong>{{server.name}}</strong></div>
+        </blockquote>
+        <blockquote v-if="server === undefined">
+          Loading your server...
+        </blockquote>
+        <blockquote v-if="server === null">
+          Sorry <strong>{{user.discordTag}}</strong>. <br/> 
+          We couldn't find a server in which you are a leader. 
+        </blockquote>
+        <div
+          v-if="server"
+        >
+          <ep-upload-form 
+
+            :ep="ep"
+            @validation-change="onEpValidationChange"
+          />
+          <button
+            class="button"
+            :disabled="!canSubmit"
+            @click="submit"
+          >
+            <span class="icon">
+              <i class="fas fa-paper-plane" />
+            </span>
+            <span>Submit</span>
+          </button>
+        </div>
+      </div>
+      <modal ref="submitmodal" :open="true">
+        <template v-slot:header>
+          <strong v-if="isIdle">Nothing...</strong>
+          <strong v-if="isCheckingValidity">Checking submission validity...</strong>
+          <strong v-if="isReportingErrors">You can't submit this EP because</strong>
+          <strong v-if="isSending">EP Submission can't finish because</strong>
+          <strong v-if="isReportingSendingErrors">Bad things happened during the submission...</strong>
+          <strong v-if="isSent">EP submitted!</strong>
+        </template>
+        <template v-slot:default>
+          <spinner v-if="isCheckingValidity"/>
+          <spinner v-if="isSending"/>
+          <div v-if="isReportingErrors">
+            <ul>
+              <li
+                v-for="(m,i) of modalSubmissionErrorMessages"
+                :key="i"
+              >
+                {{ m }}
+              </li>
+            </ul>
+          </div>
+          <div v-if="isReportingSendingErrors">
+            Try again to upload your EP and contact an admin.
+          </div>
+          <div v-if="isSent">
+            Thank you for your submission!
+          </div>
+        </template>
+      </modal>
     </div>
-    <modal ref="submitmodal" :open="true">
-      <template v-slot:header>
-        <strong v-if="isIdle">Nothing...</strong>
-        <strong v-if="isCheckingValidity">Checking submission validity...</strong>
-        <strong v-if="isReportingErrors">You can't submit this EP because</strong>
-        <strong v-if="isSending">EP Submission can't finish because</strong>
-        <strong v-if="isReportingSendingErrors">Bad things happened during the submission...</strong>
-        <strong v-if="isSent">EP submitted!</strong>
-      </template>
-      <template v-slot:default>
-        <spinner v-if="isCheckingValidity"/>
-        <spinner v-if="isSending"/>
-        <div v-if="isReportingErrors">
-          <ul>
-            <li
-              v-for="(m,i) of modalSubmissionErrorMessages"
-              :key="i"
-            >
-              {{ m }}
-            </li>
-          </ul>
-        </div>
-        <div v-if="isReportingSendingErrors">
-          Try again to upload your EP and contact an admin.
-        </div>
-        <div v-if="isSent">
-          Thank you for your submission!
-        </div>
-      </template>
-    </modal>
   </not-open-yet>
 </template>
 
@@ -98,12 +126,22 @@ export default {
   data() {
     return {
       ep: new Album(),
+      server: undefined,
       modalSubmissionErrorMessages: [],
       canSubmit: true,
       submissionState: SUBMISSION_STATE.IDLE
     }
   },
   computed: {
+    user() {
+      return this.$svsAuth.user
+    },
+    isAuthenticated() {
+      return this.$svsAuth.isAuthenticated
+    },
+    isLeader() {
+      return this.$svsAuth.isLeader()
+    },
     isIdle() {
       return this.submissionState == SUBMISSION_STATE.IDLE
     },
@@ -126,26 +164,33 @@ export default {
       return !!this.modalSubmissionErrorMessages.length
     }
   },
-  mounted() {
-    let ep = this.ep
-    ep.infos.name = "EP Name"
-    ep.infos.streamingLink = "stream.link"
-    let track = new Track()
-    track.name = "Yikes bumber 1"
-    track.lyrics = "I've seen enough \n But I want to see more"
-    track.hasLyrics = true
-    track.genre = "Acid"
-    let cred = new CreditEntry()
-    cred.artistName = "Jiway"
-    cred.description = "Jiw, ay"
-    cred.discordTag = "Boomboclat#1234"
-    track.credits.push(cred)
-    ep.tracks.push(track)
-    this.$refs.submitmodal.open()
+  async mounted() {
+    await this.onUserChange()
   },
   methods: {
     onEpValidationChange(evt) {
       // this.canSubmit = evt
+    },
+    async onUserChange() {
+      let user = this.$svsAuth.user
+      if (!user) {
+        this.server = null
+        console.log("No user logged")
+        return 
+      }
+      if (!user.discordTag) {
+        this.server = null
+        console.log("No discord tag")
+        return 
+      }
+      let discordTag = user.discordTag
+      this.ep = Album.createRandomValidAlbum()
+      try {
+        this.server = undefined
+        this.server = await this.$svsBackend.getServerOfLeader(discordTag)    
+      } catch(error) {
+        console.warn("Not a leader!")
+      }
     },
     /**
      * Returns a promise that is true if it can be sumbitted
@@ -226,7 +271,7 @@ export default {
 
       let ep = this.ep
 
-      let sId             = null
+      let sId             = this.server.id
       let fAlbum          = new FirestoreModel.Album()
       let fTracks         = []
       let fCredits        = []
@@ -270,7 +315,7 @@ export default {
       }
       try {
         this.submissionState = SUBMISSION_STATE.SENDING
-        // await this.$svsBackend.submitFullAlbum(sId, fAlbum, fTracks, fCredits, caf, tafs)
+        await this.$svsBackend.submitFullAlbum(sId, fAlbum, fTracks, fCredits, caf, tafs)
         this.submissionState = SUBMISSION_STATE.SENT
       } catch(error) {
         console.error(error)

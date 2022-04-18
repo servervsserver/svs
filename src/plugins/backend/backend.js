@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { DocumentReference, getFirestore, runTransaction, writeBatch } from "firebase/firestore"
-import { getDatabase } from "firebase/database";
+import { getDatabase, update } from "firebase/database";
 
 import { getExtension } from "./utils"
 
@@ -23,7 +23,8 @@ import {
   getDoc, getDocs, getAll,
   deleteDoc
 } from "firebase/firestore";
-import { push, ref, child, get } from "firebase/database";
+import { push, ref, child, get, onValue, set } from "firebase/database";
+
 
 /*
 * Firebase config
@@ -146,6 +147,7 @@ export default class BackendPlugin {
       && !!pathOrType.fromFirestore 
       && typeof pathOrType.fromFirestore === 'function') {
       data = pathOrType.fromFirestore(data)
+      if (data.id === null) data.id = docId
     }
     return data
   }
@@ -277,6 +279,29 @@ export default class BackendPlugin {
     return Promise.all(promises)
   }
 
+  async getFirebaseDoc(path) {
+    const dbRef = ref(
+      this._firebaseDb,
+      path
+    )
+    return new Promise((resolve, reject) => {
+      onValue(dbRef, (snapshot) => {
+        console.log(path)
+        if (!snapshot.exists()) {
+          reject("The item doesn't exist")
+          return
+        }
+        const data = snapshot.val()
+        console.log(data)
+        resolve(data)
+        return
+      })
+    })
+  }
+
+  async updatesFirebase(updates) {
+    return await update(ref(this._firebaseDb), updates)
+  }
   /**
   * Creates a new server application document in DB
   * {ServerApplication} serverApplication : data for the server application
@@ -380,7 +405,9 @@ export default class BackendPlugin {
     return colSnap.then(snappedDocs => {
       let data = []
       snappedDocs.forEach(doc => {
-        data.push(ServerApplicationConverter.fromFirestore(doc.data()))
+        let d = doc.data()
+        d.id = doc.id
+        data.push(ServerApplicationConverter.fromFirestore(d))
       })
       return data;
     })
@@ -612,6 +639,34 @@ export default class BackendPlugin {
 
   }
 
+  async getServerIdOfLeader(leaderDiscordTag) {
+    leaderDiscordTag = leaderDiscordTag.replace(/#/g, "_").toLowerCase()
+    return await this.getFirebaseDoc(['leaders', leaderDiscordTag, 'server'].join("/"))
+  }
+
+  async getServerOfLeader(leaderDiscordTag) {
+    let serverId = await this.getServerIdOfLeader(leaderDiscordTag)
+    return await this.firestoreGetDocData(FirestoreModel.Server, serverId)
+  }
+
+  async writeAdminServMap() {
+    let data = await this.getAllServers()
+
+    const updates = {}
+    console.log(data)
+    data.forEach(sapp => {
+      console.log(sapp)
+      sapp.admins.forEach(a => {
+        a = a.replace(/#/g, '_').toLowerCase()
+        console.log(a)
+        updates[['leaders', a].join('/')] = { server: sapp.id }
+      })
+    })
+
+    await this.updatesFirebase(updates)
+    return updates
+  }
+
 
   /**
     * Gets all the servers
@@ -678,9 +733,12 @@ export default class BackendPlugin {
     const suggestion
       = push(appRef, message);
 
+    push()
+
     return suggestion
 
   }
+  
 
 
 

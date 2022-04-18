@@ -640,7 +640,7 @@ export default class BackendPlugin {
   }
 
   async getServerIdOfLeader(leaderDiscordTag) {
-    leaderDiscordTag = leaderDiscordTag.replace(/#/g, "_").toLowerCase()
+    leaderDiscordTag = leaderDiscordTag.replace(/[\$\#\.\/\[\] ]/g, "_").toLowerCase()
     return await this.getFirebaseDoc(['leaders', leaderDiscordTag, 'server'].join("/"))
   }
 
@@ -657,7 +657,7 @@ export default class BackendPlugin {
     data.forEach(sapp => {
       console.log(sapp)
       sapp.admins.forEach(a => {
-        a = a.replace(/#/g, '_').toLowerCase()
+        a = a.replace(/[\$\#\.\/\[\] ]/g, '_').toLowerCase()
         console.log(a)
         updates[['leaders', a].join('/')] = { server: sapp.id }
       })

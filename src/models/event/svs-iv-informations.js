@@ -48,55 +48,55 @@ export class SvSIVInformations {
 
     this.competitionEnd = new EventMilestone(
       "Competition submissions close",
-      new Date(Date.UTC(2022, 3, 23, 23, 59, 0)),
+      new Date(Date.UTC(2022, 3, 23 + 7, 23, 59, 0)),
       "The one and only final deadline for servers to submit their completed EPs through our website."
     )
 
     this.competitionEndStream = new EventMilestone(
       "Competition end stream",
-      new Date(Date.UTC(2022, 3, 24, 21, 0, 0)),
+      new Date(Date.UTC(2022, 3, 24 + 7, 21, 0, 0)),
       "Join us on Twitch to reflect on how the music-making period has gone, before we launch into our full-blown EP festival just a few days after."
     )
 
     this.epFestival1 = new EventMilestone(
       "EP Festival - Day 1",
-      new Date(Date.UTC(2022, 3, 29, 21, 0, 0)),
+      new Date(Date.UTC(2022, 3, 29 + 7, 21, 0, 0)),
       "The first day of our EP festival, where we’ll be playing and celebrating the music, art, and even visualizers/video that participating servers have produced; complete with live interviews with server leaders/representatives!"
     )
 
     this.epFestival2 = new EventMilestone(
       "EP Festival - Day 2",
-      new Date(Date.UTC(2022, 3, 30, 21, 0, 0)),
+      new Date(Date.UTC(2022, 3, 30 + 7, 21, 0, 0)),
       ""
     )
 
     this.epFestival3 = new EventMilestone(
       "EP Festival - Day 3",
-      new Date(Date.UTC(2022, 3, 31, 19, 0, 0)),
+      new Date(Date.UTC(2022, 3, 31 + 7, 19, 0, 0)),
       ""
     )
 
     this.epFestival4 = new EventMilestone(
       "EP Festival - Day 4",
-      new Date(Date.UTC(2022, 4, 6, 21, 0, 0)),
+      new Date(Date.UTC(2022, 4, 6 + 7, 21, 0, 0)),
       ""
     )
 
     this.epFestival5 = new EventMilestone(
       "EP Festival - Day 5",
-      new Date(Date.UTC(2022, 4, 7, 21, 0, 0)),
+      new Date(Date.UTC(2022, 4, 7 + 7, 21, 0, 0)),
       ""
     )
 
     this.epFestival6 = new EventMilestone(
       "EP Festival - Day 6",
-      new Date(Date.UTC(2022, 4, 8, 19, 0, 0)),
+      new Date(Date.UTC(2022, 4, 8 + 7, 19, 0, 0)),
       ""
     )
 
     this.awardsCeremony = new EventMilestone(
       "Awards Ceremony",
-      new Date(Date.UTC(2022, 4, 14, 21, 0, 0)),
+      new Date(Date.UTC(2022, 4, 14 + 7, 21, 0, 0)),
       "Our awards ceremony, with the winners of each category decided by you and your vote!"
     )
 

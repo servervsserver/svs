@@ -97,7 +97,8 @@ export class Validators {
   }
 
   /**
-  * Checks if the value matches the pattern
+  * Checks if the value matches the pattern.
+  * If no value provided, return true. (to enable optional fields)
   * @param {RegExp} regexp - Expression to match
   * @param {boolean} loose - If false, matches the exact expression. If true validates if the regexp is found in the value
   */
@@ -109,7 +110,7 @@ export class Validators {
     }
 
     return (value) => {
-      if (value === undefined || value === null) return false
+      if (value === undefined || value === null || value === "") return true
       var match = value.match(regexp)
       return !!(match && value === match[0])
     }

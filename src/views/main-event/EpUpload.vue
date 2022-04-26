@@ -42,7 +42,7 @@
           Loading your server...
         </blockquote>
         <blockquote v-if="server === null">
-          Sorry <strong>{{ user.discordTag }}</strong>. <br> 
+          Sorry <strong v-if="user">{{ user.discordTag }}</strong>. <br> 
           We couldn't find a server in which you are a leader. 
         </blockquote>
         <div
@@ -292,7 +292,8 @@ export default {
       // Album content
       let fEp             = new FirestoreModel.Album()
       fEp.name            = ep.infos.name
-      fEp.streaminglink   = ep.infos.streamingLink
+      fEp.streaming_link   = ep.infos.streamingLink
+      fEp.visualizer_link = ep.infos.visualizerLink
       caf                 = ep.infos.coverArtFile
 
       // Populate tracks content

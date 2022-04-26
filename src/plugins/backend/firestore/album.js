@@ -28,7 +28,12 @@ export class Album extends Model {
     /**
      * @type {string} Link to stream the full Album
      */
-    this.streaminglink = ""
+    this.streaming_link = ""
+
+    /**
+     * @type {string} Link to stream the full Album with a visualizer
+     */
+    this.visualizer_link
 
     /**
      * @type {Array<string>} Array of the ids of the tracks in order

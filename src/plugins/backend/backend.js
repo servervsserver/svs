@@ -54,12 +54,12 @@ const amazonS3Config = {
 function resolvePathOrType(pathOrType) {
   if (!pathOrType) {
     throw Error("pathorType Cannot be null or empty")
-  } 
+  }
 
   if (typeof pathOrType === 'string') {
     return pathOrType
   }
-  
+
   if (pathOrType.collection === undefined || typeof pathOrType.collection !== 'string') {
     throw Error("The type must have a class member named collection with the path to the collection in the store")
   }
@@ -143,8 +143,8 @@ export default class BackendPlugin {
     let snap = await this.firestoreGetDocSnapshot(pathOrType, docId)
     if (!snap.exists()) return null
     let data = snap.data()
-    if (typeof pathOrType !== 'string' 
-      && !!pathOrType.fromFirestore 
+    if (typeof pathOrType !== 'string'
+      && !!pathOrType.fromFirestore
       && typeof pathOrType.fromFirestore === 'function') {
       data = pathOrType.fromFirestore(data)
       if (data.id === null) data.id = docId
@@ -159,11 +159,11 @@ export default class BackendPlugin {
 
   async firestoreGetCollectionData(pathOrType) {
     const snap = await this.firestoreGetCollectionSnapshot(pathOrType)
-    let res = {} 
+    let res = {}
     snap.forEach((doc) => {
       let data = doc.data()
-      if (typeof pathOrType !== 'string' 
-        && !!pathOrType.fromFirestore 
+      if (typeof pathOrType !== 'string'
+        && !!pathOrType.fromFirestore
         && typeof pathOrType.fromFirestore === 'function') {
         data = pathOrType.fromFirestore(data)
       }
@@ -179,7 +179,7 @@ export default class BackendPlugin {
    * @returns {Promise<string>} A promise returning the id of the document
    */
   async firestoreWriteDoc(documentReference, data) {
-    if (data.toFirestore && typeof data.toFirestore === 'function') 
+    if (data.toFirestore && typeof data.toFirestore === 'function')
       data = data.toFirestore()
     await setDoc(documentReference, data)
     return documentReference.id
@@ -192,7 +192,7 @@ export default class BackendPlugin {
   async firestoreWriteDocs(documents) {
     const batch = writeBatch(this._firestoreDb)
 
-    for(let doc of documents) {
+    for (let doc of documents) {
       let data = doc.data.toFirestore()
       batch.set(doc.ref, data)
     }
@@ -219,7 +219,7 @@ export default class BackendPlugin {
     throw Error("Not implemented")
     // return runTransaction(this._firebaseDb, transactionFnc)
   }
-  
+
   /**
    * Uploads a file to aws
    * @param {File} file File to upload
@@ -259,14 +259,14 @@ export default class BackendPlugin {
       this._amazonS3.upload(
         params,
         (err, _) => {
-          if (err) { 
-            reject(err) 
+          if (err) {
+            reject(err)
           }
           else {
             resolve(`${this._cloudfrontEndpoint}/${filePath}`)
           }
         })
-      })
+    })
   }
 
   /**
@@ -275,7 +275,7 @@ export default class BackendPlugin {
    * @returns 
    */
   async awsUploadFiles(filesToUpload) {
-    let promises = filesToUpload.map(ftu => this.awsUploadFile(ftu.file,ftu.path, ftu.name))
+    let promises = filesToUpload.map(ftu => this.awsUploadFile(ftu.file, ftu.path, ftu.name))
     return Promise.all(promises)
   }
 
@@ -423,7 +423,7 @@ export default class BackendPlugin {
           .then(
             servers => { return servers; }
           )
-    })
+      })
 
 
   }
@@ -447,43 +447,43 @@ export default class BackendPlugin {
     // Prepare what to write to firestore and AWS
     const docsToWrite = []
     let filesToUpload = []
-    
+
     const albumServerRef = this.firestoreNewDocReference(FirestoreModel.Album)
     let albumUid = albumServerRef.id
-    
+
     album.server_id = serverId
     album.id = albumUid
-    
-    for(let trackIdx in tracks) {
+
+    for (let trackIdx in tracks) {
       let track = tracks[trackIdx]
       const trackServerRef = this.firestoreNewDocReference(FirestoreModel.Track)
       let trackUid = trackServerRef.id
-      
+
       track.id = trackUid
       track.album_id = album.id
-      
+
       album.tracks_ids.push(trackUid)
-      
-      
+
+
       let trackCredits = credits[trackIdx]
-      
+
       for (let creditsEntryIdx in trackCredits) {
         let creditEntry = trackCredits[creditsEntryIdx]
         const ceServerRef = this.firestoreNewDocReference(FirestoreModel.TrackCreditsEntry)
         let ceUid = ceServerRef.id
-        
+
         creditEntry.id = ceUid
         creditEntry.track_id = track.id
-        
+
         track.credits_ids.push(ceUid)
-        
-        docsToWrite.push({ ref: ceServerRef, data: creditEntry})
+
+        docsToWrite.push({ ref: ceServerRef, data: creditEntry })
       }
-      
+
       filesToUpload.push({ file: trackAudioFiles[trackIdx], path: 'tracks/audio_files', name: trackUid })
       docsToWrite.push({ ref: trackServerRef, data: track })
     }
-    
+
     filesToUpload.push({ file: coverArtFile, path: 'albums/cover_arts', name: albumUid })
     docsToWrite.push({ ref: albumServerRef, data: album })
 
@@ -491,10 +491,10 @@ export default class BackendPlugin {
     let awsRes = await this.awsUploadFiles(filesToUpload)
 
     // Add the file urls to firestore data
-    let coverArtUrl = awsRes[awsRes.awsRes.length - 1]
+    let coverArtUrl = awsRes[awsRes.length - 1]
     album.coverart_url = coverArtUrl
 
-    for(let trackIdx in tracks) {
+    for (let trackIdx in tracks) {
       let track = tracks[trackIdx]
       let audioUrl = awsRes[trackIdx]
       track.audiofile_url = audioUrl
@@ -508,7 +508,7 @@ export default class BackendPlugin {
     // }
 
   }
-  
+
   // E P
   /**
    * Creates an EP in the DB
@@ -516,10 +516,10 @@ export default class BackendPlugin {
    * @param {File} audioFile Audio file of the track
    */
   async createEp(ep, coverArtFile) {
-    
+
     const serverRef = this.firestoreNewDocReference(FirestoreModel.Album)
     let uid = serverRef.id
-    
+
     ep.id = uid
     ep.coverart_url = await this.awsUploadFile(coverArtFile, 'albums/cover_arts', uid)
 
@@ -544,7 +544,7 @@ export default class BackendPlugin {
   async getAllEps() {
     return this.firestoreGetCollectionData(FirestoreModel.Album)
   }
-  
+
   /**
    * Deletes a track in the DB
    * @param {string} epId Id of the track to delete
@@ -554,7 +554,7 @@ export default class BackendPlugin {
     await this.firestoreDeleteDoc(FirestoreModel.Album, epId)
 
   }
-  
+
   // T R A C K
   /**
    * Creates a track in the DB
@@ -565,7 +565,7 @@ export default class BackendPlugin {
 
     const serverRef = this.firestoreNewDocReference(FirestoreModel.Track)
     let uid = serverRef.id
-    
+
     track.id = uid
     track.audiofile_url = await this.awsUploadFile(audioFile, 'tracks/audio_files', uid)
 
@@ -679,7 +679,7 @@ export default class BackendPlugin {
     for (let si in server_id) {
       promises.push(getDoc(refs[si]).then(
         document => {
-          data[si] = document.data();          
+          data[si] = document.data();
           return document;
         }
       ))
@@ -730,7 +730,7 @@ export default class BackendPlugin {
     return suggestion
 
   }
-  
+
 
 
 

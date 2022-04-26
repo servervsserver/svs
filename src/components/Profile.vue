@@ -25,9 +25,11 @@ export default {
   props: {
     user: {
       type: User,
-    },
-  },
-};
+      required: true
+    }
+  }
+}
+>>>>>>> 1b0b59de4b39283140624ff596c5e4b4772e2251
 </script>
 
 

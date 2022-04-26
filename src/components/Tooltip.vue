@@ -84,10 +84,12 @@ export default {
 </script>
 
 <style scoped lang='scss'>
+@use 'sass:math';
 
 $anchor-size: 10px;
 $box-margin: 1px;
 $anchor-box: $anchor-size + $box-margin;
+$anchor-box-sqrt2: math.div($anchor-box, 1.4142);
 
 .tooltip {
   display: inline;
@@ -129,8 +131,8 @@ $anchor-box: $anchor-size + $box-margin;
       transform: rotate(45deg);
 
       .anchor-inner {
-        top: -$anchor-size / 2;
-        left: -$anchor-size / 2;
+        top: -$anchor-size * 0.5;
+        left: -$anchor-size * 0.5;
         border: 1px solid #8884;
         position: relative;
         width: $anchor-size;
@@ -198,9 +200,9 @@ $anchor-box: $anchor-size + $box-margin;
     }
 
     &.top.right {
-      top: -$anchor-box / 1.4;
+      top: -$anchor-box-sqrt2;
       left: 100%;
-      transform: translate($anchor-box / 1.4, -100%);
+      transform: translate($anchor-box-sqrt2, -100%);
 
       border-bottom-left-radius: 0;
 
@@ -210,8 +212,8 @@ $anchor-box: $anchor-size + $box-margin;
     }
 
     &.top.left {
-      top: -$anchor-box / 1.4;
-      left: -$anchor-box / 1.4;
+      top: -$anchor-box-sqrt2;
+      left: -$anchor-box-sqrt2;
       transform: translate(-100%, -100%);
 
       border-bottom-right-radius: 0;
@@ -222,9 +224,9 @@ $anchor-box: $anchor-size + $box-margin;
     }
 
     &.bottom.right {
-      bottom: -$anchor-box / 1.4;
+      bottom: -$anchor-box-sqrt2;
       left: 100%;
-      transform: translate($anchor-box / 1.4, 100%);
+      transform: translate($anchor-box-sqrt2, 100%);
 
       border-top-left-radius: 0;
 
@@ -234,8 +236,8 @@ $anchor-box: $anchor-size + $box-margin;
     }
 
     &.bottom.left {
-      bottom: -$anchor-box / 1.4;
-      left: -$anchor-box / 1.4;
+      bottom: -$anchor-box-sqrt2;
+      left: -$anchor-box-sqrt2;
       transform: translate(-100%, 100%);
 
       border-top-right-radius: 0;
@@ -276,8 +278,6 @@ $anchor-box: $anchor-size + $box-margin;
   }
 
 }
-/* 1. Liro 🔥 2. DJ ANdel 🔥 3. Rezaa 🔥 4. Jiway
-jiwayjNarciss
- 5. BYOboxer 🔥 6. Melfoss 🔥 7. Confiture 🔥 8. Scorch 🔥 9. Melo 10. Jul Verne */
+
 
 </style>

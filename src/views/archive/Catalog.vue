@@ -12,39 +12,47 @@
         :albums="allEps" 
         @album-click="onAlbumClick"
       />
+      <album-content
+        v-if="activeAlbum"
+        :album="activeAlbum"
+        :tracks="activeAlbumTracks"
+        @track-click="onTrackClick"
+      />
+      <!-- <audio-player :audio-player="$svsAudioPlayer.player"/> -->
     </section>
   </section>
 </template>
 
 <script>
+import AudioPlayer from "@/modules/audio-player/components/AudioPlayer.vue"
+import * as AudioPlayerLogic from "@/modules/audio-player/models"
 
 import * as Archive from "@/modules/catalog/models"
 import AlbumListComponent from "@/modules/catalog/components/AlbumsList.vue"
+import AlbumContentComponent from "@/modules/catalog/components/AlbumContent.vue"
 
 export default {
   components: {
-    'albums-list': AlbumListComponent
+    'albums-list': AlbumListComponent,
+    'album-content': AlbumContentComponent,
+    // 'audio-player': AudioPlayer
   },
   data() {
     return {
       catalog: null,
       catalogLoading: true,
+      activeAlbum: null,
+      activeAlbumTracks: [],
       allEps: []
+    }
+  },
+  computed: {
+    audioPlayer() {
+      return this.$svsAudioPlayer.mainAudioPlayer
     }
   },
   mounted() {
       let catalog = new Archive.Catalog()
-      // catalog.addEp(new ArchiveEp("1","Server name","Title of EP", "https://picsum.photos/200?random=" + (Math.random() * 100000)))
-      // catalog.addEp(new ArchiveEp("2","Server name","Title of EP", "https://picsum.photos/200?random=" + (Math.random() * 100000)))
-      // catalog.addEp(new ArchiveEp("3","Server name","Title of EP", "https://picsum.photos/200?random=" + (Math.random() * 100000)))
-      // catalog.addEp(new ArchiveEp("4","Server name","Title of EP", "https://picsum.photos/200?random=" + (Math.random() * 100000)))
-      // catalog.addEp(new ArchiveEp("5","Server name","Title of EP", "https://picsum.photos/200?random=" + (Math.random() * 100000)))
-      // catalog.addEp(new ArchiveEp("5","Server name","Title of EP", "https://picsum.photos/200?random=" + (Math.random() * 100000)))
-      // catalog.addEp(new ArchiveEp("13","Server name","Title of EP", "https://picsum.photos/200?random=" + (Math.random() * 100000)))
-      // catalog.addEp(new ArchiveEp("14","Server name","Title of EP", "https://picsum.photos/200?random=" + (Math.random() * 100000)))
-      // catalog.addEp(new ArchiveEp("15","Server name","Title of EP", "https://picsum.photos/200?random=" + (Math.random() * 100000)))
-      // catalog.addEp(new ArchiveEp("15","Server name","Title of EP", "https://picsum.photos/200?random=" + (Math.random() * 100000)))
-
       this.catalog = catalog
       this.catalogLoading = false
       this.getAllEps()
@@ -53,9 +61,16 @@ export default {
   methods: {
     async getAllEps() {
       let fAllEpsMap = await this.$svsBackend.getAllEps()
-      for (let [id,fEp] of Object.entries(fAllEpsMap)) {
-        let aEp = new Archive.Album(id, "Server name not given", fEp.name, fEp.coverart_url)
-        this.catalog.addEp(aEp)
+      for (let [id,fAlbum] of Object.entries(fAllEpsMap)) {
+        let aAlbum = new Archive.Album(
+          id, 
+          "Server name not given", 
+          fAlbum.name, 
+          fAlbum.coverart_url
+        )
+        // console.log(fAlbum, aAlbum)
+        aAlbum.trackIds = [...fAlbum.tracks_ids]
+        this.catalog.addEp(aAlbum)
       }
       this.allEps = this.catalog.getAllEps()
     },
@@ -64,12 +79,24 @@ export default {
       for (let [id,fTrack] of Object.entries(fAllTracksMap)) {
         let aTrack = new Archive.Track(id, fTrack.name, fTrack.audiofile_url)
         this.catalog.addTrack(aTrack)
-        console.log(aTrack, this.catalog)
+        // console.log(aTrack, this.catalog)
       }
-      console.log("get all eps", fAllTracksMap)
+      // console.log("get all eps", fAllTracksMap)
     },
     onAlbumClick(evt) {
-      console.log("Hey", evt)
+      this.activeAlbum = evt
+      this.activeAlbumTracks = this.activeAlbum.trackIds.map(
+        id => this.catalog.getTrackById(id)
+      )
+      console.log(this.activeAlbum, this.activeAlbumTracks)
+    },
+    onTrackClick(evt) {
+      console.log(this.$svsAudioPlayer, this.audioPlayer)
+      let track = new AudioPlayerLogic.Track(evt.id, evt.title, this.activeAlbum.name, 'https://' + evt.trackUrl)
+      if (this.audioPlayer.pushAsNextTrack(track))
+        this.audioPlayer.next()
+      // this.audioPlayer
+      //   .setTrack()
     }
   }
 

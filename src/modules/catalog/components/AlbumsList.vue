@@ -15,7 +15,7 @@
         <album-block 
           :album="album" 
           @album-click="onAlbumClick"
-          />
+        />
       </div>
     </div>
   </div>
@@ -31,7 +31,8 @@ export default {
   },
   props: {
     albums: {
-      type: Array
+      type: Array,
+      required: true
     }
   },
   methods: {

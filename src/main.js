@@ -2,7 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import { BackendPlugin, SettingsPlugin, AuthPlugin, CharityPlugin } from "./plugins/all"
+import { 
+  BackendPlugin, 
+  SettingsPlugin, 
+  AuthPlugin, 
+  CharityPlugin 
+} from "./plugins/all"
+import AudioPlayerPlugin from "@/modules/audio-player/plugins"
 
 import PreOpening from "./components/PreOpening.vue"
 import ComingSoon from "./components/ComingSoon.vue"
@@ -64,6 +70,7 @@ Vue.use(BackendPlugin);
 Vue.use(SettingsPlugin);
 Vue.use(AuthPlugin);
 Vue.use(CharityPlugin);
+Vue.use(AudioPlayerPlugin)
 
 new Vue({
   router,

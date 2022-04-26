@@ -10,6 +10,11 @@ export class TrackCreditsEntry extends Model {
     this.id = null
 
     /**
+     * @type {string} Id of the track this credits entry belongs to
+     */
+    this.track_id = null
+    
+    /**
      * @type {string} Artist name if applicable
      */
     this.artist_name = ""

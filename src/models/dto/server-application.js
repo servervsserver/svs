@@ -4,6 +4,9 @@ export class ServerApplication {
 
   constructor(name, discordInvite, icon, admins, description, submission_date, isPrivate) {
     this.vueId = Math.floor(Math.random() * 123456)
+    
+    this.id = null
+    
     if (!name) throw Error("Name cannot be null")
     this.name = name
 
@@ -50,6 +53,7 @@ export const ServerApplicationConverter = {
   */
   toFirestore(serverApplication) {
     return {
+      id: serverApplication.id,
       name: serverApplication.name,
       discord_invite: serverApplication.discordInvite,
       iconExt: serverApplication.icon.name.split(".").pop(),
@@ -70,6 +74,7 @@ export const ServerApplicationConverter = {
       data.is_private || false
     )
     sa.icon_url = data.icon_url
+    sa.id = data.id
     return sa
   }
 }

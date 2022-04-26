@@ -11,6 +11,11 @@ export class Track extends Model {
     this.id = null
 
     /**
+     * @type {string} Id of the album this track belongs to
+     */
+    this.album_id = null
+    
+    /**
     * @type {string} name of the track
     */
     this.name = ''

@@ -11,6 +11,11 @@ export class Album extends Model {
     this.id = null
 
     /**
+     * @type {string} Id of the server that created the Album
+     */
+    this.server_id = null
+
+    /**
      * @type {string} Name of the Album
      */
     this.name = ""
@@ -23,7 +28,12 @@ export class Album extends Model {
     /**
      * @type {string} Link to stream the full Album
      */
-    this.streaminglink = ""
+    this.streaming_link = ""
+
+    /**
+     * @type {string} Link to stream the full Album with a visualizer
+     */
+    this.visualizer_link
 
     /**
      * @type {Array<string>} Array of the ids of the tracks in order

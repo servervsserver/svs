@@ -6,6 +6,8 @@ export default class AlbumInfos {
 
     this.streamingLink = ""
 
+    this.visualizerLink = ""
+
     this.coverArtFile = null
 
     this.coverArtUrl = ""

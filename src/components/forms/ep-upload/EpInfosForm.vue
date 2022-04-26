@@ -33,6 +33,24 @@
             (Youtube, Soundcloud, etc.)
           </template>
         </text-input>
+
+        <text-input
+          v-model="albumInfos.visualizerLink"
+          :label="'Public visualizer link'"
+          :icon="'fas fa-link'"
+          :placeholder="'https://youtube.com/my-awesome-ep-visualizer-link'"
+          :validators="visualizerLinkValidators"
+          @validation-change="onVisualizerLinkValidationChange"
+        >
+          <template v-slot:tooltip>
+            A link where people can see the visualizer to your EP if any.<br>
+            (Youtube, vimeo, etc.)
+          </template>
+        </text-input>
+        <p>
+          For this edition, your visualizer must be on an external host.<br/>
+          This visualizer is optional.
+        </p>
       </div>
 
       <div class="column is-offset-2 is-5">
@@ -70,7 +88,12 @@ export default {
     'image-file-input': ImageFileInputComponent
   },
   mixins: [
-    FormValidationMixin.forValidators(['title', 'stream-Link', 'cover art'])
+    FormValidationMixin.forValidators([
+      'title', 
+      'stream-Link', 
+      'cover art',
+      'visualizer-link'
+      ])
   ],
   props: {
     albumInfos: {
@@ -85,6 +108,10 @@ export default {
         ValidatorWithMessage.maxCharCount(100)
       ],
       streamLinkValidators: [
+        ValidatorWithMessage.required(),
+        ValidatorWithMessage.url()
+      ],
+      visualizerLinkValidators: [
         ValidatorWithMessage.url()
       ],
       coverArtValidators: [

@@ -158,7 +158,7 @@ export default class AuthPlugin {
   }
 
   get isAdmin() {
-    return this._store.getters.isAdmin
+    return this._store.getters.isAdmin || (process.env.VUE_APP_IS_ADMIN == 'true')
   }
 
   isLeader() {

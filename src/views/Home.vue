@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid home">
+  <div class="container-fluid home" >
     <section class="main-home-section">
       <h1 class="main-title">
         Welcome to <brand-name style="color: #ffba5e" />
@@ -19,6 +19,34 @@
         >
           Submit Theme Suggestions!
         </router-link> -->
+        <div style="padding: 0px 5vw;">
+          <blockquote>
+            <span class="icon"><i class="fa-solid fa-warning"></i></span><br/>
+            After discussion with our community leaders, SvS Staff has decided to extend the EP deadline to
+            <br/>
+            <tooltip
+              :vertical="'top'"
+              :mode="'hover'"
+            >
+              <strong>
+                {{ deadlineMilestone.date | date("DAY, dd MONTH yyyy") }}
+              - {{ deadlineMilestone.date | date("hour:min") }} UTC</strong>
+              <template v-slot:message>
+                <span>
+                  Your local time: <br>
+                  {{ deadlineMilestone.date | date("DAY, dd MONTH yyyy", true) }} <br>
+                  {{ deadlineMilestone.date | date("hour:min", true) }}
+                </span>
+              </template>
+            </tooltip>
+            (previously the 23th)
+            <br/>
+            All subsequent dates are also pushed by one week.<br/>
+            <router-link to="/svs-iv/overview">
+              See the updated dates
+              </router-link>
+          </blockquote>
+        </div>
         <p class="main-message">
           The theme of SvS IV <br><strong class="theme">SECRETS</strong>
         </p>
@@ -115,10 +143,10 @@
           class="columns"
           style="margin: 0"
         >
-          <div class="column is-2"></div>
+          <div class="column is-2" />
           <div class="column is-4 has-text-centered">
             <h2>Give A Beat</h2>
-            <hr/>
+            <hr>
             <p>
               Give a Beat’s mission is to use the power of music as a pathway to healing and opportunity for those impacted by the criminal justice system, 
               while inspiring communities to take action. 
@@ -146,12 +174,13 @@
             >
               Donate to help the cause!
             </a>
-            
           </div>
-          <div class="column is-1">
-          </div>
+          <div class="column is-1" />
           <div class="column is-4 icon-block">
-            <img src="/icons/giveabeat/GiveaBeat_Logo_shadow.png" width="400"/>
+            <img
+              src="/icons/giveabeat/GiveaBeat_Logo_shadow.png"
+              width="400"
+            >
           </div>
         </div>
       </div>
@@ -168,12 +197,23 @@ export default {
     "flip-album": FlipAlbum,
   },
   mounted() {},
+  computed: {
+    deadlineMilestone() {
+      return this.$store.state.svsMainEventInformations.competitionEnd
+    }
+  }
 };
 </script>
 
 <style scoped lang='scss'>
 .home {
   padding-top: 0px !important;
+}
+
+@media (max-width: 768px) {
+  .home {
+    font-size: 0.8em;
+  }
 }
 .main-home-section {
   height: 100vh;
@@ -191,7 +231,7 @@ export default {
 
   
   .main-message {
-    font-size: 2em;
+    font-size: 1em;
     .theme {
       letter-spacing: 5px;
       font-size: 1.5em;

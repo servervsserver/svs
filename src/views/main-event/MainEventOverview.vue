@@ -2,6 +2,31 @@
   <div class="container">
     <h1><brand-name /> overview</h1>
 
+    <blockquote class="has-text-centered">
+      <span class="icon"><i class="fa-solid fa-warning"></i></span>
+      <br/>
+      After discussion with our community leaders, SvS Staff has decided to extend the EP deadline to
+      <br/>
+      <tooltip
+        :vertical="'top'"
+        :mode="'hover'"
+      >
+        <strong>
+          {{ deadlineMilestone.date | date("DAY, dd MONTH yyyy") }}
+        - {{ deadlineMilestone.date | date("hour:min") }} UTC</strong>
+        <template v-slot:message>
+          <span>
+            Your local time: <br>
+            {{ deadlineMilestone.date | date("DAY, dd MONTH yyyy", true) }} <br>
+            {{ deadlineMilestone.date | date("hour:min", true) }}
+          </span>
+        </template>
+      </tooltip>
+      (previously the 23th)
+      <br/>
+      Below are the updated dates (changes start from the milestone <a :href="'#' + deadlineMilestone.name">{{ deadlineMilestone.name }}</a>)
+    </blockquote>
+
     <div class="columns">
       <div class="column is-7">
         <h2>Timeline</h2>
@@ -14,6 +39,7 @@
           </header>
 
           <div
+            :id="milestone.name"
             v-for="milestone in milestones"
             :key="milestone.name"
             class="timeline-item"
@@ -106,6 +132,9 @@ export default {
   computed: {
     milestones() {
       return this.$store.state.svsMainEventInformations.milestones;
+    },
+    deadlineMilestone() {
+      return this.$store.state.svsMainEventInformations.competitionEnd
     },
     nextMilestone() {
       return this.$store.getters.nextMilestone;

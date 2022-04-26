@@ -19,7 +19,8 @@ export const navbarContent = [
     children: [
       { name: 'DashboardAdmin' },
       { name: 'ServerListAdmin' },
-      { name: 'AnonymousConcernsAdmin' }
+      { name: 'AnonymousConcernsAdmin' },
+      { name: 'Administration For Devs' }
     ]
   },
   {
@@ -37,7 +38,8 @@ if (process.env.VUE_APP_SHOW_DEVNAVBAR == "true") {
         { name: 'Toggle Voting Dev' },
         { name: 'Profile Dev' },
         { name: 'Validator Dev' },
-        { name: 'ColorPaletteTest Dev' }
+        { name: 'ColorPaletteTest Dev' },
+        { name: 'Backend Tests Dev' }
       ]
     }
   )

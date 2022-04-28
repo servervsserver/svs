@@ -26,6 +26,16 @@ import {
 import { push, ref, child, get, onValue, set } from "firebase/database";
 
 
+function removeLeadingAndTrailingSlashes(str) {
+  if (!str) return str
+  return str.replace(/(^[\/\\]+)|(\/[\/\\]+$)/g, "")
+}
+
+function replaceBackwardForForwardSlashes(str) {
+  if (!str) return str
+  return str.replace(/\\/g, "/")
+}
+
 /*
 * Firebase config
 */
@@ -297,6 +307,18 @@ export default class BackendPlugin {
     })
   }
 
+  async writeFirebaseData(path, data) {
+    if (!path) {
+      throw Error("Path cannot be null")
+    }
+    if (path instanceof Array) {
+      let p = path.map(v =>  removeLeadingAndTrailingSlashes(replaceBackwardForForwardSlashes(v)))
+      path = p.join('/')
+    }
+    const dbRef = ref(this._firebaseDb, path)
+    await set( dbRef, data )
+  }
+
   async updatesFirebase(updates) {
     return await update(ref(this._firebaseDb), updates)
   }
@@ -503,6 +525,14 @@ export default class BackendPlugin {
     // Write firestore data
 
     await this.firestoreWriteDocs(docsToWrite)
+
+    try {
+      let eventId = 'svs_iv'
+      await this.writeAlbumInServerCatalog(album.id, eventId, serverId)
+      await this.writeAlbumInEventCatalog(album.id, eventId, serverId)
+    } catch(error) {
+      console.error("Failed to write in the catalog")
+    }
     // for( let docToWrite of docsToWrite) {
     //   this.firestoreWriteDoc(docToWrite.ref, docToWrite.data)
     // }
@@ -646,6 +676,21 @@ export default class BackendPlugin {
     let serverId = await this.getServerIdOfLeader(leaderDiscordTag)
     return await this.firestoreGetDocData(FirestoreModel.Server, serverId)
   }
+
+  async writeAlbumInServerCatalog(album_id, event_id, server_id) {
+    await this.writeFirebaseData(
+      ['servers_catalogs', server_id, album_id], 
+      event_id
+    )
+  }
+
+  async writeAlbumInEventCatalog(album_id, event_id, server_id) {
+    await this.writeFirebaseData(
+      ['events_catalogs', event_id, album_id],
+      server_id
+    )
+  }
+
 
   async writeAdminServMap() {
     let data = await this.getAllServers()

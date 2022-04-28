@@ -323,7 +323,7 @@ export default {
         this.submissionState = SUBMISSION_STATE.SENDING;
         await this.$svsBackend.submitFullAlbum(
           sId,
-          fAlbum,
+          fEp,
           fTracks,
           fCredits,
           caf,

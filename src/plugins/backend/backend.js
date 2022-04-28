@@ -247,8 +247,8 @@ export default class BackendPlugin {
     }
 
     const ext = getExtension(file)
-    const filePath = `${this._useDevSubspace ? "dev_test/" : ""}${folderPath}/${nameWithoutExtension}${ext ? "." + ext : ""}`
-
+    const filePath0 = `${this._useDevSubspace ? "dev_test/" : ""}${folderPath}/${nameWithoutExtension}${ext ? "." + ext : ""}`
+    const filePath = filePath0.replace("undefined/", "");
     const params = {
       Bucket: this._awsBucket,
       Key: filePath,

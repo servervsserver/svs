@@ -480,7 +480,7 @@ export default class BackendPlugin {
         docsToWrite.push({ ref: ceServerRef, data: creditEntry })
       }
 
-      filesToUpload.push({ file: trackAudioFiles[trackIdx], path: 'tracks/audio_files', name: trackIdx + "-" + track.name })
+      filesToUpload.push({ file: trackAudioFiles[trackIdx], path: 'tracks/audio_files', name: trackIdx + "-" + trackUid })
       docsToWrite.push({ ref: trackServerRef, data: track })
     }
 

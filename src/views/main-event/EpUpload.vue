@@ -58,7 +58,7 @@
           <strong v-if="isReportingErrors"
             >You can't submit this EP because</strong
           >
-          <strong v-if="isSending">EP Submission can't finish because</strong>
+          <strong v-if="isSending">EP Submission in Progress...</strong>
           <strong v-if="isReportingSendingErrors"
             >Bad things happened during the submission...</strong
           >

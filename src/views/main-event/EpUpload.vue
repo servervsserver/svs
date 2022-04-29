@@ -39,7 +39,10 @@
           >. <br />
           We couldn't find a server in which you are a leader.
         </blockquote>
-        <div v-if="server">
+        <div
+          v-if="server"
+          :class="{ 'disabled-section': isSending || isCheckingValidity }"
+        >
           <ep-upload-form :ep="ep" @validation-change="onEpValidationChange" />
           <button class="button" :disabled="!canSubmit" @click="submit">
             <span class="icon">
@@ -401,5 +404,11 @@ export default {
   .has-text-centered-on-mobile {
     text-align: center;
   }
+}
+
+.disabled-section,
+.disabled-section * {
+  pointer-events: none !important;
+  filter: blur(1px) grayscale(0.5);
 }
 </style>

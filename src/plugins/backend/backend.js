@@ -265,6 +265,7 @@ export default class BackendPlugin {
       Body: file
     }
 
+    const endpoint = this._cloudfrontEndpoint;
     return new Promise((resolve, reject) => {
       this._amazonS3.upload(
         params,
@@ -273,7 +274,7 @@ export default class BackendPlugin {
             reject(err)
           }
           else {
-            resolve(`${this._cloudfrontEndpoint}/${filePath}`)
+            resolve(`${endpoint}/${filePath}`)
           }
         })
     })
@@ -312,11 +313,11 @@ export default class BackendPlugin {
       throw Error("Path cannot be null")
     }
     if (path instanceof Array) {
-      let p = path.map(v =>  removeLeadingAndTrailingSlashes(replaceBackwardForForwardSlashes(v)))
+      let p = path.map(v => removeLeadingAndTrailingSlashes(replaceBackwardForForwardSlashes(v)))
       path = p.join('/')
     }
     const dbRef = ref(this._firebaseDb, path)
-    await set( dbRef, data )
+    await set(dbRef, data)
   }
 
   async updatesFirebase(updates) {
@@ -530,7 +531,7 @@ export default class BackendPlugin {
       let eventId = 'svs_iv'
       await this.writeAlbumInServerCatalog(album.id, eventId, serverId)
       await this.writeAlbumInEventCatalog(album.id, eventId, serverId)
-    } catch(error) {
+    } catch (error) {
       console.error("Failed to write in the catalog")
     }
     // for( let docToWrite of docsToWrite) {
@@ -679,7 +680,7 @@ export default class BackendPlugin {
 
   async writeAlbumInServerCatalog(album_id, event_id, server_id) {
     await this.writeFirebaseData(
-      ['servers_catalogs', server_id, album_id], 
+      ['servers_catalogs', server_id, album_id],
       event_id
     )
   }

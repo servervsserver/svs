@@ -26,15 +26,16 @@
       </div>
       <div v-if="previouslySubmittedAlbum">
         <blockquote>
-          It seems you already submitted an EP 
-          <strong>{{previouslySubmittedAlbum.name}}</strong>. You can check the content of your submission here
+          It seems you already submitted the EP named <strong>{{previouslySubmittedAlbum.name}}</strong>. 
+          You can check the content of your submission here
           <router-link
             to="/profile"
           >
             here
           </router-link>
           <br/>
-          If you submit again, it will override entirely your submission by the new submission. If you realized you made a small mistake, or something went wrong when submitting, contact a staff member instead.
+          If you submit again, it will override entirely your submission by the new submission. <br/>
+          If you realized you made a small mistake, or something went wrong when submitting, contact a staff member instead.
         </blockquote>
       </div>
       <div v-if="isLeader">

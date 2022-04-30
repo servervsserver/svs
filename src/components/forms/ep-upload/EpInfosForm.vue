@@ -50,7 +50,7 @@
           </template>
         </text-input>
         <blockquote>
-          These links below must stay valid for the duration of the event<br/>
+          These links must stay valid for the duration of the event.<br/>
           For this edition, your visualizer must be on an external host.<br/>
           The visualizer is optional.
         </blockquote>

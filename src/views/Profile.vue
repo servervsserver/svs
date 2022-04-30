@@ -7,8 +7,12 @@
       :tracks='tracks'
       :credits='tracksCredits'
     />
-    <blockquote v-if="isLeader && !album">
+    <blockquote v-if="isLeader && !album && !fetchingAlbum">
       No album submitted
+    </blockquote>
+    <blockquote v-if="fetchingAlbum">
+      Trying to fetch your submission...
+      <spinner />
     </blockquote>
   </section>
 </template>
@@ -19,11 +23,13 @@
 import { User } from "@/models/dto/user"
 import Profile from "@/components/Profile.vue"
 import AlbumInfoComponent from '@/components/AlbumInfo.vue'
+import Spinner from "@/components/Spinner.vue";
 
 export default {
   components: {
     'profile': Profile,
-    'album-info': AlbumInfoComponent
+    'album-info': AlbumInfoComponent,
+    spinner: Spinner,
   },
   computed: {
     user() {
@@ -45,7 +51,8 @@ export default {
       server: null,
       album: null,
       tracks: null,
-      tracksCredits: null
+      tracksCredits: null,
+      fetchingAlbum: false
     }
   },
   mounted() {
@@ -77,6 +84,7 @@ export default {
       // HwzeRGXLSePS0yaHmwyb
       let album = null
       try {
+        this.fetchingAlbum = true
         let [album] = await this.$svsBackend.getAlbumsOfServer(this.serverId)
         if (!album) return
 
@@ -98,10 +106,11 @@ export default {
         this.album = album
         this.tracks = tracks
         this.tracksCredits = credits
-
+        this.fetchingAlbum = false
       } catch(error) {
         console.log(error)
         console.error("Couldn't retrieve any album")
+        this.fetchingAlbum = false
         return false
       }
     }

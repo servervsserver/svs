@@ -49,7 +49,7 @@ export default {
     }
   },
   mounted() {
-    setTimeout(() => { this.onUserChange() }, 1000)
+    setTimeout(() => { this.onUserChange() }, 100)
   },
   methods: {
     async onUserChange() {

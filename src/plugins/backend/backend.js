@@ -36,6 +36,14 @@ function replaceBackwardForForwardSlashes(str) {
   return str.replace(/\\/g, "/")
 }
 
+function resolvePath(path) {
+  if (path instanceof Array) {
+    let p = path.map(v => removeLeadingAndTrailingSlashes(replaceBackwardForForwardSlashes(v)))
+    path = p.join('/')
+  }
+  return path
+}
+
 /*
 * Firebase config
 */
@@ -291,6 +299,7 @@ export default class BackendPlugin {
   }
 
   async getFirebaseDoc(path) {
+    path = resolvePath(path)
     const dbRef = ref(
       this._firebaseDb,
       path
@@ -692,6 +701,36 @@ export default class BackendPlugin {
     )
   }
 
+
+  async getAlbumsIdOfServer(server_id) {
+    try { 
+      let ids = await this.getFirebaseDoc(['servers_catalogs', server_id])
+      return ids
+    } catch(error) {
+    }
+    return null
+  }
+
+  /**
+   * 
+   * @param {*} server_id 
+   * @param {*} event 
+   * @returns {Array<FirestoreModel.Album>}
+   */
+  async getAlbumsOfServer(server_id, event) {
+    let ids = await this.getAlbumsIdOfServer(server_id)
+    console.log(ids)
+    if (!ids) return null
+
+    let albums = []
+    for(let id in ids) {
+      console.log(id)
+      if (event && ids[id] !== event) continue
+      let album = await this.getEpById(id)
+      albums.push(album)
+    }
+    return albums
+  }
 
   async writeAdminServMap() {
     let data = await this.getAllServers()

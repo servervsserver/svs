@@ -144,7 +144,7 @@ export const routes = [
     name: 'Profile',
     component: Profile,
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
   {

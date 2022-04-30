@@ -719,12 +719,12 @@ export default class BackendPlugin {
    */
   async getAlbumsOfServer(server_id, event) {
     let ids = await this.getAlbumsIdOfServer(server_id)
-    console.log(ids)
+
     if (!ids) return null
 
     let albums = []
     for(let id in ids) {
-      console.log(id)
+
       if (event && ids[id] !== event) continue
       let album = await this.getEpById(id)
       albums.push(album)

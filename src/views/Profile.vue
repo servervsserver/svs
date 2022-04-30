@@ -2,11 +2,14 @@
   <section class="container">
     <div class="spacer" />
     <profile v-if="user" :user="user" />
-    <album-info 
+    <album-info v-if="isLeader && album"
       :album='album' 
       :tracks='tracks'
       :credits='tracksCredits'
-      />
+    />
+    <blockquote v-if="isLeader && !album">
+      No album submitted
+    </blockquote>
   </section>
 </template>
 
@@ -27,8 +30,13 @@ export default {
       console.log(this.$svsAuth.user)
       return this.$svsAuth.user
     },
+    isLeader() {
+      if (!this.user) return false;
+      return this.user.isServerLeader;
+    },
     serverId() {
-      let def = 'ZqzdC97vJjnEi6V0qTvn'
+      // let def = 'ZqzdC97vJjnEi6V0qTvn'
+      let def = ''
       if (!this.server || !this.server.id) return def
       return this.server.id
     }

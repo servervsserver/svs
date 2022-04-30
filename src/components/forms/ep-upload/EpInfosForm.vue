@@ -22,7 +22,7 @@
         </image-file-input>
         <text-input
           v-model="albumInfos.streamingLink"
-          :label="'Public streaming link'"
+          :label="'Streaming link'"
           :icon="'fas fa-link'"
           :placeholder="'https://soundcloud.com/my-server/my-awesome-ep-link'"
           :validators="streamLinkValidators"
@@ -30,13 +30,14 @@
         >
           <template v-slot:tooltip>
             A link where people can listen to your EP<br>
+            The link must stay valid for the duration of the event (until the awards), it doesn't have to be a public link.
             (Youtube, Soundcloud, etc.)
           </template>
         </text-input>
 
         <text-input
           v-model="albumInfos.visualizerLink"
-          :label="'Public visualizer link'"
+          :label="'Visualizer link'"
           :icon="'fas fa-link'"
           :placeholder="'https://youtube.com/my-awesome-ep-visualizer-link'"
           :validators="visualizerLinkValidators"
@@ -44,13 +45,15 @@
         >
           <template v-slot:tooltip>
             A link where people can see the visualizer to your EP if any.<br>
+            The link must stay valid for the duration of the event (until the awards), it doesn't have to be a public link.<br/>
             (Youtube, vimeo, etc.)
           </template>
         </text-input>
-        <p>
+        <blockquote>
+          These links below must stay valid for the duration of the event<br/>
           For this edition, your visualizer must be on an external host.<br/>
-          This visualizer is optional.
-        </p>
+          The visualizer is optional.
+        </blockquote>
       </div>
 
       <div class="column is-offset-2 is-5">

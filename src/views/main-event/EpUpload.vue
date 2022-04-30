@@ -24,6 +24,19 @@
           You must be the leader of a server to submit an EP
         </blockquote>
       </div>
+      <div v-if="previouslySubmittedAlbum">
+        <blockquote>
+          It seems you already submitted an EP 
+          <strong>{{previouslySubmittedAlbum.name}}</strong>. You can check the content of your submission here
+          <router-link
+            to="/profile"
+          >
+            here
+          </router-link>
+          <br/>
+          If you submit again, it will override entirely your submission by the new submission. If you realized you made a small mistake, or something went wrong when submitting, contact a staff member instead.
+        </blockquote>
+      </div>
       <div v-if="isLeader">
         <blockquote v-if="server" class="columns is-flex is-vcentered">
           <img :src="'https://' + server.icon_url" width="100" height="20" />
@@ -125,6 +138,7 @@ export default {
       modalSubmissionErrorMessages: [],
       canSubmit: true,
       submissionState: SUBMISSION_STATE.IDLE,
+      previouslySubmittedAlbum: null
     };
   },
   computed: {
@@ -184,9 +198,17 @@ export default {
       try {
         this.server = undefined;
         this.server = await this.$svsBackend.getServerOfLeader(discordTag);
+        if (this.server) {
+          let albums = await this.$svsBackend.getAlbumsOfServer(this.server.id)
+          if (albums && albums.length) {
+            this.previouslySubmittedAlbum = albums[0]
+          }
+        }
       } catch (error) {
         console.warn("Not a leader!");
       }
+
+
     },
     /**
      * Returns a promise that is true if it can be sumbitted

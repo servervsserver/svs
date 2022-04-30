@@ -50,6 +50,15 @@
         </li>
         <li>
           <h2>Submission Criteria:</h2>
+          <blockquote>
+            <strong>Change!</strong><br/>
+            Due to changes in the submission system compared to previous editions: 
+            <ul>
+              <li><em>(Rule C.1)</em> the ZIP file is no longer mandatory</li>
+              <li><em>(Rule C.1.c)</em> the .txt containing contributions/lyrics is no longer mandatory. </li>
+            </ul>
+            Instead fill the corresponding fields in the form.
+          </blockquote>
           <ol>
             <li>
               Each EP must be submitted for playback for the stream as a ZIP file containing:
@@ -149,4 +158,9 @@
 
 <script></script>
 
-<style scoped lang='scss'></style>
+<style scoped lang='scss'>
+em {
+  font-style: normal;
+  opacity: 0.6;
+}
+</style>

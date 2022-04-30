@@ -27,7 +27,6 @@ export default {
   },
   computed: {
     user() {
-      console.log(this.$svsAuth.user)
       return this.$svsAuth.user
     },
     isLeader() {
@@ -94,7 +93,7 @@ export default {
           }
         }
 
-        console.log(album, tracks, credits)
+        // console.log(album, tracks, credits)
 
         this.album = album
         this.tracks = tracks

@@ -127,7 +127,7 @@ export default {
   methods: {
     selectTrack(track, idx) {
       this.selectedTrack = track
-      console.log(this.credits, track.id)
+      // console.log(this.credits, track.id)
       this.selectedTrackCredits = this.credits[track.id]
     },
     openLyricsModal() {

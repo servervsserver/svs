@@ -28,20 +28,44 @@ export default {
       return this.$svsAuth.user
     },
     serverId() {
-      return 'HwzeRGXLSePS0yaHmwyb'
+      let def = 'ZqzdC97vJjnEi6V0qTvn'
+      if (!this.server || !this.server.id) return def
+      return this.server.id
     }
   },
   data() {
     return {
+      server: null,
       album: null,
       tracks: null,
       tracksCredits: null
     }
   },
   mounted() {
-    setTimeout(() => { this.getAlbumsOfServer() }, 1000)
+    setTimeout(() => { this.onUserChange() }, 1000)
   },
   methods: {
+    async onUserChange() {
+      let user = this.$svsAuth.user;
+      if (!user) {
+        this.server = null;
+        console.log("No user logged");
+        return;
+      }
+      if (!user.discordTag) {
+        this.server = null;
+        console.log("No discord tag");
+        return;
+      }
+      let discordTag = user.discordTag;
+      try {
+        this.server = undefined;
+        this.server = await this.$svsBackend.getServerOfLeader(discordTag);
+        await this.getAlbumsOfServer()
+      } catch (error) {
+        console.warn("Not a leader!");
+      }
+    },
     async getAlbumsOfServer() {
       // HwzeRGXLSePS0yaHmwyb
       let album = null

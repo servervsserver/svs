@@ -55,8 +55,8 @@ export default {
       let catalog = new Archive.Catalog()
       this.catalog = catalog
       this.catalogLoading = false
-      this.getAllEps()
-      this.getAllTracks()
+      // this.getAllEps()
+      // this.getAllTracks()
   },
   methods: {
     async getAllEps() {

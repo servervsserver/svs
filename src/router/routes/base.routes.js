@@ -107,11 +107,11 @@ export const routes = [
         name: 'SvS IV Rules',
         component: Rules
       },
-      {
-        path: 'ep-upload',
-        name: 'SvS IV EP Submission',
-        component: EpUpload
-      },
+      // {
+      //   path: 'ep-upload',
+      //   name: 'SvS IV EP Submission',
+      //   component: EpUpload
+      // },
       {
         path: 'servers',
         name: 'SvS IV Participants',

@@ -45,7 +45,7 @@
     height: 100%;
     & > * {
       position: relative;
-      z-index: 2;
+      z-index: 0;
     }
   }
 

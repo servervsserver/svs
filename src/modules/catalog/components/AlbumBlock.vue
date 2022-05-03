@@ -42,8 +42,7 @@ export default {
       return this.album.title
     },
     albumServerName() {
-      // return this.album.title
-      return "Server name not provided"
+      return this.album.author
     }
   },
   emits: [

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div v-if="!albums">
+    <div v-if="!hasAlbums">
       No albums.
     </div>
     <div 
-      v-if="albums"
+      v-if="hasAlbums"
       class="album-collection columns is-multiline is-mobile"
     >
       <div 
@@ -33,6 +33,11 @@ export default {
     albums: {
       type: Array,
       required: true
+    }
+  },
+  computed: {
+    hasAlbums() {
+      return this.albums && this.albums.length
     }
   },
   methods: {

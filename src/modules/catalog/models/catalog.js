@@ -17,7 +17,7 @@ export class Catalog {
     /**
      * @type {Map<string, Album>} All the eps in the catalog
      */
-    this.eps        = new Map()
+    this.albums        = new Map()
 
     /**
      * @type {Map<string, Track>}
@@ -51,23 +51,23 @@ export class Catalog {
     return track
   }
 
-  addEp(ep) {
-    if (!ep) {
+  addAlbum(album) {
+    if (!album) {
       console.error("You can't add a null EP")
       return null
     }
-    if (!this.eps) this.eps = new Map()
-    if (!ep.id) {
+    if (!this.albums) this.albums = new Map()
+    if (!album.id) {
       console.error("The EP must have an id")
       return
     }
-    if (this.eps.has(ep.id)) {
+    if (this.albums.has(album.id)) {
       console.warn("There is already an EP with that id")
       return null
     }
-    this.eps.set(ep.id, ep)
+    this.albums.set(album.id, album)
 
-    return ep
+    return album
   }
 
   getTrackById(id) {
@@ -75,7 +75,7 @@ export class Catalog {
   }
 
   getAlbumById(id) {
-    return this.eps.get(id) || null
+    return this.albums.get(id) || null
   }
 
   getAllTracks() {
@@ -86,9 +86,9 @@ export class Catalog {
     return all
   }
 
-  getAllEps() {
+  getAllAlbums() {
     let all = []
-    for(let [id, ep] of this.eps) {
+    for(let [id, ep] of this.albums) {
       all.push(ep)
     }
     return all

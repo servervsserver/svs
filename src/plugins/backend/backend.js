@@ -677,6 +677,15 @@ export default class BackendPlugin {
 
   }
 
+  /**
+   * 
+   * @param {*} id 
+   * @returns {Promise<FirestoreModel.Server>}
+   */
+  async getServerById(id) {
+    return await this.firestoreGetDocData(FirestoreModel.Server, id)
+  }
+
   async getServerIdOfLeader(leaderDiscordTag) {
     leaderDiscordTag = leaderDiscordTag.replace(/[\$\#\.\/\[\] ]/g, "_").toLowerCase()
     return await this.getFirebaseDoc(['leaders', leaderDiscordTag, 'server'].join("/"))
@@ -684,7 +693,8 @@ export default class BackendPlugin {
 
   async getServerOfLeader(leaderDiscordTag) {
     let serverId = await this.getServerIdOfLeader(leaderDiscordTag)
-    return await this.firestoreGetDocData(FirestoreModel.Server, serverId)
+    let server = await this.getServerById(serverId)
+    return server
   }
 
   async writeAlbumInServerCatalog(album_id, event_id, server_id) {
@@ -701,6 +711,41 @@ export default class BackendPlugin {
     )
   }
 
+  async getAlbumsIdsOfEvent(event_id) {
+    if (!event_id) event_id = 'svs_iv'
+
+    try {
+      let ids = await this.getFirebaseDoc(['events_catalogs', event_id])
+      return ids
+    } catch(error) {
+      console.error(error)
+      return null
+    }
+  }
+
+  /**
+   * 
+   * @param {string} event_id 
+   * @returns { albums, servers }
+   */
+  async getAlbumsAndServersOfEvent(event_id) {
+    let ids = await this.getAlbumsIdsOfEvent(event_id)
+
+    if (!ids) return null
+
+    let albums = {}
+    let servers = {}
+    for (let id in ids) {
+      let serverId = ids[id]
+      let album = await this.getEpById(id)
+      let server = await this.getServerById(serverId)
+
+      albums[id] = album
+      servers[serverId] = server
+    }
+
+    return { albums, servers }
+  }
 
   async getAlbumsIdOfServer(server_id) {
     try { 

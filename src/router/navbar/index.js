@@ -8,6 +8,7 @@ export const navbarContent = [
       { name: 'SvS IV Overview', display: 'Overview' },
       { name: 'SvS IV Rules', display: 'Rules' },
       { name: 'SvS IV Participants', display: 'SvS IV Servers' },
+      { name: 'SvS IV Catalog', display: 'The EPs!' }
       // { name: 'SvS IV EP Submission', display: 'EP Submission' }
     ]
   },

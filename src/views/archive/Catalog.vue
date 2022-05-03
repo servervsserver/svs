@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     async getAllEps() {
-      let fAllEpsMap = await this.$svsBackend.getAllEps()
+      let fAllAlbumsMap = await this.$svsBackend.getAllTracks()
       for (let [id,fAlbum] of Object.entries(fAllEpsMap)) {
         let aAlbum = new Archive.Album(
           id, 

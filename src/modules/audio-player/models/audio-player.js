@@ -419,7 +419,7 @@ export class AudioPlayer {
     /**
      * @type {boolean} If set to true, moving in the queue will start the next track directly
      */
-    this.autoPlay = false
+    this.autoPlay = true
 
     /**
      * @type {number} Defines the behavior when arriving at the end of a track
@@ -429,30 +429,30 @@ export class AudioPlayer {
 
     this._queue = new AudioPlayerQueue()
 
-    this._queue.addToQueue(
-      new Track(
-        "-1",
-        "Drum loop",
-        "Jiway",
-        "/placeholders/audio/drumloop.wav"
-      )
-    )
-    this._queue.addToQueue(
-      new Track(
-        "-2",
-        "Stanky groovey",
-        "Jiway",
-        "/placeholders/audio/stankygroovy.wav"
-      )
-    )
-    this._queue.addToQueue(
-      new Track(
-        "-3",
-        "Vesper Martini",
-        "Jiway",
-        "/placeholders/audio/vespermartini_jiway.mp3"
-      )
-    )
+    // this._queue.addToQueue(
+    //   new Track(
+    //     "-1",
+    //     "Drum loop",
+    //     "Jiway",
+    //     "/placeholders/audio/drumloop.wav"
+    //   )
+    // )
+    // this._queue.addToQueue(
+    //   new Track(
+    //     "-2",
+    //     "Stanky groovey",
+    //     "Jiway",
+    //     "/placeholders/audio/stankygroovy.wav"
+    //   )
+    // )
+    // this._queue.addToQueue(
+    //   new Track(
+    //     "-3",
+    //     "Vesper Martini",
+    //     "Jiway",
+    //     "/placeholders/audio/vespermartini_jiway.mp3"
+    //   )
+    // )
 
     this._duration = 0
     this._currentTime = 0
@@ -509,6 +509,7 @@ export class AudioPlayer {
             let track = this._queue.currentTrack
             this.setTrack(track)
           }
+          this.play()
           break;
       }
       // this.next()
@@ -521,6 +522,7 @@ export class AudioPlayer {
    * @param {Track} track 
    */
   setTrack(track) {
+    if (!track) return
     this._currentTrack  = track
     this.audio.src      = track.source
     if (this.autoPlay) {
@@ -605,6 +607,13 @@ export class AudioPlayer {
     this._queue.moveHeadAt(position)
     let track = this._queue.currentTrack
     this.setTrack(track)
+  }
+
+  moveToTrack(track) {
+    let pos = this._queue.trackPositionInQueue(track)
+    if (!pos) return false
+    this.moveToPosition(position)
+    return true
   }
 
   pushToQueue(track) {

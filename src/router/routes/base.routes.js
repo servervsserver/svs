@@ -12,6 +12,7 @@ import MainEventOverview from "@/views/main-event/MainEventOverview.vue"
 import Rules from '@/views/main-event/Rules.vue'
 import ServerApplication from '@/views/main-event/ServerApplication.vue'
 import EpUpload from "@/views/main-event/EpUpload.vue"
+import SvSIVRadio from "@/views/main-event/SvSIVRadio.vue"
 import ThemeSubmit from "@/views/ThemeSubmit.vue"
 
 import ServerProfile from '@/views/server/ServerProfile.vue'
@@ -106,6 +107,11 @@ export const routes = [
         path: 'rules',
         name: 'SvS IV Rules',
         component: Rules
+      },
+      {
+        path: 'radio',
+        name: 'SvS IV Catalog',
+        component: SvSIVRadio
       },
       // {
       //   path: 'ep-upload',

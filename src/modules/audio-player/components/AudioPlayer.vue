@@ -1,4 +1,4 @@
-<template>
+77<template>
   <div class="audio-player-container">
     <!-- <progress class="progress is-small" value="20" max="100">20%</progress> -->
     <section class="progress-bar-section">
@@ -207,6 +207,9 @@ export default {
     },
     pushAsNextTrack(track) {
       return this.audioPlayer.pushAsNextTrack(track)
+    },
+    moveToTrack(track) {
+      return this.audioPlayer.moveToTrack(track)
     },
     previous() {
       let wasPlaying = this.isPlaying

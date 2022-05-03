@@ -22,7 +22,10 @@
       class="admin-drawer"
     >
       <template v-slot:aside>
-        <div
+        <section style="min-width: 400px;">
+          <side-menu :menuItems="menuItems" />
+        </section>
+        <!-- <div
           class="menu"
           style="width: auto; max-width: 300px; overflow: hidden;"
         >
@@ -40,7 +43,7 @@
               </router-link>
             </li>
           </ul>
-        </div>
+        </div> -->
       </template>
       <template v-slot:content>
         <div class="router-view admin-router-view">
@@ -55,12 +58,60 @@
 <script>
 
 import { ADMIN_ROUTES } from "@/router/routes"
+import { 
+  default as MenuVue, 
+  MenuItem 
+} from '@/components/layout/Menu.vue'
 
 export default {
+  components: {
+    'side-menu': MenuVue
+  },
   data: function() {
     return {
-      routes: ADMIN_ROUTES
+      menuItems: []
     }
+  },
+  mounted() {
+    console.log(ADMIN_ROUTES)
+
+    const rootRoute = '/admin'
+
+    let mis = []
+    for(let lvl1Route of ADMIN_ROUTES) {
+      let mi = new MenuItem()
+      mi.label = lvl1Route.meta.title
+      mi.expanded = true
+      mi.to = ""
+      mi.active = false
+      mi.children = []
+
+      mis.push(mi)
+      if (!lvl1Route.children) {
+        let smi = new MenuItem()
+        smi.label = lvl1Route.meta.title
+        smi.expanded = true
+        smi.to = [rootRoute, lvl1Route.path].join("/")
+        smi.active = false
+        smi.children = []
+        mi.children.push(smi)
+      } else {
+        for (let lvl2Route of lvl1Route.children) {
+          let smi = new MenuItem()
+          smi.label = lvl2Route.meta.title
+          smi.expanded = true
+          smi.to = [rootRoute, lvl1Route.path, lvl2Route.path].join("/")
+          smi.active = false
+          smi.children = []
+          mi.children.push(smi)
+        }
+      }
+
+
+
+    }
+
+    this.menuItems = mis
   },
   methods: {
     toggleDrawer () {

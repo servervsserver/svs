@@ -1,46 +1,79 @@
-import Admin from '@/views/admin/Admin.vue'
+import Admin from '@/views/admin/layout/Admin.vue'
+import AdminSublevel from '@/views/admin/layout/AdminSublevel.vue'
 
-import Dashboard from '@/views/admin/Dashboard.vue'
-import AnonymousConcerns from "@/views/admin/AnonymousConcerns.vue"
-import ServerList from "@/views/admin/ServerList.vue"
-import ThemeList from "@/views/admin/ThemeList.vue"
+// General administration
+import Dashboard from '@/views/admin/general/Dashboard.vue'
+import AnonymousConcerns from "@/views/admin/general/AnonymousConcerns.vue"
+import ServerList from "@/views/admin/general/ServerList.vue"
+
+// SvS IV administration
+import EpUpload from "@/views/admin/svs-iv/EpUpload.vue"
+import ThemeList from "@/views/admin/svs-iv/ThemeList.vue"
+
+// Dev administration
 import AdminForDev from "@/views/admin/AdminForDev.vue"
 
 
-import store from '@/store'
-
 export const ADMIN_ROUTES = [
   {
-    path: 'dashboard',
-    name: 'DashboardAdmin',
-    component: Dashboard,
+    path: 'svs',
+    name: 'SvS Administration',
+    component: AdminSublevel,
     meta: {
-      title: "Dashboard",
-    }
+      title: "SvS"
+    },
+    children: [
+      {
+        path: 'ep-upload',
+        name: 'SvSIVEpUploadAdmin',
+        component: EpUpload,
+        meta: {
+          title: "Ep Upload",
+        }
+      },
+      {
+        path: 'themes',
+        name: 'ThemeList',
+        component: ThemeList,
+        meta: {
+          title: "Theme list",
+        }
+      }
+    ]
   },
   {
-    path: 'servers',
-    name: 'ServerListAdmin',
-    component: ServerList,
+    path: 'general',
+    name: 'General Administration',
+    component: AdminSublevel,
     meta: {
-      title: "Servers"
-    }
-  },
-  {
-    path: 'themes',
-    name: 'ThemeList',
-    component: ThemeList,
-    meta: {
-      title: "ThemeList"
-    }
-  },
-  {
-    path: 'anonymous-concerns',
-    name: 'AnonymousConcernsAdmin',
-    component: AnonymousConcerns,
-    meta: {
-      title: "Anonymous Concerns"
-    }
+      title: "General"
+    },
+    children: [
+      {
+        path: 'dashboard',
+        name: 'DashboardAdmin',
+        component: Dashboard,
+        meta: {
+          title: "Dashboard",
+        }
+      },
+      {
+        path: 'anonymous-concerns',
+        name: 'AnonymousConcernsAdmin',
+        component: AnonymousConcerns,
+        meta: {
+          title: "Anonymous Concerns"
+        }
+      },
+      {
+        path: 'servers',
+        name: 'ServerListAdmin',
+        component: ServerList,
+        meta: {
+          title: "Servers"
+        }
+      }
+    ]
   },
   {
     path: 'for-devs',
@@ -50,6 +83,40 @@ export const ADMIN_ROUTES = [
       title: "AdminForDev"
     }
   },
+  // {
+  //   path: 'dashboard',
+  //   name: 'DashboardAdmin',
+  //   component: Dashboard,
+  //   meta: {
+  //     title: "Dashboard",
+  //   }
+  // },
+  // {
+  //   path: 'servers',
+  //   name: 'ServerListAdmin',
+  //   component: ServerList,
+  //   meta: {
+  //     title: "Servers"
+  //   }
+  // },
+
+  // {
+  //   path: 'themes',
+  //   name: 'ThemeList',
+  //   component: ThemeList,
+  //   meta: {
+  //     title: "ThemeList"
+  //   }
+  // },
+  // {
+  //   path: 'anonymous-concerns',
+  //   name: 'AnonymousConcernsAdmin',
+  //   component: AnonymousConcerns,
+  //   meta: {
+  //     title: "Anonymous Concerns"
+  //   }
+  // },
+
 ]
 
 function createAdminBlockRouter(path) {

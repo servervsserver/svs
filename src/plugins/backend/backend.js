@@ -443,6 +443,15 @@ export default class BackendPlugin {
     })
   }
 
+// /**
+//  * Get all the eps in a dictionary index by id
+//  * @returns {Object}
+//  */
+//   async getAllServers() {
+//     return this.firestoreGetCollectionData(FirestoreModel.Album)
+//   }
+
+
   /**
   * Returns a list from Realtime Database given key
   * @return promise to the document ref in firebase of the application

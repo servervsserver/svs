@@ -9,10 +9,14 @@
           <div class="album-server-name">
             {{ albumServerName }}
           </div>
+          <br/>
+          <div class="album-geners tags">
+            <span class="tag" v-for="genre in albumGenres" :key="genre">{{ genre }}</span>
+          </div>
         </div>
       </div>
       <div class="column is-3">
-        <squared-image-box style="max-width: 200px">
+        <squared-image-box style="max-width: 300px">
           <img
             :src="coverArtUrl"
             class="cover-art shadow-depth-1"
@@ -40,7 +44,14 @@
             <div class="track-title">
               {{ track.title }}
             </div>
-            <div class="track-duration" />
+            <div class="album-geners tags">
+              <span class="tag is-small" 
+                v-for="genre in track.genres" 
+                :key="index + '-' + genre">
+                {{ genre }}
+              </span>
+            </div>
+            <!-- <div class="track-duration" /> -->
           </li>
         </ul>
       </div>
@@ -87,6 +98,18 @@ export default {
     albumServerName() {
       // return this.album.title
       return this.album.author
+    },
+    albumGenres() {
+      if (!this.tracks) return []
+
+      let genres = new Set()
+      for( let track of this.tracks) {
+        console.log(track)
+        for (let g of track.genres) {
+          genres.add(g)
+        }
+      }
+      return [...genres]
     }
   },
   methods: {

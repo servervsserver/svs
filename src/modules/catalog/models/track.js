@@ -6,7 +6,7 @@ export class Track {
     this.title    = title || ""
     this.trackUrl = trackUrl || ""
     this.credits  = []
-
+    this.genres   = []
   }
 
 }

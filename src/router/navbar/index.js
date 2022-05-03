@@ -17,12 +17,12 @@ export const navbarContent = [
   },
   {
     name: 'Admin',
-    children: [
-      { name: 'DashboardAdmin' },
-      { name: 'ServerListAdmin' },
-      { name: 'AnonymousConcernsAdmin' },
-      { name: 'Administration For Devs' }
-    ]
+    // children: [
+    //   { name: 'DashboardAdmin' },
+    //   { name: 'ServerListAdmin' },
+    //   { name: 'AnonymousConcernsAdmin' },
+    //   { name: 'Administration For Devs' }
+    // ]
   },
   {
     name: 'About', display: 'About Us'

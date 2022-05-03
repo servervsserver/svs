@@ -1,38 +1,38 @@
 <template>
 <coming-soon :type="'page'">
   <div>
-    <!-- <drawer ref="sidenav">
-      <template v-slot:content> -->
-        <h1>SvS IV Radio</h1>
-        <section class="album-content-section shadow-depth-2">
-          <!-- <button class="button" @click="toggleDrawer">Close</button> -->
-          <blockquote
-            v-if="!activeAlbum"
-          >
-          Click on an EP to see its content!
-          </blockquote>
-          <album-content
-            v-if="activeAlbum"
-            :album="activeAlbum"
-            :tracks="activeAlbumTracks"
-            :loadingTracks="loadingTracks"
-            @track-click="onTrackClick" 
-          />
-          <div class="buttons" v-if="activeAlbumTracks && activeAlbumTracks.length">
-            <button class="button" @click="sendEpToQueue">Send EP to queue</button>
-            <!-- <button class="button" @click="sendEpToQueueAndPlayEp">Play EP</button> -->
-          </div>
-        </section>
-        <section>
-          <albums-list 
-            :albums="albums"
-            @album-click="onAlbumClick"
-          />
-        </section>
-      <!-- </template>
-      <template v-slot:aside> -->
-      <!-- </template>
-    </drawer> -->
+    <h1>SvS IV Radio</h1>
+    <section class="album-content-section shadow-depth-2">
+      <!-- <button class="button" @click="toggleDrawer">Close</button> -->
+      <blockquote
+        v-if="!activeAlbum"
+      >
+      Click on an EP to see its content!
+      </blockquote>
+
+      <album-content
+        v-if="activeAlbum"
+        :album="activeAlbum"
+        :tracks="activeAlbumTracks"
+        :loadingTracks="loadingTracks"
+        @track-click="onTrackClick" 
+      />
+      <div class="buttons" v-if="activeAlbumTracks && activeAlbumTracks.length">
+        <button class="button" @click="sendEpToQueue">Send EP to queue</button>
+        <!-- <button class="button" @click="sendEpToQueueAndPlayEp">Play EP</button> -->
+      </div>
+    </section>
+    <section>
+      <div class="buttons is-vcentered">
+        <button class="button" @click="sortAlbumsByServername(!ascending)">Sort by Server</button>
+        <button class="button" @click="sortAlbumsByTitle(!ascending)">Sort by Title</button>
+        <button class="button" @click="shuffleAlbums">Shuffle</button>
+      </div>
+      <albums-list 
+        :albums="albums"
+        @album-click="onAlbumClick"
+      />
+    </section>
   </div>
 </coming-soon>
 </template>
@@ -43,6 +43,24 @@ import AlbumContentComponent from "@/modules/catalog/components/AlbumContent.vue
 import ComingSoon from '../../components/ComingSoon.vue'
 import * as Archive from "@/modules/catalog/models"
 import * as AudioPlayerLogic from "@/modules/audio-player/models"
+
+function shuffle(array) {
+  let currentIndex = array.length;
+
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+
+    // Pick a remaining element.
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+  console.log(array)
+  return array;
+}
 
 export default {
   components: {
@@ -57,7 +75,8 @@ export default {
       albums: [],
       activeAlbum: null,
       activeAlbumTracks: [],
-      loadingTracks: false
+      loadingTracks: false,
+      ascending: false
     }
   },
   computed: {
@@ -70,11 +89,14 @@ export default {
     this.catalog = new Archive.Catalog()
     
     let aAndS = this.restoreAlbumsAndServers()
-    if (!aAndS) {
+    if (!aAndS || !this.lastCache() || (Date.now() - this.lastCache() > 1000 * 60 * 1)) {
       aAndS = await this.$svsBackend.getAlbumsAndServersOfEvent('svs_iv')
     }
     this.storeAlbumsAndServers(aAndS.albums, aAndS.servers)
-    this.servers = aAndS.servers
+
+    let servers = aAndS.servers
+    // servers = shuffle(servers)
+    this.servers = servers
 
     let fAlbumsMap = aAndS.albums
     for (let [id, fAlbum] of Object.entries(fAlbumsMap)) {
@@ -90,12 +112,17 @@ export default {
     }
 
     this.albums = this.catalog.getAllAlbums()
+    this.shuffleAlbums()
 
   },
   methods: {
     storeAlbumsAndServers(albums, servers) {
       localStorage.setItem("svsivradio/albums", JSON.stringify(albums))
       localStorage.setItem("svsivradio/servers", JSON.stringify(servers))
+      localStorage.setItem("svsivradio/cachedAt", JSON.stringify(Date.now()))
+    },
+    lastCache() {
+      return JSON.parse(localStorage.getItem("svsivradio/cachedAt"))
     },
     restoreAlbumsAndServers() {
       let res = { 
@@ -105,6 +132,25 @@ export default {
       if (!res.albums || !res.servers) 
         return null
       return res
+    },
+    shuffleAlbums() {
+      this.albums = [...shuffle(this.albums)]
+    },
+    sortAlbumsByTitle(ascending) {
+      this.albums.sort((a, b) => {
+        return ("" + a.title).localeCompare(b.title)
+      })
+      if (!ascending)
+        this.albums.reverse()
+      this.ascending = ascending
+    },
+    sortAlbumsByServername(ascending) {
+      this.albums.sort((a, b) => {
+        return (""+a.author).localeCompare(b.author)
+      })
+      if (!ascending)
+        this.albums.reverse()
+      this.ascending = ascending
     },
     async onAlbumClick(album) {
       this.activeAlbum = album
@@ -120,6 +166,8 @@ export default {
             fTrack.name,
             fTrack.audiofile_url
           )
+          if (fTrack.genres)
+            aTrack.genres = [...fTrack.genres]
           this.catalog.addTrack(aTrack)
         }
         console.log(aTrack)
@@ -128,7 +176,6 @@ export default {
       console.log(this.activeAlbumTracks)
       this.loadingTracks = false
       this.activeAlbumTracks = tracks
-      // this.$refs.sidenav.open()
     },
     onTrackClick(evt) {
       console.log(this.$svsAudioPlayer, this.audioPlayer)

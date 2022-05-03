@@ -9,9 +9,13 @@
           <div class="album-server-name">
             {{ albumServerName }}
           </div>
-          <br/>
+          <br>
           <div class="album-geners tags">
-            <span class="tag" v-for="genre in albumGenres" :key="genre">{{ genre }}</span>
+            <span
+              v-for="genre in albumGenres"
+              :key="genre"
+              class="tag"
+            >{{ genre }}</span>
           </div>
         </div>
       </div>
@@ -45,9 +49,11 @@
               {{ track.title }}
             </div>
             <div class="album-geners tags">
-              <span class="tag is-small" 
+              <span
                 v-for="genre in track.genres" 
-                :key="index + '-' + genre">
+                :key="index + '-' + genre" 
+                class="tag is-small"
+              >
                 {{ genre }}
               </span>
             </div>

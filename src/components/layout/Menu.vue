@@ -1,17 +1,23 @@
 <template>
   <div class="menu">
-    <ul class="menu-list" v-for="(item, iidx) in menuItems" :key="iidx">
+    <ul
+      v-for="(item, iidx) in menuItems"
+      :key="iidx"
+      class="menu-list"
+    >
       <li>
-        <span>{{item.label}}</span>
+        <span>{{ item.label }}</span>
         <ul v-if="item.children">
-          <li v-for="(sitem, sidx) in item.children" :key="iidx + '-' + sidx">
+          <li
+            v-for="(sitem, sidx) in item.children"
+            :key="iidx + '-' + sidx"
+          >
             <router-link :to="sitem.to">
-              {{sitem.label}}
-            </router-link >
+              {{ sitem.label }}
+            </router-link>
           </li>
         </ul>
       </li>
-
     </ul>
   </div>
 </template>
@@ -44,7 +50,10 @@ export class MenuItem {
 
 export default {
   props: {
-    menuItems: []
+    menuItems: {
+      type: Array,
+      default: () => []
+    }
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid home" >
+  <div class="container-fluid home">
     <section class="main-home-section">
       <h1 class="main-title">
         Welcome to <brand-name style="color: #ffba5e" />
@@ -21,16 +21,16 @@
         </router-link> -->
         <div style="padding: 0px 5vw;">
           <blockquote>
-            <span class="icon"><i class="fa-solid fa-warning"></i></span><br/>
+            <span class="icon"><i class="fa-solid fa-warning" /></span><br>
             After discussion with our community leaders, SvS Staff has decided to extend the EP deadline to
-            <br/>
+            <br>
             <tooltip
               :vertical="'top'"
               :mode="'hover'"
             >
               <strong>
                 {{ deadlineMilestone.date | date("DAY, dd MONTH yyyy") }}
-              - {{ deadlineMilestone.date | date("hour:min") }} UTC</strong>
+                - {{ deadlineMilestone.date | date("hour:min") }} UTC</strong>
               <template v-slot:message>
                 <span>
                   Your local time: <br>
@@ -40,11 +40,11 @@
               </template>
             </tooltip>
             (previously the 23th)
-            <br/>
-            All subsequent dates are also pushed by one week.<br/>
+            <br>
+            All subsequent dates are also pushed by one week.<br>
             <router-link to="/svs-iv/overview">
               See the updated dates
-              </router-link>
+            </router-link>
           </blockquote>
         </div>
         <p class="main-message">
@@ -196,12 +196,12 @@ export default {
   components: {
     "flip-album": FlipAlbum,
   },
-  mounted() {},
   computed: {
     deadlineMilestone() {
       return this.$store.state.svsMainEventInformations.competitionEnd
     }
-  }
+  },
+  mounted() {}
 };
 </script>
 

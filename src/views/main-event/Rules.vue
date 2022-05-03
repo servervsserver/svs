@@ -51,7 +51,7 @@
         <li>
           <h2>Submission Criteria:</h2>
           <blockquote>
-            <strong>Change!</strong><br/>
+            <strong>Change!</strong><br>
             Due to changes in the submission system compared to previous editions: 
             <ul>
               <li><em>(Rule C.1)</em> the ZIP file is no longer mandatory</li>

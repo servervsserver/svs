@@ -25,17 +25,24 @@
       />
     </section>
 
-    <blockquote v-if="server" class="columns is-flex is-vcentered">
+    <blockquote
+      v-if="server"
+      class="columns is-flex is-vcentered"
+    >
       <div class="column is-6">
-        <img :src="'https://' + server.icon_url" width="100" height="20" />
+        <img
+          :src="'https://' + server.icon_url"
+          width="100"
+          height="20"
+        >
         <div>
           You are submitting for <strong>{{ server.name }}</strong>
-          {{server.id}}
+          {{ server.id }}
         </div>
       </div>
       <div class="column is-6">
         <div v-if="previouslySubmittedAlbum">
-          Already submitted the EP <strong>{{previouslySubmittedAlbum.name}}</strong>. 
+          Already submitted the EP <strong>{{ previouslySubmittedAlbum.name }}</strong>. 
         </div>
         <div v-if="!previouslySubmittedAlbum">
           No previous submission
@@ -48,8 +55,7 @@
     </blockquote>
 
     <blockquote v-if="server === null">
-      Sorry <strong v-if="user">{{ user.discordTag }}</strong
-      >. <br />
+      Sorry <strong v-if="user">{{ user.discordTag }}</strong>. <br>
       We couldn't find a server in which you are a leader.
     </blockquote>
 
@@ -57,8 +63,15 @@
       v-if="server"
       :class="{ 'disabled-section': isSending || isCheckingValidity }"
     >
-      <ep-upload-form :ep="ep" @validation-change="onEpValidationChange" />
-      <button class="button" :disabled="!canSubmit" @click="submit">
+      <ep-upload-form
+        :ep="ep"
+        @validation-change="onEpValidationChange"
+      />
+      <button
+        class="button"
+        :disabled="!canSubmit"
+        @click="submit"
+      >
         <span class="icon">
           <i class="fas fa-paper-plane" />
         </span>
@@ -67,19 +80,22 @@
     </div>
     <!-- </div> -->
 
-    <modal ref="submitmodal" :open="true">
+    <modal
+      ref="submitmodal"
+      :open="true"
+    >
       <template v-slot:header>
         <strong v-if="isIdle">Nothing...</strong>
-        <strong v-if="isCheckingValidity"
-          >Checking submission validity...</strong
-        >
-        <strong v-if="isReportingErrors"
-          >You can't submit this EP because</strong
-        >
+        <strong
+          v-if="isCheckingValidity"
+        >Checking submission validity...</strong>
+        <strong
+          v-if="isReportingErrors"
+        >You can't submit this EP because</strong>
         <strong v-if="isSending">EP Submission in Progress...</strong>
-        <strong v-if="isReportingSendingErrors"
-          >Bad things happened during the submission...</strong
-        >
+        <strong
+          v-if="isReportingSendingErrors"
+        >Bad things happened during the submission...</strong>
         <strong v-if="isSent">EP submitted!</strong>
       </template>
       <template v-slot:default>
@@ -87,7 +103,10 @@
         <spinner v-if="isSending" />
         <div v-if="isReportingErrors">
           <ul>
-            <li v-for="(m, i) of modalSubmissionErrorMessages" :key="i">
+            <li
+              v-for="(m, i) of modalSubmissionErrorMessages"
+              :key="i"
+            >
               {{ m }}
             </li>
           </ul>
@@ -95,7 +114,9 @@
         <div v-if="isReportingSendingErrors">
           Try again to upload your EP and contact an admin.
         </div>
-        <div v-if="isSent">Thank you for your submission!</div>
+        <div v-if="isSent">
+          Thank you for your submission!
+        </div>
       </template>
     </modal>
   </div>

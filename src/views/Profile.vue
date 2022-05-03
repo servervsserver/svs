@@ -1,11 +1,15 @@
 <template>
   <section class="container">
     <div class="spacer" />
-    <profile v-if="user" :user="user" />
-    <album-info v-if="isLeader && album"
-      :album='album' 
-      :tracks='tracks'
-      :credits='tracksCredits'
+    <profile
+      v-if="user"
+      :user="user"
+    />
+    <album-info
+      v-if="isLeader && album"
+      :album="album" 
+      :tracks="tracks"
+      :credits="tracksCredits"
     />
     <blockquote v-if="isLeader && !album && !fetchingAlbum">
       No album submitted
@@ -31,6 +35,15 @@ export default {
     'album-info': AlbumInfoComponent,
     spinner: Spinner,
   },
+  data() {
+    return {
+      server: null,
+      album: null,
+      tracks: null,
+      tracksCredits: null,
+      fetchingAlbum: false
+    }
+  },
   computed: {
     user() {
       return this.$svsAuth.user
@@ -44,15 +57,6 @@ export default {
       let def = ''
       if (!this.server || !this.server.id) return def
       return this.server.id
-    }
-  },
-  data() {
-    return {
-      server: null,
-      album: null,
-      tracks: null,
-      tracksCredits: null,
-      fetchingAlbum: false
     }
   },
   mounted() {

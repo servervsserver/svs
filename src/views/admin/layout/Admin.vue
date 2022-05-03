@@ -23,7 +23,7 @@
     >
       <template v-slot:aside>
         <section style="min-width: 400px;">
-          <side-menu :menuItems="menuItems" />
+          <side-menu :menu-items="menuItems" />
         </section>
         <!-- <div
           class="menu"

@@ -3,17 +3,17 @@
     <h1><brand-name /> overview</h1>
 
     <blockquote class="has-text-centered">
-      <span class="icon"><i class="fa-solid fa-warning"></i></span>
-      <br/>
+      <span class="icon"><i class="fa-solid fa-warning" /></span>
+      <br>
       After discussion with our community leaders, SvS Staff has decided to extend the EP deadline to
-      <br/>
+      <br>
       <tooltip
         :vertical="'top'"
         :mode="'hover'"
       >
         <strong>
           {{ deadlineMilestone.date | date("DAY, dd MONTH yyyy") }}
-        - {{ deadlineMilestone.date | date("hour:min") }} UTC</strong>
+          - {{ deadlineMilestone.date | date("hour:min") }} UTC</strong>
         <template v-slot:message>
           <span>
             Your local time: <br>
@@ -23,7 +23,7 @@
         </template>
       </tooltip>
       (previously the 23th)
-      <br/>
+      <br>
       Below are the updated dates (changes start from the milestone <a :href="'#' + deadlineMilestone.name">{{ deadlineMilestone.name }}</a>)
     </blockquote>
 
@@ -39,8 +39,8 @@
           </header>
 
           <div
-            :id="milestone.name"
             v-for="milestone in milestones"
+            :id="milestone.name"
             :key="milestone.name"
             class="timeline-item"
           >

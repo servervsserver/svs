@@ -1,6 +1,9 @@
 <template>
   <section>
-    <div class="album-infos-container" v-if="album">
+    <div
+      v-if="album"
+      class="album-infos-container"
+    >
       <div class="album-infos columns">
         <div class="column is-5">
           <h3>Album infos</h3>
@@ -9,16 +12,19 @@
           </div>
           <div class="streamlink">
             <label>Stream link: </label>
-            <a :href="album.streaming_link">{{album.streaming_link || album.streaminglink }}</a>
+            <a :href="album.streaming_link">{{ album.streaming_link || album.streaminglink }}</a>
           </div>
           <div class="track-list">
             <h3>Tracks</h3>
             <ol>
               <li 
+                v-for="(track, idx) in tracks"
+                :key="idx" 
                 class="clickable"
-                v-for="(track, idx) in tracks" 
-                :key="idx"
-                @click="selectTrack(track, idx)">{{track.name}}</li>
+                @click="selectTrack(track, idx)"
+              >
+                {{ track.name }}
+              </li>
             </ol>
           </div>
         </div>
@@ -32,30 +38,50 @@
           </squared-image-box>
         </div>
       </div>
-      <div class="selected-track-infos" >
-        <blockquote v-if="!selectedTrack">Click on a track to see its infos</blockquote>
+      <div class="selected-track-infos">
+        <blockquote v-if="!selectedTrack">
+          Click on a track to see its infos
+        </blockquote>
         <div v-if="selectedTrack">
-          <div><strong>Track title: </strong>{{selectedTrack.name}}</div>
-          <div><strong>Explicit: </strong>{{selectedTrack.explicit ? 'yes' : 'no'}}</div>
-          <div><strong>Genres: </strong>{{selectedTrack.genres.join(', ')}}</div>
-          <div><strong>Track title: </strong>{{selectedTrack.name}}</div>
-          <audio controls :src="selectedTrackAudioUrl" />
-          <button v-if="selectedTrack.lyrics" class="button" @click="openLyricsModal">
+          <div><strong>Track title: </strong>{{ selectedTrack.name }}</div>
+          <div><strong>Explicit: </strong>{{ selectedTrack.explicit ? 'yes' : 'no' }}</div>
+          <div><strong>Genres: </strong>{{ selectedTrack.genres.join(', ') }}</div>
+          <div><strong>Track title: </strong>{{ selectedTrack.name }}</div>
+          <audio
+            controls
+            :src="selectedTrackAudioUrl"
+          />
+          <button
+            v-if="selectedTrack.lyrics"
+            class="button"
+            @click="openLyricsModal"
+          >
             Show lyrics
           </button>
-          <div class="selected-track-credits" v-if="selectedTrackCredits">
-            <div class="columns" 
+          <div
+            v-if="selectedTrackCredits"
+            class="selected-track-credits"
+          >
+            <div
               v-for="(c, cidx) in selectedTrackCredits" 
-              :key="cidx"
+              :key="cidx" 
+              class="columns"
             >
-              <div class="column is-3">{{c.artist_name}}</div>
-              <div class="column is-3">{{c.discord_tag}}</div>
-              <div class="column is-3">{{c.roles.join(', ')}}</div>
-              <div class="column is-3">{{c.anonymous ? "Anonymous": ''}}</div>
+              <div class="column is-3">
+                {{ c.artist_name }}
+              </div>
+              <div class="column is-3">
+                {{ c.discord_tag }}
+              </div>
+              <div class="column is-3">
+                {{ c.roles.join(', ') }}
+              </div>
+              <div class="column is-3">
+                {{ c.anonymous ? "Anonymous": '' }}
+              </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
     <modal ref="lyrics">
@@ -63,7 +89,7 @@
         Lyrics
       </template>
       <template v-slot:default>
-        <pre v-if="selectedTrack">{{selectedTrack.lyrics}}</pre>
+        <pre v-if="selectedTrack">{{ selectedTrack.lyrics }}</pre>
       </template>>
     </modal>
   </section>

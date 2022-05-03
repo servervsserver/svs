@@ -10,16 +10,25 @@
         Update
       </button>
     </div>
-    <hr/>
+    <hr>
     <div class="columns">
-      <div class="column is-3" >
-        <text-input v-model="server_id" :label="'Server id'"/>
+      <div class="column is-3">
+        <text-input
+          v-model="server_id"
+          :label="'Server id'"
+        />
       </div>
-      <div class="column is-3" >
-        <text-input v-model="album_id" :label="'Album id'"/>
+      <div class="column is-3">
+        <text-input
+          v-model="album_id"
+          :label="'Album id'"
+        />
       </div>
-      <div class="column is-3" >
-        <text-input v-model="event_id" :label="'Event id'"/>
+      <div class="column is-3">
+        <text-input
+          v-model="event_id"
+          :label="'Event id'"
+        />
       </div>
     </div>
     <button
@@ -28,10 +37,13 @@
     >
       Write
     </button>
-    <hr/>
+    <hr>
     <div class="columns">
-      <div class="column is-3" >
-        <text-input v-model="server_id" :label="'Server id'"/>
+      <div class="column is-3">
+        <text-input
+          v-model="server_id"
+          :label="'Server id'"
+        />
       </div>
     </div>
     <button
@@ -41,10 +53,10 @@
       Retrieve
     </button>
     <album-info 
-      :album='album' 
-      :tracks='tracks'
-      :credits='tracksCredits'
-      />
+      :album="album" 
+      :tracks="tracks"
+      :credits="tracksCredits"
+    />
   </div>
 </template>
 
@@ -58,9 +70,6 @@ export default {
     'text-input': TextInputComponent,
     'album-info': AlbumInfoComponent
   },
-  async mounted() {
-    
-  },
   data: () => {
     return {
       server_id: "HwzeRGXLSePS0yaHmwyb",
@@ -70,6 +79,9 @@ export default {
       tracks: null,
       tracksCredits: null
     }
+  },
+  async mounted() {
+    
   },
   methods: {
     async writeAdminServMap() {

@@ -15,11 +15,11 @@
 import { User } from "@/models/dto/user";
 
 export default {
-  props: {
-    user: {
-      type: User,
-    },
-  },
+  // props: {
+  //   user: {
+  //     type: User,
+  //   },
+  // },
   computed: {
     vote_uid() {
       return this.$svsAuth.user;

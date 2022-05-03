@@ -1,40 +1,63 @@
 <template>
-<coming-soon :type="'page'">
-  <div>
-    <h1>SvS IV Radio</h1>
-    <section class="album-content-section shadow-depth-2">
-      <!-- <button class="button" @click="toggleDrawer">Close</button> -->
-      <blockquote
-        v-if="!activeAlbum"
-      >
-      Click on an EP to see its content!
-      </blockquote>
+  <coming-soon :type="'page'">
+    <div>
+      <h1>SvS IV Radio</h1>
+      <section class="album-content-section shadow-depth-2">
+        <!-- <button class="button" @click="toggleDrawer">Close</button> -->
+        <blockquote
+          v-if="!activeAlbum"
+        >
+          Click on an EP to see its content!
+        </blockquote>
 
-      <album-content
-        v-if="activeAlbum"
-        :album="activeAlbum"
-        :tracks="activeAlbumTracks"
-        :loadingTracks="loadingTracks"
-        @track-click="onTrackClick" 
-      />
-      <div class="buttons" v-if="activeAlbumTracks && activeAlbumTracks.length">
-        <button class="button" @click="sendEpToQueue">Send EP to queue</button>
+        <album-content
+          v-if="activeAlbum"
+          :album="activeAlbum"
+          :tracks="activeAlbumTracks"
+          :loading-tracks="loadingTracks"
+          @track-click="onTrackClick" 
+        />
+        <div
+          v-if="activeAlbumTracks && activeAlbumTracks.length"
+          class="buttons"
+        >
+          <button
+            class="button"
+            @click="sendEpToQueue"
+          >
+            Send EP to queue
+          </button>
         <!-- <button class="button" @click="sendEpToQueueAndPlayEp">Play EP</button> -->
-      </div>
-    </section>
-    <section>
-      <div class="buttons is-vcentered">
-        <button class="button" @click="sortAlbumsByServername(!ascending)">Sort by Server</button>
-        <button class="button" @click="sortAlbumsByTitle(!ascending)">Sort by Title</button>
-        <button class="button" @click="shuffleAlbums">Shuffle</button>
-      </div>
-      <albums-list 
-        :albums="albums"
-        @album-click="onAlbumClick"
-      />
-    </section>
-  </div>
-</coming-soon>
+        </div>
+      </section>
+      <section>
+        <div class="buttons is-vcentered">
+          <button
+            class="button"
+            @click="sortAlbumsByServername(!ascending)"
+          >
+            Sort by Server
+          </button>
+          <button
+            class="button"
+            @click="sortAlbumsByTitle(!ascending)"
+          >
+            Sort by Title
+          </button>
+          <button
+            class="button"
+            @click="shuffleAlbums"
+          >
+            Shuffle
+          </button>
+        </div>
+        <albums-list 
+          :albums="albums"
+          @album-click="onAlbumClick"
+        />
+      </section>
+    </div>
+  </coming-soon>
 </template>
 
 <script>

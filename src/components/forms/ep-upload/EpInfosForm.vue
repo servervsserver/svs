@@ -45,13 +45,13 @@
         >
           <template v-slot:tooltip>
             A link where people can see the visualizer to your EP if any.<br>
-            The link must stay valid for the duration of the event (until the awards), it doesn't have to be a public link.<br/>
+            The link must stay valid for the duration of the event (until the awards), it doesn't have to be a public link.<br>
             (Youtube, vimeo, etc.)
           </template>
         </text-input>
         <blockquote>
-          These links must stay valid for the duration of the event.<br/>
-          For this edition, your visualizer must be on an external host.<br/>
+          These links must stay valid for the duration of the event.<br>
+          For this edition, your visualizer must be on an external host.<br>
           The visualizer is optional.
         </blockquote>
       </div>

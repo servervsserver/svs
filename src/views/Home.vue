@@ -1,9 +1,14 @@
 <template>
   <div class="container-fluid home">
-
     <section class="main-home-section">
-      <div class="columns" style="width: 100%;">
-      <div class="column is-12 is-hidden-desktop" style="height: 10vh;"></div>
+      <div
+        class="columns"
+        style="width: 100%;"
+      >
+        <div
+          class="column is-12 is-hidden-desktop"
+          style="height: 10vh;"
+        />
         <div class="column is-5 is-offset-1">
           <h1 class="main-title">
             Welcome to <brand-name style="color: #ffba5e" />

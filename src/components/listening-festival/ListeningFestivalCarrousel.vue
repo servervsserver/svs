@@ -1,20 +1,22 @@
 <template>
   <div 
     class="listening-festival-carroussel"
-    :style="{ background: activeDayColors.backgroundColor}">
-    
+    :style="{ background: activeDayColors.backgroundColor}"
+  >
     <div 
       class="circle"
-      :style="{ '--circle-color': activeDayColors.circleColor }">
+      :style="{ '--circle-color': activeDayColors.circleColor }"
+    >
       <div 
         class="servers-list"
         :style="{ color: activeDayColors.serversColor }"
       >
-        <div class="server-name" 
+        <div
           v-for="s in activeDay.servers" 
-          :key="s"
+          :key="s" 
+          class="server-name"
         >
-          {{s}}
+          {{ s }}
         </div>
       </div>
     </div>
@@ -23,17 +25,17 @@
       class="lfc-title"
       :style="{ color: activeDayColors.titleColor }"
     >
-      <h2>SVS FESTIVAL DAY {{activeDayIdx + 1}}</h2>
+      <h2>SVS FESTIVAL DAY {{ activeDayIdx + 1 }}</h2>
       <span>on <a href="https://www.twitch.tv/servervsserver">twitch.tv/servervsserver</a></span>
     </div>
 
     <div 
       class="date"
       :style="{ color: activeDayColors.dateColor }"
-      >
-      <span>{{activeDay3LDay}}</span>
-      <span>{{activeDayDate}} May</span>
-      <span>{{activeDayHour}} utc</span>
+    >
+      <span>{{ activeDay3LDay }}</span>
+      <span>{{ activeDayDate }} May</span>
+      <span>{{ activeDayHour }} utc</span>
     </div>
 
     <div
@@ -41,19 +43,18 @@
       :style="{ '--thumb-color': activeDayColors.titleColor }"
     >
       <div 
-        class="thumb clickable" 
-        :class="{ 'is-active': activeDayIdx == idx }"
         v-for="(d, idx) in days" 
-        :key="idx" 
-        @click="toDayIdx(idx)">
-      </div>
+        :key="idx"
+        class="thumb clickable" 
+        :class="{ 'is-active': activeDayIdx == idx }" 
+        @click="toDayIdx(idx)"
+      />
     </div>
-
   </div>
 </template>
 
 <script>
-const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 // const MONTHS = ['January', 'February', 'March', 'April']
 export class Day {
   constructor(
@@ -110,7 +111,7 @@ let days = [
   ),
   new Day(
     ["WSAP", "J-Fusion", "Xenharmonic Alliance", "Renaissance", "KBD: Continuum"],
-    new Date(Date.UTC(2022,4,8,21))
+    new Date(Date.UTC(2022,4,8,19))
   ),
     new Day(
     ["The Modulated Realm", "Somber", "Producer Hub", "imagiro's house", "Parable Collective"],
@@ -126,14 +127,6 @@ export default {
       previousDayIdx: 0, 
       activeDayIdx: 1
     }
-  },
-  mounted() {
-    setInterval(
-      () => {
-        this.toNextDay()
-      },
-      4000
-    )
   },
   computed: {
     previousDay() {
@@ -163,6 +156,14 @@ export default {
       if (h > 12) return (h - 12) + " PM"
       return h + " AM"
     }
+  },
+  mounted() {
+    setInterval(
+      () => {
+        this.toNextDay()
+      },
+      4000
+    )
   },
   methods: {
     toNextDay() {

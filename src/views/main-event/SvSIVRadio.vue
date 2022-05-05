@@ -25,32 +25,36 @@
             class="button svs-button-transparent"
             @click="sendEpToQueue"
           >
-          <span>
-            <span style="font-size: 0.6em;" >Send EP to queue</span>
-            <br/>
             <span>
-              <i class="fa-solid fa-compact-disc"></i>&nbsp;
-              <i class="fa-solid fa-angle-right"></i>&nbsp;
-              <i class="fa-solid fa-list-ol"></i>
+              <span style="font-size: 0.6em;">Send EP to queue</span>
+              <br>
+              <span>
+                <i class="fa-solid fa-compact-disc" />&nbsp;
+                <i class="fa-solid fa-angle-right" />&nbsp;
+                <i class="fa-solid fa-list-ol" />
+              </span>
             </span>
-          </span>
           </button>
           <button
             class="button svs-button-transparent"
             @click="sendEpToQueue"
           >
             <span>
-              <span style="font-size: 0.6em;" >Play EP</span>
-              <br/>
+              <span style="font-size: 0.6em;">Play EP</span>
+              <br>
               <span>
-                <i class="fa-solid fa-compact-disc"></i>&nbsp;
-                <i class="fa-regular fa-circle-play"></i>
+                <i class="fa-solid fa-compact-disc" />&nbsp;
+                <i class="fa-regular fa-circle-play" />
               </span>
             </span>
           </button>
         </div>
       </section>
-      <blockquote v-if="loadingAlbums" class="has-text-centered" style="font-size: 2em;">
+      <blockquote
+        v-if="loadingAlbums"
+        class="has-text-centered"
+        style="font-size: 2em;"
+      >
         <spinner />
         Loading the EPs... 
         <spinner />

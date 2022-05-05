@@ -1,12 +1,14 @@
 <template>
   <div class="album-block">
     <div class="album-block-content">
-      <img
-        :src="coverArtUrl"
-        class="cover-art clickable"
-        onerror="if (this.src != '/placeholders/uwu_colored_svs_transparent.png') this.src = '/placeholders/uwu_colored_svs_transparent.png';"
-        @click="onCoverArtClick"
-      >
+      <squared-image-box class="image-box">
+        <img
+          :src="coverArtUrl"
+          class="cover-art clickable"
+          onerror="if (this.src != '/placeholders/uwu_colored_svs_transparent.png') this.src = '/placeholders/uwu_colored_svs_transparent.png';"
+          @click="onCoverArtClick"
+        >
+      </squared-image-box>
       <div class="album-infos">
         <div class="album-name">
           {{ albumName }}
@@ -59,10 +61,17 @@ export default {
 
 <style scoped lang='scss'>
 .album-block {
-  .cover-art {
-    border-radius: 3px;
-    background: #333366;
-    box-shadow: 1px 2px 5px 0px #0004;
+  // .cover-art {
+  //   border-radius: 3px;
+  //   background: #333366;
+  //   box-shadow: 1px 2px 5px 0px #0004;
+  //   width: 100%;
+  // }
+  .image-box {
+    width: 200px;
+    @media (max-width:768px) {
+     width: 35vw; 
+    }
   }
   .album-infos {
     font-family: 'Jost';

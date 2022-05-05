@@ -28,8 +28,12 @@ export default {
     }
   },
   computed: {
+    isAdmin() {
+      return this.$svsAuth.isAdmin
+    },
     isComingSoonBypassed() {
-      return this.$store.getters.isComingSoonBypassed
+      return this.$store.getters.isComingSoonBypassed 
+        || (this.$store.state.bypassComingSoonIfAdmin && this.isAdmin)
     },
     isPage() {
       return this.type == 'page'

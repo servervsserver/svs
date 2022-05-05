@@ -10,7 +10,7 @@
       <div 
         v-for="album of albums"
         :key="album.id"
-        class="column is-2-desktop is-3-tablet is-6-mobile"
+        class="column"
       >
         <album-block 
           :album="album" 

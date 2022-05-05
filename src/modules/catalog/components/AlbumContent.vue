@@ -1,7 +1,27 @@
 <template>
   <div class="album-content">
-    <div class="columns">
-      <div class="column is-3">
+    <div class="columns is-mobile is-multiline">
+      <div class="column is-3 is-hidden-touch">
+        <squared-image-box style="max-width: 300px">
+          <img
+            :src="coverArtUrl"
+            class="cover-art shadow-depth-1"
+            onerror="if (this.src != '/placeholders/uwu_colored_svs_transparent.png') this.src = '/placeholders/uwu_colored_svs_transparent.png';"
+          >
+        </squared-image-box>
+      </div>
+
+      <div class="column is-6-mobile is-hidden-desktop">
+        <squared-image-box style="max-width: 30vw;">
+          <img
+            :src="coverArtUrl"
+            class="cover-art shadow-depth-1"
+            onerror="if (this.src != '/placeholders/uwu_colored_svs_transparent.png') this.src = '/placeholders/uwu_colored_svs_transparent.png';"
+          >
+        </squared-image-box>
+      </div>
+
+      <div class="column is-3-desktop is-6-tablet">
         <div class="album-infos">
           <div class="album-name">
             {{ albumName }}
@@ -19,16 +39,8 @@
           </div>
         </div>
       </div>
-      <div class="column is-3">
-        <squared-image-box style="max-width: 300px">
-          <img
-            :src="coverArtUrl"
-            class="cover-art shadow-depth-1"
-            onerror="if (this.src != '/placeholders/uwu_colored_svs_transparent.png') this.src = '/placeholders/uwu_colored_svs_transparent.png';"
-          >
-        </squared-image-box>
-      </div>
-      <div class="column is-6">
+
+      <div class="column is-6-desktop is-12-tablet is-12-mobile">
         <div v-if="loadingTracks">
           <blockquote>
             Loading the tracks... 

@@ -16,7 +16,7 @@
 * Resetting some user-agent properties so it's easier to style afterward
 */
 
-* { transition: 0.15s background-color, 0.15s color; }
+* { transition: 0.15s background-color; }
 
 html {
   min-height: 100vh;

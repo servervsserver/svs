@@ -1,57 +1,62 @@
 <template>
   <div class="container-fluid home">
+
     <section class="main-home-section">
-      <h1 class="main-title">
-        Welcome to <brand-name style="color: #ffba5e" />
-      </h1>
+      <div class="columns" style="width: 100%;">
+      <div class="column is-12 is-hidden-desktop" style="height: 10vh;"></div>
+        <div class="column is-5 is-offset-1">
+          <h1 class="main-title">
+            Welcome to <brand-name style="color: #ffba5e" />
+          </h1>
 
-      <event-countdown
-        :title="$store.getters.nextMilestone.name"
-        :time="$store.getters.nextMilestone.timeRemaining"
-      />
+          <event-countdown
+            :title="$store.getters.nextMilestone.name"
+            :time="$store.getters.nextMilestone.timeRemaining"
+          />
 
-      <div class="has-text-centered">
-        <!-- <h2>Wanna join the fourth edition?</h2> -->
-        <!-- <router-link
-          class="button svs-evolving-gradient is-large"
-          style="text-decoration: none"
-          to="/theme"
-        >
-          Submit Theme Suggestions!
-        </router-link> -->
-        <div style="padding: 0px 5vw;">
-          <blockquote>
-            <span class="icon"><i class="fa-solid fa-warning" /></span><br>
-            After discussion with our community leaders, SvS Staff has decided to extend the EP deadline to
-            <br>
-            <tooltip
-              :vertical="'top'"
-              :mode="'hover'"
-            >
-              <strong>
-                {{ deadlineMilestone.date | date("DAY, dd MONTH yyyy") }}
-                - {{ deadlineMilestone.date | date("hour:min") }} UTC</strong>
-              <template v-slot:message>
-                <span>
-                  Your local time: <br>
-                  {{ deadlineMilestone.date | date("DAY, dd MONTH yyyy", true) }} <br>
-                  {{ deadlineMilestone.date | date("hour:min", true) }}
-                </span>
-              </template>
-            </tooltip>
-            (previously the 23th)
-            <br>
-            All subsequent dates are also pushed by one week.<br>
-            <router-link to="/svs-iv/overview">
-              See the updated dates
-            </router-link>
-          </blockquote>
+          <div class="has-text-centered">
+            <!-- <div style="padding: 0px 5vw;">
+              <blockquote>
+                <span class="icon"><i class="fa-solid fa-warning" /></span><br>
+                After discussion with our community leaders, SvS Staff has decided to extend the EP deadline to
+                <br>
+                <tooltip
+                  :vertical="'top'"
+                  :mode="'hover'"
+                >
+                  <strong>
+                    {{ deadlineMilestone.date | date("DAY, dd MONTH yyyy") }}
+                    - {{ deadlineMilestone.date | date("hour:min") }} UTC</strong>
+                  <template v-slot:message>
+                    <span>
+                      Your local time: <br>
+                      {{ deadlineMilestone.date | date("DAY, dd MONTH yyyy", true) }} <br>
+                      {{ deadlineMilestone.date | date("hour:min", true) }}
+                    </span>
+                  </template>
+                </tooltip>
+                (previously the 23th)
+                <br>
+                All subsequent dates are also pushed by one week.<br>
+                <router-link to="/svs-iv/overview">
+                  See the updated dates
+                </router-link>
+              </blockquote>
+            </div> -->
+            <p class="main-message">
+              The theme of SvS IV <br><strong class="theme">SECRETS</strong>
+            </p>
+          </div>
         </div>
-        <p class="main-message">
-          The theme of SvS IV <br><strong class="theme">SECRETS</strong>
-        </p>
+        <div class="column is-5">
+          <section class="listening-event-section shadow-depth-2">
+            <listening-festival-carrousel />
+          </section>
+        </div>
       </div>
     </section>
+
+
     
     <section class="sample-pack-section shadow-depth-3">
       <div class="sample-pack-section-inner">
@@ -190,11 +195,13 @@
 
 <script>
 import FlipAlbum from "@/components/FlipAlbum.vue";
+import ListeningFestivalCarrousel from "@/components/listening-festival/ListeningFestivalCarrousel.vue"
 
 export default {
   name: "Home",
   components: {
     "flip-album": FlipAlbum,
+    "listening-festival-carrousel": ListeningFestivalCarrousel
   },
   computed: {
     deadlineMilestone() {
@@ -216,7 +223,7 @@ export default {
   }
 }
 .main-home-section {
-  height: 100vh;
+  // height: 100vh;
   min-height: 100vh;
   display: flex;
   flex-flow: column wrap;
@@ -252,6 +259,10 @@ export default {
   }
 }
 
+// .listening-event-section {
+//   width: 100%;
+//   min-height: 20px;
+// }
 .charity-section {
   margin-top: 60px;
   padding: 1px 0px;

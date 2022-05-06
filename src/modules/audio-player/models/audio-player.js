@@ -12,10 +12,12 @@ export class Track {
      * @type {string} Unique identifier for the track
      */
     this.id     = id
+    
     /**
      * @type {string} Title of the track
      */
     this.name   = name
+
     /**
      * @type {string} Artist of the track
      */
@@ -25,6 +27,8 @@ export class Track {
      * Audio source for the track
      */
     this.source = source
+
+    this.album = null
   }
 
   /**

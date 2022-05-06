@@ -7,6 +7,11 @@
         :max="duration"
       />
       <div class="below-bar">
+        <div class="cover-art-thumbnail">
+          <squared-image-box>
+            <img :src="currentTrackCoverArtUrl" />
+          </squared-image-box>
+        </div>
         <div
           v-if="currentTrack"
           class="track-base-metadatas"
@@ -15,7 +20,7 @@
             {{ currentTrack.name }}
           </div>
           <div class="artist-name">
-            {{ currentTrack.artist }}
+            {{ currentTrackAuthor }}
           </div>
         </div>
         <div
@@ -60,7 +65,10 @@
           </div>
         </div>
         <div class="time">
-          {{ currentTime | duration }} - {{ duration | duration }}
+          {{ currentTime | duration }} 
+          <span class="is-hidden-touch">-</span>
+          <br class="is-hidden-desktop"/>
+          {{ duration | duration }}
         </div>
       </div>
     </section>
@@ -142,6 +150,20 @@ export default {
     }
   },
   computed: {
+    currentTrackCoverArtUrl() {
+      if (!this.currentTrack) return null
+      if (!this.currentTrack.album) return null
+      if (!this.currentTrack.album.coverArtUrl) return null
+
+      let uri = this.currentTrack.album.coverArtUrl
+      uri = uri.replace('cover_arts', '250')
+      return uri
+    },
+    currentTrackAuthor() {
+      if (!this.currentTrack) return null
+      if (!this.currentTrack.album) return null
+      return this.currentTrack.album.author
+    },
     isPlaying() {
       return this.audioPlayer.isPlaying
     },
@@ -184,12 +206,6 @@ export default {
       this.$emit('timeupdate', event)
     }
     this.$svsAudioPlayer.mainAudioPlayer = this
-    
-    // console.log(this, this.$svsAudioPlayer)
-    // setInterval(() => {
-    //   this.forceRerender()
-    //   console.log(this.audioPlayer)
-    // }, 500)
   },
   beforeDestroy() {
     this.audioPlayer.destroy()
@@ -270,14 +286,26 @@ export default {
 
 <style scoped lang='scss'>
 .audio-player-container {
+
   display: flex;
   height: 60px;
   justify-content: center;
   .below-bar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+
     & > * {
       flex-grow: 1;
+    }
+  }
+
+  .cover-art-thumbnail {
+    width: 50px;
+    flex-grow: 0;
+
+    & > * {
+      width: 100%;
     }
   }
 
@@ -313,6 +341,14 @@ export default {
       padding: 0.5em;
       text-align: right;
       font-variant-numeric: tabular-nums;
+    }
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+    .cover-art-thumbnail {
+      padding: 5px;
+      width: 50px;
     }
   }
 }

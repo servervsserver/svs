@@ -225,13 +225,21 @@ export default {
             aTrack.genres = [...fTrack.genres]
           this.catalog.addTrack(aTrack)
         }
+        aTrack.album = this.activeAlbum
         tracks.push(aTrack)
       }
       this.loadingTracks = false
       this.activeAlbumTracks = tracks
     },
     onTrackClick(evt) {
-      let track = new AudioPlayerLogic.Track(evt.id, evt.title, this.activeAlbum.name, evt.trackUrl)
+      let track = new AudioPlayerLogic.Track(
+        evt.id, 
+        evt.title, 
+        this.activeAlbum.name, 
+        evt.trackUrl
+      )
+      track.album = evt.album
+      console.log(track)
       if (this.audioPlayer.pushAsNextTrack(track))
         this.audioPlayer.next()
       else {
@@ -248,6 +256,7 @@ export default {
           this.activeAlbum.name, 
           track.trackUrl
         )
+        track.album = this.activeAlbum
         this.audioPlayer.pushToQueue(apTrack)
       }
     },

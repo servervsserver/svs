@@ -2,7 +2,7 @@
   <div class="container-fluid home">
     <section class="main-home-section">
       <div
-        class="columns"
+        class="columns is-multiline"
         style="width: 100%;"
       >
         <div
@@ -222,7 +222,7 @@ export default {
   padding-top: 0px !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1223px) {
   .home {
     font-size: 0.8em;
   }

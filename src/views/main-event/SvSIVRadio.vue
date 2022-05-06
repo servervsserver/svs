@@ -19,19 +19,48 @@
         />
         <div
           v-if="activeAlbumTracks && activeAlbumTracks.length"
-          class="buttons"
+          class="buttons is-justify-content-flex-end"
         >
           <button
-            class="button"
+            class="button svs-button-transparent"
             @click="sendEpToQueue"
           >
-            Send EP to queue
+            <span>
+              <span style="font-size: 0.6em;">Send EP to queue</span>
+              <br>
+              <span>
+                <i class="fa-solid fa-compact-disc" />&nbsp;
+                <i class="fa-solid fa-angle-right" />&nbsp;
+                <i class="fa-solid fa-list-ol" />
+              </span>
+            </span>
           </button>
-        <!-- <button class="button" @click="sendEpToQueueAndPlayEp">Play EP</button> -->
+          <button
+            class="button svs-button-transparent"
+            @click="sendEpToQueue"
+          >
+            <span>
+              <span style="font-size: 0.6em;">Play EP</span>
+              <br>
+              <span>
+                <i class="fa-solid fa-compact-disc" />&nbsp;
+                <i class="fa-regular fa-circle-play" />
+              </span>
+            </span>
+          </button>
         </div>
       </section>
+      <blockquote
+        v-if="loadingAlbums"
+        class="has-text-centered"
+        style="font-size: 2em;"
+      >
+        <spinner />
+        Loading the EPs... 
+        <spinner />
+      </blockquote>
       <section>
-        <div class="buttons is-vcentered">
+        <div class="buttons">
           <button
             class="button"
             @click="sortAlbumsByServername(!ascending)"
@@ -66,6 +95,7 @@ import AlbumContentComponent from "@/modules/catalog/components/AlbumContent.vue
 import ComingSoon from '../../components/ComingSoon.vue'
 import * as Archive from "@/modules/catalog/models"
 import * as AudioPlayerLogic from "@/modules/audio-player/models"
+import Spinner from "@/components/Spinner.vue";
 
 function shuffle(array) {
   let currentIndex = array.length;
@@ -90,6 +120,7 @@ export default {
     'albums-list': AlbumListComponent,
     'album-content': AlbumContentComponent,
     ComingSoon,
+    'spinner': Spinner,
   },
   data () {
     return {
@@ -99,7 +130,8 @@ export default {
       activeAlbum: null,
       activeAlbumTracks: [],
       loadingTracks: false,
-      ascending: false
+      ascending: false,
+      loadingAlbums: false
     }
   },
   computed: {
@@ -108,11 +140,11 @@ export default {
     }
   },
   async mounted() {
-    
+    this.loadingAlbums = true
     this.catalog = new Archive.Catalog()
     
     let aAndS = this.restoreAlbumsAndServers()
-    if (!aAndS || !this.lastCache() || (Date.now() - this.lastCache() > 1000 * 60 * 1)) {
+    if (!aAndS || !this.lastCache() || (Date.now() - this.lastCache() > 1000 * 60 * 60)) {
       aAndS = await this.$svsBackend.getAlbumsAndServersOfEvent('svs_iv')
     }
     this.storeAlbumsAndServers(aAndS.albums, aAndS.servers)
@@ -136,7 +168,7 @@ export default {
 
     this.albums = this.catalog.getAllAlbums()
     this.shuffleAlbums()
-
+    this.loadingAlbums = false
   },
   methods: {
     storeAlbumsAndServers(albums, servers) {
@@ -233,7 +265,8 @@ export default {
   // min-height: 20vh;
   max-height: 50vh;
   padding: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
+  overflow: hidden scroll;
 }
 
 </style>

@@ -155,7 +155,6 @@ export default {
 
     let fAlbumsMap = aAndS.albums
     for (let [id, fAlbum] of Object.entries(fAlbumsMap)) {
-      // console.log(this.servers[fAlbum.server_id], fAlbum)
       let aAlbum = new Archive.Album(
         id,
         this.servers[fAlbum.server_id].name,
@@ -226,20 +225,17 @@ export default {
             aTrack.genres = [...fTrack.genres]
           this.catalog.addTrack(aTrack)
         }
-        console.log(aTrack)
         tracks.push(aTrack)
       }
-      console.log(this.activeAlbumTracks)
       this.loadingTracks = false
       this.activeAlbumTracks = tracks
     },
     onTrackClick(evt) {
-      console.log(this.$svsAudioPlayer, this.audioPlayer)
       let track = new AudioPlayerLogic.Track(evt.id, evt.title, this.activeAlbum.name, evt.trackUrl)
       if (this.audioPlayer.pushAsNextTrack(track))
         this.audioPlayer.next()
       else {
-        console.log(this.audioPlayer.moveToTrack(track))
+        this.audioPlayer.moveToTrack(track)
       }
 
       this.audioPlayer.play()
@@ -260,7 +256,6 @@ export default {
       let track = this.activeAlbumTracks[0]
       this.audioPlayer.moveToTrack(track)
       this.audioPlayer.play()
-      console.log("HEYA")
     }
   }
 }

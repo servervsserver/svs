@@ -61,8 +61,8 @@
             </div>
             <div class="album-geners tags">
               <span
-                v-for="genre in track.genres" 
-                :key="index + '-' + genre" 
+                v-for="(genre, gidx) in track.genres" 
+                :key="index + '-' + gidx + '-' + genre" 
                 class="tag is-small"
               >
                 {{ genre }}
@@ -131,7 +131,6 @@ export default {
 
       let genres = new Set()
       for( let track of this.tracks) {
-        console.log(track)
         for (let g of track.genres) {
           genres.add(g)
         }

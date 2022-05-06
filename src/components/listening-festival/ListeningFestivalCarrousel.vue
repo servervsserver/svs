@@ -106,7 +106,7 @@ let days = [
     new Date(Date.UTC(2022,4,6,21))
   ),
   new Day(
-    ["unfa", "Untitle Virtual Ensemble", "The Hideaway", "Homecourt", "lilbadsnacks' server", "KILOBASE"],
+    ["unfa", "Untitled Virtual Ensemble", "The Hideaway", "Homecourt", "lilbadsnacks' server", "KILOBASE"],
     new Date(Date.UTC(2022,4,7,21))
   ),
   new Day(

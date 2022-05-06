@@ -152,7 +152,6 @@ export default {
 
     let servers = aAndS.servers
     this.servers = servers
-
     let fAlbumsMap = aAndS.albums
     for (let [id, fAlbum] of Object.entries(fAlbumsMap)) {
       let aAlbum = new Archive.Album(
@@ -161,6 +160,10 @@ export default {
         fAlbum.name,
         fAlbum.coverart_url
       )
+      
+      aAlbum.setAdditionalData('External stream link', fAlbum.streaming_link || undefined)
+      aAlbum.setAdditionalData('Visualizer link', fAlbum.visualizer_link || undefined)
+
       aAlbum.trackIds = [...fAlbum.tracks_ids]
       this.catalog.addAlbum(aAlbum)
     }
@@ -239,7 +242,6 @@ export default {
         evt.trackUrl
       )
       track.album = evt.album
-      console.log(track)
       if (this.audioPlayer.pushAsNextTrack(track))
         this.audioPlayer.next()
       else {

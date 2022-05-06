@@ -36,6 +36,11 @@
               class="tag"
             >{{ genre }}</span>
           </div>
+          <div class="meta-informations" v-if="isAdmin">
+            <div class="meta-info-piece" v-for="(data, idx) of additionalDatas" :key="data">
+              <a :href="data">{{ idx }}</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -107,6 +112,9 @@ export default {
     }
   },
   computed: {
+    isAdmin() {
+      return this.$svsAuth.isAdmin
+    },
     coverArtUrl() {
       if (!this.album.coverArtUrl) 
         return '/placeholders/uwu_colored_svs_transparent.png'
@@ -136,6 +144,9 @@ export default {
         }
       }
       return [...genres]
+    },
+    additionalDatas() {
+      return this.album.additionalDatas
     }
   },
   methods: {
@@ -188,6 +199,10 @@ export default {
         text-align: center;
       }
     }
+  }
+
+  .meta-informations {
+    font-size: 0.8em;
   }
 }
 

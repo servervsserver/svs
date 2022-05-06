@@ -5,7 +5,7 @@ import AnonymousConcerns from "@/views/AnonymousConcerns.vue"
 import About from '@/views/About.vue'
 import CookiePolicy from '@/views/CookiePolicy.vue'
 import FAQ from '@/views/Faq.vue'
-
+import Download from '@/views/Download.vue'
 
 import MainEvent from '@/views/main-event/MainEvent.vue'
 import MainEventOverview from "@/views/main-event/MainEventOverview.vue"
@@ -88,6 +88,11 @@ export const routes = [
     component: LoginCallback
   },
   {
+    path: '/gabagool',
+    name: "download",
+    component: Download
+  },
+  {
     path: '/svs-iv',
     name: 'SvS IV',
     redirect: '/svs-iv/overview',
@@ -113,11 +118,11 @@ export const routes = [
         name: 'SvS IV Catalog',
         component: SvSIVRadio
       },
-      // {
-      //   path: 'ep-upload',
-      //   name: 'SvS IV EP Submission',
-      //   component: EpUpload
-      // },
+      {
+        path: 'ep-upload',
+        name: 'SvS IV EP Submission',
+        component: EpUpload
+      },
       {
         path: 'servers',
         name: 'SvS IV Participants',

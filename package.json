@@ -21,6 +21,7 @@
     "bulma-timeline": "^3.0.5",
     "core-js": "^3.6.5",
     "firebase": "^9.6.5",
+    "jszip": "^3.9.1",
     "sass": "^1.32.8",
     "sass-loader": "^10.0.0",
     "tiltify-api-client": "^1.1.2",

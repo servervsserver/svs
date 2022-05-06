@@ -443,13 +443,13 @@ export default class BackendPlugin {
     })
   }
 
-// /**
-//  * Get all the eps in a dictionary index by id
-//  * @returns {Object}
-//  */
-//   async getAllServers() {
-//     return this.firestoreGetCollectionData(FirestoreModel.Album)
-//   }
+  // /**
+  //  * Get all the eps in a dictionary index by id
+  //  * @returns {Object}
+  //  */
+  //   async getAllServers() {
+  //     return this.firestoreGetCollectionData(FirestoreModel.Album)
+  //   }
 
 
   /**
@@ -726,7 +726,7 @@ export default class BackendPlugin {
     try {
       let ids = await this.getFirebaseDoc(['events_catalogs', event_id])
       return ids
-    } catch(error) {
+    } catch (error) {
       console.error(error)
       return null
     }
@@ -757,10 +757,10 @@ export default class BackendPlugin {
   }
 
   async getAlbumsIdOfServer(server_id) {
-    try { 
+    try {
       let ids = await this.getFirebaseDoc(['servers_catalogs', server_id])
       return ids
-    } catch(error) {
+    } catch (error) {
     }
     return null
   }
@@ -777,7 +777,7 @@ export default class BackendPlugin {
     if (!ids) return null
 
     let albums = []
-    for(let id in ids) {
+    for (let id in ids) {
 
       if (event && ids[id] !== event) continue
       let album = await this.getEpById(id)
@@ -901,6 +901,40 @@ export default class BackendPlugin {
         return AnonymousConcernsTicket.fromFirestoreDoc(snappedDoc)
       })
   }
+
+
+
+
+
+  /**Story's stuff */
+
+  async getAllAlbumsUrls() {
+    let data = [];
+
+    let ids = await this.getAlbumsIdsOfEvent("svs_iv");
+    for (let id in ids) {
+      let serverId = ids[id]
+      let obj = {};
+      let arr = [];
+      let album = await this.getEpById(id)
+      let server = await this.getServerById(serverId)
+      obj.name = server.name;
+      obj.visual = album.visualizer_link;
+      for (let t in album.tracks_ids) {
+        let ti = album.tracks_ids[t];
+        let tt = await this.getTrackById(ti);
+        arr.push(tt.audiofile_url);
+      }
+      obj.tracks = arr;
+      data.push(obj);
+    }
+    return data;
+  }
+
+
+
+
+
 
 
 

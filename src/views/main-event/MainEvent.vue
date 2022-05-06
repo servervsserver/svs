@@ -7,5 +7,10 @@
 </template>
 
 <style scoped lang='scss'>
-
+@media (max-width: 768px) {
+  .container {
+    padding-left:10px !important; 
+    padding-right:10px !important; 
+  }
+}
 </style>

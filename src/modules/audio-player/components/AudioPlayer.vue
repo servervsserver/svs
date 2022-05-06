@@ -75,6 +75,14 @@
             <i class="fa-solid fa-list-ol" />
           </span>
         </button>
+        <!-- <button
+          class="button svs-button-transparent"
+          @mousedown="toggleListDisplay()"
+        >
+          <span class="icon">
+            <i class="fa-solid fa-list-ol" />
+          </span>
+        </button> -->
       </div>
     </section>
 
@@ -148,6 +156,9 @@ export default {
         this.audioPlayer.currentTime = val
         // console.log(val)
       }
+    },
+    queueLength() {
+      return this.audioPlayer.queueLength
     },
     currentTrack() {
       return this.audioPlayer.currentTrack
@@ -241,9 +252,9 @@ export default {
     },
     cyclePlayMode: (function() {
       let availablePlayModes = [
-        PlayMode.STOP,
-        PlayMode.LOOP_TRACK,
         PlayMode.LOOP_QUEUE,
+        PlayMode.STOP,
+        PlayMode.LOOP_TRACK
       ]
       let currentPlayModeIdx = 0
 

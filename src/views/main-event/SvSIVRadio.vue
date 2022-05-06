@@ -37,7 +37,7 @@
           </button>
           <button
             class="button svs-button-transparent"
-            @click="sendEpToQueue"
+            @click="sendEpToQueueAndPlayEp"
           >
             <span>
               <span style="font-size: 0.6em;">Play EP</span>
@@ -82,6 +82,7 @@
         </div>
         <albums-list 
           :albums="albums"
+          :mockAlbumsCount="mockAlbumsCount"
           @album-click="onAlbumClick"
         />
       </section>
@@ -111,7 +112,6 @@ function shuffle(array) {
     [array[currentIndex], array[randomIndex]] = [
       array[randomIndex], array[currentIndex]];
   }
-  console.log(array)
   return array;
 }
 
@@ -127,6 +127,7 @@ export default {
       servers: null,
       catalog: null,
       albums: [],
+      mockAlbumsCount: 20,
       activeAlbum: null,
       activeAlbumTracks: [],
       loadingTracks: false,
@@ -142,7 +143,7 @@ export default {
   async mounted() {
     this.loadingAlbums = true
     this.catalog = new Archive.Catalog()
-    
+    this.mockAlbumsCount = 20
     let aAndS = this.restoreAlbumsAndServers()
     if (!aAndS || !this.lastCache() || (Date.now() - this.lastCache() > 1000 * 60 * 60)) {
       aAndS = await this.$svsBackend.getAlbumsAndServersOfEvent('svs_iv')
@@ -150,7 +151,6 @@ export default {
     this.storeAlbumsAndServers(aAndS.albums, aAndS.servers)
 
     let servers = aAndS.servers
-    // servers = shuffle(servers)
     this.servers = servers
 
     let fAlbumsMap = aAndS.albums
@@ -167,6 +167,7 @@ export default {
     }
 
     this.albums = this.catalog.getAllAlbums()
+    this.mockAlbumsCount = 0
     this.shuffleAlbums()
     this.loadingAlbums = false
   },
@@ -237,6 +238,10 @@ export default {
       let track = new AudioPlayerLogic.Track(evt.id, evt.title, this.activeAlbum.name, evt.trackUrl)
       if (this.audioPlayer.pushAsNextTrack(track))
         this.audioPlayer.next()
+      else {
+        console.log(this.audioPlayer.moveToTrack(track))
+      }
+
       this.audioPlayer.play()
     },
     sendEpToQueue() {
@@ -254,6 +259,8 @@ export default {
       this.sendEpToQueue()
       let track = this.activeAlbumTracks[0]
       this.audioPlayer.moveToTrack(track)
+      this.audioPlayer.play()
+      console.log("HEYA")
     }
   }
 }

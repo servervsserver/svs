@@ -1,11 +1,11 @@
 <template>
   <div class="album-block">
-    <div class="album-block-content">
+    <div class="album-block-content has-text-centered">
       <squared-image-box class="image-box">
         <img
           :src="coverArtUrl"
           class="cover-art clickable"
-          onerror="if (this.src != '/placeholders/uwu_colored_svs_transparent.png') this.src = '/placeholders/uwu_colored_svs_transparent.png';"
+          @error="onCAUError"
           @click="onCoverArtClick"
         >
       </squared-image-box>
@@ -32,13 +32,23 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      failedOnceCAU: false
+    }
+  },
   computed: {
     coverArtUrl() {
       if (!this.album.coverArtUrl) 
         return '/placeholders/uwu_colored_svs_transparent.png'
-      if (!/^http(s)?:\/\//.test(this.album.coverArtUrl)) 
-        return "https://" + this.album.coverArtUrl
-      return this.album.coverArtUrl
+
+      let uri = this.album.coverArtUrl
+
+      if (this.failedOnceCAU)
+        return uri
+
+      uri = uri.replace('cover_arts', '250')
+      return uri
     },
     albumName() {
       return this.album.title
@@ -53,6 +63,9 @@ export default {
   methods: {
     onCoverArtClick(evt) {
       this.$emit('album-click', this.album)
+    },
+    onCAUError(evt) {
+      this.failedOnceCAU = true
     }
   }
 }
@@ -67,11 +80,13 @@ export default {
   //   box-shadow: 1px 2px 5px 0px #0004;
   //   width: 100%;
   // }
+  .album-block-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .image-box {
     width: 200px;
-    @media (max-width:768px) {
-     width: 35vw; 
-    }
   }
   .album-infos {
     font-family: 'Jost';
@@ -81,6 +96,16 @@ export default {
     }
     .album-server-name {
       font-weight: 200;
+    }
+  }
+
+  @media (max-width:768px) {
+    .image-box {
+      width: calc((100vw - 20px - 1em) / 3);
+    }
+
+    .album-infos {
+      font-size: 0.8rem;
     }
   }
 }

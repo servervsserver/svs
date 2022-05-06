@@ -6,7 +6,7 @@
           <img
             :src="coverArtUrl"
             class="cover-art shadow-depth-1"
-            onerror="if (this.src != '/placeholders/uwu_colored_svs_transparent.png') this.src = '/placeholders/uwu_colored_svs_transparent.png';"
+            @error="onCAUError"
           >
         </squared-image-box>
       </div>
@@ -16,7 +16,6 @@
           <img
             :src="coverArtUrl"
             class="cover-art shadow-depth-1"
-            onerror="if (this.src != '/placeholders/uwu_colored_svs_transparent.png') this.src = '/placeholders/uwu_colored_svs_transparent.png';"
           >
         </squared-image-box>
       </div>
@@ -102,13 +101,23 @@ export default {
       default: false
     }
   },
+  data() {
+    return {
+      failedOnceCAU: false
+    }
+  },
   computed: {
     coverArtUrl() {
       if (!this.album.coverArtUrl) 
         return '/placeholders/uwu_colored_svs_transparent.png'
-      if (!/^http(s)?:\/\//.test(this.album.coverArtUrl)) 
-        return "https://" + this.album.coverArtUrl
-      return this.album.coverArtUrl
+
+      let uri = this.album.coverArtUrl
+
+      if (this.failedOnceCAU)
+        return uri
+
+      uri = uri.replace('cover_arts', '500')
+      return uri
     },
     albumName() {
       return this.album.title
@@ -133,6 +142,9 @@ export default {
   methods: {
     onTrackClick(evt) {
       this.$emit('track-click', evt)
+    },
+    onCAUError(evt) {
+      this.failedOnceCAU = true
     }
   }
 }

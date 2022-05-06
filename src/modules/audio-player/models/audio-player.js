@@ -425,7 +425,7 @@ export class AudioPlayer {
      * @type {number} Defines the behavior when arriving at the end of a track
      * @see PlayMode
      */
-    this.playMode = PlayMode.STOP
+    this.playMode = PlayMode.LOOP_QUEUE
 
     this._queue = new AudioPlayerQueue()
 
@@ -571,6 +571,10 @@ export class AudioPlayer {
     return this._queue
   }
 
+  get queueLength() {
+    return this.queue.queueLength
+  }
+
   play() {
     this.audio.volume = 0.2
     this._isPlaying = true
@@ -612,7 +616,7 @@ export class AudioPlayer {
   moveToTrack(track) {
     let pos = this._queue.trackPositionInQueue(track)
     if (!pos) return false
-    this.moveToPosition(position)
+    this.moveToPosition(pos)
     return true
   }
 

@@ -27,44 +27,43 @@
           <li
             v-for="(track, idx) of tracks"
             :key="track.vueid"
-            class="playlist-item clickable"
+            class="playlist-item"
             :class="{ 
               'track-played': idx < idxCurrentTrack , 
               'track-playing': idx == idxCurrentTrack,
               'track-toplay': idx > idxCurrentTrack }"
-            @click="onTrackClick(idx - idxCurrentTrack, track)"
+            
           > 
-            <div
-              class="track-position"
-            >
-              {{ idx - idxCurrentTrack }}
+            <div class="playlist-item-start">
+              <div
+                class="track-position"
+              >
+                {{ idx - idxCurrentTrack }}
+              </div>
             </div>
-            <div class="track-base-metadatas">
-              <span class="track-name">
-                {{ track.name }}
-              </span>
-              <span class="artist-name">
-                {{ track.artist }}
-              </span>
+            <div 
+              class="playlist-item-center clickable"
+              @click="onTrackClick(idx, track)"
+            >
+              <div class="track-base-metadatas">
+                <span class="track-name">
+                  {{ track.name }}
+                </span>
+                <span class="artist-name">
+                  {{ track.artist }}
+                </span>
+              </div>
+            </div>
+            <div class="playlist-item-end">
+              <div
+                v-if="idx !== idxCurrentTrack"
+                class="track-position clickable"
+                @click="onDeleteTrack($event, idx, track)"
+              >
+                <i class="fa-regular fa-circle-xmark"></i>
+              </div>
             </div>
           </li>
-        <!-- </ul> -->
-        <!-- <h3>Next tracks</h3> -->
-        <!-- <ul > -->
-          <!-- <li
-            class="playlist-item track-toplay"
-            v-for="(track) of nextTracks"
-            :key="track.vueid"
-          > 
-            <div class="track-base-metadatas">
-              <span class="track-name">
-                {{ track.name }}
-              </span>
-              <span class="artist-name">
-                {{ track.artist }}
-              </span>
-            </div>
-          </li> -->
         </ul>
       </section>
       <footer
@@ -131,8 +130,12 @@ export default {
       if (this.openedData) this.close()
       else this.open()
     },
-    onTrackClick(position, track) {
+    onTrackClick(idx, track) {
+      let position = idx - this.idxCurrentTrack
       this.$emit('track-click', position, track)
+    },
+    onDeleteTrack(event, idx, track) {
+      let position = idx - this.idxCurrentTrack
     }
   }
 }
@@ -164,6 +167,7 @@ export default {
       display: flex;
       flex-direction: row;
       align-items: center;
+      justify-content: space-between;
       margin: 2px 0px;
       padding: 1em;
       background: #0004;
@@ -178,6 +182,10 @@ export default {
         }
       }
 
+      .playlist-item-center {
+        flex-grow: 1;
+      }
+
       .track-position {
         width: 2em;
         text-align: center;;
@@ -185,6 +193,7 @@ export default {
 
       &.track-played {
         font-style: italic;
+        opacity: 0.9;
       }
       
       &.track-playing {

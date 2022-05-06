@@ -529,6 +529,15 @@ export class AudioPlayer {
     if (!track) return
     this._currentTrack  = track
     this.audio.src      = track.source
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: this._currentTrack.name,
+      artist: this._currentTrack.album.author,
+      album: this._currentTrack.album.title,
+      artwork: [
+        { src: this._currentTrack.album.coverArtUrl }
+      ]
+    })
     if (this.autoPlay) {
       this.play()
     }

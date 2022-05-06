@@ -1,16 +1,13 @@
 <template>
   <div class="mock-album-block">
     <div class="album-block-content has-text-centered">
-      <squared-image-box class="image-box">
-        </squared-image-box>
+      <squared-image-box class="image-box" />
       <div class="album-infos">
-        <div class="album-name">
-          </div>
-        <div class="album-server-name">
-          </div>
+        <div class="album-name" />
+        <div class="album-server-name" />
       </div>
     </div>
-    <div class="mock-gradient"></div>
+    <div class="mock-gradient" />
   </div>
 </template>
 

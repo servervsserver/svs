@@ -17,7 +17,9 @@
           @album-click="onAlbumClick"
         />
       </div>
-      <div v-for="mai in mockAlbumsCount" :key="mai"
+      <div
+        v-for="mai in mockAlbumsCount"
+        :key="mai"
         class="column"
       >
         <mock-album-block />

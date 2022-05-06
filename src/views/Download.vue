@@ -1,15 +1,21 @@
 <template>
   <div>
     <div v-if="all.length > 0">
-      <div v-for="(ep, index) in all" v-bind:key="index">
+      <div
+        v-for="(ep, index) in all"
+        :key="index"
+      >
         <h3>{{ ep.name }}</h3>
-        <br />
-        <a :href="ep.visualizer_link" v-if="ep.visualizer_link"
-          >LINK TO VISUALIZER</a
-        >
-        <br />
-        <button @click="download(index)">DOWNLOAD TRACKS</button>
-        <hr />
+        <br>
+        <a
+          v-if="ep.visualizer_link"
+          :href="ep.visualizer_link"
+        >LINK TO VISUALIZER</a>
+        <br>
+        <button @click="download(index)">
+          DOWNLOAD TRACKS
+        </button>
+        <hr>
       </div>
     </div>
     <div v-if="all.length == 0">

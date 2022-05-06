@@ -82,7 +82,7 @@
         </div>
         <albums-list 
           :albums="albums"
-          :mockAlbumsCount="mockAlbumsCount"
+          :mock-albums-count="mockAlbumsCount"
           @album-click="onAlbumClick"
         />
       </section>

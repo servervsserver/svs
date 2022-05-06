@@ -32,7 +32,6 @@
               'track-played': idx < idxCurrentTrack , 
               'track-playing': idx == idxCurrentTrack,
               'track-toplay': idx > idxCurrentTrack }"
-            
           > 
             <div class="playlist-item-start">
               <div
@@ -60,7 +59,7 @@
                 class="track-position clickable"
                 @click="onDeleteTrack($event, idx, track)"
               >
-                <i class="fa-regular fa-circle-xmark"></i>
+                <i class="fa-regular fa-circle-xmark" />
               </div>
             </div>
           </li>

@@ -1,6 +1,7 @@
 import Dexie from 'dexie'
 import { Album } from "./album"
 import { Track } from "./track"
+import { Server } from "./server"
 
 export const db = new Dexie('catalogDb')
 
@@ -22,7 +23,8 @@ function toDexieVersion(str) {
 
 db.version(toDexieVersion('1.0.0')).stores({
   albums: 'id, title, author, coverArtUrl, additionalDatas, trackIds',
-  tracks: 'id, title, trackUrl, albumId, credits, genres, lyrics'
+  tracks: 'id, title, trackUrl, albumId, credits, genres, lyrics',
+  servers: 'id, name, icon_url, description, dicord_invite'
 })
 
 function defaultDexieStoreAdapter(obj) {
@@ -58,4 +60,14 @@ export async function restoreTrack(id) {
   let dTrack = await db.tracks.where('id').equals(id).first();
   if (!dTrack) return null
   return defaultDexieRestoreAdapter(new Track(), dTrack)
+}
+
+export function storeServer(server) {
+  db.servers.put(defaultDexieStoreAdapter(server))
+}
+
+export async function restoreServer(id) {
+  let dServer = await db.servers.where('id').equals(id).first();
+  if (!dServer) return null
+  return defaultDexieRestoreAdapter(new Server(), dServer)
 }

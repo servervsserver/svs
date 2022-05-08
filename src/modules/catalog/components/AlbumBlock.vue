@@ -10,12 +10,16 @@
         >
       </squared-image-box>
       <div class="album-infos">
+        <div class="album-server-id" v-if="showDevInfos">
+          {{ albumId }}
+        </div>
         <div class="album-name">
           {{ albumName }}
         </div>
         <div class="album-server-name">
           {{ albumServerName }}
         </div>
+
       </div>
     </div>
   </div>
@@ -23,13 +27,17 @@
 
 <script>
 
-import { Album } from "@/modules/catalog/models"
+import { Album, Server } from "../models"
 
 export default {
   props: {
     album: {
       type: Album,
       required: true
+    },
+    server: {
+      type: Server,
+      required: false
     }
   },
   data() {
@@ -38,6 +46,9 @@ export default {
     }
   },
   computed: {
+    showDevInfos() {
+      return this.$svsSettings.showDevInfos
+    },
     coverArtUrl() {
       if (!this.album.coverArtUrl) 
         return '/placeholders/uwu_colored_svs_transparent.png'
@@ -53,8 +64,16 @@ export default {
     albumName() {
       return this.album.title
     },
+    albumId() {
+      return this.album.id
+    },
     albumServerName() {
-      return this.album.author
+      if (!this.server) {
+        console.warn("No server provided, cannot display info")
+        return '...'
+      }
+      return this.server.name
+      // return this.album.author
     }
   },
   emits: [
@@ -96,6 +115,11 @@ export default {
     }
     .album-server-name {
       font-weight: 200;
+    }
+
+    .album-server-id {
+      font-weight: 100;
+      font-size: 0.8em;
     }
   }
 

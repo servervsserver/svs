@@ -1,11 +1,14 @@
-import {
-  Track,
-  Album,
-  // ArchiveAccoladeEntry,
-  // ArchiveAccoladeType,
-  // ArchiveAccolade
-} from "./archive-entry.js"
-
+// import {
+//   Track,
+//   Album,
+//   // ArchiveAccoladeEntry,
+//   // ArchiveAccoladeType,
+//   // ArchiveAccolade
+// } from "./archive-entry.js"
+import { Track } from "./track"
+import { Album } from "./album"
+import { Server } from "./server"
+import { AlbumCollection } from "./album-collection"
 
 /**
 * Archive catalog. It should be used as a cache for the catalogue
@@ -118,7 +121,15 @@ export class AsyncCatalog {
      */
     this._tracks    = new Map()
 
+    /**
+     * @type {Map<string, Server>}
+     */
+    this._servers   = new Map()
 
+    /**
+     * @type {Map<string, AlbumCollection>}
+     */
+    this._albumCollections  = new Map()
 
     /**
      * @type {(id: string) => Promise<Album>}
@@ -129,6 +140,17 @@ export class AsyncCatalog {
      * @type {(id: string) => Promise<Track>}
      */
     this._asyncTrackFetchFnc = null
+
+    /**
+     * @type {(id: string) => Promise<Server>}
+     */
+    this._asyncServerFetchFnc = null
+
+    /**
+     * @type {(id: string) => Promise<AlbumCollection>}
+     */
+    this._asyncAlbumCollectionFetchFnc = null
+
 
   }
 
@@ -147,6 +169,20 @@ export class AsyncCatalog {
   }
 
   /**
+   * @param fnc {(id: string) => Promise<Server|null>}
+   */
+  set serverFetch(fnc) {
+    this._asyncServerFetchFnc = fnc
+  }
+
+  /**
+   * @param fnc {(id: string) => Promise<AlbumCollection>}
+   */
+  set albumCollectionFetch(fnc) {
+    this._asyncAlbumCollectionFetchFnc = fnc
+  }
+
+  /**
    * 
    * @param {Track} track The track to add
    * @returns The track if successfully added, null otherwise.
@@ -160,7 +196,7 @@ export class AsyncCatalog {
 
     if (!track.id) {
       console.error("The track must have an id")
-      return
+      return null
     }
     if (this._tracks.has(track.id)) {
       console.warn("There is already a track with that id. Replaced")
@@ -184,7 +220,7 @@ export class AsyncCatalog {
     }
     if (!album.id) {
       console.error("The EP must have an id")
-      return
+      return null
     }
     if (this._albums.has(album.id)) {
       console.warn("There is already an Album with that id. Replaced")
@@ -194,6 +230,58 @@ export class AsyncCatalog {
     CatalogDb.storeAlbum(album)
 
     return album
+  }
+
+  /**
+   * 
+   * @param {Server} server The track to add
+   * @returns The track if successfully added, null otherwise.
+   */
+  addServer(server) {
+
+    if (!server) {
+      console.error("You can't add a null server")
+      return null
+    }
+
+    if (!server.id) {
+      console.error("The server must have an id")
+      return null
+    }
+    if (this._servers.has(server.id)) {
+      console.warn("There is already a server with that id. Replaced")
+    }
+    this._servers.set(server.id, server)
+
+    CatalogDb.storeServer(server)
+
+    return server
+  }
+
+  /**
+   * 
+   * @param {AlbumCollection} albumCollection The track to add
+   * @returns The track if successfully added, null otherwise.
+   */
+  addAlbumCollection(albumCollection) {
+
+    if (!albumCollection) {
+      console.error("You can't add a null server")
+      return null
+    }
+
+    if (!albumCollection.id) {
+      console.error("The album-collection must have an id")
+      return null
+    }
+    if (this._servers.has(albumCollection.id)) {
+      console.warn("There is already a album-collection with that id. Replaced")
+    }
+    this._servers.set(albumCollection.id, albumCollection)
+
+    // CatalogDb.storeServer(server)
+
+    return albumCollection
   }
 
   /**
@@ -249,5 +337,49 @@ export class AsyncCatalog {
 
     return album
 
+  }
+
+  /**
+   * 
+   * @param {string} id 
+   * @returns (id: string) => Promise<Server>
+   */
+  async asyncGetServerById(id) {
+    
+    // Try in RAM
+    let server = this._servers.get(id)
+    if (server) return server
+
+    // Try in cache
+    server = await CatalogDb.restoreServer(id)
+    if (server) return server
+    
+    // Try distant
+    if (this._asyncServerFetchFnc) 
+      server = await this._asyncServerFetchFnc(id)
+
+    if (server) {
+      this.addServer(server)
+    }
+
+    return server
+
+  }
+
+  async asyncGetAlbumCollectionById(id) {
+
+    // Try in RAM
+    let albumCollection = this._albumCollections.get(id)
+    if (albumCollection) return albumCollection
+
+    // Try distant
+    if (this._asyncAlbumCollectionFetchFnc)
+      albumCollection = await this._asyncAlbumCollectionFetchFnc(id)
+
+    if (albumCollection) {
+      this.addAlbumCollection(albumCollection)
+    }
+
+    return albumCollection
   }
 }

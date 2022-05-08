@@ -1,7 +1,8 @@
 <template>
   <div>
     <album-content
-      v-if="album"
+      v-if="album && server"
+      :server="server"
       :album="album"
       :tracks="tracks"
       :mockTracksCount="mockTracksCount"
@@ -28,6 +29,10 @@ export default {
        */
       album: null,
       /**
+       * @type {Archive.Server}
+       */
+      server: null,
+      /**
        * @type {Archive.Track[]}
        */
       tracks: null,
@@ -38,18 +43,20 @@ export default {
     }
   },
   async mounted() {
-    console.log(this.$route)
+    
     if (this.$route.params.id) {
       let id = this.$route.params.id
       let album = await this.catalog.asyncGetAlbumById(id)
+      let server = await this.catalog.asyncGetServerById(album.author)
+
       this.album = album
+      this.server = server
 
       this.tracks = []
       for( let trackId of album.trackIds ) {
         let track = await this.catalog.asyncGetTrackById(trackId)
         this.tracks.push(track)
       }
-      console.log(this.tracks)
     }
   },
   computed: {

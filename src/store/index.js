@@ -8,7 +8,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     svsMainEventInformations: new SvSIVInformations(),
-    bypassComingSoonIfAdmin: true
+    bypassComingSoonIfAdmin: true,
+    showDevInfoIfAdmin: true
   },
   getters: {
     nextMilestone: state => {

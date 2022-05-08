@@ -2,8 +2,13 @@ import * as Archive from "@/modules/catalog/models"
 
 export default function (catalogPlugin, backendPlugin) {
 
+  /**
+   * @type {Archive.AsyncCatalog}
+   */
+  let catalog = catalogPlugin.mainCatalog
+
   // Album fetching
-  catalogPlugin.mainCatalog.albumFetch = async (id) => {
+  catalog.albumFetch = async (id) => {
 
     let fAlbum = await backendPlugin.getAlbumById(id)
     if (!fAlbum) return null
@@ -27,7 +32,7 @@ export default function (catalogPlugin, backendPlugin) {
   }
 
   // Track fetching
-  catalogPlugin.mainCatalog.trackFetch = async (id) => {
+  catalog.trackFetch = async (id) => {
 
     let fTrack = await backendPlugin.getTrackById(id)
     if (!fTrack) return null
@@ -47,5 +52,47 @@ export default function (catalogPlugin, backendPlugin) {
     
     return aTrack
     
+  }
+
+  // Author fetching
+  catalog.serverFetch = async (id) => {
+    let fServer = await backendPlugin.getServerById(id)
+    console.log("F", fServer)
+    if (!fServer) return null
+
+    let aServer = new Archive.Server(
+      fServer.id,
+      fServer.name,
+      fServer.icon_url,
+      fServer.description,
+      fServer.icon_url,
+      fServer.is_private ? null : fServer.discord_invite
+    )
+    console.log("A", aServer)
+    return aServer
+  }
+
+  catalog.albumCollectionFetch = async (id) => {
+    let fAC = await backendPlugin.getAlbumCollectionById(id)
+    if (!fAC) return null
+
+    let aAC = new Archive.AlbumCollection()
+    
+    aAC.id             = fAC.id
+    aAC.name           = fAC.name
+    aAC.description    = fAC.description
+    aAC.albumsIds      = [...fAC.albums_ids]
+    aAC.subCollections = []
+
+    if (fAC.sub_collections) {
+      for (let fSC of fAC.sub_collections) {
+        let aSC = new Archive.AlbumSubcollection()
+        aSC.name = fSC.name
+        aSC.description = fSC.description
+        aSC.albumsIds = fSC.albums_ids ? [...fSC.albums_ids] : []
+      }
+    }
+    console.log(aAC)
+    return aAC
   }
 }

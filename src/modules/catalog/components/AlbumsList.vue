@@ -5,14 +5,16 @@
     </div>
     <div 
       v-if="hasAlbums"
-      class="album-collection columns is-multiline is-mobile is-variable is-1-mobile is-1-tablet"
+      class="album-collection columns is-mobile is-variable is-1-mobile is-1-tablet"
+      :class="{ 'is-multiline': isMultiline }"
     >
       <div 
         v-for="album of albums"
         :key="album.id"
         class="column"
       >
-        <album-block 
+        <album-block
+          :server="getServerOfAlbum(album)"
           :album="album" 
           @album-click="onAlbumClick"
         />
@@ -43,18 +45,43 @@ export default {
       type: Array,
       required: true
     },
+    servers: {
+      type: Array,
+      required: false
+    },
     mockAlbumsCount: {
       type: Number,
       default: 0,
       required: false
+    },
+    listStyle: {
+      type: String,
+      required: false,
+      default: 'grid'
     }
   },
   computed: {
+    isMultiline() {
+      return this.listStyle === 'grid'
+    },
+    serverMap() {
+      if (!this.servers) return null
+
+      let map = new Map()
+      for(let server of this.servers) {
+        map.set(server.id, server)
+      }
+      return map
+    },
     hasAlbums() {
       return (this.albums && this.albums.length) || this.mockAlbumsCount
     }
   },
   methods: {
+    getServerOfAlbum(album)  {
+      if (!this.serverMap) return null
+      return this.serverMap.get(album.author)
+    },
     onAlbumClick(evt) {
       this.$emit('album-click', evt)
     }

@@ -250,6 +250,13 @@ export default class SettingsPlugin {
     return this._vue.$data.theme
   }
 
+  // ================= Adminstration
+
+  get showDevInfos() {
+    console.log(this.$svsAuth)
+    return true
+  }
+
   // ================= Cookies
 
   /**

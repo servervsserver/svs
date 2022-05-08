@@ -1,11 +1,12 @@
+import CollectionPage from "../pages/CollectionPage.vue"
 import AlbumPage from "../pages/AlbumPage.vue"
 import TrackPage from "../pages/TrackPage.vue"
 
 export const routes = [
   {
-    path: 'collection',
+    path: 'collection/:id',
     name: 'CatalogCollection',
-    component: () => AlbumPage,
+    component: CollectionPage,
     meta: {
       title: 'Collection'
     }

@@ -1,5 +1,6 @@
 <template>
-  <div class="album-content">
+  <section class="album-content">
+    <h2>{{ albumName }}</h2>
     <div class="columns is-mobile is-multiline">
       <div class="column is-3 is-hidden-touch">
         <squared-image-box style="max-width: 300px">
@@ -89,21 +90,24 @@
         </ul>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
 
 import Spinner from "@/components/Spinner.vue";
 
-import { Album } from "@/modules/catalog/models"
-import { Track } from "@/modules/catalog/models"
+import { Album, Track, Server } from "@/modules/catalog/models"
 
 export default {
   components: {
     'spinner': Spinner,
   },
   props: {
+    server: {
+      type: Server,
+      required: true
+    },
     album: {
       type: Album,
       required: true
@@ -154,7 +158,10 @@ export default {
     },
     albumServerName() {
       // return this.album.title
-      return this.album.author
+      return this.server.name
+    },
+    serverUrl() {
+      return [this.baseRoute, 'server', this.server.id ].join('/')
     },
     albumGenres() {
       if (!this.tracks) return []

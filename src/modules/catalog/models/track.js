@@ -9,6 +9,7 @@ export class Track {
     this.credits  = []
     this.genres   = []
     this.lyrics   = null
+    
   }
 
 }

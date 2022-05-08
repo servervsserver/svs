@@ -1,7 +1,11 @@
 <template>
   <coming-soon :type="'page'">
     <div class="container is-fluid">
-      <router-view />
+      <div class="transition-container">
+      <transition name="scale">
+        <router-view />
+      </transition>
+      </div>
     </div>
     <!-- <div
       id="archive-container"
@@ -118,4 +122,42 @@ export default {
     height: 100%;
     overflow-y: scroll;
   }
+
+.transition-container {
+  position: relative;
+  width: 100%;
+}
+.scale-enter-active,
+.scale-leave-active {
+  transition: transform 0.5s ease;
+  position: relative;
+  top: 0;
+  left: 0; 
+  right: 0;
+  & > * {
+    position: relative;
+  }
+}
+
+.scale-leave-active  {
+  position: absolute;
+}
+
+
+.scale-enter,
+.scale-enter-from,
+.scale-leave-to {
+  & > * {
+    position: absolute;
+    top:0;
+  }
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.scale-enter-to,
+.scale-leave {
+  opacity: 1;
+  transform: scale(1);
+}
 </style>

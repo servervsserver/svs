@@ -695,6 +695,10 @@ export default class BackendPlugin {
 
   }
 
+  async getAlbumCollectionById(id) {
+    return await this.firestoreGetDocData(FirestoreModel.AlbumCollection, id)
+  }
+
   /**
    * 
    * @param {*} id 

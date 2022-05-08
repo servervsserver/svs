@@ -23,8 +23,8 @@ export class Catalog {
      * @type {Map<string, Track>}
      */
     this.tracks     = new Map()
+    
     this.accolades  = new Map()
-
   }
 
   /**
@@ -94,4 +94,143 @@ export class Catalog {
     return all
   }
 
+}
+
+
+export class AsyncCatalog {
+
+  constructor() {
+
+    /**
+     * @type {boolean} Whether to use cache or not
+     */
+    this.useCache = true
+
+
+    /**
+     * @type {Map<string, Album>} All the eps in the catalog
+     */
+    this._albums    = new Map()
+
+    /**
+     * @type {Map<string, Track>} All the eps in the catalog
+     */
+    this._tracks    = new Map()
+
+
+
+    /**
+     * @type {(id: string) => Promise<Album>}
+     */
+    this._asyncAlbumFetchFnc = null
+
+    /**
+     * @type {(id: string) => Promise<Track>}
+     */
+    this._asyncTrackFetchFnc = null
+
+  }
+
+  /**
+   *  @param fnc {(id: string) => Promise<Album|null>}
+   */
+  set albumFetch(fnc) {
+    this._asyncAlbumFetchFnc = fnc
+  }
+
+  /**
+   * @param fnc {(id: string) => Promise<Track|null>}
+   */
+  set trackFetch(fnc) {
+    this._asyncTrackFetchFnc = fnc
+  }
+
+  /**
+   * 
+   * @param {Track} track The track to add
+   * @returns The track if successfully added, null otherwise.
+   */
+   addTrack(track) {
+
+    if (!track) {
+      console.error("You can't add a null track")
+      return null
+    }
+
+    if (!track.id) {
+      console.error("The track must have an id")
+      return
+    }
+    if (this._tracks.has(track.id)) {
+      console.warn("There is already a track with that id. Replaced")
+    }
+    this._tracks.set(track.id, track)
+
+    return track
+  }
+
+  /**
+   * 
+   * @param {Album} album The track to add
+   * @returns The album if successfully added, null otherwise.
+   */
+  addAlbum(album) {
+    if (!album) {
+      console.error("You can't add a null Album")
+      return null
+    }
+    if (!album.id) {
+      console.error("The EP must have an id")
+      return
+    }
+    if (this._albums.has(album.id)) {
+      console.warn("There is already an Album with that id. Replaced")
+    }
+    this._albums.set(album.id, album)
+
+    return album
+  }
+
+  /**
+   * 
+   * @param {string} id 
+   * @returns (id: string) => Promise<Track>
+   */
+  async asyncGetTrackById(id) {
+    
+    // Try in RAM
+    let track = this._tracks.get(id)
+    if (track) return track
+
+    // Try in cache
+
+    // Try distant
+    if (this._asyncTrackFetchFnc)
+      return await this._asyncTrackFetchFnc(id)
+
+    return null
+  }
+
+  
+
+  /**
+   * 
+   * @param {string} id 
+   * @returns (id: string) => Promise<Album>
+   */
+  async asyncGetAlbumById(id) {
+    
+    // Try in RAM
+    let album = this._albums.get(id)
+    if (album) return album
+
+    // Try in cache
+
+    // Try distant
+    if (this._asyncAlbumFetchFnc)
+      return await this._asyncAlbumFetchFnc(id)
+
+    return null
+
+  }
 }

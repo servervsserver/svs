@@ -587,6 +587,15 @@ export default class BackendPlugin {
   }
 
   /**
+   * Get an Album by its id
+   * @param {*} id 
+   * @returns The FirestoreModel.Album if it exists, null otherwise.
+   */
+  async getAlbumById(id) {
+    return this.firestoreGetDocData(FirestoreModel.Album, id)
+  }
+
+  /**
    * Get all the eps in a dictionary index by id
    * @returns {Object}
    */

@@ -26,7 +26,7 @@
             {{ albumName }}
           </div>
           <div class="album-server-name">
-            {{ albumServerName }}
+            <em>by</em> {{ albumServerName }}
           </div>
           <br>
           <div class="album-geners tags">
@@ -56,13 +56,12 @@
             v-for="(track, index) in tracks"
             :key="index"
             class="track-list-item shadow-depth-1 clickable"
-            @click="onTrackClick(track)"
           >
             <div class="track-number">
               {{ index + 1 }}
             </div>
             <div class="track-title">
-              {{ track.title }}
+              <router-link :to="trackUrl(track)">{{ track.title }}</router-link>
             </div>
             <div class="album-geners tags">
               <span
@@ -74,6 +73,18 @@
               </span>
             </div>
             <!-- <div class="track-duration" /> -->
+          </li>
+          <li
+            v-for="midx in mockTracksCount"
+            :key="'mocktrack-' + midx"
+            class="track-list-item shadow-depth-1 mock"
+          >
+            <div class="track-number">
+              {{ midx }}
+            </div>
+            <div class="track-title">
+              Loading track...
+            </div>
           </li>
         </ul>
       </div>
@@ -101,6 +112,10 @@ export default {
       type: Array,
       default: () => []
     },
+    mockTracksCount: {
+      type: Number,
+      default: 4
+    },
     loadingTracks: {
       type: Boolean,
       default: false
@@ -112,6 +127,13 @@ export default {
     }
   },
   computed: {
+    /**
+     * @returns {string}
+     */
+    baseRoute() {
+      let l = this.$route.matched.length
+      return this.$route.matched[l - 2].path
+    },
     isAdmin() {
       return this.$svsAuth.isAdmin
     },
@@ -150,6 +172,12 @@ export default {
     }
   },
   methods: {
+    /**
+     * @returns {string}
+     */
+    trackUrl(track) {
+      return [this.baseRoute, 'track', track.id ].join('/')
+    },
     onTrackClick(evt) {
       this.$emit('track-click', evt)
     },
@@ -204,6 +232,15 @@ export default {
   .meta-informations {
     font-size: 0.8em;
   }
+}
+
+a {
+  text-decoration: none;
+}
+
+em {
+  font-size: 0.8em;
+  font-weight: 200;  
 }
 
 </style>

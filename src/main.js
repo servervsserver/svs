@@ -8,7 +8,9 @@ import {
   AuthPlugin, 
   CharityPlugin 
 } from "./plugins/all"
+
 import AudioPlayerPlugin from "@/modules/audio-player/plugins"
+import CatalogPlugin from "@/modules/catalog/plugins"
 
 import PreOpening from "./components/PreOpening.vue"
 import ComingSoon from "./components/ComingSoon.vue"
@@ -71,9 +73,15 @@ Vue.use(SettingsPlugin);
 Vue.use(AuthPlugin);
 Vue.use(CharityPlugin);
 Vue.use(AudioPlayerPlugin)
+Vue.use(CatalogPlugin)
 
-new Vue({
+let v = new Vue({
   router,
   store,
   render: function (h) { return h(App) }
 }).$mount('#app')
+
+// Bridge backend and catalog plugins
+import catalogBackendBridge from "@/bridges/catalog-backend.js"
+
+catalogBackendBridge(v.$svsCatalog, v.$svsBackend)

@@ -1,25 +1,52 @@
 import Archive from '@/views/archive/Archive.vue'
-import ArchiveTim from '@/views/archive/ArchiveTim.vue'
-import CatalogArchive from "@/views/archive/Catalog.vue"
+import { routes } from "@/modules/catalog/router"
 
-export const ARCHIVE_ROUTES = [
-  {
-    path: 'tim',
-    name: 'TimArchive',
-    component: ArchiveTim,
-    meta: {
-      title: 'Tim\'s Archives'
-    }
-  },
-  {
-    path: 'catalog',
-    name: 'CatalogArchive',
-    component: CatalogArchive,
-    meta: {
-      title: 'Catalog'
-    }
-  }
-]
+// import ArchiveTim from '@/views/archive/ArchiveTim.vue'
+// import CatalogArchive from "@/views/archive/Catalog.vue"
+
+export const ARCHIVE_ROUTES = routes
+// export const ARCHIVE_ROUTES = [
+//   {
+//     path: 'collection',
+//     name: 'CatalogCollection',
+//     component: () => import('@/modules/page'),
+//     meta: {
+//       title: 'Collection'
+//     }
+//   },
+//   {
+//     path: 'album',
+//     name: 'CatalogAlbum',
+//     component: null,
+//     meta: {
+//       title: 'Album'
+//     }
+//   },
+//   {
+//     path: 'track',
+//     name: 'CatalogTrack',
+//     component: null,
+//     meta: {
+//       title: 'Track'
+//     }
+//   }
+  // {
+  //   path: 'tim',
+  //   name: 'TimArchive',
+  //   component: ArchiveTim,
+  //   meta: {
+  //     title: 'Tim\'s Archives'
+  //   }
+  // },
+  // {
+  //   path: 'catalog',
+  //   name: 'CatalogArchive',
+  //   component: CatalogArchive,
+  //   meta: {
+  //     title: 'Catalog'
+  //   }
+  // }
+// ]
 
 function createArchiveBlockRouter(path) {
   return {

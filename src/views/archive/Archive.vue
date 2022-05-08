@@ -1,6 +1,9 @@
 <template>
   <coming-soon :type="'page'">
-    <div
+    <div class="container is-fluid">
+      <router-view />
+    </div>
+    <!-- <div
       id="archive-container"
       class="archive-container"
     >
@@ -49,7 +52,7 @@
           </div>
         </template>
       </drawer>
-    </div>
+    </div> -->
   </coming-soon>
 </template>
 

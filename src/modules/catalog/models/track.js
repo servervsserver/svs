@@ -5,9 +5,10 @@ export class Track {
     this.id       = id || null
     this.title    = title || ""
     this.trackUrl = trackUrl || ""
-    this.album    = null
+    this.albumId  = null
     this.credits  = []
     this.genres   = []
+    this.lyrics   = null
   }
 
 }

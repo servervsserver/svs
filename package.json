@@ -20,6 +20,7 @@
     "bulma-switch": "^2.0.4",
     "bulma-timeline": "^3.0.5",
     "core-js": "^3.6.5",
+    "dexie": "^3.2.2",
     "firebase": "^9.6.5",
     "jszip": "^3.9.1",
     "sass": "^1.32.8",

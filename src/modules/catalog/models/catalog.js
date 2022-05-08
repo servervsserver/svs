@@ -96,6 +96,7 @@ export class Catalog {
 
 }
 
+import * as CatalogDb from "./db"
 
 export class AsyncCatalog {
 
@@ -166,6 +167,8 @@ export class AsyncCatalog {
     }
     this._tracks.set(track.id, track)
 
+    CatalogDb.storeTrack(track)
+
     return track
   }
 
@@ -188,6 +191,8 @@ export class AsyncCatalog {
     }
     this._albums.set(album.id, album)
 
+    CatalogDb.storeAlbum(album)
+
     return album
   }
 
@@ -203,12 +208,18 @@ export class AsyncCatalog {
     if (track) return track
 
     // Try in cache
+    track = await CatalogDb.restoreTrack(id)
+    if (track) return track
 
     // Try distant
     if (this._asyncTrackFetchFnc)
-      return await this._asyncTrackFetchFnc(id)
+      track = await this._asyncTrackFetchFnc(id)
 
-    return null
+    if (track) {
+      this.addTrack(track)
+    }
+
+    return track
   }
 
   
@@ -225,12 +236,18 @@ export class AsyncCatalog {
     if (album) return album
 
     // Try in cache
+    album = await CatalogDb.restoreAlbum(id)
+    if (album) return album
 
     // Try distant
-    if (this._asyncAlbumFetchFnc)
-      return await this._asyncAlbumFetchFnc(id)
+    if (this._asyncAlbumFetchFnc) 
+      album = await this._asyncAlbumFetchFnc(id)
 
-    return null
+    if (album) {
+      this.addAlbum(album)
+    }
+
+    return album
 
   }
 }

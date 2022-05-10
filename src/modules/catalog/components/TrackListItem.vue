@@ -1,27 +1,24 @@
 <template>
-  <li class="track-list-item shadow-depth-1">
+  <li 
+    class="track-list-item shadow-depth-1"
+    :class="{ 'is-mock': isMock }"  
+  >
     <div class="track-number">
-      {{ index + 1 }}
+      <span v-if="!isMock">{{ index + 1 }}</span>
     </div>
     <div class="track-title">
-      <router-link :to="trackRoute(track)">
+      <router-link 
+        v-if="!isMock" 
+        :to="trackRoute(track)"
+      >
         {{ track.title }}
       </router-link>
+      <span class="is-loading"></span>
     </div>
-    <!-- <div class="track-genres">
-      <div class="tags">
-        <span
-          v-for="(genre, gidx) in track.genres" 
-          :key="index + '-' + gidx + '-' + genre" 
-          class="tag is-small"
-        >
-          {{ genre }}
-        </span>
-      </div>
-    </div> -->
     <div class="additional-buttons">
       <div class="buttons">
-        <slot :track="track" />
+        <slot v-if="!isMock" :track="track" />
+        <button v-if="isMock" class="button is-loading svs-button-transparent"></button>
       </div>
     </div>
   </li>
@@ -38,11 +35,16 @@ export default {
   props: {
     index: {
       type: Number,
-      required: true
+      required: false
     },
     track: {
       type: Track,
-      required: true
+      required: false
+    }
+  },
+  computed: {
+    isMock() {
+      return !this.track || this.index === null || this.index === undefined
     }
   }
 }
@@ -58,7 +60,8 @@ $gap: 1em;
   background: linear-gradient(58deg, black, #333366, #f5816b80, transparent);
   margin: 4px 0px;
   border-radius: 3px;
-
+  transition: 0.5s opacity;
+  
   & > * {
     padding: #{$gap * 0.5};
     // padding-left: $gap * 0.5;
@@ -80,6 +83,10 @@ $gap: 1em;
   .track-title {
     flex-grow: 1;
     a { text-decoration: none; }
+  }
+
+  &.is-mock {
+    opacity: 0.5;
   }
 }
 </style>

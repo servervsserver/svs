@@ -61,7 +61,7 @@
         </div>
         <ul class="track-list">
           <track-list-item 
-            v-for="(track, index) in tracks" 
+            v-for="(track, index) in innerTracks" 
             :key="index"
             v-slot:default="slotProps"
             :index="index"
@@ -70,16 +70,9 @@
             <template>
               <slot :track="slotProps.track" />
             </template>
-            <!-- v-slot:default="slotProps"
-            <template>
-              <button class="button svs-fab-button-transparent">
-                <span class="icon"><i class="fa-solid fa-circle-play">
-                </i></span>
-              </button>
-            </template> -->
           </track-list-item>
-          <li
-            v-for="midx in mockTracksCount"
+          <!-- <li
+            v-for="midx in (mockTracksCount+1)"
             :key="'mocktrack-' + midx"
             class="track-list-item shadow-depth-1 mock"
           >
@@ -89,7 +82,7 @@
             <div class="track-title">
               Loading track...
             </div>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>
@@ -140,6 +133,14 @@ export default {
     }
   },
   computed: {
+    innerTracks() {
+      let tracks = []
+      if (this.tracks) tracks = [...this.tracks]
+      for(let i = 0; i < this.mockTracksCount; i++) {
+        tracks.push(null)
+      }
+      return tracks
+    },
     isAdmin() {
       return this.$svsAuth.isAdmin
     },

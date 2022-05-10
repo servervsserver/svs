@@ -1,4 +1,4 @@
-import * as Archive from "@/modules/catalog/models"
+import * as Archive from "../modules/catalog/models"
 
 export default function (catalogPlugin, backendPlugin) {
 
@@ -19,8 +19,6 @@ export default function (catalogPlugin, backendPlugin) {
       fAlbum.name,
       fAlbum.coverart_url
     )
-
-    console.log(fAlbum)
 
     aAlbum.setAdditionalData('External stream link', fAlbum.streaming_link || undefined)
     aAlbum.setAdditionalData('Visualizer link', fAlbum.visualizer_link || undefined)
@@ -50,6 +48,9 @@ export default function (catalogPlugin, backendPlugin) {
     
     aTrack.albumId = fTrack.album_id
     
+    if (fTrack.credits_ids)
+      aTrack.credits = [...fTrack.credits_ids]
+
     return aTrack
     
   }
@@ -92,5 +93,19 @@ export default function (catalogPlugin, backendPlugin) {
       }
     }
     return aAC
+  }
+
+  catalog.trackCreditsEntryFetch = async (id) => {
+
+    let fC = await backendPlugin.getTrackCreditsEntryById(id)
+    if (!fC) return null
+
+    let aC = new Archive.TrackCreditsEntry(
+      id, 
+      fC.anonymous ? null : fC.artist_name,
+      [...fC.roles]
+    )
+
+    return aC
   }
 }

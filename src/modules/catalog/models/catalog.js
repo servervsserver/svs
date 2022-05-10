@@ -1,15 +1,8 @@
-// import {
-//   Track,
-//   Album,
-//   // ArchiveAccoladeEntry,
-//   // ArchiveAccoladeType,
-//   // ArchiveAccolade
-// } from "./archive-entry.js"
+import { TrackCreditsEntry } from "./credits"
 import { Track } from "./track"
 import { Album } from "./album"
 import { Server } from "./server"
 import { AlbumCollection } from "./album-collection"
-
 /**
 * Archive catalog. It should be used as a cache for the catalogue
 */
@@ -127,6 +120,11 @@ export class AsyncCatalog {
     this._servers   = new Map()
 
     /**
+     * @type {Map<string, TrackCreditsEntry}
+     */
+    this._trackCreditsEntries = new Map()
+
+    /**
      * @type {Map<string, AlbumCollection>}
      */
     this._albumCollections  = new Map()
@@ -151,36 +149,48 @@ export class AsyncCatalog {
      */
     this._asyncAlbumCollectionFetchFnc = null
 
+    /**
+     * @type {(id: string) => Promise<TrackCreditsEntry>}
+     */
+    this._asyncTrackCreditsEntryFetchFnc = null
 
   }
 
   /**
-   *  @param fnc {(id: string) => Promise<Album|null>}
+   *  @param {(id: string) => Promise<Album|null>} fnc 
    */
   set albumFetch(fnc) {
     this._asyncAlbumFetchFnc = fnc
   }
 
   /**
-   * @param fnc {(id: string) => Promise<Track|null>}
+   * @param {(id: string) => Promise<Track|null>} fnc 
    */
   set trackFetch(fnc) {
     this._asyncTrackFetchFnc = fnc
   }
 
   /**
-   * @param fnc {(id: string) => Promise<Server|null>}
+   * @param {(id: string) => Promise<Server|null>} fnc 
    */
   set serverFetch(fnc) {
     this._asyncServerFetchFnc = fnc
   }
 
   /**
-   * @param fnc {(id: string) => Promise<AlbumCollection>}
+   * @param {(id: string) => Promise<AlbumCollection>} fnc
    */
   set albumCollectionFetch(fnc) {
     this._asyncAlbumCollectionFetchFnc = fnc
   }
+
+  /**
+   * @param {(id: string) => Promise<AlbumCollection>} fnc
+   */
+  set trackCreditsEntryFetch(fnc) {
+    this._asyncTrackCreditsEntryFetchFnc = fnc
+  }
+  
 
   /**
    * 
@@ -285,6 +295,31 @@ export class AsyncCatalog {
   }
 
   /**
+   * @param {TrackCreditsEntry} trackCreditsEntry The track to add
+   * @returns The track if successfully added, null otherwise.
+   */
+  addTrackCreditsEntry(trackCreditsEntry) {
+
+    if (!trackCreditsEntry) {
+      console.error("You can't add a null trackCreditsEntry")
+      return null
+    }
+
+    if (!trackCreditsEntry.id) {
+      console.error("The trackCreditsEntry must have an id")
+      return null
+    }
+    if (this._trackCreditsEntries.has(trackCreditsEntry.id)) {
+      console.warn("There is already a trackCreditsEntry with that id. Replaced")
+    }
+    this._trackCreditsEntries.set(trackCreditsEntry.id, trackCreditsEntry)
+
+    // CatalogDb.storeServer(server)
+
+    return trackCreditsEntry
+  }
+
+  /**
    * 
    * @param {string} id 
    * @returns (id: string) => Promise<Track>
@@ -309,8 +344,6 @@ export class AsyncCatalog {
 
     return track
   }
-
-  
 
   /**
    * 
@@ -382,4 +415,30 @@ export class AsyncCatalog {
 
     return albumCollection
   }
+
+  async asyncGetTrackCreditsEntryById(id) {
+
+    // Try in RAM
+    let creditsEntry = this._trackCreditsEntries.get(id)
+    if (creditsEntry) return creditsEntry
+
+    // Try distant
+    if (this._asyncTrackCreditsEntryFetchFnc)
+      creditsEntry = await this._asyncTrackCreditsEntryFetchFnc(id)
+
+    if (creditsEntry) {
+      this.addTrackCreditsEntry(creditsEntry)
+    }
+
+    return creditsEntry
+  }
+
+  async asyncClearCache() {
+    await CatalogDb.clearCache()
+  } 
+
+  async asyncDeleteCache() {
+    await CatalogDb.deleteCache()
+  }
+  
 }

@@ -8,6 +8,10 @@
         @album-click="onAlbumClick"
       />
     </div>
+    <div class="buttons" v-if="showDevInfos">
+      <button class="button" @click="clearCache()">Clear cache</button>
+      <button class="button" @click="deleteCache()">Delete cache</button>
+    </div>
     <!-- <albums-list
       :servers="servers"
       :albums="albums"
@@ -44,6 +48,9 @@ export default {
     }
   },
   computed: {
+    showDevInfos() {
+      return this.$svsSettings.showDevInfos
+    },
     /**
      * @returns {Archive.AsyncCatalog}
      */
@@ -76,6 +83,12 @@ export default {
     },
     mockAlbumsCount(expectedCount, actualCount) {
       return Math.max(0, expectedCount - actualCount)
+    },
+    async clearCache() {
+      this.catalog.asyncClearCache()
+    },
+    async deleteCache() {
+      this.catalog.asyncDeleteCache()
     }
   }
 }

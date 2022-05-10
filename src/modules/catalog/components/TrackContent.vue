@@ -2,59 +2,81 @@
   <section class="track-content">
     <h2>Track {{ title }}</h2>
     <div class="columns is-multiline is-mobile">
-      <div class="column is-3 is-hidden-touch">
-        <squared-image-box style="max-width: 300px">
-          <img
-            :src="coverArtUrl"
-            class="cover-art shadow-depth-1"
-            @error="onCAUError"
-          >
-        </squared-image-box>
-      </div>
+      <div class="column is-6-desktop is-12-mobile">
 
-      <div class="column is-6-mobile is-hidden-desktop">
-        <squared-image-box style="max-width: 30vw;">
-          <img
-            :src="coverArtUrl"
-            class="cover-art shadow-depth-1"
-          >
-        </squared-image-box>
-      </div>
+        <div class="columns is-multiline is-mobile">
+          <div class="column is-6 is-hidden-touch">
+            <squared-image-box style="max-width: 300px">
+              <img
+                :src="coverArtUrl"
+                class="cover-art shadow-depth-1"
+                @error="onCAUError"
+              >
+            </squared-image-box>
+          </div>
 
-      <div class="column is-3-desktop is-6-tablet">
-        <div class="album-infos">
-          <div class="album-name">
-            {{ title }}
+          <div class="column is-6-mobile is-hidden-desktop">
+            <squared-image-box style="max-width: 100%;">
+              <img
+                :src="coverArtUrl"
+                class="cover-art shadow-depth-1"
+              >
+            </squared-image-box>
           </div>
-          <div class="">
-            <em>in</em> 
-            <router-link 
-              :to="albumUrl"
-            >
-              {{ albumTitle }}
-            </router-link>
+
+          <div class="column is-6-desktop is-6-tablet">
+            <div class="album-infos">
+              <div class="track-id" v-if="showDevInfos">
+                {{ id }}
+              </div>
+              <div class="album-name">
+                {{ title }}
+              </div>
+              <div class="">
+                <em>in</em> 
+                <router-link 
+                  :to="albumUrl"
+                >
+                  {{ albumTitle }}
+                </router-link>
+              </div>
+              <div class="album-server-name">
+                <em>by</em> {{ authorName }}
+              </div>
+              <br>
+              <div class="album-geners tags">
+                <span
+                  v-for="genre in genres"
+                  :key="genre"
+                  class="tag"
+                >{{ genre }}</span>
+              </div>
+            </div>
           </div>
-          <div class="album-server-name">
-            <em>by</em> {{ author }}
+
+          <div class="column is-12">
+            <h3>Credits</h3>
+            <table class="table is-hoverable is-striped is-fullwidth is-transparent">
+              <tr v-for="(c, idx) of credits" :key="idx">
+                <td>{{c.artistName}}</td>
+                <td><em>{{c.roles.join(', ')}}</em></td>
+              </tr>
+            </table>
           </div>
-          <br>
-          <div class="album-geners tags">
-            <span
-              v-for="genre in genres"
-              :key="genre"
-              class="tag"
-            >{{ genre }}</span>
-          </div>
+
         </div>
+
       </div>
 
       <div
-        v-if="lyrics"
         class="column is-6-desktop is-12-mobile"
       >
         <h3>Lyrics</h3>
-        <div class="lyrics shadow-depth-1">
+        <div v-if="lyrics" class="lyrics shadow-depth-1">
           {{ lyrics }}
+        </div>
+        <div v-if="!lyrics" class="lyrics shadow-depth-1">
+          <em>This track is instrumental</em>
         </div>
       </div>
     </div>
@@ -70,6 +92,10 @@ export default {
     RouterHelperMixin
   ],
   props: {
+    author: {
+      type: Archive.Server,
+      require: true
+    },
     /**
      * @type {Archive.Track} track to display
      */
@@ -83,6 +109,12 @@ export default {
     album: {
       type: Archive.Album,
       required: true
+    },
+
+    credits: {
+      type: Array,
+      required: false,
+      default: () => []
     }
   },
   data() {
@@ -91,17 +123,24 @@ export default {
     }
   },
   computed: {
+    showDevInfos() {
+      return this.$svsSettings.showDevInfos
+    },
     /**
      * @returns {string}
      */
     albumUrl() {
       return this.albumRoute(this.album)
     },
+    id() {
+      return this.track.id
+    },
     title() {
       return this.track.title
     },
-    author() {
-      return this.album.author
+    authorName() {
+      if (!this.author) return "..."
+      return this.author.name
     },
     albumTitle() {
       return this.album.title
@@ -149,5 +188,13 @@ export default {
 em {
   font-size: 0.8em;
   font-weight: 200;  
+}
+
+.table.is-transparent {
+  background: transparent;
+  color: inherit;
+  tr:hover {
+    background: #33336680;
+  }
 }
 </style>

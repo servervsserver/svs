@@ -20,7 +20,7 @@ function toDexieVersion(str) {
   }
   return v
 }
-
+// db.delete()
 db.version(toDexieVersion('1.0.0')).stores({
   albums: 'id, title, author, coverArtUrl, additionalDatas, trackIds',
   tracks: 'id, title, trackUrl, albumId, credits, genres, lyrics',
@@ -70,4 +70,14 @@ export async function restoreServer(id) {
   let dServer = await db.servers.where('id').equals(id).first();
   if (!dServer) return null
   return defaultDexieRestoreAdapter(new Server(), dServer)
+}
+
+export async function clearCache() {
+  await db.albums.clear()
+  await db.tracks.clear()
+  await db.servers.clear()
+}
+
+export async function deleteCache() {
+  return db.delete()
 }

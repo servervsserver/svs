@@ -16,6 +16,8 @@
       v-if="track && album"
       :track="track"
       :album="album"
+      :author="author"
+      :credits="credits"
     />
   </div>
   <!-- </div> -->
@@ -35,8 +37,22 @@ export default {
   ],
   data() {
     return {
+      /**
+       * @type {Archive.Server}
+       */
+      author: null,
+      /**
+       * @type {Archive.Track}
+       */
       track: null,
-      album: null
+      /**
+       * @type {Archive.Album}
+       */
+      album: null,
+      /**
+       * @type {Archive.TrackCreditsEntry[]}
+       */
+      credits: []
     }
   },
   computed: {
@@ -56,6 +72,16 @@ export default {
       if (track) {
         let album = await this.catalog.asyncGetAlbumById(track.albumId)
         this.album = album
+
+        let server = await this.catalog.asyncGetServerById(album.author)
+        this.author = server
+        console.log(server, this.author, album.author)
+        this.credits = []
+        console.log(track)
+        for ( let cId of track.credits) {
+          let c = await this.catalog.asyncGetTrackCreditsEntryById(cId)
+          this.credits.push(c)
+        }
       }
     }
   }

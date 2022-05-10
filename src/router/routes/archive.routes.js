@@ -53,7 +53,8 @@ function createArchiveBlockRouter(path) {
     path: path,
     name: "Archives",
     component: Archive,
-    children: ARCHIVE_ROUTES
+    children: ARCHIVE_ROUTES,
+    redirect: '/archives/collection/svs-iv'
   }
 }
 

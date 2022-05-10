@@ -1,10 +1,13 @@
 <template>
   <div class="container">
-  <!-- <div class="container"> -->
+    <!-- <div class="container"> -->
     <div class="buttons">
-      <button class="button svs-button-transparent" @click="navigateToCollection()">
+      <button
+        class="button svs-button-transparent"
+        @click="navigateToCollection()"
+      >
         <span class="icon">
-          <i class="fa-solid fa-arrow-left"></i>
+          <i class="fa-solid fa-arrow-left" />
         </span>
         <span>Back to the collection</span>
       </button>
@@ -24,16 +27,24 @@ import * as Archive from "../models"
 import { RouterHelperMixin } from "../mixins"
 // 0siwEkuLSueDRT8HJabn
 export default {
-  mixins: [
-    RouterHelperMixin
-  ],
   components: {
     'track-content': TrackContent
   },
+  mixins: [
+    RouterHelperMixin
+  ],
   data() {
     return {
       track: null,
       album: null
+    }
+  },
+  computed: {
+    /**
+     * @returns {Archive.AsyncCatalog}
+     */
+    catalog() {
+      return this.$svsCatalog.mainCatalog
     }
   },
   async mounted() {
@@ -46,14 +57,6 @@ export default {
         let album = await this.catalog.asyncGetAlbumById(track.albumId)
         this.album = album
       }
-    }
-  },
-  computed: {
-    /**
-     * @returns {Archive.AsyncCatalog}
-     */
-    catalog() {
-      return this.$svsCatalog.mainCatalog
     }
   }
 }

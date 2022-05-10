@@ -37,10 +37,14 @@
               class="tag"
             >{{ genre }}</span>
           </div>
-          <div class="meta-informations" v-if="isAdmin">
-            <div class="meta-info-piece" 
+          <div
+            v-if="isAdmin"
+            class="meta-informations"
+          >
+            <div
               v-for="(data, idx) of additionalDatas" 
-              :key="data + '-' + idx"
+              :key="data + '-' + idx" 
+              class="meta-info-piece"
             >
               <a :href="data">{{ idx }}</a>
             </div>
@@ -59,12 +63,12 @@
           <track-list-item 
             v-for="(track, index) in tracks" 
             :key="index"
+            v-slot:default="slotProps"
             :index="index"
             :track="track"
-            v-slot:default="slotProps"
           >
             <template>
-              <slot v-bind:track="slotProps.track"></slot>
+              <slot :track="slotProps.track" />
             </template>
             <!-- v-slot:default="slotProps"
             <template>
@@ -100,14 +104,14 @@ import TrackListItemComponent from "./TrackListItem.vue"
 import { Album, Track, Server } from "@/modules/catalog/models"
 import { RouterHelperMixin } from "../mixins"
 
-export default {
-  mixins: [
-    RouterHelperMixin
-  ],  
+export default {  
   components: {
     'track-list-item': TrackListItemComponent,
     'spinner': Spinner,
   },
+  mixins: [
+    RouterHelperMixin
+  ],
   props: {
     server: {
       type: Server,

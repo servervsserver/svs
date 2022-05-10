@@ -9,7 +9,7 @@
       columns 
       is-mobile 
       is-variable is-1-mobile is-2-tablet is-3-desktop"
-      :class="{ 'is-multiline': isMultiline, 'is-horizontal': isHorizontal  }"
+      :class="{ 'is-multiline': isMultiline, 'is-horizontal': isHorizontal }"
     >
       <div 
         v-for="album of albums"

@@ -2,7 +2,6 @@
   <section class="track-content">
     <h2>Track {{ title }}</h2>
     <div class="columns is-multiline is-mobile">
-      
       <div class="column is-3 is-hidden-touch">
         <squared-image-box style="max-width: 300px">
           <img
@@ -30,7 +29,8 @@
           <div class="">
             <em>in</em> 
             <router-link 
-              :to="albumUrl">
+              :to="albumUrl"
+            >
               {{ albumTitle }}
             </router-link>
           </div>
@@ -48,9 +48,14 @@
         </div>
       </div>
 
-      <div class="column is-6-desktop is-12-mobile" v-if="lyrics">
+      <div
+        v-if="lyrics"
+        class="column is-6-desktop is-12-mobile"
+      >
         <h3>Lyrics</h3>
-        <div class="lyrics shadow-depth-1">{{ lyrics }}</div>
+        <div class="lyrics shadow-depth-1">
+          {{ lyrics }}
+        </div>
       </div>
     </div>
   </section>

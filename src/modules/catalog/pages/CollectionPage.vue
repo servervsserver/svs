@@ -24,12 +24,12 @@ import * as Archive from "../models"
 import { RouterHelperMixin } from "../mixins"
 
 export default {
-  mixins: [
-    RouterHelperMixin
-  ],
   components: {
     'album-collection': AlbumCollectionContentComponent
   },
+  mixins: [
+    RouterHelperMixin
+  ],
   data() {
     return {
       collection: null,
@@ -42,6 +42,14 @@ export default {
        */
       servers: []
     }
+  },
+  computed: {
+    /**
+     * @returns {Archive.AsyncCatalog}
+     */
+    catalog() {
+      return this.$svsCatalog.mainCatalog
+    },
   },
   async mounted() {
     let id = this.$route.params.id
@@ -61,14 +69,6 @@ export default {
       this.albums.push(album)
     }
 
-  },
-  computed: {
-    /**
-     * @returns {Archive.AsyncCatalog}
-     */
-    catalog() {
-      return this.$svsCatalog.mainCatalog
-    },
   },
   methods: {
     onAlbumClick(album) {

@@ -21,7 +21,7 @@
     </div> -->
     <div class="additional-buttons">
       <div class="buttons">
-        <slot v-bind:track="track"></slot>
+        <slot :track="track" />
       </div>
     </div>
   </li>

@@ -10,7 +10,10 @@
         >
       </squared-image-box>
       <div class="album-infos">
-        <div class="album-server-id" v-if="showDevInfos">
+        <div
+          v-if="showDevInfos"
+          class="album-server-id"
+        >
           {{ albumId }}
         </div>
         <div class="album-name">
@@ -19,7 +22,6 @@
         <div class="album-server-name">
           {{ albumServerName }}
         </div>
-
       </div>
     </div>
   </div>

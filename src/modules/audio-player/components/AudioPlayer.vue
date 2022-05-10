@@ -9,7 +9,7 @@
       <div class="below-bar">
         <div class="cover-art-thumbnail">
           <squared-image-box>
-            <img :src="currentTrackCoverArtUrl" />
+            <img :src="currentTrackCoverArtUrl">
           </squared-image-box>
         </div>
         <div
@@ -17,7 +17,7 @@
           class="track-base-metadatas"
         >
           <div class="track-name">
-            {{ currentTrack.name }}
+            {{ currentTrackTitle }}
           </div>
           <div class="artist-name">
             {{ currentTrackAuthor }}
@@ -67,7 +67,7 @@
         <div class="time">
           {{ currentTime | duration }} 
           <span class="is-hidden-touch">-</span>
-          <br class="is-hidden-desktop"/>
+          <br class="is-hidden-desktop">
           {{ duration | duration }}
         </div>
       </div>
@@ -135,7 +135,7 @@
 
 import ProgressBar from "./ProgressBar.vue"
 import PlaylistModalComponent from "./PlayListModal.vue"
-import { AudioPlayer, PlayMode } from "../models"
+import { AudioPlayer, PlayMode, Track } from "../models"
 
 export default {
   name: 'AudioPlayer',
@@ -150,6 +150,10 @@ export default {
     }
   },
   computed: {
+    currentTrackTitle() {
+      if (!this.currentTrack) return null
+      return this.currentTrack.title
+    },
     currentTrackCoverArtUrl() {
       if (!this.currentTrack) return null
       if (!this.currentTrack.album) return null
@@ -161,8 +165,8 @@ export default {
     },
     currentTrackAuthor() {
       if (!this.currentTrack) return null
-      if (!this.currentTrack.album) return null
-      return this.currentTrack.album.author
+      if (!this.currentTrack.author) return null
+      return this.currentTrack.author.name
     },
     isPlaying() {
       return this.audioPlayer.isPlaying
@@ -182,6 +186,9 @@ export default {
     queueLength() {
       return this.audioPlayer.queueLength
     },
+    /**
+     * @returns {Track}
+     */
     currentTrack() {
       return this.audioPlayer.currentTrack
     },
@@ -203,7 +210,7 @@ export default {
   },
   mounted() {
     this.audioPlayer.onTimeUpdate = (evt) => {
-      this.$emit('timeupdate', event)
+      this.$emit('timeupdate', evt)
     }
     this.$svsAudioPlayer.mainAudioPlayer = this
   },

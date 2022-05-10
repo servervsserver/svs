@@ -2,9 +2,9 @@
   <coming-soon :type="'page'">
     <div class="container is-fluid">
       <div class="transition-container">
-      <transition name="scale">
-        <router-view />
-      </transition>
+        <transition name="scale">
+          <router-view />
+        </transition>
       </div>
     </div>
     <!-- <div

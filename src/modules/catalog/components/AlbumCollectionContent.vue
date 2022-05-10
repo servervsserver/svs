@@ -1,39 +1,54 @@
 <template>
-<section>
-  <h2>{{ collection.name }}</h2>
-  <p>
-    {{collection.description }}
-  </p>
-  <div class="buttons">
-    <button class="button svs-button-transparent" @click="cycleLayouts()">
-      <span class="icon">
-        <i class="fa-solid fa-ellipsis" v-if="layout == 'horizontal'"></i>
-        <i class="fa-solid fa-ellipsis-vertical" v-if="layout == 'vertical'"></i>
-        <i class="fa-solid fa-grip" v-if="layout == 'grid'"></i>
-      </span>
-      <span v-if="layout == 'horizontal'">Line layout</span>
-      <span v-if="layout == 'grid'">Grid layout</span>
-    </button>
-  </div>
-  <albums-list
-    :servers="servers"
-    :albums="mainCollectionAlbums"
-    :mockAlbumsCount="mainCollectionMockCount"
-    :layout="layout"
-    @album-click="onAlbumClick"
-  />
-  <section v-for="(sc, scidx) in collection.subCollections" :key="'subcol-' + scidx">
-    <h3>{{ sc.name }}</h3>
-    <p>{{sc.description}}</p>
+  <section>
+    <h2>{{ collection.name }}</h2>
+    <p>
+      {{ collection.description }}
+    </p>
+    <div class="buttons">
+      <button
+        class="button svs-button-transparent"
+        @click="cycleLayouts()"
+      >
+        <span class="icon">
+          <i
+            v-if="layout == 'horizontal'"
+            class="fa-solid fa-ellipsis"
+          />
+          <i
+            v-if="layout == 'vertical'"
+            class="fa-solid fa-ellipsis-vertical"
+          />
+          <i
+            v-if="layout == 'grid'"
+            class="fa-solid fa-grip"
+          />
+        </span>
+        <span v-if="layout == 'horizontal'">Line layout</span>
+        <span v-if="layout == 'grid'">Grid layout</span>
+      </button>
+    </div>
     <albums-list
       :servers="servers"
-      :albums="albumsOfCollection(sc)"
-      :mockAlbumsCount="mockAlbumsCountOfCollection(sc)"
+      :albums="mainCollectionAlbums"
+      :mock-albums-count="mainCollectionMockCount"
       :layout="layout"
       @album-click="onAlbumClick"
     />
+    <section
+      v-for="(sc, scidx) in collection.subCollections"
+      :key="'subcol-' + scidx"
+    >
+      <h3>{{ sc.name }}</h3>
+      <p>{{ sc.description }}</p>
+      <albums-list
+        :servers="servers"
+        :albums="albumsOfCollection(sc)"
+        :mock-albums-count="mockAlbumsCountOfCollection(sc)"
+        :layout="layout"
+        @album-click="onAlbumClick"
+      />
+    </section>
   </section>
-</section>
 </template>
 
 <script>
@@ -42,12 +57,12 @@ import * as Archive from "../models"
 import { RouterHelperMixin } from "../mixins"
 
 export default {
-  mixins: [
-    RouterHelperMixin
-  ],
   components: {
     'albums-list': AlbumListComponent,
   },
+  mixins: [
+    RouterHelperMixin
+  ],
   props: {
     collection:  {
       type: Archive.AlbumCollection,

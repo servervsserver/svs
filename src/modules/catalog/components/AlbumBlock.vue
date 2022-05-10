@@ -28,8 +28,12 @@
 <script>
 
 import { Album, Server } from "../models"
+import { RouterHelperMixin } from "../mixins"
 
 export default {
+  mixins: [
+    RouterHelperMixin
+  ],
   props: {
     album: {
       type: Album,
@@ -99,6 +103,7 @@ export default {
   //   box-shadow: 1px 2px 5px 0px #0004;
   //   width: 100%;
   // }
+  max-width:  200px;
   .album-block-content {
     display: flex;
     flex-direction: column;
@@ -124,8 +129,9 @@ export default {
   }
 
   @media (max-width:768px) {
+    max-width: calc((100vw - 16px - 1em) / 3);
     .image-box {
-      width: calc((100vw - 20px - 1em) / 3);
+      width: calc((100vw - 16px - 1em) / 3);
     }
 
     .album-infos {

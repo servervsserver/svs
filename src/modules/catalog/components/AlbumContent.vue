@@ -38,7 +38,10 @@
             >{{ genre }}</span>
           </div>
           <div class="meta-informations" v-if="isAdmin">
-            <div class="meta-info-piece" v-for="(data, idx) of additionalDatas" :key="data">
+            <div class="meta-info-piece" 
+              v-for="(data, idx) of additionalDatas" 
+              :key="data + '-' + idx"
+            >
               <a :href="data">{{ idx }}</a>
             </div>
           </div>
@@ -62,7 +65,7 @@
               {{ index + 1 }}
             </div>
             <div class="track-title">
-              <router-link :to="trackUrl(track)">{{ track.title }}</router-link>
+              <router-link :to="trackRoute(track)">{{ track.title }}</router-link>
             </div>
             <div class="album-geners tags">
               <span
@@ -98,8 +101,12 @@
 import Spinner from "@/components/Spinner.vue";
 
 import { Album, Track, Server } from "@/modules/catalog/models"
+import { RouterHelperMixin } from "../mixins"
 
 export default {
+  mixins: [
+    RouterHelperMixin
+  ],  
   components: {
     'spinner': Spinner,
   },
@@ -131,13 +138,6 @@ export default {
     }
   },
   computed: {
-    /**
-     * @returns {string}
-     */
-    baseRoute() {
-      let l = this.$route.matched.length
-      return this.$route.matched[l - 2].path
-    },
     isAdmin() {
       return this.$svsAuth.isAdmin
     },
@@ -179,12 +179,6 @@ export default {
     }
   },
   methods: {
-    /**
-     * @returns {string}
-     */
-    trackUrl(track) {
-      return [this.baseRoute, 'track', track.id ].join('/')
-    },
     onTrackClick(evt) {
       this.$emit('track-click', evt)
     },

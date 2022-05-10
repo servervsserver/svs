@@ -25,6 +25,7 @@
   &::-webkit-scrollbar
   {
   	width: $size;
+    height: $size;
   	background-color: $track-color;
   }
 

@@ -1,10 +1,6 @@
 <template>
   <section>
     <div v-if="collection">
-      <h2>{{ collection.name }}</h2>
-      <p>
-        {{collection.description }}
-      </p>
       <album-collection
         :collection="collection"
         :servers="servers"
@@ -25,10 +21,13 @@
 // import AlbumListComponent from "../components/AlbumsList.vue"
 import AlbumCollectionContentComponent from "../components/AlbumCollectionContent.vue"
 import * as Archive from "../models"
+import { RouterHelperMixin } from "../mixins"
 
 export default {
+  mixins: [
+    RouterHelperMixin
+  ],
   components: {
-    // 'albums-list': AlbumListComponent,
     'album-collection': AlbumCollectionContentComponent
   },
   data() {
@@ -65,13 +64,6 @@ export default {
   },
   computed: {
     /**
-     * @returns {string}
-     */
-    baseRoute() {
-      let l = this.$route.matched.length
-      return this.$route.matched[l - 2].path
-    },
-    /**
      * @returns {Archive.AsyncCatalog}
      */
     catalog() {
@@ -80,8 +72,7 @@ export default {
   },
   methods: {
     onAlbumClick(album) {
-      console.log(album)
-      this.$router.push([this.baseRoute, 'album', album.id].join('/'))
+      this.navigateToAlbum(album)
     },
     mockAlbumsCount(expectedCount, actualCount) {
       return Math.max(0, expectedCount - actualCount)

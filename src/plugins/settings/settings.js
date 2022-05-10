@@ -231,6 +231,8 @@ export default class SettingsPlugin {
       }
     }
 
+    this._showDevInfos = true
+
   }
 
   // =================== Theme
@@ -253,8 +255,11 @@ export default class SettingsPlugin {
   // ================= Adminstration
 
   get showDevInfos() {
-    console.log(this.$svsAuth)
-    return true
+    return this._vue.$svsAuth.isAdmin && this._showDevInfos
+  }
+
+  set showDevInfos(value) {
+    this._showDevInfos = !!value
   }
 
   // ================= Cookies

@@ -5,13 +5,16 @@
     </div>
     <div 
       v-if="hasAlbums"
-      class="album-collection columns is-mobile is-variable is-1-mobile is-1-tablet"
-      :class="{ 'is-multiline': isMultiline }"
+      class="album-collection 
+      columns 
+      is-mobile 
+      is-variable is-1-mobile is-2-tablet is-3-desktop"
+      :class="{ 'is-multiline': isMultiline, 'is-horizontal': isHorizontal  }"
     >
       <div 
         v-for="album of albums"
         :key="album.id"
-        class="column"
+        class="column is-narrow"
       >
         <album-block
           :server="getServerOfAlbum(album)"
@@ -54,15 +57,21 @@ export default {
       default: 0,
       required: false
     },
-    listStyle: {
+    layout: {
       type: String,
       required: false,
-      default: 'grid'
+      default: 'grid',
+      validator(value) {
+        return ['grid', 'horizontal'].includes(value)
+      }
     }
   },
   computed: {
     isMultiline() {
-      return this.listStyle === 'grid'
+      return this.layout === 'grid'
+    },
+    isHorizontal() {
+      return this.layout === 'horizontal'
     },
     serverMap() {
       if (!this.servers) return null
@@ -88,3 +97,13 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+.is-horizontal {
+  overflow: auto;
+  mask: linear-gradient(90deg, #0000 0%, #000F 3%, #000F 97%, #0000);
+}
+.album-collection {
+  position: relative;
+}
+</style>

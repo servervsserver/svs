@@ -1,5 +1,13 @@
 <template>
-  <div>
+  <div class="container">
+    <div class="buttons">
+      <button class="button svs-button-transparent" @click="navigateToCollection()">
+        <span class="icon">
+          <i class="fa-solid fa-arrow-left"></i>
+        </span>
+        <span>Back to the collection</span>
+      </button>
+    </div>
     <album-content
       v-if="album && server"
       :server="server"
@@ -15,10 +23,13 @@
 <script>
 import AlbumContentComponent from "../components/AlbumContent.vue"
 import * as Archive from "../models"
-
+import { RouterHelperMixin } from "../mixins"
 
 // nzZHljEmYDS9M6jwFlCs
 export default {
+  mixins: [
+    RouterHelperMixin
+  ],
   components: {
     'album-content': AlbumContentComponent
   },

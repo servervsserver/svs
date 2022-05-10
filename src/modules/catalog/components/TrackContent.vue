@@ -1,7 +1,7 @@
 <template>
   <section class="track-content">
     <h2>Track {{ title }}</h2>
-    <div class="columns is-multiline">
+    <div class="columns is-multiline is-mobile">
       
       <div class="column is-3 is-hidden-touch">
         <squared-image-box style="max-width: 300px">
@@ -48,7 +48,7 @@
         </div>
       </div>
 
-      <div class="column is-6" v-if="lyrics">
+      <div class="column is-6-desktop is-12-mobile" v-if="lyrics">
         <h3>Lyrics</h3>
         <div class="lyrics shadow-depth-1">{{ lyrics }}</div>
       </div>
@@ -58,8 +58,12 @@
 
 <script>
 import * as Archive from "../models"
+import { RouterHelperMixin } from "../mixins"
 
 export default {
+  mixins: [
+    RouterHelperMixin
+  ],
   props: {
     /**
      * @type {Archive.Track} track to display
@@ -85,15 +89,8 @@ export default {
     /**
      * @returns {string}
      */
-    baseRoute() {
-      let l = this.$route.matched.length
-      return this.$route.matched[l - 2].path
-    },
-    /**
-     * @returns {string}
-     */
     albumUrl() {
-      return [this.baseRoute, 'album', this.album.id ].join('/')
+      return this.albumRoute(this.album)
     },
     title() {
       return this.track.title

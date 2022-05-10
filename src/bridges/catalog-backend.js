@@ -57,7 +57,6 @@ export default function (catalogPlugin, backendPlugin) {
   // Author fetching
   catalog.serverFetch = async (id) => {
     let fServer = await backendPlugin.getServerById(id)
-    console.log("F", fServer)
     if (!fServer) return null
 
     let aServer = new Archive.Server(
@@ -68,7 +67,6 @@ export default function (catalogPlugin, backendPlugin) {
       fServer.icon_url,
       fServer.is_private ? null : fServer.discord_invite
     )
-    console.log("A", aServer)
     return aServer
   }
 
@@ -90,9 +88,9 @@ export default function (catalogPlugin, backendPlugin) {
         aSC.name = fSC.name
         aSC.description = fSC.description
         aSC.albumsIds = fSC.albums_ids ? [...fSC.albums_ids] : []
+        aAC.subCollections.push(aSC)
       }
     }
-    console.log(aAC)
     return aAC
   }
 }

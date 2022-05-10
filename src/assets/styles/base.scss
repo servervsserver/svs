@@ -35,6 +35,12 @@ em {
   font-style: italic;
 }
 
+@media (max-width:768px) {
+  .container.is-fluid {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
 /* ========================================================================= */
 
 /*

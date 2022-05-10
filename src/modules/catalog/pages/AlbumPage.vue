@@ -15,8 +15,17 @@
       :tracks="tracks"
       :mockTracksCount="mockTracksCount"
       :loading-tracks="loadingTracks"
-      @track-click="onTrackClick" 
-    />
+      v-slot:default="slotProps"
+    >
+      <template>
+        <button class="button svs-fab-button-transparent" @click="play(slotProps.track)">
+          <span class="icon">
+            <i class="fa-solid fa-circle-play">
+            </i>
+          </span>
+        </button>
+      </template>
+    </album-content>
   </div>
 </template>
 
@@ -24,6 +33,8 @@
 import AlbumContentComponent from "../components/AlbumContent.vue"
 import * as Archive from "../models"
 import { RouterHelperMixin } from "../mixins"
+
+import * as AudioPlayerLogic from "@/modules/audio-player/models"
 
 // nzZHljEmYDS9M6jwFlCs
 export default {
@@ -71,6 +82,9 @@ export default {
     }
   },
   computed: {
+    audioPlayer() {
+      return this.$svsAudioPlayer.mainAudioPlayer
+    },
     mockTracksCount() {
       if (!this.album) return 0
       let tot = this.album.trackIds.length
@@ -85,8 +99,22 @@ export default {
     }
   },
   methods: {
-    onTrackClick($event) {
+    play(track) {
+      console.log(this)
+      let aplTrack = new AudioPlayerLogic.Track(
+        track.id, 
+        track.title, 
+        this.album.title, 
+        track.trackUrl
+      )
+      aplTrack.album = this.album
+      if (this.audioPlayer.pushAsNextTrack(aplTrack))
+        this.audioPlayer.next()
+      else {
+        this.audioPlayer.moveToTrack(aplTrack)
+      }
 
+      this.audioPlayer.play()
     }
   }
 }

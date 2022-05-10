@@ -56,28 +56,24 @@
           </blockquote>
         </div>
         <ul class="track-list">
-          <li 
-            v-for="(track, index) in tracks"
+          <track-list-item 
+            v-for="(track, index) in tracks" 
             :key="index"
-            class="track-list-item shadow-depth-1 clickable"
+            :index="index"
+            :track="track"
+            v-slot:default="slotProps"
           >
-            <div class="track-number">
-              {{ index + 1 }}
-            </div>
-            <div class="track-title">
-              <router-link :to="trackRoute(track)">{{ track.title }}</router-link>
-            </div>
-            <div class="album-geners tags">
-              <span
-                v-for="(genre, gidx) in track.genres" 
-                :key="index + '-' + gidx + '-' + genre" 
-                class="tag is-small"
-              >
-                {{ genre }}
-              </span>
-            </div>
-            <!-- <div class="track-duration" /> -->
-          </li>
+            <template>
+              <slot v-bind:track="slotProps.track"></slot>
+            </template>
+            <!-- v-slot:default="slotProps"
+            <template>
+              <button class="button svs-fab-button-transparent">
+                <span class="icon"><i class="fa-solid fa-circle-play">
+                </i></span>
+              </button>
+            </template> -->
+          </track-list-item>
           <li
             v-for="midx in mockTracksCount"
             :key="'mocktrack-' + midx"
@@ -99,6 +95,7 @@
 <script>
 
 import Spinner from "@/components/Spinner.vue";
+import TrackListItemComponent from "./TrackListItem.vue"
 
 import { Album, Track, Server } from "@/modules/catalog/models"
 import { RouterHelperMixin } from "../mixins"
@@ -108,6 +105,7 @@ export default {
     RouterHelperMixin
   ],  
   components: {
+    'track-list-item': TrackListItemComponent,
     'spinner': Spinner,
   },
   props: {
@@ -210,24 +208,6 @@ export default {
     list-style: none;
     margin: 0px;
     padding: 0px;
-    .track-list-item {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      background: linear-gradient(58deg, black, #333366, #f5816b80, transparent);
-      margin: 4px 0px;
-      border-radius: 3px;
-      // box-shadow: 1px solid #333366;
-
-      & > * {
-        padding: 1em;
-      }
-      .track-number {
-        font-variant-numeric: tabular-nums;
-        width: 4em;
-        text-align: center;
-      }
-    }
   }
 
   .meta-informations {

@@ -4,7 +4,9 @@
       {{ index + 1 }}
     </div>
     <div class="track-title">
-      <router-link :to="trackRoute(track)">{{ track.title }}</router-link>
+      <router-link :to="trackRoute(track)">
+        {{ track.title }}
+      </router-link>
     </div>
     <!-- <div class="track-genres">
       <div class="tags">
@@ -47,6 +49,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$gap: 1em;
 .track-list-item {
   display: flex;
   flex-direction: row;
@@ -57,11 +60,20 @@ export default {
   border-radius: 3px;
 
   & > * {
-    padding: 1em;
+    padding: #{$gap * 0.5};
+    // padding-left: $gap * 0.5;
+    // padding-right: $gap * 0.5;
+    &:first-child {
+      padding-left: $gap;
+    }
+    &:last-child {
+      padding-right: $gap;
+    }
   }
+
   .track-number {
     font-variant-numeric: tabular-nums;
-    width: 4em;
+    width: 3em;
     text-align: center;
     flex-grow: 0;
   }

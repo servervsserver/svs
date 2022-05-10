@@ -81,7 +81,9 @@ let v = new Vue({
   render: function (h) { return h(App) }
 }).$mount('#app')
 
-// Bridge backend and catalog plugins
-import catalogBackendBridge from "@/bridges/catalog-backend.js"
+// Bridge backend, audio-player & catalog plugins
+import catalogBackendBridge from "@/bridges/catalog-backend"
+import catalogPlayerBridge from "@/bridges/catalog-player"
 
 catalogBackendBridge(v.$svsCatalog, v.$svsBackend)
+catalogPlayerBridge(v.$svsCatalog, v.$svsAudioPlayer)

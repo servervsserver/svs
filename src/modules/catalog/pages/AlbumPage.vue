@@ -18,11 +18,16 @@
       v-slot:default="slotProps"
     >
       <template>
-        <button class="button svs-fab-button-transparent" @click="play(slotProps.track)">
-          <span class="icon">
-            <i class="fa-solid fa-circle-play">
-            </i>
+        <button 
+          v-for="(action, actionidx) in trackListItemsActions"
+          :key="'action' + actionidx"
+          class="button svs-button-transparent"
+          @click="action.fnc(slotProps.track, slotProps.index)">
+          <span class="icon" v-if="action.icon && action.icon.klass">
+            <i 
+              :class="action.icon.klass"></i>
           </span>
+          <span v-if="action.text">{{action.text}}</span>
         </button>
       </template>
     </album-content>
@@ -82,6 +87,13 @@ export default {
     }
   },
   computed: {
+    catalogPlugin() {
+      return this.$svsCatalog
+    },
+    trackListItemsActions() {
+      console.log(this.catalogPlugin)
+      return this.catalogPlugin.trackListItemActions
+    },
     audioPlayer() {
       return this.$svsAudioPlayer.mainAudioPlayer
     },
@@ -96,25 +108,6 @@ export default {
      */
     catalog() {
       return this.$svsCatalog.mainCatalog
-    }
-  },
-  methods: {
-    play(track) {
-      console.log(this)
-      let aplTrack = new AudioPlayerLogic.Track(
-        track.id, 
-        track.title, 
-        this.album.title, 
-        track.trackUrl
-      )
-      aplTrack.album = this.album
-      if (this.audioPlayer.pushAsNextTrack(aplTrack))
-        this.audioPlayer.next()
-      else {
-        this.audioPlayer.moveToTrack(aplTrack)
-      }
-
-      this.audioPlayer.play()
     }
   }
 }

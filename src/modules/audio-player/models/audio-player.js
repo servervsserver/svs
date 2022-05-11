@@ -58,10 +58,12 @@ export class AudioPlayer {
 
     this._duration      = 0
     this._currentTime   = 0
+    this._skipStep      = 10
     this._isPlaying     = false
     this._currentTrack  = null
 
     this.init()
+    this.initMediaSession()
   }
 
   
@@ -117,6 +119,31 @@ export class AudioPlayer {
       // this.next()
       console.log(this._queue)
     })
+  }
+
+  initMediaSession() {
+
+    let ms = navigator.mediaSession
+    ms.setActionHandler('nexttrack', (details) => {
+      this.next()
+    })
+
+    ms.setActionHandler('pause', (details) => {
+      this.pause()
+    })
+
+    ms.setActionHandler('play', (details) => {
+      this.play()
+    })
+
+    ms.setActionHandler('seekforward', (details) => {
+      this.currentTime += this._skipStep
+    })
+
+    ms.setActionHandler('seekbackward', (details) => {
+      this.currentTime -= this._skipStep
+    })
+
   }
 
   /**
@@ -205,33 +232,54 @@ export class AudioPlayer {
     this._isPlaying = false
   }
 
+  /**
+   * Moves back to the start of the track
+   */
   toStart() {
     this.currentTime = 0
   }
 
+  /**
+   * Moves to the end of the track
+   */
   toEnd() {
     this.currentTime = this.duration
   }
 
+  /**
+   * Advances the queue
+   */
   next() {
     this._queue.moveToNext()
     let track = this._queue.currentTrack
     this.setTrack(track)
-    console.log(this._queue)
   }
 
+  /**
+   * Moves back into the queue
+   */
   previous() {
     this._queue.moveToPrevious()
     let track = this._queue.currentTrack
     this.setTrack(track)
   }
 
+  /**
+   * Leaps to a specific position in the queue
+   * @see {AudioPlayerQueue.moveHeadAt}
+   * @param {number} position 
+   */
   moveToPosition(position) {
     this._queue.moveHeadAt(position)
     let track = this._queue.currentTrack
     this.setTrack(track)
   }
 
+  /**
+   * Leaps to a specific track in the queue if it exists
+   * @param {Track} track 
+   * @returns 
+   */
   moveToTrack(track) {
     let pos = this._queue.trackPositionInQueue(track)
     if (!pos) return false
@@ -239,10 +287,20 @@ export class AudioPlayer {
     return true
   }
 
+  /**
+   * Adds a track on top of the queue
+   * @see {AudioPlayerQueue.addToQueue}
+   * @param {number} position 
+   */
   pushToQueue(track) {
     this._queue.addToQueue(track)
   }
 
+  /**
+   * Adds a track in the queue just after the track currently playing
+   * @see {AudioPlayerQueue.addAsNextTrack}
+   * @param {number} position 
+   */ 
   pushAsNextTrack(track) {
     return this._queue.addAsNextTrack(track)
   }

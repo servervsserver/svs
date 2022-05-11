@@ -13,15 +13,19 @@
       >
         {{ track.title }}
       </router-link>
-      <span class="is-loading"></span>
+      <span class="is-loading" />
     </div>
     <div class="additional-buttons">
       <div class="buttons">
-        <slot name="trackButtons" v-if="!isMock" :track="track" />
+        <slot
+          v-if="!isMock"
+          name="trackButtons"
+          :track="track"
+        />
         <button 
           v-if="isMock" 
-          class="button is-loading svs-button-transparent">
-        </button>
+          class="button is-loading svs-button-transparent"
+        />
       </div>
     </div>
   </li>

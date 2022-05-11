@@ -3,7 +3,6 @@
     <h2>Track {{ title }}</h2>
     <div class="columns is-multiline is-mobile">
       <div class="column is-6-desktop is-12-mobile">
-
         <div class="columns is-multiline is-mobile">
           <div class="column is-6 is-hidden-touch">
             <squared-image-box style="max-width: 300px">
@@ -26,7 +25,10 @@
 
           <div class="column is-6-desktop is-6-tablet">
             <div class="album-infos">
-              <div class="track-id" v-if="showDevInfos">
+              <div
+                v-if="showDevInfos"
+                class="track-id"
+              >
                 {{ id }}
               </div>
               <div class="album-name">
@@ -57,25 +59,32 @@
           <div class="column is-12">
             <h3>Credits</h3>
             <table class="table is-hoverable is-striped is-fullwidth is-transparent">
-              <tr v-for="(c, idx) of credits" :key="idx">
-                <td>{{c.artistName}}</td>
-                <td><em>{{c.roles.join(', ')}}</em></td>
+              <tr
+                v-for="(c, idx) of credits"
+                :key="idx"
+              >
+                <td>{{ c.artistName }}</td>
+                <td><em>{{ c.roles.join(', ') }}</em></td>
               </tr>
             </table>
           </div>
-
         </div>
-
       </div>
 
       <div
         class="column is-6-desktop is-12-mobile"
       >
         <h3>Lyrics</h3>
-        <div v-if="lyrics" class="lyrics shadow-depth-1">
+        <div
+          v-if="lyrics"
+          class="lyrics shadow-depth-1"
+        >
           {{ lyrics }}
         </div>
-        <div v-if="!lyrics" class="lyrics shadow-depth-1">
+        <div
+          v-if="!lyrics"
+          class="lyrics shadow-depth-1"
+        >
           <em>This track is instrumental</em>
         </div>
       </div>

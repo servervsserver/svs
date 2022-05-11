@@ -55,7 +55,10 @@
       <div class="column is-6-desktop is-12-tablet is-12-mobile">
         <div class="tracks-top-additional-buttons">
           <div class="buttons">
-            <slot name="tracksTopButtons" :tracks="tracks" />
+            <slot
+              name="tracksTopButtons"
+              :tracks="tracks"
+            />
           </div>
         </div>
 
@@ -67,7 +70,10 @@
             :track="track"
           >
             <template v-slot:trackButtons="slotProps">
-              <slot name="trackButtons" :track="slotProps.track" />
+              <slot
+                name="trackButtons"
+                :track="slotProps.track"
+              />
             </template>
           </track-list-item>
           <!-- <li

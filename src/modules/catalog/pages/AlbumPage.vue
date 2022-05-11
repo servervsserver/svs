@@ -19,7 +19,6 @@
       :mock-tracks-count="mockTracksCount"
       :loading-tracks="loadingTracks"
     >
-
       <template v-slot:tracksTopButtons="slotProps">
         <button 
           v-for="(action, actionidx) in tracksTopActions"

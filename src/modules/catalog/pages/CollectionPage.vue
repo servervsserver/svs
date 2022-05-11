@@ -8,9 +8,22 @@
         @album-click="onAlbumClick"
       />
     </div>
-    <div class="buttons" v-if="showDevInfos">
-      <button class="button" @click="clearCache()">Clear cache</button>
-      <button class="button" @click="deleteCache()">Delete cache</button>
+    <div
+      v-if="showDevInfos"
+      class="buttons"
+    >
+      <button
+        class="button"
+        @click="clearCache()"
+      >
+        Clear cache
+      </button>
+      <button
+        class="button"
+        @click="deleteCache()"
+      >
+        Delete cache
+      </button>
     </div>
     <!-- <albums-list
       :servers="servers"

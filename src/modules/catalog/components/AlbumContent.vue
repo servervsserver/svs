@@ -53,22 +53,21 @@
       </div>
 
       <div class="column is-6-desktop is-12-tablet is-12-mobile">
-        <div v-if="loadingTracks">
-          <blockquote>
-            Loading the tracks... 
-            <spinner />
-          </blockquote>
+        <div class="tracks-top-additional-buttons">
+          <div class="buttons">
+            <slot name="tracksTopButtons" :tracks="tracks" />
+          </div>
         </div>
+
         <ul class="track-list">
           <track-list-item 
             v-for="(track, index) in innerTracks" 
             :key="index"
-            v-slot:default="slotProps"
             :index="index"
             :track="track"
           >
-            <template>
-              <slot :track="slotProps.track" />
+            <template v-slot:trackButtons="slotProps">
+              <slot name="trackButtons" :track="slotProps.track" />
             </template>
           </track-list-item>
           <!-- <li
@@ -99,8 +98,7 @@ import { RouterHelperMixin } from "../mixins"
 
 export default {  
   components: {
-    'track-list-item': TrackListItemComponent,
-    'spinner': Spinner,
+    'track-list-item': TrackListItemComponent
   },
   mixins: [
     RouterHelperMixin
@@ -121,10 +119,6 @@ export default {
     mockTracksCount: {
       type: Number,
       default: 4
-    },
-    loadingTracks: {
-      type: Boolean,
-      default: false
     }
   },
   data() {
@@ -217,6 +211,15 @@ export default {
 
   .meta-informations {
     font-size: 0.8em;
+  }
+}
+
+.tracks-top-additional-buttons {
+  // display: flex;
+  padding: 1em;
+  .buttons {
+    display: flex;
+    flex-direction: row-reverse;
   }
 }
 

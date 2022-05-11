@@ -45,12 +45,12 @@
               @click="onTrackClick(idx, track)"
             >
               <div class="track-base-metadatas">
-                <span class="track-name">
-                  {{ track.name }}
-                </span>
-                <span class="artist-name">
-                  {{ track.artist }}
-                </span>
+                <div class="track-name">
+                  {{ track.title }}
+                </div>
+                <div class="artist-name">
+                  {{ track.author.name }}
+                </div>
               </div>
             </div>
             <div class="playlist-item-end">
@@ -199,9 +199,11 @@ export default {
         text-shadow: 1px 1px 2px #F5816B;
         box-shadow: 0px 0px 1px 2px #F5816B80 inset;
       }
-      // &.track-toplay {
-      //   // font-style: italic;
-      // }
+
+      .artist-name {
+        font-weight: 200;
+        font-size: 0.8em;
+      }
     }
 
   }

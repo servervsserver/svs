@@ -71,6 +71,7 @@ export default function (catalogPlugin, audioPlayerPlugin) {
     }
   })
   
+  // Actions for track list items
   catalogPlugin.addActionToTrackListItem(
     {
       icon: { klass: "fa-solid fa-circle-play"},
@@ -91,6 +92,47 @@ export default function (catalogPlugin, audioPlayerPlugin) {
           audioPlayer.moveToTrack(aplTrack)
         }
   
+        audioPlayer.play()
+      }
+    }
+  )
+
+  // Actions for top of track list
+  catalogPlugin.addActionToTracksTopActions(
+    {
+      icon: { klass: "fa-solid fa-list-ol"},
+      /**
+       * 
+       * @param {Archive.Track[]} track 
+       */
+      text: "Send EP to queue",
+      fnc: async (tracks) => {
+        let audioPlayer = audioPlayerPlugin.mainAudioPlayer
+        for (let track of tracks) {
+          let aplTrack = await ToAudioPlayerLogic.asyncConvertTrack(track)
+          audioPlayer.pushToQueue(aplTrack)
+        }
+      }
+    }
+  )
+
+  catalogPlugin.addActionToTracksTopActions(
+    {
+      icon: { klass: "fa-regular fa-circle-play"},
+      /**
+       * 
+       * @param {Archive.Track[]} track 
+       */
+      text: "Play EP",
+      fnc: async (tracks) => {
+        let audioPlayer = audioPlayerPlugin.mainAudioPlayer
+        let firstTrack = null
+        for (let track of tracks) {
+          let aplTrack = await ToAudioPlayerLogic.asyncConvertTrack(track)
+          if (!firstTrack) firstTrack = aplTrack
+          audioPlayer.pushToQueue(aplTrack)
+        }
+        audioPlayer.moveToTrack(firstTrack)
         audioPlayer.play()
       }
     }

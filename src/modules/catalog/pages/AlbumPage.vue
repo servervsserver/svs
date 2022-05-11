@@ -13,14 +13,33 @@
     </div>
     <album-content
       v-if="album && server"
-      v-slot:default="slotProps"
       :server="server"
       :album="album"
       :tracks="tracks"
       :mock-tracks-count="mockTracksCount"
       :loading-tracks="loadingTracks"
     >
-      <template>
+
+      <template v-slot:tracksTopButtons="slotProps">
+        <button 
+          v-for="(action, actionidx) in tracksTopActions"
+          :key="'action' + actionidx"
+          class="button svs-button-transparent"
+          @click="action.fnc(slotProps.tracks)"
+        >
+          <span v-if="action.text">{{ action.text }}</span>
+          <span
+            v-if="action.icon && action.icon.klass"
+            class="icon"
+          >
+            <i 
+              :class="action.icon.klass"
+            />
+          </span>
+        </button>
+      </template>
+
+      <template v-slot:trackButtons="slotProps">
         <button 
           v-for="(action, actionidx) in trackListItemsActions"
           :key="'action' + actionidx"
@@ -82,8 +101,11 @@ export default {
       return this.$svsCatalog
     },
     trackListItemsActions() {
-      console.log(this.catalogPlugin)
       return this.catalogPlugin.trackListItemActions
+    },
+    tracksTopActions() {
+      console.log(this.catalogPlugin.tracksTopActions)
+      return this.catalogPlugin.tracksTopActions
     },
     audioPlayer() {
       return this.$svsAudioPlayer.mainAudioPlayer

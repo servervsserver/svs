@@ -71,7 +71,7 @@ export class AudioPlayer {
     this._initialized = true
 
     this.audio = new Audio()
-    this.audio.volume = 0.1
+    this.audio.volume = 0.5
     this.audio.preload = 'auto'
 
     // this._queue.moveToNext()
@@ -181,8 +181,21 @@ export class AudioPlayer {
     return this.queue.queueLength
   }
 
+  /**
+   * @returns {number} Volume between 0 and 1
+   */
+  get volume() {
+    return this.audio.volume
+  }
+
+  /**
+   * @param {number} value Volume between 0 and 1
+   */
+  set volume(value) {
+    return
+  }
+
   play() {
-    this.audio.volume = 0.2
     this._isPlaying = true
     this.audio.play()
   }

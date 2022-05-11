@@ -17,8 +17,11 @@
     </div>
     <div class="additional-buttons">
       <div class="buttons">
-        <slot v-if="!isMock" :track="track" />
-        <button v-if="isMock" class="button is-loading svs-button-transparent"></button>
+        <slot name="trackButtons" v-if="!isMock" :track="track" />
+        <button 
+          v-if="isMock" 
+          class="button is-loading svs-button-transparent">
+        </button>
       </div>
     </div>
   </li>
@@ -61,7 +64,7 @@ $gap: 1em;
   margin: 4px 0px;
   border-radius: 3px;
   transition: 0.5s opacity;
-  
+
   & > * {
     padding: #{$gap * 0.5};
     // padding-left: $gap * 0.5;

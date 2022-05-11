@@ -2,6 +2,7 @@ import * as Archive from "../models"
 
 /**
  * @typedef {{ icon?: { klass: string }, text?: string, fnc: (track: Archive.Track, index: number) => void}} TrackListItemAction
+ * @typedef {{ icon?: { klass: string }, text?: string, fnc: (track: Archive.Track[]) => void}} TracksTopAction
  */
 
 export default class CatalogPlugin {
@@ -11,6 +12,8 @@ export default class CatalogPlugin {
     this._catalog = new Archive.AsyncCatalog()
 
     this._trackListItemActions = []
+
+    this._tracksTopActions = []
   }
 
   /**
@@ -23,8 +26,22 @@ export default class CatalogPlugin {
     this._trackListItemActions.push(action)
   }
 
+  /**
+   * 
+   * @param {TracksTopAction} action 
+   * @returns 
+   */
+  addActionToTracksTopActions(action) {
+    if (!action) return
+    this._tracksTopActions.push(action)
+  }
+
   get trackListItemActions() {
     return this._trackListItemActions
+  }
+
+  get tracksTopActions() {
+    return this._tracksTopActions
   }
 
   get mainCatalog() {

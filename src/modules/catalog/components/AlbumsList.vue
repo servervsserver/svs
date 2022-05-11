@@ -50,7 +50,8 @@ export default {
     },
     servers: {
       type: Array,
-      required: false
+      required: false,
+      default: () => []
     },
     mockAlbumsCount: {
       type: Number,

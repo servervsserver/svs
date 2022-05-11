@@ -22,16 +22,7 @@
     </div>
 
     <coming-soon>
-      <section 
-        class="player"
-      >
-        <div class="player-container">
-          <div class="vertical-split" />
-          <audio-player />
-          <div class="vertical-split" />
-        </div>
-        <div class="vertical-split" />
-      </section>
+      <audio-player />
     </coming-soon>
   </div>
 </template>
@@ -100,46 +91,46 @@ export default {
   opacity: 0;
 }
 
-.player {
-  display: flex;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #333366;
-  justify-content: center;
-  align-content: stretch;
+// .player {
+//   display: flex;
+//   position: fixed;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+//   background: #333366;
+//   justify-content: center;
+//   align-content: stretch;
 
-  .player-container {
-    display: flex;
-    max-width: 960px;
-    flex-grow: 1;
-    // box-shadow: 0 0 2px 2px #333366;
-    & > * {
-      flex-grow: 1;
-    }
+//   .player-container {
+//     display: flex;
+//     max-width: 960px;
+//     flex-grow: 1;
+//     // box-shadow: 0 0 2px 2px #333366;
+//     & > * {
+//       flex-grow: 1;
+//     }
 
-    & > .vertical-split {
-      flex-grow: 0;
-    }
-  }
+//     & > .vertical-split {
+//       flex-grow: 0;
+//     }
+//   }
 
-  .vertical-split {
-    position: relative;
-    height: 100%;
-    width: 0px;
-    background-color: black;
-    &::before {
-      position: absolute;
-      display: block;
-      height: 60%;
-      width: 1px;
-      background: #F5816B;
-      content: ' ';
-      top: 20%;
-      left: 0;
-    }
-  }
-}
+//   .vertical-split {
+//     position: relative;
+//     height: 100%;
+//     width: 0px;
+//     background-color: black;
+//     &::before {
+//       position: absolute;
+//       display: block;
+//       height: 60%;
+//       width: 1px;
+//       background: #F5816B;
+//       content: ' ';
+//       top: 20%;
+//       left: 0;
+//     }
+//   }
+// }
 
 </style>

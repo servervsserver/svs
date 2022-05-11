@@ -5,11 +5,10 @@
 </template>
 
 <script>
-import AlbumListComponent from "../components/AlbumsList.vue"
 
 export default {
   components: {
-    'albums-list': AlbumListComponent,
+    // 'albums-list': AlbumListComponent,
   }
 }
 </script>

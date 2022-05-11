@@ -43,7 +43,8 @@ export default {
     },
     server: {
       type: Server,
-      required: false
+      required: false,
+      default: null
     }
   },
   data() {
@@ -75,11 +76,9 @@ export default {
     },
     albumServerName() {
       if (!this.server) {
-        console.warn("No server provided, cannot display info")
         return '...'
       }
       return this.server.name
-      // return this.album.author
     }
   },
   emits: [

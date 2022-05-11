@@ -32,27 +32,6 @@
           </ul>
         </div>
 
-        <!-- <div class="column">
-          <h4>Archive</h4>
-          <ul>
-            <li>
-              <router-link to="">
-                A link
-              </router-link>
-            </li>
-            <li>
-              <router-link to="">
-                Another  link
-              </router-link>
-            </li>
-            <li>
-              <router-link to="">
-                Yet another link
-              </router-link>
-            </li>
-          </ul>
-        </div> -->
-
         <div class="column">
           <h4>Get in touch</h4>
           <ul>
@@ -81,9 +60,6 @@
         </div> -->
       </div>
 
-
-
-
       <section class="social-medias columns">
         <div
           v-for="sml in socialMedias"
@@ -104,6 +80,7 @@
         </div>
       </section>
     </div>
+    <div class="player-reserved-space" />
   </footer>
 </template>
 
@@ -156,5 +133,8 @@
 <style scoped lang='scss'>
 .social-media-item:hover {
   padding-left: 0 !important;
+}
+.player-reserved-space {
+  height: 100px;
 }
 </style>

@@ -115,7 +115,8 @@ $transi-duration: 0.25s;
 .progress-bar {
 
   --progress-bar-height: #{$pb-height};
-  --thumb-size-half: var(--progress-bar-height);
+  --thumb-size-half: #{$pb-height * 0.7};
+  
   &, * {
     transition: $transi-duration left,
       $transi-duration width,
@@ -135,7 +136,7 @@ $transi-duration: 0.25s;
     height: calc(var(--progress-bar-height) * 0.6);
     top: calc(var(--progress-bar-height) * 0.2);
     box-shadow: 0px 0px 2px 0px #333366;
-    border-radius: 2px;
+    border-radius: 3px;
 
     cursor: pointer;
 
@@ -146,6 +147,7 @@ $transi-duration: 0.25s;
       top: 0;
       left: 0;
       background: #f5816b;
+      border-radius: 3px;
     }
   }
 
@@ -167,7 +169,7 @@ $transi-duration: 0.25s;
       transition: $transi-duration all;
       border-radius: 50%;
       background-color: #333366;
-      box-shadow: 0px 0px 1px 2px #f5816b inset,
+      box-shadow: 0px 0px 0px 1px #f5816b inset,
         0px 0px 2px 3px #000 inset,
         0px 0px 2px 0px #333366;
       touch-action: none;
@@ -175,11 +177,19 @@ $transi-duration: 0.25s;
 
   }
 
-  &:hover,
+
+  &:hover {
+    .progress-bar-thumb-circle {
+      box-shadow: 0px 0px 1px 2px #f5816b;
+    }
+    .progress-bar-track {
+      background: color.mix(#000, #f5816b, 40%);
+    }
+  }
   .progress-bar-thumb-circle:hover {
     box-shadow: 0px 0px 1px 1px #f5816b;
     .progress-bar-thumb-circle {
-      transform: scale(1.4);
+      transform: scale(1.2);
 
     }
   }

@@ -1,88 +1,99 @@
-77<template>
-  <div class="audio-player-container">
-    <!-- <progress class="progress is-small" value="20" max="100">20%</progress> -->
-    <section class="progress-bar-section">
-      <audio-progress-bar
-        v-model="currentTime"
-        :max="duration"
-      />
-      <div class="below-bar">
-        <div class="cover-art-thumbnail">
-          <squared-image-box>
-            <img :src="currentTrackCoverArtUrl">
-          </squared-image-box>
-        </div>
-        <div
-          v-if="currentTrack"
-          class="track-base-metadatas"
-        >
-          <div class="track-name">
-            {{ currentTrackTitle }}
+<template>
+  <section 
+    class="audio-player"
+    :class="{ 
+      'is-fixed': isFixed,
+      'is-floating': isFloating,
+      'is-anchored-to-bottom': isAnchoredToBottom
+    }"
+  >
+    <div 
+      class="audio-player-container"
+      :class="{ 'shadow-depth-2': isFloating }"
+    >
+      <!-- <progress class="progress is-small" value="20" max="100">20%</progress> -->
+      <section class="progress-bar-section">
+        <audio-progress-bar
+          v-model="currentTime"
+          :max="duration"
+        />
+        <div class="below-bar">
+          <div class="cover-art-thumbnail">
+            <squared-image-box>
+              <img :src="currentTrackCoverArtUrl">
+            </squared-image-box>
           </div>
-          <div class="artist-name">
-            {{ currentTrackAuthor }}
+          <div
+            v-if="currentTrack"
+            class="track-base-metadatas"
+          >
+            <div class="track-name">
+              {{ currentTrackTitle }}
+            </div>
+            <div class="artist-name">
+              {{ currentTrackAuthor }}
+            </div>
           </div>
-        </div>
-        <div
-          v-if="!currentTrack"
-          class="track-base-metadatas"
-        >
-          <div class="track-name">
-            No track.
+          <div
+            v-if="!currentTrack"
+            class="track-base-metadatas"
+          >
+            <div class="track-name">
+              No track.
+            </div>
+            <div class="artist-name" />
           </div>
-          <div class="artist-name" />
-        </div>
 
-        <div class="controls">
-          <div class="buttons">
-            <button
-              class="button svs-button-transparent"
-              @mousedown="onMouseDownBackward()"
-            >
-              <span class="icon"><i class="fa-solid fa-backward" /></span>
-            </button>
-            <button
-              class="button has-icon svs-button-transparent"
-              @click="togglePlayPause()"
-            >
-              <span class="icon">
-                <i
-                  v-if="!isPlaying"
-                  class="fa-solid fa-play"
-                />
-                <i
-                  v-if="isPlaying"
-                  class="fa-solid fa-pause"
-                />
-              </span>
-            </button>
-            <button
-              class="button has-icon svs-button-transparent"
-              @mousedown="onMouseDownForward()"
-            >
-              <span class="icon"><i class="fa-solid fa-forward" /></span>
-            </button>
+          <div class="controls">
+            <div class="buttons">
+              <button
+                class="button svs-button-transparent"
+                @mousedown="onMouseDownBackward()"
+              >
+                <span class="icon"><i class="fa-solid fa-backward" /></span>
+              </button>
+              <button
+                class="button has-icon svs-button-transparent"
+                @click="togglePlayPause()"
+              >
+                <span class="icon">
+                  <i
+                    v-if="!isPlaying"
+                    class="fa-solid fa-play"
+                  />
+                  <i
+                    v-if="isPlaying"
+                    class="fa-solid fa-pause"
+                  />
+                </span>
+              </button>
+              <button
+                class="button has-icon svs-button-transparent"
+                @mousedown="onMouseDownForward()"
+              >
+                <span class="icon"><i class="fa-solid fa-forward" /></span>
+              </button>
+            </div>
+          </div>
+          <div class="time">
+            {{ currentTime | duration }} 
+            <span class="is-hidden-touch">-</span>
+            <br class="is-hidden-desktop">
+            {{ duration | duration }}
           </div>
         </div>
-        <div class="time">
-          {{ currentTime | duration }} 
-          <span class="is-hidden-touch">-</span>
-          <br class="is-hidden-desktop">
-          {{ duration | duration }}
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="playlist">
-      <div class="buttons">
-        <button
-          class="button svs-button-transparent"
-          @mousedown="toggleListDisplay()"
-        >
-          <span class="icon">
-            <i class="fa-solid fa-list-ol" />
-          </span>
-        </button>
+      <section class="playlist">
+        <div class="buttons">
+          <button
+            class="button svs-button-transparent"
+            @mousedown="toggleListDisplay()"
+          >
+            <span class="icon">
+              <i class="fa-solid fa-list-ol" />
+            </span>
+          </button>
         <!-- <button
           class="button svs-button-transparent"
           @mousedown="toggleListDisplay()"
@@ -91,44 +102,45 @@
             <i class="fa-solid fa-list-ol" />
           </span>
         </button> -->
-      </div>
-    </section>
+        </div>
+      </section>
 
-    <section class="extra">
-      <div class="buttons">
-        <button
-          class="button svs-button-transparent"
-          @mousedown="cyclePlayMode()"
-        >
-          <span
-            v-if="isPlayModeStop"
-            class="icon"
+      <section class="extra">
+        <div class="buttons">
+          <button
+            class="button svs-button-transparent"
+            @mousedown="cyclePlayMode()"
           >
-            <i class="fa-regular fa-circle-pause" />
-          </span>
-          <span
-            v-if="isPlayModeLoopTrack"
-            class="icon"
-          >
-            <i class="fa-solid fa-repeat" />
-            <span>1</span>
-          </span>
-          <span
-            v-if="isPlayModeLoopQueue"
-            class="icon"
-          >
-            <i class="fa-solid fa-repeat" />
-          </span>
-        </button>
-      </div>
-    </section>
+            <span
+              v-if="isPlayModeStop"
+              class="icon"
+            >
+              <i class="fa-regular fa-circle-pause" />
+            </span>
+            <span
+              v-if="isPlayModeLoopTrack"
+              class="icon"
+            >
+              <i class="fa-solid fa-repeat" />
+              <span>1</span>
+            </span>
+            <span
+              v-if="isPlayModeLoopQueue"
+              class="icon"
+            >
+              <i class="fa-solid fa-repeat" />
+            </span>
+          </button>
+        </div>
+      </section>
 
-    <playlist-modal 
-      ref="playlistModal"
-      :queue="queue"
-      @track-click="onPlaylistTrackClick"
-    />
-  </div>
+      <playlist-modal 
+        ref="playlistModal"
+        :queue="queue"
+        @track-click="onPlaylistTrackClick"
+      />
+    </div>
+  </section>
 </template>
 
 <script>
@@ -143,6 +155,26 @@ export default {
     'audio-progress-bar': ProgressBar,
     'playlist-modal': PlaylistModalComponent
   },
+  props: {
+    fixed: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+    anchor: {
+      type: String,
+      required: false,
+      default: 'to-bottom',
+      validator( value ) {
+        return ['to-bottom'].includes(value)
+      }
+    },
+    floating: {
+      type: Boolean,
+      required: false,
+      default: true
+    }
+  },
   data() {
     return {
       audioPlayer: new AudioPlayer(),
@@ -150,6 +182,15 @@ export default {
     }
   },
   computed: {
+    isFixed() {
+      return this.fixed
+    },
+    isFloating() {
+      return this.floating
+    },
+    isAnchoredToBottom() {
+      return this.anchor === 'to-bottom'
+    },
     currentTrackTitle() {
       if (!this.currentTrack) return null
       return this.currentTrack.title
@@ -363,6 +404,36 @@ export default {
 .audio-player-container {
   color: #FFFADE;
   background: #333366;
+}
+
+.audio-player {
+  background: transparent;
+  // visibility: hidden;
+  // width: 100vw;
+  display: block;
+
+  &.is-fixed {
+    position: fixed;
+    &.is-anchored-to-bottom {
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 0%);
+      width: 100vw;
+      max-width: 1344px;
+    }
+
+    &.is-floating {
+      padding: 5px;
+      .audio-player-container {
+        border:#4d4d75 solid 1px;
+        border-radius: 5px;
+        // box-shadow: 
+        //   0 16px 24px 2px rgba(0,0,0,0.14),
+        //   0 6px 30px 5px rgba(0,0,0,0.12),
+        //   0 8px 10px -7px rgba(0,0,0,0.2);
+      }
+    }
+  }
 }
 
 </style>

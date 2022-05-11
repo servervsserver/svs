@@ -59,7 +59,7 @@ export class Track {
     console.log(this)
 
     let mm = new MediaMetadata({
-      title: this.name,
+      title: this.title,
       artist: authorName,
       album: albumTitle,
       artwork: [

@@ -1,27 +1,18 @@
 <template>
   <section class="album-content">
     <h2>{{ albumName }}</h2>
-    <div class="columns is-mobile is-multiline">
-      <div class="column is-3 is-hidden-touch">
-        <squared-image-box style="max-width: 300px">
+    <layout>
+      <template v-slot:topLeftLeft>
+        <squared-image-box style="max-width: 100%;">
           <img
             :src="coverArtUrl"
             class="cover-art shadow-depth-1"
             @error="onCAUError"
           >
         </squared-image-box>
-      </div>
+      </template>
 
-      <div class="column is-6-mobile is-hidden-desktop">
-        <squared-image-box style="max-width: 30vw;">
-          <img
-            :src="coverArtUrl"
-            class="cover-art shadow-depth-1"
-          >
-        </squared-image-box>
-      </div>
-
-      <div class="column is-3-desktop is-6-tablet">
+      <template v-slot:topLeftRight>
         <div class="album-infos">
           <div class="album-name">
             {{ albumName }}
@@ -50,9 +41,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </template>
 
-      <div class="column is-6-desktop is-12-tablet is-12-mobile">
+      <template v-slot:right>
         <div class="tracks-top-additional-buttons">
           <div class="buttons">
             <slot
@@ -76,35 +67,23 @@
               />
             </template>
           </track-list-item>
-          <!-- <li
-            v-for="midx in (mockTracksCount+1)"
-            :key="'mocktrack-' + midx"
-            class="track-list-item shadow-depth-1 mock"
-          >
-            <div class="track-number">
-              {{ midx }}
-            </div>
-            <div class="track-title">
-              Loading track...
-            </div>
-          </li> -->
         </ul>
-      </div>
-    </div>
+      </template>
+    </layout>
   </section>
 </template>
 
 <script>
-
-import Spinner from "@/components/Spinner.vue";
 import TrackListItemComponent from "./TrackListItem.vue"
+import OneOneTwoXOneOneStackLayout from "@/modules/layouts/components/OneOneTwoXOneOneStackLayout.vue"
 
 import { Album, Track, Server } from "@/modules/catalog/models"
 import { RouterHelperMixin } from "../mixins"
 
 export default {  
   components: {
-    'track-list-item': TrackListItemComponent
+    'track-list-item': TrackListItemComponent,
+    'layout': OneOneTwoXOneOneStackLayout
   },
   mixins: [
     RouterHelperMixin

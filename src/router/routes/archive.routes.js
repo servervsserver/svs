@@ -54,11 +54,11 @@ function createArchiveBlockRouter(path) {
     name: "Archives",
     component: Archive,
     children: ARCHIVE_ROUTES,
-    redirect: '/archives/collection/svs-iv'
+    redirect: '/catalog/collection/svs-iv'
   }
 }
 
 export function addArchiveBlockToRoutes(routes, path) {
-  if (!path) path = "/archives"
+  if (!path) path = "/catalog"
   routes.push(createArchiveBlockRouter(path))
 }

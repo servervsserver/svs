@@ -1,79 +1,63 @@
 <template>
   <section class="track-content">
-    <h2>Track {{ title }}</h2>
-    <div class="columns is-multiline is-mobile">
-      <div class="column is-6-desktop is-12-mobile">
-        <div class="columns is-multiline is-mobile">
-          <div class="column is-6 is-hidden-touch">
-            <squared-image-box style="max-width: 300px">
-              <img
-                :src="coverArtUrl"
-                class="cover-art shadow-depth-1"
-                @error="onCAUError"
-              >
-            </squared-image-box>
+    <track-layout>
+      <template v-slot:topLeftLeft>
+        <squared-image-box style="max-width: 100%;">
+          <img
+            :src="coverArtUrl"
+            class="cover-art shadow-depth-1"
+            @error="onCAUError"
+          >
+        </squared-image-box>
+      </template>
+      
+      <template v-slot:topLeftRight>
+        <div class="album-infos">
+          <div
+            v-if="showDevInfos"
+            class="track-id"
+          >
+            {{ id }}
           </div>
-
-          <div class="column is-6-mobile is-hidden-desktop">
-            <squared-image-box style="max-width: 100%;">
-              <img
-                :src="coverArtUrl"
-                class="cover-art shadow-depth-1"
-              >
-            </squared-image-box>
+          <div class="album-name">
+            {{ title }}
           </div>
-
-          <div class="column is-6-desktop is-6-tablet">
-            <div class="album-infos">
-              <div
-                v-if="showDevInfos"
-                class="track-id"
-              >
-                {{ id }}
-              </div>
-              <div class="album-name">
-                {{ title }}
-              </div>
-              <div class="">
-                <em>in</em> 
-                <router-link 
-                  :to="albumUrl"
-                >
-                  {{ albumTitle }}
-                </router-link>
-              </div>
-              <div class="album-server-name">
-                <em>by</em> {{ authorName }}
-              </div>
-              <br>
-              <div class="album-geners tags">
-                <span
-                  v-for="genre in genres"
-                  :key="genre"
-                  class="tag"
-                >{{ genre }}</span>
-              </div>
-            </div>
+          <div class="">
+            <em>in</em> 
+            <router-link 
+              :to="albumUrl"
+            >
+              {{ albumTitle }}
+            </router-link>
           </div>
-
-          <div class="column is-12">
-            <h3>Credits</h3>
-            <table class="table is-hoverable is-striped is-fullwidth is-transparent">
-              <tr
-                v-for="(c, idx) of credits"
-                :key="idx"
-              >
-                <td>{{ c.artistName }}</td>
-                <td><em>{{ c.roles.join(', ') }}</em></td>
-              </tr>
-            </table>
+          <div class="album-server-name">
+            <em>by</em> {{ authorName }}
+          </div>
+          <br>
+          <div class="album-geners tags">
+            <span
+              v-for="genre in genres"
+              :key="genre"
+              class="tag"
+            >{{ genre }}</span>
           </div>
         </div>
-      </div>
+      </template>
 
-      <div
-        class="column is-6-desktop is-12-mobile"
-      >
+      <template v-slot:bottomLeft>
+        <h3>Credits</h3>
+        <table class="table is-hoverable is-striped is-fullwidth is-transparent">
+          <tr
+            v-for="(c, idx) of credits"
+            :key="idx"
+          >
+            <td>{{ c.artistName }}</td>
+            <td><em>{{ c.roles.join(', ') }}</em></td>
+          </tr>
+        </table>
+      </template>
+
+      <template v-slot:right>
         <h3>Lyrics</h3>
         <div
           v-if="lyrics"
@@ -87,23 +71,28 @@
         >
           <em>This track is instrumental</em>
         </div>
-      </div>
-    </div>
+      </template>
+    </track-layout>
   </section>
 </template>
 
 <script>
 import * as Archive from "../models"
 import { RouterHelperMixin } from "../mixins"
+import OneOneTwoXOneOneStackLayout from "@/modules/layouts/components/OneOneTwoXOneOneStackLayout.vue"
 
 export default {
+  components: {
+    'track-layout': OneOneTwoXOneOneStackLayout
+  },
   mixins: [
     RouterHelperMixin
   ],
   props: {
     author: {
       type: Archive.Server,
-      require: true
+      required: false,
+      default: null
     },
     /**
      * @type {Archive.Track} track to display

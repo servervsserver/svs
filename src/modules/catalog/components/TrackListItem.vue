@@ -42,11 +42,13 @@ export default {
   props: {
     index: {
       type: Number,
-      required: false
+      required: false,
+      default: undefined
     },
     track: {
       type: Track,
-      required: false
+      required: false,
+      default: null
     }
   },
   computed: {

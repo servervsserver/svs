@@ -69,6 +69,7 @@ import * as AudioPlayerLogic from "@/modules/audio-player/models"
 
 // nzZHljEmYDS9M6jwFlCs
 export default {
+  name: 'TrackLayout',
   components: {
     'album-content': AlbumContentComponent
   },

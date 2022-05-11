@@ -116,7 +116,8 @@ export const routes = [
       {
         path: 'radio',
         name: 'SvS IV Catalog',
-        component: SvSIVRadio
+        // component: SvSIVRadio
+        redirect: '/catalog/collection/svs-iv'
       },
       {
         path: 'ep-upload',

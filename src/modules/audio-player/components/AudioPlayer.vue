@@ -7,83 +7,111 @@
       'is-anchored-to-bottom': isAnchoredToBottom
     }"
   >
+        <!-- <div class="volume-bar" style="padding: 20px; position: relative;">
+          <audio-progress-bar
+            v-model="volume"
+            :max="100"
+          />
+        </div> -->
     <div 
       class="audio-player-container"
-      :class="{ 'shadow-depth-2': isFloating }"
+      :class="{ 
+        'shadow-depth-2': isFloating,
+        'cartdrige': isFloating
+        }"
     >
-      <!-- <progress class="progress is-small" value="20" max="100">20%</progress> -->
-      <section class="progress-bar-section">
-        <audio-progress-bar
-          v-model="currentTime"
-          :max="duration"
-        />
-        <div class="below-bar">
-          <div class="cover-art-thumbnail">
-            <squared-image-box>
-              <img :src="currentTrackCoverArtUrl">
-            </squared-image-box>
-          </div>
-          <div
-            v-if="currentTrack"
-            class="track-base-metadatas"
-          >
-            <div class="track-name">
-              {{ currentTrackTitle }}
-            </div>
-            <div class="artist-name">
-              {{ currentTrackAuthor }}
-            </div>
-          </div>
-          <div
-            v-if="!currentTrack"
-            class="track-base-metadatas"
-          >
-            <div class="track-name">
-              No track.
-            </div>
-            <div class="artist-name" />
-          </div>
 
-          <div class="controls">
-            <div class="buttons">
-              <button
-                class="button svs-button-transparent"
-                @mousedown="onMouseDownBackward()"
-              >
-                <span class="icon"><i class="fa-solid fa-backward" /></span>
-              </button>
-              <button
-                class="button has-icon svs-button-transparent"
-                @click="togglePlayPause()"
-              >
-                <span class="icon">
-                  <i
-                    v-if="!isPlaying"
-                    class="fa-solid fa-play"
-                  />
-                  <i
-                    v-if="isPlaying"
-                    class="fa-solid fa-pause"
-                  />
-                </span>
-              </button>
-              <button
-                class="button has-icon svs-button-transparent"
-                @mousedown="onMouseDownForward()"
-              >
-                <span class="icon"><i class="fa-solid fa-forward" /></span>
-              </button>
-            </div>
+    <player-layout>
+      
+      <template v-slot:audioBar>
+        <div style="padding: 5px 10px;">
+          <audio-progress-bar
+            v-model="currentTime"
+            :max="duration"
+          />
+        </div>
+      </template>
+      
+      <template v-slot:coverArt>
+        <div class="cover-art-thumbnail">
+          <squared-image-box>
+            <img :src="currentTrackCoverArtUrl">
+          </squared-image-box>
+        </div>
+      </template>
+
+      <template v-slot:metadatas>
+        <div
+          v-if="currentTrack"
+          class="track-base-metadatas"
+        >
+          <div class="track-name">
+            {{ currentTrackTitle }}
           </div>
-          <div class="time">
-            {{ currentTime | duration }} 
-            <span class="is-hidden-touch">-</span>
-            <br class="is-hidden-desktop">
-            {{ duration | duration }}
+          <div class="artist-name">
+            {{ currentTrackAuthor }}
           </div>
         </div>
-      </section>
+        <div
+          v-if="!currentTrack"
+          class="track-base-metadatas"
+        >
+          <div class="track-name">
+            No track.
+          </div>
+          <div class="artist-name" />
+        </div>
+      </template>
 
+      <template v-slot:coreControls>
+        <div class="controls">
+          <div class="buttons">
+            <button
+              class="button svs-button-transparent"
+              @mousedown="onMouseDownBackward()"
+            >
+              <span class="icon"><i class="fa-solid fa-backward" /></span>
+            </button>
+            <button
+              class="button has-icon svs-button-transparent"
+              @click="togglePlayPause()"
+            >
+              <span class="icon">
+                <i
+                  v-if="!isPlaying"
+                  class="fa-solid fa-play"
+                />
+                <i
+                  v-if="isPlaying"
+                  class="fa-solid fa-pause"
+                />
+              </span>
+            </button>
+            <button
+              class="button has-icon svs-button-transparent"
+              @mousedown="onMouseDownForward()"
+            >
+              <span class="icon"><i class="fa-solid fa-forward" /></span>
+            </button>
+          </div>
+        </div>
+      </template>
+
+      <template v-slot:time>
+        <div class="time">
+          {{ currentTime | duration }} 
+          <span class="is-hidden-touch">-</span>
+          <br class="is-hidden-desktop">
+          {{ duration | duration }}
+        </div>
+      </template>
+    </player-layout>
+      <!-- <progress class="progress is-small" value="20" max="100">20%</progress> -->
+      <!-- <section class="progress-bar-section">
+        <div class="below-bar">
+        </div>
+      </section> -->
+<!-- 
       <section class="playlist">
         <div class="buttons">
           <button
@@ -94,18 +122,10 @@
               <i class="fa-solid fa-list-ol" />
             </span>
           </button>
-        <!-- <button
-          class="button svs-button-transparent"
-          @mousedown="toggleListDisplay()"
-        >
-          <span class="icon">
-            <i class="fa-solid fa-list-ol" />
-          </span>
-        </button> -->
         </div>
-      </section>
+      </section> -->
 
-      <section class="extra">
+      <!-- <section class="extra">
         <div class="buttons">
           <button
             class="button svs-button-transparent"
@@ -132,7 +152,7 @@
             </span>
           </button>
         </div>
-      </section>
+      </section> -->
 
       <playlist-modal 
         ref="playlistModal"
@@ -147,12 +167,15 @@
 
 import ProgressBar from "./ProgressBar.vue"
 import PlaylistModalComponent from "./PlayListModal.vue"
+import PlayerLayout from '../layouts/AudioPlayerLayout.vue'
+
 import { AudioPlayer, PlayMode, Track } from "../models"
 
 export default {
   name: 'AudioPlayer',
   components: {
     'audio-progress-bar': ProgressBar,
+    'player-layout': PlayerLayout,
     'playlist-modal': PlaylistModalComponent
   },
   props: {
@@ -178,7 +201,8 @@ export default {
   data() {
     return {
       audioPlayer: new AudioPlayer(),
-      tick: 0
+      tick: 0,
+      volume: 50
     }
   },
   computed: {
@@ -336,7 +360,7 @@ export default {
 .audio-player-container {
 
   display: flex;
-  height: 60px;
+  // height: 60px;
   justify-content: center;
   .below-bar {
     display: flex;
@@ -359,8 +383,10 @@ export default {
 
   .track-base-metadatas {
     padding: 0.5em;
+    white-space: nowrap;;
     .track-name {
       font-weight: 500;
+      text-overflow: ellipsis;
     }
 
     .artist-name {
@@ -406,6 +432,11 @@ export default {
   background: #333366;
 }
 
+.cartdrige {
+  border:#4d4d75 solid 1px;
+  border-radius: 5px;
+}
+
 .audio-player {
   background: transparent;
   // visibility: hidden;
@@ -425,8 +456,7 @@ export default {
     &.is-floating {
       padding: 5px;
       .audio-player-container {
-        border:#4d4d75 solid 1px;
-        border-radius: 5px;
+        padding: 2px;
         // box-shadow: 
         //   0 16px 24px 2px rgba(0,0,0,0.14),
         //   0 6px 30px 5px rgba(0,0,0,0.12),

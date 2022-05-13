@@ -29,7 +29,6 @@
             >{{ genre }}</span>
           </div>
           <div
-            v-if="isAdmin"
             class="meta-informations"
           >
             <div

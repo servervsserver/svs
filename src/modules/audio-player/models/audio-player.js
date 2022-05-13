@@ -59,6 +59,7 @@ export class AudioPlayer {
     this._duration      = 0
     this._currentTime   = 0
     this._skipStep      = 10
+    this._volume        = 0.25
     this._isPlaying     = false
     this._currentTrack  = null
 
@@ -72,9 +73,9 @@ export class AudioPlayer {
 
     this._initialized = true
 
-    this.audio = new Audio()
-    this.audio.volume = 0.5
-    this.audio.preload = 'auto'
+    this.audio          = new Audio()
+    this.audio.volume   = this._volume
+    this.audio.preload  = 'auto'
 
     // this._queue.moveToNext()
     let track = this._queue.currentTrack
@@ -172,38 +173,53 @@ export class AudioPlayer {
     this._initialized = false
 
     this.audio.src = null
-    //
-    // this.audio.removeEventListener( 'timeupdate' )
-    //
-    // this.audio.removeEventListener( 'loadedmetadata' )
-    //
-    // this.audio.removeEventListener( 'ended' )
   }
 
+  /**
+   * Gets the duration of the track
+   */
   get duration() {
     return this._duration
   }
 
+  /**
+   * Gets the time advance of the track (in seconds)
+   */
   get currentTime() {
     return this._currentTime
   }
 
+  /**
+   * Sets the time advance of the track (in seconds)
+   */
   set currentTime(val) {
-    this.audio.currentTime = Math.max(val, 0)
+    this.audio.currentTime = this._currentTime = Math.max(val, 0)
   }
 
+  /**
+   * Gets the current track in the player
+   */
   get currentTrack() {
     return this._currentTrack
   }
 
+  /**
+   * True if the track is currently playing
+   */
   get isPlaying() {
     return this._isPlaying
   }
 
+  /**
+   * Gets the queue. Do not change the queue, only read on it.
+   */
   get queue() {
     return this._queue
   }
 
+  /**
+   * Gets the length of the queue (including previous and current track)
+   */
   get queueLength() {
     return this.queue.queueLength
   }
@@ -212,14 +228,15 @@ export class AudioPlayer {
    * @returns {number} Volume between 0 and 1
    */
   get volume() {
-    return this.audio.volume
+    return this._volume
   }
 
   /**
    * @param {number} value Volume between 0 and 1
    */
   set volume(value) {
-    return
+    this._volume = Math.max(0, Math.min(value, 1))
+    this.audio.volume = this._volume
   }
 
   play() {
@@ -282,7 +299,7 @@ export class AudioPlayer {
    */
   moveToTrack(track) {
     let pos = this._queue.trackPositionInQueue(track)
-    if (!pos) return false
+    if (pos === null) return false
     this.moveToPosition(pos)
     return true
   }
@@ -303,6 +320,16 @@ export class AudioPlayer {
    */ 
   pushAsNextTrack(track) {
     return this._queue.addAsNextTrack(track)
+  }
+
+  /**
+   * Removes a track from the queue
+   * @param {AudioPlayer.Track} track 
+   * @returns 
+   */
+  removeTrack(track) {
+    /** TODO: handle all the edges cases of removal of tracks currently playlist ... */
+    return this._queue.removeTrackFromQueue(track)
   }
 }
 

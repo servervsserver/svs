@@ -132,6 +132,7 @@ export default function (catalogPlugin, audioPlayerPlugin) {
           if (!firstTrack) firstTrack = aplTrack
           audioPlayer.pushToQueue(aplTrack)
         }
+        
         audioPlayer.moveToTrack(firstTrack)
         audioPlayer.play()
       }

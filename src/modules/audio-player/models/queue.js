@@ -98,6 +98,7 @@ export class AudioPlayerQueue {
    */
   removeTrackFromQueue(track) {
     let pos = this.trackPositionInQueue(track)
+    console.log(pos, track)
     if (pos === null) return null
     return this.removeTrackAtPosition(pos)
   }
@@ -108,7 +109,7 @@ export class AudioPlayerQueue {
    * @returns {Track|null} The track removed if removed, null if the position is invalid
    */
   removeTrackAtPosition(position) {
-    let idx = this._idxToPosition(position)
+    let idx = this._positionToIdx(position)
     if (idx >= this.queueLength) {
       console.warn("The position is outside of the queue (too big)")
       return null
@@ -117,7 +118,7 @@ export class AudioPlayerQueue {
       console.warn("The position is outside of the queue (too low)")
       return null
     }
-    let [trackRemoved] =  this._tracks.splice(idx,1)[0]
+    let [trackRemoved] =  this._tracks.splice(idx,1)
     if (this._currentIndex > idx) this._currentIndex -= 1
     return trackRemoved
   }

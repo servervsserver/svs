@@ -18,7 +18,6 @@
     >
       <div
         class="progress-bar-thumb-circle"
-        @mousedown="onMouseDown($event)"
       />
     </div>
   </div>
@@ -114,8 +113,9 @@ $thumb-half-size: $thumb-size * 0.5; */
 $transi-duration: 0.25s;
 .progress-bar {
 
+  user-select: none;
   --progress-bar-height: #{$pb-height};
-  --thumb-size-half: #{$pb-height * 0.7};
+  --thumb-size-half: #{$pb-height * 0.5};
   
   &, * {
     transition: $transi-duration left,

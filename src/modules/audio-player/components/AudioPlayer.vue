@@ -7,12 +7,6 @@
       'is-anchored-to-bottom': isAnchoredToBottom
     }"
   >
-        <!-- <div class="volume-bar" style="padding: 20px; position: relative;">
-          <audio-progress-bar
-            v-model="volume"
-            :max="100"
-          />
-        </div> -->
     <div 
       class="audio-player-container"
       :class="{ 
@@ -29,6 +23,14 @@
             v-model="currentTime"
             :max="duration"
           />
+        </div>
+      </template>
+
+      <template v-slot:coverArtBig>
+        <div class="cover-art-big">
+          <squared-image-box>
+            <img :src="currentTrackCoverArtUrlBig">
+          </squared-image-box>
         </div>
       </template>
       
@@ -64,6 +66,7 @@
       </template>
 
       <template v-slot:coreControls>
+
         <div class="controls">
           <div class="buttons">
             <button
@@ -97,14 +100,43 @@
         </div>
       </template>
 
-      <template v-slot:time>
-        <div class="time">
-          {{ currentTime | duration }} 
-          <span class="is-hidden-touch">-</span>
-          <br class="is-hidden-desktop">
-          {{ duration | duration }}
+      <template v-slot:duration>
+        <div class="time">{{ duration | duration }}</div>
+      </template>
+
+      <template v-slot:currentTime>
+        <div class="time">{{ currentTime | duration }}</div>
+      </template>
+
+      <template v-slot:volume>
+        <div class="volume-button">
+          <button class="button svs-button-transparent">
+            <span class="icon">
+              <i class="fa-solid fa-volume-high" :class="{ 'is-active': isHighVolume }"></i>
+              <i class="fa-solid fa-volume-low" :class="{ 'is-active': isMidVolume }"></i>
+              <i class="fa-solid fa-volume-off" :class="{ 'is-active': isLowVolume }"></i>
+              <i class="fa-solid fa-volume-xmark" :class="{ 'is-active': isNoVolume }"></i>
+            </span>
+          </button>
+          <div class="volume-bar">
+            <div class="volume-bar-inner shadow-depth-2">
+              <audio-progress-bar 
+                v-model="volume"
+                :max="1"
+              />
+            </div>
+          </div>
         </div>
       </template>
+
+      <template v-slot:playlist>
+        <playlist 
+          :queue="queue"
+          @track-click="onPlaylistTrackClick"
+          @track-delete-click="onPlaylistTrackDeleteClick"
+        />
+      </template>
+
     </player-layout>
       <!-- <progress class="progress is-small" value="20" max="100">20%</progress> -->
       <!-- <section class="progress-bar-section">
@@ -154,11 +186,12 @@
         </div>
       </section> -->
 
-      <playlist-modal 
+
+      <!-- <playlist-modal 
         ref="playlistModal"
         :queue="queue"
         @track-click="onPlaylistTrackClick"
-      />
+      /> -->
     </div>
   </section>
 </template>
@@ -167,6 +200,7 @@
 
 import ProgressBar from "./ProgressBar.vue"
 import PlaylistModalComponent from "./PlayListModal.vue"
+import PlaylistComponent from "./PlayList.vue"
 import PlayerLayout from '../layouts/AudioPlayerLayout.vue'
 
 import { AudioPlayer, PlayMode, Track } from "../models"
@@ -176,7 +210,8 @@ export default {
   components: {
     'audio-progress-bar': ProgressBar,
     'player-layout': PlayerLayout,
-    'playlist-modal': PlaylistModalComponent
+    // 'playlist-modal': PlaylistModalComponent,
+    'playlist': PlaylistComponent
   },
   props: {
     fixed: {
@@ -200,9 +235,7 @@ export default {
   },
   data() {
     return {
-      audioPlayer: new AudioPlayer(),
-      tick: 0,
-      volume: 50
+      audioPlayer: new AudioPlayer()
     }
   },
   computed: {
@@ -215,6 +248,41 @@ export default {
     isAnchoredToBottom() {
       return this.anchor === 'to-bottom'
     },
+    /**
+     * True if the volume is high
+     */
+    isHighVolume() {
+      return this.volume > 0.66
+    },
+    /**
+     * True if the volume is normal
+     */
+    isMidVolume() {
+      return this.volume > 0.33 && this.volume < 0.66
+    },
+    /**
+     * True if the volume is low
+     */
+    isLowVolume() {
+      return this.volume > 0 && this.volume < 0.33
+    },
+    /**
+     * True if the volume is 0
+     */
+    isNoVolume() {
+      return this.volume == 0
+    },
+    /**
+     * Volume of the audio player
+     */
+    volume: {
+      get: function() {
+        return Math.pow(this.audioPlayer.volume, 0.25)
+      },
+      set: function(value) {
+        this.audioPlayer.volume = Math.pow(value, 4)
+      }
+    },
     currentTrackTitle() {
       if (!this.currentTrack) return null
       return this.currentTrack.title
@@ -226,6 +294,15 @@ export default {
 
       let uri = this.currentTrack.album.coverArtUrl
       uri = uri.replace('cover_arts', '250')
+      return uri
+    },
+    currentTrackCoverArtUrlBig() {
+      if (!this.currentTrack) return null
+      if (!this.currentTrack.album) return null
+      if (!this.currentTrack.album.coverArtUrl) return null
+
+      let uri = this.currentTrack.album.coverArtUrl
+      uri = uri.replace('cover_arts', '500')
       return uri
     },
     currentTrackAuthor() {
@@ -338,6 +415,9 @@ export default {
       console.log(position, track)
       this.audioPlayer.moveToPosition(position)
     },
+    onPlaylistTrackDeleteClick(position, track) {
+      this.audioPlayer.removeTrack(track)
+    },
     cyclePlayMode: (function() {
       let availablePlayModes = [
         PlayMode.LOOP_QUEUE,
@@ -370,6 +450,12 @@ export default {
     & > * {
       flex-grow: 1;
     }
+  }
+
+  .cover-art-big {
+    width: 400px;
+    padding: 10px;
+    margin-left: calc(50% - 200px + 5px);
   }
 
   .cover-art-thumbnail {
@@ -420,8 +506,13 @@ export default {
 
   @media (max-width: 768px) {
     font-size: 0.7rem;
+    .cover-art-big {
+      width: 200px;
+      padding: 10px;
+      margin-left: calc(50% - 100px + 5px);
+    }
     .cover-art-thumbnail {
-      padding: 5px;
+      padding: 2px;
       width: 50px;
     }
   }
@@ -437,10 +528,54 @@ export default {
   border-radius: 5px;
 }
 
+// Volume button styling
+
+.volume-button {
+  position: relative;
+  width: fit-content;
+
+  span {
+    i {
+      position: absolute;
+      width: 17.5px;
+      text-align: left;
+      transition: opacity 0.15s;
+      opacity: 0;
+
+      &.is-active {
+        opacity: 1;
+      }
+    }
+  }
+
+  .volume-bar {
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: scale(0);
+    transition: transform 0.5s;
+    transform-origin: 0 50%;
+    
+    .volume-bar-inner {
+      width: 100px;
+      padding: 5px;
+      border:#4d4d75 solid 1px;
+      border-radius: 5px;
+      background: #333366;
+      transform-origin: 0 50%;
+      transform: rotate(-90deg);
+    }
+  }
+
+  &:hover {
+    .volume-bar {
+      transform: scale(1);
+    }
+  }
+}
+
 .audio-player {
   background: transparent;
-  // visibility: hidden;
-  // width: 100vw;
   display: block;
 
   &.is-fixed {

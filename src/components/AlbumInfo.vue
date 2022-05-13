@@ -134,15 +134,6 @@ export default {
   },
   computed: {
     coverArtUrl() {
-      // console.log(this.album.coverart_url)
-      // let url = this.album.coverart_url
-      // if (!url) {
-      //   return ""
-      // }
-      // if (!/^http/.test(url)) {
-      //   url = 'https://' + url
-      // }
-      // return url
       return addHttps(this.album.coverart_url)
     },
     selectedTrackAudioUrl() {
@@ -153,7 +144,6 @@ export default {
   methods: {
     selectTrack(track, idx) {
       this.selectedTrack = track
-      // console.log(this.credits, track.id)
       this.selectedTrackCredits = this.credits[track.id]
     },
     openLyricsModal() {

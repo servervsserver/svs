@@ -225,10 +225,6 @@ export default {
       this.track.removeCreditEntry(creditEntry)
       this.onCreditsValidationDeleted(index)
     }
-    // onCreditValidationChange(event, index) {
-    //   console.log("HEYA")
-    //   console.log(event, index)
-    // }
   }
 }
 </script>

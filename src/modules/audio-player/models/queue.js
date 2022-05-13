@@ -98,7 +98,6 @@ export class AudioPlayerQueue {
    */
   removeTrackFromQueue(track) {
     let pos = this.trackPositionInQueue(track)
-    console.log(pos, track)
     if (pos === null) return null
     return this.removeTrackAtPosition(pos)
   }

@@ -94,7 +94,6 @@ export default {
       this.onTracksValidationDeleted(index)
     },
     _onTracksValidationChange(evt, index) {
-      console.log(evt, index)
       this.onTracksValidationChange(evt, index)
     }
     // onEpInfosValidationChange(evt) {

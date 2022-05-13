@@ -35,8 +35,6 @@ export const RouterHelperMixin = {
       return Object.entries(query).map(p => p.join('=')).join('&')
     },
     collectionInQuery() {
-      console.log(this.$route)
-      console.log(this.baseRoute)
       return this.$route.query['col']
     }
   },

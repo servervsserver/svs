@@ -104,7 +104,6 @@ export default {
       return this.catalogPlugin.trackListItemActions
     },
     tracksTopActions() {
-      console.log(this.catalogPlugin.tracksTopActions)
       return this.catalogPlugin.tracksTopActions
     },
     audioPlayer() {

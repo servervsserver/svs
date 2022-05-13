@@ -3,8 +3,10 @@ import { Track } from "./track"
 import { Album } from "./album"
 import { Server } from "./server"
 import { AlbumCollection } from "./album-collection"
+
 /**
 * Archive catalog. It should be used as a cache for the catalogue
+* @deprecated Use AsyncCatalog instead.
 */
 export class Catalog {
 
@@ -91,6 +93,7 @@ export class Catalog {
   }
 
 }
+
 
 import * as CatalogDb from "./db"
 

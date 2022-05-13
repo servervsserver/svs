@@ -23,15 +23,12 @@ export default class CharityPlugin {
 
 
         return Promise.all(promises).then(() => {
-            // console.log(data);
-
             return allData;
         });
     }
 
     getCause(name) {
-        let id = this._campaigns [name];
-        // console.log(id);
+        let id = this._campaigns [name];        
         this._client.Campaigns.get(id, function (data) {
             return data;
         });

@@ -38,16 +38,13 @@ export default {
   },
   async mounted() {
     if (!once) {
-      console.log("start");
       let a = await this.$svsBackend.getAllAlbumsUrls();
       this.all = a;
       once = true;
-      console.log("done");
     }
   },
   methods: {
     download: function (ind) {
-      console.log(ind);
       let curr = this.all[ind];
       for (let link in curr.tracks) {
         let ct = curr.tracks;

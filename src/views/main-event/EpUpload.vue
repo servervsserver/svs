@@ -208,12 +208,12 @@ export default {
       let user = this.$svsAuth.user;
       if (!user) {
         this.server = null;
-        console.log("No user logged");
+        console.warn("No user logged");
         return;
       }
       if (!user.discordTag) {
         this.server = null;
-        console.log("No discord tag");
+        console.warn("No discord tag");
         return;
       }
       let discordTag = user.discordTag;

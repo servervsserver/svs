@@ -322,7 +322,6 @@ export default {
       },
       set: function(val) {
         this.audioPlayer.currentTime = val
-        // console.log(val)
       }
     },
     queueLength() {
@@ -361,16 +360,21 @@ export default {
     this.audioPlayer = null
   },
   methods: {
-    forceRerender() {
-      // console.log("Did you force my rerender?")
-      // this.tick += 1
-    },
+    /**
+     * Plays the current track
+     */
     play() {
       this.audioPlayer.play()
     },
+    /**
+     * Pauses the current track
+     */
     pause() {
       this.audioPlayer.pause()
     },
+    /**
+     * Toggles play/pause
+     */
     togglePlayPause() {
       if (this.audioPlayer.isPlaying) {
         this.pause()
@@ -412,7 +416,6 @@ export default {
       this.$refs.playlistModal.toggle()
     },
     onPlaylistTrackClick(position, track) {
-      console.log(position, track)
       this.audioPlayer.moveToPosition(position)
     },
     onPlaylistTrackDeleteClick(position, track) {

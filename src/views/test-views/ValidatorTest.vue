@@ -127,7 +127,7 @@ export default {
       test.result = test.test()
     }
 
-    console.log( tests )
+    console.warn( tests )
 
     this.tests = tests
   }

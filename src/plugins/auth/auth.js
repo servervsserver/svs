@@ -125,15 +125,6 @@ export default class AuthPlugin {
 
   }
 
-  checkAuth() {
-    let user = this._auth.currentUser;
-    if (user) {
-      // console.log(user);
-    } else {
-      // console.log('AAAAAAAAAAAAAAAAAAAAAAAAAH');
-    }
-  }
-
   get user() {
     return this._store.getters.user.data
   }

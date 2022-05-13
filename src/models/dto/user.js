@@ -12,7 +12,6 @@ export class User {
 
   static fromAuthServData(data) {
 
-    console.log(data)
     if (data === "string") {
       try {
         data = JSON.parse(data)

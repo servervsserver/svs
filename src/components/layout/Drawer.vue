@@ -56,7 +56,6 @@ export default {
   watch: {
     opened: function(newVal, oldVal) {
       this.openedData = newVal
-      // console.log(newVal, oldVal, this)
     }
   },
   methods: {

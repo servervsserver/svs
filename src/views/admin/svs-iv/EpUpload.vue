@@ -178,7 +178,6 @@ export default {
           this.server = null
         } else {
           this.server = s
-          console.log(this.server.name, this.server.id)
           this.$svsBackend.getAlbumsOfServer(this.server.id)
             .then(albums => {
               if (albums) {
@@ -189,7 +188,6 @@ export default {
             })
           
         }
-        console.log(this.server)
       }
     },
     serverOptions() {
@@ -256,12 +254,12 @@ export default {
       let user = this.$svsAuth.user;
       if (!user) {
         this.server = null;
-        console.log("No user logged");
+        console.warn("No user logged");
         return;
       }
       if (!user.discordTag) {
         this.server = null;
-        console.log("No discord tag");
+        console.warn("No discord tag");
         return;
       }
       let discordTag = user.discordTag;

@@ -63,11 +63,9 @@ export default {
 
 
       let omm = (evt) => {
-        // console.log("Moving!")
         this.handleProgressPanmove(evt)
       }
       let omu = (evt) => {
-        console.log("Stoping the moviemiento")
         window.removeEventListener( 'mousemove', omm )
         window.removeEventListener( 'mouseup', omu)
       }

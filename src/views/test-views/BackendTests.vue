@@ -86,7 +86,6 @@ export default {
   methods: {
     async writeAdminServMap() {
       let res = await this.$svsBackend.writeAdminServMap()
-      console.log(res)
     },
     async writeSomethingToCatalogs() {
       await this.$svsBackend.writeAlbumInServerCatalog(this.album_id, this.event_id, this.server_id)
@@ -112,14 +111,12 @@ export default {
           }
         }
 
-        console.log(album, tracks, credits)
-
         this.album = album
         this.tracks = tracks
         this.tracksCredits = credits
 
       } catch(error) {
-        console.log(error)
+        console.error(error)
         console.error("Couldn't retrieve any album")
         return false
       }

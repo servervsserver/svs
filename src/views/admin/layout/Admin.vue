@@ -73,7 +73,6 @@ export default {
     }
   },
   mounted() {
-    console.log(ADMIN_ROUTES)
 
     const rootRoute = '/admin'
 
@@ -115,7 +114,6 @@ export default {
   },
   methods: {
     toggleDrawer () {
-      console.log(this.$refs.sidenav.opened)
       this.$refs.sidenav.toggle()
     }
   }

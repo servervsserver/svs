@@ -75,9 +75,8 @@ export default {
 
         let server = await this.catalog.asyncGetServerById(album.author)
         this.author = server
-        console.log(server, this.author, album.author)
         this.credits = []
-        console.log(track)
+        
         for ( let cId of track.credits) {
           let c = await this.catalog.asyncGetTrackCreditsEntryById(cId)
           this.credits.push(c)

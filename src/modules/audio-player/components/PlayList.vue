@@ -71,7 +71,6 @@ export default {
       return this.queue.tracks
     },
     currentTrack() {
-      console.log(this.queue, this.queue.currentTrack)
       return this.queue.currentTrack
     },
     idxCurrentTrack() {
@@ -81,7 +80,6 @@ export default {
   watch: {
     opened: function(newVal, oldVal) {
       this.openedData = newVal
-      // console.log(newVal, oldVal, this)
     }
   },
   methods: {

@@ -68,7 +68,6 @@ export default {
           fAlbum.name, 
           fAlbum.coverart_url
         )
-        // console.log(fAlbum, aAlbum)
         aAlbum.trackIds = [...fAlbum.tracks_ids]
         this.catalog.addEp(aAlbum)
       }
@@ -79,19 +78,15 @@ export default {
       for (let [id,fTrack] of Object.entries(fAllTracksMap)) {
         let aTrack = new Archive.Track(id, fTrack.name, fTrack.audiofile_url)
         this.catalog.addTrack(aTrack)
-        // console.log(aTrack, this.catalog)
       }
-      // console.log("get all eps", fAllTracksMap)
     },
     onAlbumClick(evt) {
       this.activeAlbum = evt
       this.activeAlbumTracks = this.activeAlbum.trackIds.map(
         id => this.catalog.getTrackById(id)
       )
-      console.log(this.activeAlbum, this.activeAlbumTracks)
     },
     onTrackClick(evt) {
-      console.log(this.$svsAudioPlayer, this.audioPlayer)
       let track = new AudioPlayerLogic.Track(evt.id, evt.title, this.activeAlbum.name, 'https://' + evt.trackUrl)
       if (this.audioPlayer.pushAsNextTrack(track))
         this.audioPlayer.next()

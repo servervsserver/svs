@@ -55,8 +55,6 @@ export class Track {
     if (this.author) {
       authorName = this.author.name
     }
-    
-    console.log(this)
 
     let mm = new MediaMetadata({
       title: this.title,
@@ -67,7 +65,6 @@ export class Track {
       ]
     })
 
-    console.log(mm)
     return mm
   }
   /**

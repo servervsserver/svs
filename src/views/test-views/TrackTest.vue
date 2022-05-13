@@ -124,13 +124,11 @@ export default {
       this.trackId = await this.$svsBackend.createTrack(new FirestoreModel.Track())
     },
     async deleteTrack() {
-      console.log()
       await this.$svsBackend.deleteTrack(this.trackId)
       this.trackId = null
     },
     async getEp() {
       let ep = await this.$svsBackend.getEpById(this.trackId)
-      console.log(ep)
     }
   }
 }

@@ -81,9 +81,8 @@ export class AudioPlayer {
     let track = this._queue.currentTrack
     this.setTrack(track)
 
-    this.onTimeUpdate = (evt) => {
-      console.log(evt)
-    }
+    this.onTimeUpdate = (evt) => {}
+    
     this.audio.addEventListener( 'timeupdate', (evt) => {
       this._currentTime = this.audio.currentTime
       if (this.onTimeUpdate)
@@ -117,8 +116,6 @@ export class AudioPlayer {
           this.play()
           break;
       }
-      // this.next()
-      console.log(this._queue)
     })
   }
 

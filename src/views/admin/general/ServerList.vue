@@ -115,10 +115,8 @@ export default {
   computed: {},
   mounted() {
     this.$svsBackend.getAppServers(0).then((res) => {
-      console.log(res);
       this.serverApplications = res;
       this.pendingApplications = res;
-      console.log(this.pendingApplications);
     });
   },
   methods: {

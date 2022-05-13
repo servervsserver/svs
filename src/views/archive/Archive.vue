@@ -71,7 +71,6 @@ export default {
   },
   methods: {
     toggleDrawer () {
-      console.log(this.$refs.sidenav.openedData)
       this.$refs.sidenav.toggle()
     }
   }

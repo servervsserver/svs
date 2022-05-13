@@ -287,10 +287,10 @@ export class AsyncCatalog {
       console.error("The album-collection must have an id")
       return null
     }
-    if (this._servers.has(albumCollection.id)) {
+    if (this._albumCollections.has(albumCollection.id)) {
       console.warn("There is already a album-collection with that id. Replaced")
     }
-    this._servers.set(albumCollection.id, albumCollection)
+    this._albumCollections.set(albumCollection.id, albumCollection)
 
     // CatalogDb.storeServer(server)
 

@@ -21,9 +21,8 @@
       <svs-footer />
     </div>
 
-    <coming-soon>
-      <audio-player />
-    </coming-soon>
+    <audio-player />
+    
   </div>
 </template>
 

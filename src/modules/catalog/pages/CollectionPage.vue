@@ -40,6 +40,8 @@ import AlbumCollectionContentComponent from "../components/AlbumCollectionConten
 import * as Archive from "../models"
 import { RouterHelperMixin } from "../mixins"
 
+import { shuffle } from "../models/helpers"
+
 export default {
   components: {
     'album-collection': AlbumCollectionContentComponent
@@ -74,20 +76,26 @@ export default {
   async mounted() {
     let id = this.$route.params.id
 
-    let collection = await this.catalog.asyncGetAlbumCollectionById('svs-iv')
-    this.collection = collection
-    
-    let albumsIds = collection.albumsIds
+    setTimeout(
+      async () => {
+        let collection = await this.catalog.asyncGetAlbumCollectionById('svs-iv')
+        this.collection = collection
+        
+        shuffle(collection.albumsIds)
+        let albumsIds = collection.albumsIds.slice()
 
-    this.albums = []
-    for (let albumId of collection.albumsIds) {
-      let album = await this.catalog.asyncGetAlbumById(albumId)
-      let serverId = album.author
-      let server = await this.catalog.asyncGetServerById(serverId)
-      
-      this.servers.push(server)
-      this.albums.push(album)
-    }
+        this.albums = []
+        for (let albumId of albumsIds) {
+          let album = await this.catalog.asyncGetAlbumById(albumId)
+          let serverId = album.author
+          let server = await this.catalog.asyncGetServerById(serverId)
+          
+          this.servers.push(server)
+          this.albums.push(album)
+        }
+      }, 100
+    )
+
 
   },
   methods: {

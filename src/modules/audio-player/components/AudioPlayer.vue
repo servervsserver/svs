@@ -12,138 +12,150 @@
       :class="{ 
         'shadow-depth-2': isFloating,
         'cartdrige': isFloating
-        }"
+      }"
     >
+      <player-layout>
+        <template v-slot:audioBar>
+          <div style="padding: 5px 10px;">
+            <audio-progress-bar
+              v-model="currentTime"
+              :max="duration"
+            />
+          </div>
+        </template>
 
-    <player-layout>
+        <template v-slot:coverArtBig>
+          <div class="cover-art-big">
+            <squared-image-box>
+              <img :src="currentTrackCoverArtUrlBig">
+            </squared-image-box>
+          </div>
+        </template>
       
-      <template v-slot:audioBar>
-        <div style="padding: 5px 10px;">
-          <audio-progress-bar
-            v-model="currentTime"
-            :max="duration"
-          />
-        </div>
-      </template>
-
-      <template v-slot:coverArtBig>
-        <div class="cover-art-big">
-          <squared-image-box>
-            <img :src="currentTrackCoverArtUrlBig">
-          </squared-image-box>
-        </div>
-      </template>
-      
-      <template v-slot:coverArt>
-        <div class="cover-art-thumbnail">
-          <squared-image-box>
-            <img :src="currentTrackCoverArtUrl">
-          </squared-image-box>
-        </div>
-      </template>
-
-      <template v-slot:metadatas>
-        <div
-          v-if="currentTrack"
-          class="track-base-metadatas"
-        >
-          <div class="track-name">
-            {{ currentTrackTitle }}
+        <template v-slot:coverArt>
+          <div class="cover-art-thumbnail">
+            <squared-image-box>
+              <img :src="currentTrackCoverArtUrl">
+            </squared-image-box>
           </div>
-          <div class="artist-name">
-            {{ currentTrackAuthor }}
-          </div>
-        </div>
-        <div
-          v-if="!currentTrack"
-          class="track-base-metadatas"
-        >
-          <div class="track-name">
-            No track.
-          </div>
-          <div class="artist-name" />
-        </div>
-      </template>
+        </template>
 
-      <template v-slot:coreControls>
+        <template v-slot:metadatas>
+          <div
+            v-if="currentTrack"
+            class="track-base-metadatas"
+          >
+            <div class="track-name">
+              {{ currentTrackTitle }}
+            </div>
+            <div class="artist-name">
+              {{ currentTrackAuthor }}
+            </div>
+          </div>
+          <div
+            v-if="!currentTrack"
+            class="track-base-metadatas"
+          >
+            <div class="track-name">
+              No track.
+            </div>
+            <div class="artist-name" />
+          </div>
+        </template>
 
-        <div class="controls">
-          <div class="buttons">
-            <button
-              class="button svs-button-transparent"
-              @mousedown="onMouseDownBackward()"
-            >
-              <span class="icon"><i class="fa-solid fa-backward" /></span>
-            </button>
-            <button
-              class="button has-icon svs-button-transparent"
-              @click="togglePlayPause()"
-            >
+        <template v-slot:coreControls>
+          <div class="controls">
+            <div class="buttons">
+              <button
+                class="button svs-button-transparent"
+                @mousedown="onMouseDownBackward()"
+              >
+                <span class="icon"><i class="fa-solid fa-backward" /></span>
+              </button>
+              <button
+                class="button has-icon svs-button-transparent"
+                @click="togglePlayPause()"
+              >
+                <span class="icon">
+                  <i
+                    v-if="!isPlaying"
+                    class="fa-solid fa-play"
+                  />
+                  <i
+                    v-if="isPlaying"
+                    class="fa-solid fa-pause"
+                  />
+                </span>
+              </button>
+              <button
+                class="button has-icon svs-button-transparent"
+                @mousedown="onMouseDownForward()"
+              >
+                <span class="icon"><i class="fa-solid fa-forward" /></span>
+              </button>
+            </div>
+          </div>
+        </template>
+
+        <template v-slot:duration>
+          <div class="time">
+            {{ duration | duration }}
+          </div>
+        </template>
+
+        <template v-slot:currentTime>
+          <div class="time">
+            {{ currentTime | duration }}
+          </div>
+        </template>
+
+        <template v-slot:volume>
+          <div class="volume-button">
+            <button class="button svs-button-transparent">
               <span class="icon">
                 <i
-                  v-if="!isPlaying"
-                  class="fa-solid fa-play"
+                  class="fa-solid fa-volume-high"
+                  :class="{ 'is-active': isHighVolume }"
                 />
                 <i
-                  v-if="isPlaying"
-                  class="fa-solid fa-pause"
+                  class="fa-solid fa-volume-low"
+                  :class="{ 'is-active': isMidVolume }"
+                />
+                <i
+                  class="fa-solid fa-volume-off"
+                  :class="{ 'is-active': isLowVolume }"
+                />
+                <i
+                  class="fa-solid fa-volume-xmark"
+                  :class="{ 'is-active': isNoVolume }"
                 />
               </span>
             </button>
-            <button
-              class="button has-icon svs-button-transparent"
-              @mousedown="onMouseDownForward()"
-            >
-              <span class="icon"><i class="fa-solid fa-forward" /></span>
-            </button>
-          </div>
-        </div>
-      </template>
-
-      <template v-slot:duration>
-        <div class="time">{{ duration | duration }}</div>
-      </template>
-
-      <template v-slot:currentTime>
-        <div class="time">{{ currentTime | duration }}</div>
-      </template>
-
-      <template v-slot:volume>
-        <div class="volume-button">
-          <button class="button svs-button-transparent">
-            <span class="icon">
-              <i class="fa-solid fa-volume-high" :class="{ 'is-active': isHighVolume }"></i>
-              <i class="fa-solid fa-volume-low" :class="{ 'is-active': isMidVolume }"></i>
-              <i class="fa-solid fa-volume-off" :class="{ 'is-active': isLowVolume }"></i>
-              <i class="fa-solid fa-volume-xmark" :class="{ 'is-active': isNoVolume }"></i>
-            </span>
-          </button>
-          <div class="volume-bar">
-            <div class="volume-bar-inner shadow-depth-2">
-              <audio-progress-bar 
-                v-model="volume"
-                :max="1"
-              />
+            <div class="volume-bar">
+              <div class="volume-bar-inner shadow-depth-2">
+                <audio-progress-bar 
+                  v-model="volume"
+                  :max="1"
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </template>
+        </template>
 
-      <template v-slot:playlist>
-        <playlist 
-          :queue="queue"
-          @track-click="onPlaylistTrackClick"
-          @track-delete-click="onPlaylistTrackDeleteClick"
-        />
-      </template>
-
-    </player-layout>
+        <template v-slot:playlist>
+          <playlist 
+            :queue="queue"
+            @track-click="onPlaylistTrackClick"
+            @track-delete-click="onPlaylistTrackDeleteClick"
+          />
+        </template>
+      </player-layout>
       <!-- <progress class="progress is-small" value="20" max="100">20%</progress> -->
       <!-- <section class="progress-bar-section">
         <div class="below-bar">
         </div>
       </section> -->
-<!-- 
+      <!-- 
       <section class="playlist">
         <div class="buttons">
           <button

@@ -1,11 +1,14 @@
 <template>
   <div>
-    <slot name="audioBar"></slot>
-    <slot name="coverArt"></slot>
-    <slot name="metadatas"></slot>
-    <slot name="time"><slot>
-    <slot name="coreControls"></slot>
-    <slot name="volume"></slot>
+    <slot name="audioBar" />
+    <slot name="coverArt" />
+    <slot name="metadatas" />
+    <slot name="time">
+      <slot>
+        <slot name="coreControls" />
+        <slot name="volume" />
+      </slot>
+    </slot>
   </div>
 </template>
 

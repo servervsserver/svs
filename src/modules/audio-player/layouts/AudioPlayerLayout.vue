@@ -2,7 +2,7 @@
   <div 
     class="layout-container"
     :class="{ 'is-extended': extended }"
-    >
+  >
     <div class="columns is-multiline is-gapless">
       <div class="column is-12 is-hidden-out-extended">
         <div 
@@ -12,10 +12,10 @@
             class="column is-12-touch is-6-desktop"
             @click="toggleExtended()"
           >
-            <slot name="coverArtBig"></slot>
+            <slot name="coverArtBig" />
           </div>
           <div class="column is-12-touch is-6-desktop has-text-centered-touch">
-            <slot name="metadatas"></slot>
+            <slot name="metadatas" />
           </div>
         </div>
       </div>
@@ -25,45 +25,47 @@
           style="margin-bottom: 0px;"
         >
           <div class="column">
-            <slot name="currentTime"></slot>
+            <slot name="currentTime" />
           </div>
           <div class="column has-text-right">
-            <slot name="duration"></slot>
+            <slot name="duration" />
           </div>
         </div>
-        <slot name="audioBar"></slot>
+        <slot name="audioBar" />
       </div>
       <div class="column is-12">
         <div class="columns is-mobile is-variable is-2 is-vcentered">
-          <div class="column is-4-desktop is-6-touch is-hidden-in-extended"
+          <div
+            class="column is-4-desktop is-6-touch is-hidden-in-extended"
           >
             <div 
               class="columns is-mobile is-gapless clickable"
               @click="toggleExtended()"
             >
               <div class="column is-narrow">
-                <slot name="coverArt"></slot>
+                <slot name="coverArt" />
               </div>
               <div class="column">
-                <slot name="metadatas"></slot>
+                <slot name="metadatas" />
               </div>
             </div>
           </div>
           <div class="column">
-            <slot name="coreControls"></slot>
+            <slot name="coreControls" />
           </div>
           <div 
             class="column is-2-touch is-4-desktop"
             style="display: flex; justify-content: flex-end; padding: 0px 15px;"
           >
-            <slot name="volume"></slot>
+            <slot name="volume" />
           </div>
         </div>
       </div>
       <div 
         class="column is-12 is-hidden-out-extended" 
-        style="height: 40vh;">
-        <slot name="playlist"></slot>
+        style="height: 40vh;"
+      >
+        <slot name="playlist" />
       </div>
     </div>
   </div>

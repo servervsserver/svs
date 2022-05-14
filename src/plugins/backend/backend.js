@@ -714,7 +714,7 @@ export default class BackendPlugin {
     let uid = ref.id
     awardVote.id = uid
 
-    const res = await this.firestoreWriteDoc(serverRef, awardVote);
+    const res = await this.firestoreWriteDoc(ref, awardVote);
 
     return res
   }

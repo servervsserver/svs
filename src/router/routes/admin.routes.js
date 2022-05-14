@@ -9,6 +9,8 @@ import ServerList from "@/views/admin/general/ServerList.vue"
 // SvS IV administration
 import EpUpload from "@/views/admin/svs-iv/EpUpload.vue"
 import ThemeList from "@/views/admin/svs-iv/ThemeList.vue"
+import AwardsList from "@/views/admin/svs-iv/AwardsList.vue"
+import AwardCreation from "@/views/admin/svs-iv/AwardCreation.vue"
 
 // Dev administration
 import AdminForDev from "@/views/admin/AdminForDev.vue"
@@ -39,11 +41,22 @@ export const ADMIN_ROUTES = [
           title: "Theme list",
         }
       },
-      // {
-      //   path: 'awards',
-      //   name: 'Awards',
-      //   component:
-      // }
+      {
+        path: 'awards/list',
+        name: 'AwardsListAdmin',
+        component: AwardsList,
+        meta: {
+          title: "Awards list"
+        }
+      },
+      {
+        path: 'awards/create',
+        name: 'AwardCreationAdmin',
+        component: AwardCreation,
+        meta: {
+          title: "Awards creation"
+        }
+      }
     ]
   },
   {

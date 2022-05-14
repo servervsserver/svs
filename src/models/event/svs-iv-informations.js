@@ -82,17 +82,17 @@ export class SvSIVInformations {
       ""
     )
 
-    this.epFestival5 = new EventMilestone(
-      "EP Festival - Day 5",
-      new Date(Date.UTC(2022, 4, 7 + 7, 21, 0, 0)),
-      ""
-    )
+    // this.epFestival5 = new EventMilestone(
+    //   "EP Festival - Day 5",
+    //   new Date(Date.UTC(2022, 4, 7 + 7, 21, 0, 0)),
+    //   ""
+    // )
 
-    this.epFestival6 = new EventMilestone(
-      "EP Festival - Day 6",
-      new Date(Date.UTC(2022, 4, 8 + 7, 19, 0, 0)),
-      ""
-    )
+    // this.epFestival6 = new EventMilestone(
+    //   "EP Festival - Day 6",
+    //   new Date(Date.UTC(2022, 4, 8 + 7, 19, 0, 0)),
+    //   ""
+    // )
 
     this.awardsCeremony = new EventMilestone(
       "Awards Ceremony",
@@ -117,8 +117,8 @@ export class SvSIVInformations {
       this.epFestival2,
       this.epFestival3,
       this.epFestival4,
-      this.epFestival5,
-      this.epFestival6,
+      // this.epFestival5,
+      // this.epFestival6,
       this.awardsCeremony
     ]
   }

@@ -38,7 +38,12 @@ export const ADMIN_ROUTES = [
         meta: {
           title: "Theme list",
         }
-      }
+      },
+      // {
+      //   path: 'awards',
+      //   name: 'Awards',
+      //   component:
+      // }
     ]
   },
   {

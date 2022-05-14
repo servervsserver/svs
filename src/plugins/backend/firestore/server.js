@@ -1,4 +1,4 @@
-import { Model } from "./model"
+import { Model } from "./core/model"
 
 export class Server extends Model {
 

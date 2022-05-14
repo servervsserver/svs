@@ -699,6 +699,35 @@ export default class BackendPlugin {
     return await this.firestoreGetDocData(FirestoreModel.AlbumCollection, id)
   }
 
+
+  // ===========================
+  // ==== AWARDS ===============
+  // ===========================
+
+  /**
+   * 
+   * @param {FirestoreModel.AwardVote} awardVote 
+   */
+  async createAwardVote(awardVote) {
+
+    const ref = this.firestoreNewDocReference(FirestoreModel.AwardVote)
+    let uid = ref.id
+    awardVote.id = uid
+
+    const res = await this.firestoreWriteDoc(serverRef, awardVote);
+
+    return res
+  }
+
+  async getAwardVoteById(id) {
+    return await this.firestoreGetDocData(FirestoreModel.AwardVote, id)
+  }
+
+  async getAllAwardVotes() {
+    return this.firestoreGetCollectionData(FirestoreModel.AwardVote)
+  }
+
+
   /**
    * 
    * @param {*} id 

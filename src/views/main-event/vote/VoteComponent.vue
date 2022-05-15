@@ -6,21 +6,23 @@
     <div v-for="idx in awardVote.options_count" :key="idx">
       <album-selector
         v-if="['album', 'visualizer', 'artwork'].includes(awardVote.target)"
-        v-model="selection[idx]"
+        :value="selection[idx]"
         :index="idx"
         :albums="albums"
         :collection="collection"
         :servers="servers"
+        @change="onSelectionChange($event, idx - 1)"
       />
 
       <track-selector
         v-if="awardVote.target === 'track'"
-        v-model="selection[idx]"
+        :value="selection[idx - 1]"
         :index="idx"
         :albums="albums"
         :collection="collection"
         :servers="servers"
         :tracks="tracks"
+        @change="onSelectionChange($event, idx - 1)"
       />
     </div>
 
@@ -95,6 +97,7 @@ export default {
       set: function(value) {
         console.log(value)
         this.innerSelection = value || []
+        this.$emit('onAwardVoteChange', this.awardVote, value)
       }
     },
     /**
@@ -125,7 +128,10 @@ export default {
     }
   },
   methods: {
-    
+    onSelectionChange(event, index) {
+      this.selection[index] = event
+      this.$emit('awardVoteChange', this.selection)
+    }
   }
 }
 </script>

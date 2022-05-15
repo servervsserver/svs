@@ -37,19 +37,24 @@ export class AwardVoteEntry extends Model {
     this.voter = null
 
     /**
+     * @type {string} Id of the server this person is voting for
+     */
+    this.voted_on_behalf_of = null
+
+    /**
      * @type {Date} Description of the vote
      */
     this.submission_date = new Date()
 
     /**
-     * @type {string} Id of the ward this vote is for
+     * @type {string} Id of the award this vote is for
      */
     this.award_id = null
 
     /**
      * @type {string[]} Identifiers of what the vote entry is casted for
      */
-    this.voter_for = []
+    this.vote_for = []
 
   }
 

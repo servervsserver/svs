@@ -727,6 +727,24 @@ export default class BackendPlugin {
     return this.firestoreGetCollectionData(FirestoreModel.AwardVote)
   }
 
+  /**
+   * 
+   * @param {FirestoreModel.AwardVoteEntry} awardVoteEntry 
+   * @returns 
+   */
+  async createAwardVoteEntry(awardVoteEntry) {
+
+    console.error("Not implemented!")
+    return awardVoteEntry
+    
+    const ref = this.firestoreNewDocReference(FirestoreModel.AwardVoteEntry)
+    let uid = ref.id
+    awardVoteEntry.id = uid
+
+    const res = await this.firestoreWriteDoc(ref, awardVoteEntry);
+
+    return res
+  }
 
   /**
    * 

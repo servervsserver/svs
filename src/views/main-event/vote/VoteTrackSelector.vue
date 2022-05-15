@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="columns is-mobile is-multiline is-vcentered">
+    <div class="columns is-mobile is-multiline is-vcentered is-gapless">
       <div class="column is-1 has-text-centered">
         {{ index }}
       </div>
@@ -23,7 +23,7 @@
         />
       </div>
       <div class="column">
-        <squared-image-box style="width: 60px">
+        <squared-image-box style="width: 50px">
           <img :src="artworkUrl" />
         </squared-image-box>
       </div>
@@ -138,21 +138,6 @@ export default {
 
       return opts
     },
-    // selectedAlbum() {
-    //   /** @type {string[]} */
-    //   let opts = this.albumOptions
-    //   if (!opts) return null
-
-    //   let idx = opts.indexOf(this.selectedAlbumOption)
-    //   if (idx < 0) return null
-
-    //   let album = this.albums[idx]
-    //   // if (this.previousSelectedAlbum !== album)
-    //   //   this.onChange(album)
-
-    //   // this.previousSelectedAlbum = album
-    //   return album
-    // },
     artworkUrl() {
       if (!this.selectedAlbum) return ''
       return this.selectedAlbum.coverArtUrl.replace('cover_arts', '250')
@@ -180,8 +165,8 @@ export default {
 
       let idx = opts.indexOf(this.selectedTrackOption)
       if (idx < 0) return null
-
-      let track = this.tracks[idx]
+      
+      let track = this.tracks.get(this.selectedAlbum.trackIds[idx])
 
       return track
     },
@@ -190,13 +175,13 @@ export default {
       let album = this.computeNewSelectedAlbum()
       this.selectedAlbum = album
       this.selectedTrackOption = null
+      this.selectedTrack = null
     },
     onTrackChange(event) {
       this.selectedTrackOption = event
       let track = this.computeNewSelectedTrack()
       this.selectedTrack = track
       this.$emit('change', this.selectedTrack)
-
     }
   }
 }

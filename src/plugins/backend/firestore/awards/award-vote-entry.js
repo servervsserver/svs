@@ -1,4 +1,4 @@
-import { Model } from "../core/model"
+import { Model, dateFromFirestoreTimestamp } from "../core/model"
 
 export class Voter {
 
@@ -62,5 +62,8 @@ export class AwardVoteEntry extends Model {
 
 AwardVoteEntry.collection = "award_vote_entries"
 AwardVoteEntry.fromFirestore = function(firestoreObject) {
-  return new AwardVoteEntry().fromFirestore(firestoreObject)
+  let ave = new AwardVoteEntry()
+  ave.fromFirestore(firestoreObject)
+  ave.submission_date = dateFromFirestoreTimestamp(ave.submission_date)
+  return ave
 }

@@ -35,6 +35,10 @@ em {
   font-style: italic;
 }
 
+hr {
+  opacity: 0.3;
+}
+
 @media (max-width:768px) {
   .container.is-fluid {
     padding-left: 8px;

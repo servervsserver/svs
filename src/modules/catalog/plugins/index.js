@@ -1,4 +1,5 @@
 import * as Archive from "../models"
+import { clearCache } from "../models/db"
 
 /**
  * @typedef {{ icon?: { klass: string }, text?: string, fnc: (track: Archive.Track, index: number) => void}} TrackListItemAction
@@ -14,7 +15,24 @@ export default class CatalogPlugin {
     this._trackListItemActions = []
 
     this._tracksTopActions = []
+
+    this._version = 1
+
+    {
+      let v = localStorage.getItem('catalog-plugin/version')
+      if (!v) {
+        clearCache().then(v => { 
+          console.log("Cache cleared automatically because its version was too old"
+        )})
+      }
+      localStorage.setItem('catalog-plugin/version', this.version)
+    }
   }
+
+  get version() {
+    return this._version
+  }
+
 
   /**
    * 

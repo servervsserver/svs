@@ -24,6 +24,7 @@ import {
   deleteDoc
 } from "firebase/firestore";
 import { push, ref, child, get, onValue, set } from "firebase/database";
+import { AwardVoteEntry } from "./firestore";
 
 
 function removeLeadingAndTrailingSlashes(str) {
@@ -734,7 +735,7 @@ export default class BackendPlugin {
    */
   async createAwardVoteEntry(awardVoteEntry) {
 
-    console.error("Not implemented!")
+    console.error("Not implemented!", awardVoteEntry)
     return awardVoteEntry
     
     const ref = this.firestoreNewDocReference(FirestoreModel.AwardVoteEntry)

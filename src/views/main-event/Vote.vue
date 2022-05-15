@@ -22,14 +22,25 @@
       </blockquote>
 
       <form @submit.prevent="submit()" v-if="isAuthenticated">
-
-        <select-input 
-          :value="selectedServer"
-          :label="'Voting for'"
-          :unselectedText="'Pick your server'"
-          :options="serverOptions"
-          @change="onServerChange($event)"
-        />
+        
+        <div class="columns is-mobile">
+          <div class="column is-8">
+            <select-input 
+              :value="selectedServerOption"
+              :label="'Voting for'"
+              :unselectedText="'Pick your server'"
+              :options="serverOptions"
+              @change="onServerChange($event)"
+            />
+          </div>
+          <div class="column is-4">
+            <squared-image-box v-if="selectedServer" style="width: 100px">
+              <img
+                :src="'https://' + selectedServer.icon_url"
+              >
+            </squared-image-box>
+          </div>
+        </div>
 
         <section>
           <h2>Cast your vote</h2>
@@ -118,14 +129,16 @@ export default {
   },
   data() {
     return {
-      /***
-       * @type {string[]}
-       */
-      serverOptions: [],
+      // /***
+      //  * @type {string[]}
+      //  */
+      // serverOptions: [],
+      selectedServerOption: null,
       /**
        * @type {a server type}
        */  
       selectedServer: null,
+
       /**
        * @type {Firestore.AwardVote[]}
        */
@@ -188,6 +201,12 @@ export default {
           this.albums.push(album)
         }
 
+        this.servers.sort((lhs, rhs) => lhs.name.localeCompare(rhs.name))
+
+        for (let server of this.servers) {
+          this.server
+        }
+
         this.albums.sort((lhs, rhs) => lhs.title.localeCompare(rhs.title))
 
         for (let album of this.albums) {
@@ -203,6 +222,10 @@ export default {
 
   },
   computed: {
+    serverOptions() {
+      // TODO: STORY FILTER THE OPTIONS
+      return this.servers.map(s => s.name)
+    },
     isAuthenticated() {
       return this.$svsAuth.isAuthenticated;
     },
@@ -235,6 +258,14 @@ export default {
     }
   },
   methods: {
+    onServerChange(event) {
+      this.selectedServerOption = event
+      if (!event) {
+        this.selectedServer = null
+      } else {
+        this.selectedServer = this.servers.find(s => s.name === this.selectedServerOption)
+      }
+    },
     /**
    * @param {Array<Archive.Album|Archive.Track>} selection
    * @param {Firestore.AwardVote} awardVote

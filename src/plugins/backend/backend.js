@@ -736,8 +736,8 @@ export default class BackendPlugin {
   async createAwardVoteEntry(awardVoteEntry) {
 
     console.error("Not implemented!", awardVoteEntry)
-    return awardVoteEntry
-    
+    //return awardVoteEntry
+
     const ref = this.firestoreNewDocReference(FirestoreModel.AwardVoteEntry)
     let uid = ref.id
     awardVoteEntry.id = uid

@@ -735,9 +735,6 @@ export default class BackendPlugin {
    */
   async createAwardVoteEntry(awardVoteEntry) {
 
-    console.error("Not implemented!", awardVoteEntry)
-    //return awardVoteEntry
-
     const ref = this.firestoreNewDocReference(FirestoreModel.AwardVoteEntry)
     let uid = ref.id
     awardVoteEntry.id = uid
@@ -747,6 +744,21 @@ export default class BackendPlugin {
     return res
   }
 
+
+  async getServersIdsOfDiscordtag(discord_tag) {
+
+    let s = encodeURI(discord_tag.replace('#', '$'))
+
+    try {
+      let url = "https://svs4-327921.ew.r.appspot.com/svsiv/competitors/"
+      let res = await fetch(url + s)
+      let json = await res.json()
+      
+      return json.servers
+    } catch(err) {
+      return null
+    }
+  }
   /**
    * 
    * @param {*} id 

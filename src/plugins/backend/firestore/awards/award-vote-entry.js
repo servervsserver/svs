@@ -7,6 +7,7 @@ export class Voter {
 export class DiscordVoter extends Voter {
 
   constructor() {
+    super()
     /**
      * @type {string} Id of the voter
      */

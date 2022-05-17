@@ -20,6 +20,12 @@
           Each community has equal weighing, so server size doesn't influence
           votes.
         </li>
+        <li>
+          If you didn't participate in a server, you can still vote using the "Community Vote" option!
+        </li>
+        <li>
+          If your server is not in the list of your servers you can get the full list by toggling off the switch below the server choice.
+        </li>
       </ul>
 
       <blockquote v-if="!isAuthenticated">
@@ -32,10 +38,17 @@
             <select-input
               :value="selectedServerOption"
               :label="'Voting for'"
-              :unselectedText="'Pick your server'"
+              :unselectedText="'- Pick your server -'"
               :options="serverOptions"
               @change="onServerChange($event)"
             />
+            <br/>
+            <span>
+              {{filterUserServers ? "Shows only the servers you participated in" : "Show every servers"}}&nbsp;<!--
+            --><toggle-input
+              v-model="filterUserServers"
+              />
+              </span>
           </div>
           <div class="column is-4">
             <squared-image-box v-if="selectedServer" style="width: 100px">
@@ -114,6 +127,7 @@ export default {
   components: {
     // 'text-input': Forms.TextInputComponent,
     // 'textarea-input': Forms.TextAreaInputComponent,
+    "toggle-input": Forms.SwitchInputComponent,
     "select-input": Forms.SelectInputComponent,
     modal: ModalComponent,
     "award-vote": VoteComponentVue,
@@ -129,6 +143,10 @@ export default {
        * @type {a server type}
        */
       selectedServer: null,
+
+      userServersIds: [],
+
+      filterUserServers: true,
 
       /**
        * @type {Firestore.AwardVote[]}
@@ -165,6 +183,9 @@ export default {
   async mounted() {
     // Workaround for catalog not being bridge yet
     setTimeout(async () => {
+      let user_ser = await this.$svsBackend.getServersIdsOfDiscordtag("ask the storyteller#8411")
+      this.userServersIds = user_ser
+
       let collection = await this.catalog.asyncGetAlbumCollectionById("svs-iv");
       this.collection = collection;
 
@@ -194,9 +215,16 @@ export default {
 
       this.servers.sort((lhs, rhs) => lhs.name.localeCompare(rhs.name));
 
-      for (let server of this.servers) {
-        this.server;
-      }
+      let comServ = new Firestore.Server()
+      comServ.id = "-1"
+      comServ.name = "Community Vote"
+      comServ.icon_url = "servervsserver.com/placeholders/server_placeholder_icon.png"
+      comServ.admins = []
+      comServ.description = "If you didn't participate in a server but still would like to vote!"
+      this.servers.push(comServ)
+      // for (let server of this.servers) {
+      //   this.server;
+      // }
 
       this.albums.sort((lhs, rhs) => lhs.title.localeCompare(rhs.title));
 
@@ -211,9 +239,14 @@ export default {
   computed: {
     serverOptions() {
       // TODO: STORY FILTER THE OPTIONS
-      let arr = this.servers.map((s) => s.name);
-      arr.push("Community Vote");
-      arr.sort();
+      let arr = this.servers.map(s => s) // Just create a new array
+      if (this.filterUserServers) {
+        arr = arr.filter(s => this.userServersIds.includes(s.id))
+      } else {
+      }
+      arr = arr.map((s) => s.name);
+
+      // arr.sort();
       return arr;
     },
     isAuthenticated() {
@@ -351,7 +384,7 @@ export default {
 
         for (let av of this.awardVotesList) {
           let ave = new Firestore.AwardVoteEntry();
-          ave.voter = voter;
+          ave.voter = Object.assign({}, voter); // Small hack until I do a real deep firestore trick
           ave.voted_on_behalf_of = this.selectedServer.id;
           ave.submission_date = new Date();
           ave.award_id = av.id;

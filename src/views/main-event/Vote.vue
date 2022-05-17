@@ -1,97 +1,94 @@
 <template>
-  <coming-soon :type="'page'">
-    <div class="container">
-      <h1>Awards votes!</h1>
-      <p>
-        Now that we listened to all the EPs, it's time to vote for the
-        awards!<br />
-        You can take your time and listen again to the EPs here:
-        <router-link :to="'/svs-iv/radio'">SvS IV EPs</router-link>
-      </p>
-      <h2>How does it work?</h2>
-      <ul>
-        <li>Each individual can vote.</li>
-        <li>
-          When you vote you have to pick the server in which your vote will be
-          counted. Note that this is for competitors only. If you didn't submit
-          anything please pick Community Vote.
-        </li>
-        <li>
-          Each community has equal weighing, so server size doesn't influence
-          votes.
-        </li>
-      </ul>
+  <div class="container">
+    <h1>Awards votes!</h1>
+    <p>
+      Now that we listened to all the EPs, it's time to vote for the awards!<br />
+      You can take your time and listen again to the EPs here:
+      <router-link :to="'/svs-iv/radio'">SvS IV EPs</router-link>
+    </p>
+    <h2>How does it work?</h2>
+    <ul>
+      <li>Each individual can vote.</li>
+      <li>
+        When you vote you have to pick the server in which your vote will be
+        counted. Note that this is for competitors only. If you didn't submit
+        anything please pick Community Vote.
+      </li>
+      <li>
+        Each community has equal weighing, so server size doesn't influence
+        votes.
+      </li>
+    </ul>
 
-      <blockquote v-if="!isAuthenticated">
-        You must be authenticated to cast a vote!
-      </blockquote>
+    <blockquote v-if="!isAuthenticated">
+      You must be authenticated to cast a vote!
+    </blockquote>
 
-      <form @submit.prevent="submit()" v-if="isAuthenticated">
-        <div class="columns is-mobile">
-          <div class="column is-8">
-            <select-input
-              :value="selectedServerOption"
-              :label="'Voting for'"
-              :unselectedText="'Pick your server'"
-              :options="serverOptions"
-              @change="onServerChange($event)"
-            />
-          </div>
-          <div class="column is-4">
-            <squared-image-box v-if="selectedServer" style="width: 100px">
-              <img :src="'https://' + selectedServer.icon_url" />
-            </squared-image-box>
-          </div>
-        </div>
-
-        <section>
-          <h2>Cast your vote</h2>
-          <award-vote
-            v-for="av of awardVotesList"
-            :key="av.id"
-            :awardVote="av"
-            :collection="collection"
-            :albums="albums"
-            :servers="servers"
-            :tracks="tracks"
-            @awardVoteChange="onAwardVoteChange($event, av)"
+    <form @submit.prevent="submit()" v-if="isAuthenticated">
+      <div class="columns is-mobile">
+        <div class="column is-8">
+          <select-input
+            :value="selectedServerOption"
+            :label="'Voting for'"
+            :unselectedText="'Pick your server'"
+            :options="serverOptions"
+            @change="onServerChange($event)"
           />
-          <button type="submit" class="button">Send your vote!</button>
-        </section>
-      </form>
-      <modal ref="submitmodal" :open="true">
-        <template v-slot:header>
-          <strong v-if="isIdle">Nothing...</strong>
-          <strong v-if="isCheckingValidity"
-            >Checking submission validity...</strong
-          >
-          <strong v-if="isReportingErrors"
-            >You can't submit this Vote because</strong
-          >
-          <strong v-if="isSending">Vote submission in Progress...</strong>
-          <strong v-if="isReportingSendingErrors"
-            >Bad things happened during the submission...</strong
-          >
-          <strong v-if="isSent">Vote submitted!</strong>
-        </template>
-        <template v-slot:default>
-          <spinner v-if="isCheckingValidity" />
-          <spinner v-if="isSending" />
-          <div v-if="isReportingErrors">
-            <ul>
-              <li v-for="(m, i) of modalSubmissionErrorMessages" :key="i">
-                {{ m }}
-              </li>
-            </ul>
-          </div>
-          <div v-if="isReportingSendingErrors">
-            Try again to vote and contact an admin.
-          </div>
-          <div v-if="isSent">Thank you for your submission!</div>
-        </template>
-      </modal>
-    </div>
-  </coming-soon>
+        </div>
+        <div class="column is-4">
+          <squared-image-box v-if="selectedServer" style="width: 100px">
+            <img :src="'https://' + selectedServer.icon_url" />
+          </squared-image-box>
+        </div>
+      </div>
+
+      <section>
+        <h2>Cast your vote</h2>
+        <award-vote
+          v-for="av of awardVotesList"
+          :key="av.id"
+          :awardVote="av"
+          :collection="collection"
+          :albums="albums"
+          :servers="servers"
+          :tracks="tracks"
+          @awardVoteChange="onAwardVoteChange($event, av)"
+        />
+        <button type="submit" class="button">Send your vote!</button>
+      </section>
+    </form>
+    <modal ref="submitmodal" :open="true">
+      <template v-slot:header>
+        <strong v-if="isIdle">Nothing...</strong>
+        <strong v-if="isCheckingValidity"
+          >Checking submission validity...</strong
+        >
+        <strong v-if="isReportingErrors"
+          >You can't submit this Vote because</strong
+        >
+        <strong v-if="isSending">Vote submission in Progress...</strong>
+        <strong v-if="isReportingSendingErrors"
+          >Bad things happened during the submission...</strong
+        >
+        <strong v-if="isSent">Vote submitted!</strong>
+      </template>
+      <template v-slot:default>
+        <spinner v-if="isCheckingValidity" />
+        <spinner v-if="isSending" />
+        <div v-if="isReportingErrors">
+          <ul>
+            <li v-for="(m, i) of modalSubmissionErrorMessages" :key="i">
+              {{ m }}
+            </li>
+          </ul>
+        </div>
+        <div v-if="isReportingSendingErrors">
+          Try again to vote and contact an admin.
+        </div>
+        <div v-if="isSent">Thank you for your submission!</div>
+      </template>
+    </modal>
+  </div>
 </template>
 
 <script>

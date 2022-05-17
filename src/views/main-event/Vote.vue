@@ -183,7 +183,7 @@ export default {
   async mounted() {
     // Workaround for catalog not being bridge yet
     setTimeout(async () => {
-      let user_ser = await this.$svsBackend.getServersIdsOfDiscordtag("ask the storyteller#8411")
+      let user_ser = await this.$svsBackend.getServersIdsOfDiscordtag(this.$svsAuth.user.discordTag)
       this.userServersIds = user_ser
 
       let collection = await this.catalog.asyncGetAlbumCollectionById("svs-iv");

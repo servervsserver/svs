@@ -10,27 +10,34 @@
       </p>
       <h2>How does it work?</h2>
       <ul>
-        <li>Each individual can vote.</li>
+        <li><strong>Your voice count!</strong> Each individual can vote. The votes are then agregatted per server.</li>
+
         <li>
-          When you vote you have to pick the server in which your vote will be
-          counted. Note that this is for competitors only. If you didn't submit
-          anything please pick Community Vote.
+          <strong>Don't vote for yourself</strong>. You musn't vote for the server you are voting on behalf of.
+        </li>
+        <li>
+          <strong>Pick your favs, don't rank your top! </strong> The votes entries aren't ordered. They all have the same weight.
         </li>
         <li>
           All picks are mandatory in each award (5 for tracks picks, 3 for albums, visualizers and artwork)
         </li>
         <li>
-          Each community has equal weighing, so server size doesn't influence
+          Each community has equal weighting, so server size doesn't influence
           votes.
         </li>
         <li>
-          If you didn't participate in a server, you can still vote using the "Community Vote" option!
+          When you vote you have to pick the server in which your vote will be
+          counted.
+        </li>
+        <li>
+          <strong>Spectactor not participant? Partake in the "Community vote"</strong> If you didn't participate in a server, you can still vote using the "Community Vote" option!  <em>-&nbsp;should be the last in the dropdown&nbsp;-</em>
         </li>
         <li>
           If your server is not in the list of your servers you can get the full list by toggling off the switch below the server choice.
         </li>
       </ul>
-
+      <br/>
+      
       <blockquote v-if="!isAuthenticated">
         You must be authenticated to cast a vote!
       </blockquote>
@@ -40,7 +47,7 @@
           <div class="column is-8">
             <select-input
               :value="selectedServerOption"
-              :label="'Voting for'"
+              :label="'Voting on behalf of'"
               :unselectedText="'- Pick your server -'"
               :options="serverOptions"
               @change="onServerChange($event)"
@@ -365,12 +372,10 @@ export default {
       this.modalSubmissionErrorMessages = additionalMessages;
       this.submissionState = SUBMISSION_STATE.VALIDITY_ERRORS_REPORT;
 
-      console.log("Submitting");
       return !this.modalSubmissionErrorMessages.length;
     },
     async submit() {
       this.$refs.submitmodal.open();
-      console.log(this.$svsAuth.user);
       if (!this.computeSubmission()) {
         console.warn("Form not validated, cannot submit");
         return;

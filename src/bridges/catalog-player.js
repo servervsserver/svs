@@ -97,6 +97,21 @@ export default function (catalogPlugin, audioPlayerPlugin) {
     }
   )
 
+  catalogPlugin.playTrack = async (track) => {
+        
+    let audioPlayer = audioPlayerPlugin.mainAudioPlayer
+    let aplTrack = await ToAudioPlayerLogic.asyncConvertTrack(track)
+
+
+    if (audioPlayer.pushAsNextTrack(aplTrack))
+      audioPlayer.next()
+    else {
+      audioPlayer.moveToTrack(aplTrack)
+    }
+
+    audioPlayer.play()
+  }
+
   // Actions for top of track list
   catalogPlugin.addActionToTracksTopActions(
     {

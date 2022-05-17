@@ -13,7 +13,7 @@
           @change="onChange($event)"
         />
       </div>
-      <div class="column is-12-touch is-5-desktop">
+      <div class="column is-12-touch is-4-desktop">
         <select-input 
           :value="selectedTrackOption"
           :label="'Track'"
@@ -22,10 +22,15 @@
           @change="onTrackChange($event)"
         />
       </div>
-      <div class="column">
+      <div class="column is-1">
         <squared-image-box style="width: 50px">
           <img :src="artworkUrl" />
         </squared-image-box>
+      </div>
+      <div class="column is-1">
+        <div v-if="selectedTrack" class="button svs-button-transparent" @click="playSelectedTrack()">
+          <span class="icon"><i class="fa-solid fa-play"></i></span>
+        </div>
       </div>
     </div>
     <hr/>
@@ -182,6 +187,10 @@ export default {
       let track = this.computeNewSelectedTrack()
       this.selectedTrack = track
       this.$emit('change', this.selectedTrack)
+    },
+    playSelectedTrack() {
+      if (this.selectedTrack)
+        this.$svsCatalog.playTrack(this.selectedTrack)
     }
   }
 }

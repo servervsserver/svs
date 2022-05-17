@@ -595,6 +595,8 @@ export default {
 
   &.is-fixed {
     position: fixed;
+    z-index: 1000;
+    
     &.is-anchored-to-bottom {
       bottom: 0;
       left: 50%;

@@ -1,5 +1,5 @@
 <template>
-  <coming-soon :type="'page'">
+  <!-- <coming-soon :type="'page'"> -->
     <div class="container">
       <h1>Awards votes!</h1>
       <p>
@@ -107,7 +107,7 @@
         </template>
       </modal>
     </div>
-  </coming-soon>
+  <!-- </coming-soon> -->
 </template>
 
 <script>

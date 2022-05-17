@@ -17,6 +17,9 @@
           anything please pick Community Vote.
         </li>
         <li>
+          All picks are mandatory in each award (5 for tracks picks, 3 for albums, visualizers and artwork)
+        </li>
+        <li>
           Each community has equal weighing, so server size doesn't influence
           votes.
         </li>
@@ -234,13 +237,13 @@ export default {
           this.tracks.set(track.id, track);
         }
       }
-    }, 150);
+    }, 500);
   },
   computed: {
     serverOptions() {
       // TODO: STORY FILTER THE OPTIONS
       let arr = this.servers.map(s => s) // Just create a new array
-      if (this.filterUserServers) {
+      if (this.filterUserServers && this.userServersIds) {
         arr = arr.filter(s => this.userServersIds.includes(s.id))
       } else {
       }

@@ -67,6 +67,32 @@ export default class AuthPlugin {
 
   }
 
+  /**
+   * 
+   * @param {string} tokenType 
+   * @param {string} accessToken 
+   */
+  async login(tokenType, accessToken) {
+    return this._grabDiscordProfile(tokenType, accessToken)
+      .then((response) => {
+        const uid = response.data.id;
+        return this._authenticate(uid);
+      })
+      .then((response) => {
+        let token = response.data;
+        return this._fAuth(token);
+      })
+      .then((uid) => this.fetchData(uid))
+      .then(data => {
+        let user = User.fromAuthServData(data)
+        localStorage.setItem("userdata", user.stringify());
+        store.dispatch("loginUser", user);
+        router.push({ name: "Profile" });
+      });
+
+  }
+
+
 //#region Private functions
   async _grabDiscordProfile(tokenType, accessToken) {
     return axios.get("https://discord.com/api/users/@me", {
@@ -99,31 +125,13 @@ export default class AuthPlugin {
       const data = await response.json();
       return data;
     } catch (message) {
-      return console.error(message);
+      console.error(message);
+      return null
     }
   }
 
 //#endregion Private functions
 
-  login(tokenType, accessToken) {
-    this._grabDiscordProfile(tokenType, accessToken)
-      .then((response) => {
-        const uid = response.data.id;
-        return this._authenticate(uid);
-      })
-      .then((response) => {
-        let token = response.data;
-        return this._fAuth(token);
-      })
-      .then((uid) => this.fetchData(uid))
-      .then(data => {
-        let user = User.fromAuthServData(data)
-        localStorage.setItem("userdata", user.stringify());
-        store.dispatch("loginUser", user);
-        router.push({ name: "Profile" });
-      });
-
-  }
 
   get user() {
     return this._store.getters.user.data

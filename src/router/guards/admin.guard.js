@@ -1,5 +1,6 @@
 export default function(router) {
   return (to, from, next) => {
+    console.log("Admin fnc")
     if (!to.matched.some(record => record.meta.requiresAdmin)) {
       next();
       return;

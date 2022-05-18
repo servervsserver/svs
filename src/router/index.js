@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import createAdminGuard from "./guards/admin.guard.js"
-import createAuthGuard from "./guards/auth.guard.js"
+import { createAuthGuard, AuthGuard } from "./guards/auth.guard.js"
 
 import { routes } from "./routes"
 import { navbarContent, populateNavbar } from "./navbar"
@@ -26,6 +26,8 @@ const router = new VueRouter({
 })
 
 Vue.use(VueRouter)
+
+new AuthGuard().registerTo(router)
 
 router.beforeEach(createAuthGuard(router))
 router.beforeEach(createAdminGuard(router))

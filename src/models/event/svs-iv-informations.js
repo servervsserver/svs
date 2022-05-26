@@ -96,7 +96,7 @@ export class SvSIVInformations {
 
     this.awardsCeremony = new EventMilestone(
       "Awards Ceremony",
-      new Date(Date.UTC(2022, 4, 14 + 7, 21, 0, 0)),
+      new Date(Date.UTC(2022, 4, 14 + 7 + 7, 19, 0, 0)),
       "Our awards ceremony, with the winners of each category decided by you and your vote!"
     )
 

@@ -103,10 +103,7 @@ export const routes = [
       {
         path: 'overview',
         name: 'SvS IV Overview',
-        component: MainEventOverview,
-        meta: {
-          requiresAuth: true
-        }
+        component: MainEventOverview
       },
       {
         path: 'vote',

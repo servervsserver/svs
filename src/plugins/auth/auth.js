@@ -31,7 +31,6 @@ export default class AuthPlugin {
 
     onAuthStateChanged(this._firebaseAuth , (user) => {
 
-      console.log(this._store.state.authState)
       /* If no user, dipatch a null user and exit */
       if (!user) {
         store.dispatch("loginUser", null);

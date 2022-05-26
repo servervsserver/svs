@@ -20,7 +20,7 @@ export class Guard {
   get app() {
     return this.router.app
   }
-  
+
   /**
    * 
    * @param {Route} to 
@@ -42,11 +42,9 @@ export class Guard {
 
     this.router = router
     
-    console.log(this, this.beforeEach)
     if (this.beforeEach) {
       router.beforeEach(
         async (to, from, next) => {
-          console.log("New guard system")
           let res = await this.beforeEach(to, from)
           next(res)
         }

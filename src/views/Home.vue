@@ -15,6 +15,7 @@
           </h1>
 
           <event-countdown
+            v-if="$store.getters.nextMilestone"
             :title="$store.getters.nextMilestone.name"
             :time="$store.getters.nextMilestone.timeRemaining"
           />

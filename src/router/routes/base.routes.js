@@ -24,6 +24,7 @@ import Servers from '@/components/Servers.vue'
 import Charities from '@/components/Charities.vue'
 
 import LoginCallback from '@/components/LoginCallback.vue'
+import { query } from 'firebase/firestore'
 
 const CALLBACK_PATH = '/login/callback'
 const discord_client_id = process.env.VUE_APP_DISCORD_ID;
@@ -102,7 +103,10 @@ export const routes = [
       {
         path: 'overview',
         name: 'SvS IV Overview',
-        component: MainEventOverview
+        component: MainEventOverview,
+        meta: {
+          requiresAuth: true
+        }
       },
       {
         path: 'vote',
@@ -176,6 +180,14 @@ export const routes = [
     path: '/login',
     component: null,
     beforeEnter(to, from, next) {
+      
+      let redirect = []
+      if (to.query.origin) redirect.push(to.query.origin)
+      if (to.query.redirect) redirect.push(to.query.redirect)
+      redirect = encodeURIComponent(redirect.join(''))
+      
+      // TODO use redirect instead of url
+      
       window.location.href = `https://discord.com/api/oauth2/authorize?response_type=token&client_id=${discord_client_id}&scope=identify&state=15773059ghq9183habn&redirect_uri=${url}&prompt=consent`
     }
   }

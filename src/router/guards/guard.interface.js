@@ -17,6 +17,10 @@ export class Guard {
     this.router = null
   }
 
+  get app() {
+    return this.router.app
+  }
+  
   /**
    * 
    * @param {Route} to 

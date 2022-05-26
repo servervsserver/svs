@@ -1,19 +1,34 @@
-export default function(router) {
-  return (to, from, next) => {
-    console.log("Admin fnc")
-    if (!to.matched.some(record => record.meta.requiresAdmin)) {
-      next();
-      return;
-    }
+import { Guard } from "./guard.interface"
 
-    if (router.app.$svsAuth.isAdmin) {
-      next();
-      return;
-    }
+export class AdminGuard extends Guard {
 
-    next({
-      path: '/login',
-      query: { redirect: to.fullPath }
-    })
+  constructor() {
+    super()
+
+    super.beforeEach = async function(to, from) {
+      // console.log("To:", to)
+      // console.log("From:", from)
+
+      if(!this.hasMetaTrigger(to, 'requiresAdmin'))
+        return
+
+      await this.authPlugin.whenReady()
+
+      if (this.authPlugin.isAdmin)
+        return
+      
+      return {
+        path: '/login',
+        query: { 
+          origin: new URL(window.location.href).origin,
+          redirect: to.fullPath 
+        }
+      }
+    }
+  }
+
+
+  get authPlugin() {
+    return super.app.$svsAuth
   }
 }

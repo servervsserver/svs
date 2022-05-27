@@ -6,24 +6,27 @@
     </p>
     <div class="columns is-multiline">
       <div 
-        class="column is-12" 
         v-for="av in awardVotesList" 
-        :key="av.id"
+        :key="av.id" 
+        class="column is-12"
       >
-        <div class="shadow-depth-2" style="padding: 10px;">
-          <h2>{{av.label}} <em class="tag">{{av.id}}</em></h2>
-          <p>{{av.description}}</p>
+        <div
+          class="shadow-depth-2"
+          style="padding: 10px;"
+        >
+          <h2>{{ av.label }} <em class="tag">{{ av.id }}</em></h2>
+          <p>{{ av.description }}</p>
           <div>
-            Collection key: {{av.album_collection_id}}
+            Collection key: {{ av.album_collection_id }}
           </div>
           <div>
-            Target: {{av.target}}
+            Target: {{ av.target }}
           </div>
           <div>
-            Type: {{av.type}}
+            Type: {{ av.type }}
           </div>
           <div>
-            Options count: {{av.options_count}}
+            Options count: {{ av.options_count }}
           </div>
           <blockquote>
             <div>Opening the: {{ av.opening_date | date("DAY, dd MONTH yyyy") }} | {{ av.opening_date | date("hour:min", true) }}</div>

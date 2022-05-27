@@ -1,10 +1,13 @@
 <template>
   <!-- Render if user has voted -->
 
-  <div v-if="isOpen == false" class="vote_page">
+  <div
+    v-if="isOpen == false"
+    class="vote_page"
+  >
     <div class="login">
       <h1>
-        <i class="fa fa-thin fa-lock" /><br />
+        <i class="fa fa-thin fa-lock" /><br>
         Sorry, voting is currently closed
       </h1>
     </div>
@@ -15,11 +18,14 @@
     class="vote_page"
   >
     <div class="login">
-      <h1><i class="fa-brands fa-discord" /><br /></h1>
+      <h1><i class="fa-brands fa-discord" /><br></h1>
     </div>
   </div>
 
-  <div v-else-if="hasvoted" class="vote_page">
+  <div
+    v-else-if="hasvoted"
+    class="vote_page"
+  >
     <h1>Thank you for voting !</h1>
   </div>
 
@@ -37,16 +43,24 @@
 
   <!-- Render if user has not yet voted -->
 
-  <div v-else-if="hasvoted == false" class="vote_page">
+  <div
+    v-else-if="hasvoted == false"
+    class="vote_page"
+  >
     <h1>Please rank your five favourite EPs from Highest to Lowest</h1>
 
     <div>
       <div class="field">
-        <div class="label">1 (Favourite)</div>
+        <div class="label">
+          1 (Favourite)
+        </div>
         <div class="select is-rounded">
           <select v-model="ballot[1]">
             <option>Please select an EP</option>
-            <option v-for="x in EPs" :key="x.name">
+            <option
+              v-for="x in EPs"
+              :key="x.name"
+            >
               {{ x.server }} - {{ x.name }}
             </option>
           </select>
@@ -54,11 +68,16 @@
       </div>
 
       <div class="field">
-        <div class="label">2</div>
+        <div class="label">
+          2
+        </div>
         <div class="select is-rounded">
           <select v-model="ballot[2]">
             <option>Please select an EP</option>
-            <option v-for="x in EPs" :key="x.name">
+            <option
+              v-for="x in EPs"
+              :key="x.name"
+            >
               {{ x.server }} - {{ x.name }}
             </option>
           </select>
@@ -66,11 +85,16 @@
       </div>
 
       <div class="field">
-        <div class="label">3</div>
+        <div class="label">
+          3
+        </div>
         <div class="select is-rounded">
           <select v-model="ballot[3]">
             <option>Please select an EP</option>
-            <option v-for="x in EPs" :key="x.name">
+            <option
+              v-for="x in EPs"
+              :key="x.name"
+            >
               {{ x.server }} - {{ x.name }}
             </option>
           </select>
@@ -78,11 +102,16 @@
       </div>
 
       <div class="field">
-        <div class="label">4</div>
+        <div class="label">
+          4
+        </div>
         <div class="select is-rounded">
           <select v-model="ballot[4]">
             <option>Please select an EP</option>
-            <option v-for="x in EPs" :key="x.name">
+            <option
+              v-for="x in EPs"
+              :key="x.name"
+            >
               {{ x.server }} - {{ x.name }}
             </option>
           </select>
@@ -90,11 +119,16 @@
       </div>
 
       <div class="field">
-        <div class="label">5</div>
+        <div class="label">
+          5
+        </div>
         <div class="select is-rounded">
           <select v-model="ballot[5]">
             <option>Please select an EP</option>
-            <option v-for="x in EPs" :key="x.name">
+            <option
+              v-for="x in EPs"
+              :key="x.name"
+            >
               {{ x.server }} - {{ x.name }}
             </option>
           </select>
@@ -103,11 +137,18 @@
 
       <div class="field submitbuttonvote">
         <label class="checkbox">
-          <input v-model="ballot[0]" type="checkbox" value="false" />
+          <input
+            v-model="ballot[0]"
+            type="checkbox"
+            value="false"
+          >
           By voting, I agree to SVS's <a href="#">Terms of Voting</a> and
           <a href="https://cc.servervsserver.com/">Community Conduct</a>
         </label>
-        <div v-if="VoteValidationErrorMessage" style="color: red">
+        <div
+          v-if="VoteValidationErrorMessage"
+          style="color: red"
+        >
           {{ VoteValidationErrorMessage }}
         </div>
       </div>
@@ -119,13 +160,16 @@
             class="button"
             value="Submit"
             @click="submitvote"
-          />
+          >
         </div>
       </div>
     </div>
   </div>
 
-  <div v-else class="vote_page">
+  <div
+    v-else
+    class="vote_page"
+  >
     <h1>Loading...</h1>
   </div>
 </template>

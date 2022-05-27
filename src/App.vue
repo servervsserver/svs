@@ -22,7 +22,6 @@
     </div>
 
     <audio-player />
-    
   </div>
 </template>
 

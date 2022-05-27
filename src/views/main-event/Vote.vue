@@ -1,119 +1,140 @@
 <template>
   <!-- <coming-soon :type="'page'"> -->
-    <div class="container">
-      <h1>Awards votes!</h1>
-      <p>
-        Now that we listened to all the EPs, it's time to vote for the
-        awards!<br />
-        You can take your time and listen again to the EPs here:
-        <router-link :to="'/svs-iv/radio'">SvS IV EPs</router-link>
-      </p>
-      <h2>How does it work?</h2>
-      <ul>
-        <li><strong>Your voice count!</strong> Each individual can vote. The votes are then agregatted per server.</li>
+  <div class="container">
+    <h1>Awards votes!</h1>
+    <p>
+      Now that we listened to all the EPs, it's time to vote for the
+      awards!<br>
+      You can take your time and listen again to the EPs here:
+      <router-link :to="'/svs-iv/radio'">
+        SvS IV EPs
+      </router-link>
+    </p>
+    <h2>How does it work?</h2>
+    <ul>
+      <li><strong>Your voice count!</strong> Each individual can vote. The votes are then agregatted per server.</li>
 
-        <li>
-          <strong>Don't vote for yourself</strong>. You musn't vote for the server you are voting on behalf of.
-        </li>
-        <li>
-          <strong>Pick your favs, don't rank your top! </strong> The votes entries aren't ordered. They all have the same weight.
-        </li>
-        <li>
-          All picks are mandatory in each award (5 for tracks picks, 3 for albums, visualizers and artwork)
-        </li>
-        <li>
-          Each community has equal weighting, so server size doesn't influence
-          votes.
-        </li>
-        <li>
-          When you vote you have to pick the server in which your vote will be
-          counted.
-        </li>
-        <li>
-          <strong>Spectactor not participant? Partake in the "Community vote"</strong> If you didn't participate in a server, you can still vote using the "Community Vote" option!  <em>-&nbsp;should be the last in the dropdown&nbsp;-</em>
-        </li>
-        <li>
-          If your server is not in the list of your servers you can get the full list by toggling off the switch below the server choice.
-        </li>
-      </ul>
-      <br/>
+      <li>
+        <strong>Don't vote for yourself</strong>. You musn't vote for the server you are voting on behalf of.
+      </li>
+      <li>
+        <strong>Pick your favs, don't rank your top! </strong> The votes entries aren't ordered. They all have the same weight.
+      </li>
+      <li>
+        All picks are mandatory in each award (5 for tracks picks, 3 for albums, visualizers and artwork)
+      </li>
+      <li>
+        Each community has equal weighting, so server size doesn't influence
+        votes.
+      </li>
+      <li>
+        When you vote you have to pick the server in which your vote will be
+        counted.
+      </li>
+      <li>
+        <strong>Spectactor not participant? Partake in the "Community vote"</strong> If you didn't participate in a server, you can still vote using the "Community Vote" option!  <em>-&nbsp;should be the last in the dropdown&nbsp;-</em>
+      </li>
+      <li>
+        If your server is not in the list of your servers you can get the full list by toggling off the switch below the server choice.
+      </li>
+    </ul>
+    <br>
       
-      <blockquote v-if="!isAuthenticated">
-        You must be authenticated to cast a vote!
-      </blockquote>
+    <blockquote v-if="!isAuthenticated">
+      You must be authenticated to cast a vote!
+    </blockquote>
 
-      <form @submit.prevent="submit()" v-if="isAuthenticated">
-        <div class="columns is-mobile">
-          <div class="column is-8">
-            <select-input
-              :value="selectedServerOption"
-              :label="'Voting on behalf of'"
-              :unselectedText="'- Pick your server -'"
-              :options="serverOptions"
-              @change="onServerChange($event)"
-            />
-            <br/>
-            <span>
-              {{filterUserServers ? "Shows only the servers you participated in" : "Show every servers"}}&nbsp;<!--
+    <form
+      v-if="isAuthenticated"
+      @submit.prevent="submit()"
+    >
+      <div class="columns is-mobile">
+        <div class="column is-8">
+          <select-input
+            :value="selectedServerOption"
+            :label="'Voting on behalf of'"
+            :unselected-text="'- Pick your server -'"
+            :options="serverOptions"
+            @change="onServerChange($event)"
+          />
+          <br>
+          <span>
+            {{ filterUserServers ? "Shows only the servers you participated in" : "Show every servers" }}&nbsp;<!--
             --><toggle-input
               v-model="filterUserServers"
               />
-              </span>
-          </div>
-          <div class="column is-4">
-            <squared-image-box v-if="selectedServer" style="width: 100px">
-              <img :src="'https://' + selectedServer.icon_url" />
-            </squared-image-box>
-          </div>
+          </span>
         </div>
+        <div class="column is-4">
+          <squared-image-box
+            v-if="selectedServer"
+            style="width: 100px"
+          >
+            <img :src="'https://' + selectedServer.icon_url">
+          </squared-image-box>
+        </div>
+      </div>
 
-        <section>
-          <h2>Cast your vote</h2>
-          <award-vote
-            v-for="av of awardVotesList"
-            :key="av.id"
-            :awardVote="av"
-            :collection="collection"
-            :albums="albums"
-            :servers="servers"
-            :tracks="tracks"
-            @awardVoteChange="onAwardVoteChange($event, av)"
-          />
-          <button type="submit" class="button">Send your vote!</button>
-        </section>
-      </form>
-      <modal ref="submitmodal" :open="true">
-        <template v-slot:header>
-          <strong v-if="isIdle">Nothing...</strong>
-          <strong v-if="isCheckingValidity"
-            >Checking submission validity...</strong
-          >
-          <strong v-if="isReportingErrors"
-            >You can't submit this Vote because</strong
-          >
-          <strong v-if="isSending">Vote submission in Progress...</strong>
-          <strong v-if="isReportingSendingErrors"
-            >Bad things happened during the submission...</strong
-          >
-          <strong v-if="isSent">Vote submitted!</strong>
-        </template>
-        <template v-slot:default>
-          <spinner v-if="isCheckingValidity" />
-          <spinner v-if="isSending" />
-          <div v-if="isReportingErrors">
-            <ul>
-              <li v-for="(m, i) of modalSubmissionErrorMessages" :key="i">
-                {{ m }}
-              </li>
-            </ul>
-          </div>
-          <div v-if="isReportingSendingErrors">
-            Try again to vote and contact an admin.
-          </div>
-          <div v-if="isSent">Thank you for your submission!</div>
-        </template>
-      </modal>
-    </div>
+      <section>
+        <h2>Cast your vote</h2>
+        <award-vote
+          v-for="av of awardVotesList"
+          :key="av.id"
+          :award-vote="av"
+          :collection="collection"
+          :albums="albums"
+          :servers="servers"
+          :tracks="tracks"
+          @awardVoteChange="onAwardVoteChange($event, av)"
+        />
+        <button
+          type="submit"
+          class="button"
+        >
+          Send your vote!
+        </button>
+      </section>
+    </form>
+    <modal
+      ref="submitmodal"
+      :open="true"
+    >
+      <template v-slot:header>
+        <strong v-if="isIdle">Nothing...</strong>
+        <strong
+          v-if="isCheckingValidity"
+        >Checking submission validity...</strong>
+        <strong
+          v-if="isReportingErrors"
+        >You can't submit this Vote because</strong>
+        <strong v-if="isSending">Vote submission in Progress...</strong>
+        <strong
+          v-if="isReportingSendingErrors"
+        >Bad things happened during the submission...</strong>
+        <strong v-if="isSent">Vote submitted!</strong>
+      </template>
+      <template v-slot:default>
+        <spinner v-if="isCheckingValidity" />
+        <spinner v-if="isSending" />
+        <div v-if="isReportingErrors">
+          <ul>
+            <li
+              v-for="(m, i) of modalSubmissionErrorMessages"
+              :key="i"
+            >
+              {{ m }}
+            </li>
+          </ul>
+        </div>
+        <div v-if="isReportingSendingErrors">
+          Try again to vote and contact an admin.
+        </div>
+        <div v-if="isSent">
+          Thank you for your submission!
+        </div>
+      </template>
+    </modal>
+  </div>
   <!-- </coming-soon> -->
 </template>
 
@@ -190,6 +211,50 @@ export default {
       submissionState: SUBMISSION_STATE.IDLE,
     };
   },
+  computed: {
+    serverOptions() {
+      // TODO: STORY FILTER THE OPTIONS
+      let arr = this.servers.map(s => s) // Just create a new array
+      if (this.filterUserServers && this.userServersIds) {
+        arr = arr.filter(s => this.userServersIds.includes(s.id))
+      } else {
+      }
+      arr = arr.map((s) => s.name);
+
+      // arr.sort();
+      return arr;
+    },
+    isAuthenticated() {
+      return this.$svsAuth.isAuthenticated;
+    },
+    isIdle() {
+      return this.submissionState == SUBMISSION_STATE.IDLE;
+    },
+    isCheckingValidity() {
+      return this.submissionState == SUBMISSION_STATE.VALIDITY_CHECK;
+    },
+    isReportingErrors() {
+      return this.submissionState == SUBMISSION_STATE.VALIDITY_ERRORS_REPORT;
+    },
+    isSending() {
+      return this.submissionState == SUBMISSION_STATE.SENDING;
+    },
+    isReportingSendingErrors() {
+      return this.submissionState == SUBMISSION_STATE.SENDING_ERRORS;
+    },
+    isSent() {
+      return this.submissionState == SUBMISSION_STATE.SENT;
+    },
+    canShowSubmissionErrorModal() {
+      return !!this.modalSubmissionErrorMessages.length;
+    },
+    /**
+     * @returns {Archive.AsyncCatalog}
+     */
+    catalog() {
+      return this.$svsCatalog.mainCatalog;
+    },
+  },
   async mounted() {
     // Workaround for catalog not being bridge yet
     setTimeout(async () => {
@@ -245,50 +310,6 @@ export default {
         }
       }
     }, 500);
-  },
-  computed: {
-    serverOptions() {
-      // TODO: STORY FILTER THE OPTIONS
-      let arr = this.servers.map(s => s) // Just create a new array
-      if (this.filterUserServers && this.userServersIds) {
-        arr = arr.filter(s => this.userServersIds.includes(s.id))
-      } else {
-      }
-      arr = arr.map((s) => s.name);
-
-      // arr.sort();
-      return arr;
-    },
-    isAuthenticated() {
-      return this.$svsAuth.isAuthenticated;
-    },
-    isIdle() {
-      return this.submissionState == SUBMISSION_STATE.IDLE;
-    },
-    isCheckingValidity() {
-      return this.submissionState == SUBMISSION_STATE.VALIDITY_CHECK;
-    },
-    isReportingErrors() {
-      return this.submissionState == SUBMISSION_STATE.VALIDITY_ERRORS_REPORT;
-    },
-    isSending() {
-      return this.submissionState == SUBMISSION_STATE.SENDING;
-    },
-    isReportingSendingErrors() {
-      return this.submissionState == SUBMISSION_STATE.SENDING_ERRORS;
-    },
-    isSent() {
-      return this.submissionState == SUBMISSION_STATE.SENT;
-    },
-    canShowSubmissionErrorModal() {
-      return !!this.modalSubmissionErrorMessages.length;
-    },
-    /**
-     * @returns {Archive.AsyncCatalog}
-     */
-    catalog() {
-      return this.$svsCatalog.mainCatalog;
-    },
   },
   methods: {
     onServerChange(event) {

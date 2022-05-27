@@ -6,8 +6,8 @@
     </p>
     <form @submit.prevent="submit()">
       <blockquote>
-        <div>id: <em>{{award.id}}</em></div>
-        <div>collection: <em>{{award.album_collection_id}}</em></div>
+        <div>id: <em>{{ award.id }}</em></div>
+        <div>collection: <em>{{ award.album_collection_id }}</em></div>
       </blockquote>
       <text-input 
         v-model="award.label"
@@ -25,13 +25,18 @@
         :options="targets"
         :label="'Select the target'" 
       />
-      <button type="submit" :disabled="!canSubmit" class="button">Create</button>
+      <button
+        type="submit"
+        :disabled="!canSubmit"
+        class="button"
+      >
+        Create
+      </button>
     </form>
     <blockquote v-if="isSubmitted">
       Submitted!
     </blockquote>
-    <div>
-    </div>
+    <div />
   </section>
 </template>
 
@@ -59,13 +64,6 @@ export default {
       targets: ['artwork', 'visualizer', 'album', 'track'],
       submitState: SubmitState.NOT_SUBMITTED
     }
-  },
-  mounted() {
-    this.award.album_collection_id = 'svs-iv'
-    this.award.opening_date = new Date(Date.UTC(2022, 4, 15))
-    this.award.closing_date = new Date(Date.UTC(2022, 4, 15 + 5))
-    this.award.type = 'ordered_selection'
-    this.award.options_count = 5
   },
   computed: {
     targetIcon() {
@@ -95,6 +93,13 @@ export default {
     isSubmitted() {
       return this.submitState === SubmitState.SUBMITTED
     }
+  },
+  mounted() {
+    this.award.album_collection_id = 'svs-iv'
+    this.award.opening_date = new Date(Date.UTC(2022, 4, 15))
+    this.award.closing_date = new Date(Date.UTC(2022, 4, 15 + 5))
+    this.award.type = 'ordered_selection'
+    this.award.options_count = 5
   },
   methods: {
     async submit() {

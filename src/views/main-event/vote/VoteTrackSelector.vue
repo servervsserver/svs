@@ -8,7 +8,7 @@
         <select-input 
           :value="selectedAlbumOption"
           :label="'Album'"
-          :unselectedText="'Pick an album'"
+          :unselected-text="'Pick an album'"
           :options="albumOptions"
           @change="onChange($event)"
         />
@@ -17,23 +17,27 @@
         <select-input 
           :value="selectedTrackOption"
           :label="'Track'"
-          :unselectedText="'Pick a track'"
+          :unselected-text="'Pick a track'"
           :options="trackOptions"
           @change="onTrackChange($event)"
         />
       </div>
       <div class="column is-1">
         <squared-image-box style="width: 50px">
-          <img :src="artworkUrl" />
+          <img :src="artworkUrl">
         </squared-image-box>
       </div>
       <div class="column is-1">
-        <div v-if="selectedTrack" class="button svs-button-transparent" @click="playSelectedTrack()">
-          <span class="icon"><i class="fa-solid fa-play"></i></span>
+        <div
+          v-if="selectedTrack"
+          class="button svs-button-transparent"
+          @click="playSelectedTrack()"
+        >
+          <span class="icon"><i class="fa-solid fa-play" /></span>
         </div>
       </div>
     </div>
-    <hr/>
+    <hr>
   </div>
 </template>
 

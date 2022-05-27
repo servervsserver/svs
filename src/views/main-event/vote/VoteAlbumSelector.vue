@@ -8,14 +8,14 @@
         <select-input 
           :value="selectedAlbumOption"
           :label="'Album'"
-          :unselectedText="'Pick an album'"
+          :unselected-text="'Pick an album'"
           :options="albumOptions"
           @change="onChange($event)"
         />
       </div>
       <div class="column">
         <squared-image-box style="width: 50px">
-          <img :src="artworkUrl" />
+          <img :src="artworkUrl">
         </squared-image-box>
       </div>
     </div>

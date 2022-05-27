@@ -3,7 +3,10 @@
     <h3>{{ awardVote.label }}</h3>
     <p>{{ awardVote.description }}</p>
 
-    <div v-for="idx in awardVote.options_count" :key="idx">
+    <div
+      v-for="idx in awardVote.options_count"
+      :key="idx"
+    >
       <album-selector
         v-if="['album', 'visualizer', 'artwork'].includes(awardVote.target)"
         :value="selection[idx]"
@@ -25,8 +28,6 @@
         @change="onSelectionChange($event, idx - 1)"
       />
     </div>
-
-
   </section>
 </template>
 

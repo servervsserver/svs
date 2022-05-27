@@ -744,6 +744,13 @@ export default class BackendPlugin {
     return res
   }
 
+  /**
+   * @returns {{ [string] : FirestoreModel.AwardVoteEntry}}
+   */
+  async getAllAwardVoteEntries() {
+    return this.firestoreGetCollectionData(FirestoreModel.AwardVoteEntry)
+  }
+
 
   async getServersIdsOfDiscordtag(discord_tag) {
 

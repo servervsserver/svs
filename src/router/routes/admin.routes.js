@@ -11,6 +11,7 @@ import EpUpload from "@/views/admin/svs-iv/EpUpload.vue"
 import ThemeList from "@/views/admin/svs-iv/ThemeList.vue"
 import AwardsList from "@/views/admin/svs-iv/AwardsList.vue"
 import AwardCreation from "@/views/admin/svs-iv/AwardCreation.vue"
+import AwardResults from "@/views/admin/svs-iv/AwardResults.vue"
 
 // Dev administration
 import AdminForDev from "@/views/admin/AdminForDev.vue"
@@ -47,6 +48,14 @@ export const ADMIN_ROUTES = [
         component: AwardsList,
         meta: {
           title: "Awards list"
+        }
+      },
+      {
+        path: 'awards/results',
+        name: 'AwardResultsAdmin',
+        component: AwardResults,
+        meta: {
+          title: "Awards results"
         }
       },
       {

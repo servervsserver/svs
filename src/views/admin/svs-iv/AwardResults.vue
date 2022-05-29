@@ -32,7 +32,7 @@
             </table>
           </div>
           <div class="columns is-mobile">
-            <div class="column is-6">
+            <div class="column is-4">
               <h3>Per server votes</h3>
               <div class="per-server-vote-block">
                 <div
@@ -57,8 +57,37 @@
                 </div>
               </div>
             </div>
-            <div class="column is-6">
-              <h3>Results</h3>
+            <div class="column is-4">
+              <h3>Results (with the bug)</h3>
+              <div class="per-server-vote-block">
+                <table>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Rank w skips</th>
+                    <th>Vote</th>
+                    <th>Count</th>
+                  </tr>
+                  <tr
+                    v-for="res in resultsOfOld(av)"
+                    :key="'res-old-' + av.id + '-' + res.id"
+                  >
+                    <td> <span class="tag">{{ res.rank }}</span></td>
+                    <td> <span class="tag is-primary">{{ res.rankWithSkip }}</span></td>
+                    <td>
+                      <tooltip :vertical="'bottom'">
+                        {{ res.id }}
+                        <template slot="message">
+                          {{ tracks.get(res.id) ? tracks.get(res.id).title : 'loading..'}}
+                        </template>
+                      </tooltip>
+                    </td>
+                    <td> <span class="tag">{{ res.count }}</span></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="column is-4">
+              <h3>Results (fixed)</h3>
               <div class="per-server-vote-block">
                 <table>
                   <tr>
@@ -73,7 +102,14 @@
                   >
                     <td> <span class="tag">{{ res.rank }}</span></td>
                     <td> <span class="tag is-primary">{{ res.rankWithSkip }}</span></td>
-                    <td>{{ res.id }}</td>
+                    <td>
+                      <tooltip :vertical="'bottom'">
+                        {{ res.id }}
+                        <template slot="message">
+                          {{ tracks.get(res.id) ? tracks.get(res.id).title : 'loading..'}}
+                        </template>
+                      </tooltip>
+                    </td>
                     <td> <span class="tag">{{ res.count }}</span></td>
                   </tr>
                 </table>
@@ -112,8 +148,13 @@
 
 <script>
 import * as Firestore from "../../../plugins/backend/firestore"
+import { getResultsOf } from "../../../models/vote"
+import TooltipVue from '@/components/Tooltip.vue'
 
 export default {
+  components: {
+    'tooltip': TooltipVue
+  },
   data() {
     return { 
       /**
@@ -123,7 +164,8 @@ export default {
       /**
        * @type {Firestore.AwardVoteEntry[]}
        */
-      awardVoteEntries: null
+      awardVoteEntries: [],
+      tracks: new Map()
     }
   },
   async mounted() {
@@ -146,28 +188,28 @@ export default {
     this.awardVotesList = avs.filter(av => av.album_collection_id === 'svs-iv')
   },
   methods: {
-   ballotsOf(awardVote)  {
-     // Only keep this award entries
-     let voteEntries = this.awardVoteEntries
-      .filter(ave => ave.award_id === awardVote.id)
+    ballotsOf(awardVote)  {
+      // Only keep this award entries
+      let voteEntries = this.awardVoteEntries
+        .filter(ave => ave.award_id === awardVote.id)
 
-    // Remove dups base on submission date
-    voteEntries = voteEntries.filter(ave => {
-        let potDup = voteEntries.find(
-          othAve => {
-            return (othAve.voter.discord_tag === ave.voter.discord_tag)
-              && othAve !== ave
-          }
-        )
-        if (!potDup) return true
-        if (ave.submission_date < potDup.submission_date) return false
-        return true
-      })
+      // Remove dups base on submission date
+      voteEntries = voteEntries.filter(ave => {
+          let potDup = voteEntries.find(
+            othAve => {
+              return (othAve.voter.discord_tag === ave.voter.discord_tag)
+                && othAve !== ave
+            }
+          )
+          if (!potDup) return true
+          if (ave.submission_date < potDup.submission_date) return false
+          return true
+        })
 
-    // WARNING Doesn't disregard self votes
-     return voteEntries
-   },
-   perServerVotesOf(awardVote) {
+      // WARNING Doesn't disregard self votes
+      return voteEntries
+    },
+    perServerVotesOf(awardVote) {
      let ballots = this.ballotsOf(awardVote)
      let rankingEntries = new Map()
 
@@ -188,8 +230,8 @@ export default {
       }
 
       return rankingEntries
-   },
-  resultsOf(awardVote) {
+    },
+    resultsOfOld(awardVote) {
       let rankingEntries = this.perServerVotesOf(awardVote)
 
       let resultsMap = new Map()
@@ -248,8 +290,25 @@ export default {
       }
 
       return results
+    },
+    /**
+     * @param {Firestore.AwardVote} awardVote
+     */
+    resultsOf(awardVote) {
+      let res = getResultsOf(awardVote, this.awardVoteEntries)
+      if (awardVote.target === 'track') {
+        res.forEach((value) => {
+          this.$svsCatalog.mainCatalog.asyncGetTrackById(value.id).then(track => {
+            this.tracks.set(track.id, track)
+            // let ts = this.tracks
+            // this.tracks = null
+            // this.tracks = ts
+          })
+        })
+      }
+      return res
     }
-  },
+  }
 }
 </script>
 
@@ -257,12 +316,12 @@ export default {
 .ballots {
   padding-left: 2em;
   max-height: 80px;
-  overflow-y:scroll;
+  overflow: visible scroll;
 }
 
 .per-server-vote-block {
   max-height: 400px;
-  overflow-y: scroll;
+  overflow: visible scroll;
 }
 
 table {

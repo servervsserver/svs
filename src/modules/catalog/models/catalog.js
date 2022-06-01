@@ -325,7 +325,7 @@ export class AsyncCatalog {
   /**
    * 
    * @param {string} id 
-   * @returns (id: string) => Promise<Track>
+   * @returns {(id: string) => Promise<Track>}
    */
   async asyncGetTrackById(id) {
     
@@ -351,7 +351,7 @@ export class AsyncCatalog {
   /**
    * 
    * @param {string} id 
-   * @returns (id: string) => Promise<Album>
+   * @returns {(id: string) => Promise<Album>}
    */
   async asyncGetAlbumById(id) {
     

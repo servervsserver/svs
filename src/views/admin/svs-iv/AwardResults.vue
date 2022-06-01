@@ -4,6 +4,39 @@
     <p>
       List of the awards of SvS IV
     </p>
+    <div>
+      <div class="columns has-text-centered">
+        <div class="column is-4">
+          <strong>Compare the algorithms:</strong>
+        </div>
+        <div class="column is-4">
+          <select-input
+            v-model="leftAlgorithmName"
+            :label="'Left algorithm'"
+            :options="algorithmsOptions"
+          />
+        </div>
+        <div class="column is-4">
+          <select-input
+            v-model="rightAlgorithmName"
+            :label="'Right algorithm'"
+            :options="algorithmsOptions"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="columns has-text-centered">
+      <div class="column is-4">
+        Info shown:
+      </div>
+      <div class="column is-4">
+        <select-input
+          v-model="infoShownOption"
+          :label="'Info shown'"
+          :options="infoShownOptions"
+        />
+      </div>
+    </div>
     <div class="columns is-multiline">
       <div 
         v-for="av in awardVotesList"
@@ -16,6 +49,58 @@
         >
           <h2>{{ av.label }} <em class="tag">{{ av.id }}</em></h2>
           <p>{{ av.description }}</p>
+          <blockquote class="columns is-mobile">
+
+            <div class="column is-6" v-for="(algorithm, idx) in [leftAlgorithmName, rightAlgorithmName]" :key="idx">
+              <h3>Results {{algorithm}}</h3>
+              <div class="vote-results">
+                <table>
+                  <tr>
+                    <th>Rank</th>
+                    <th><span style="font-size: 0.6em;">Rank with skips</span></th>
+                    <th>Vote</th>
+                    <th>Count</th>
+                  </tr>
+                  <tr
+                    v-for="res in pickAlgorithm(algorithm)(av)"
+                    :key="'res-old-' + av.id + '-' + res.id"
+                    :class="{ 'underlined': infoShownOption === 'full', 'not-in-cut': res.rank > 3, 'first': res.rank == 1, 'second': res.rank == 2, 'third': res.rank == 3 }"
+                  >
+                    <td> <span class="tag">{{ res.rank }}</span></td>
+                    <td> <span class="tag is-primary">{{ res.rankWithSkip }}</span></td>
+                    <td>
+                      <div v-if="infoShownOption === 'id'">
+                        {{ res.id }}
+                      </div>
+                      
+                      <div v-if="infoShownOption === 'title'">
+                        <span v-if="av.target === 'track'">
+                          {{ tracks.get(res.id).title}}
+                        </span>
+                        <span v-if="av.target !== 'track'">
+                          {{ albums.get(res.id).title}}
+                        </span>
+                      </div>
+
+                      <div v-if="infoShownOption === 'full'" style="font-size: 0.8em;">
+                        <div v-if="av.target === 'track'">
+                          <sub>Tr</sub> {{ tracks.get(res.id).title}} <br/>
+                          <sub>In</sub> {{ albums.get(tracks.get(res.id).albumId).title}} <br/>
+                          <sub>By</sub> {{ servers.get(albums.get(tracks.get(res.id).albumId).author).name}}
+                        </div>
+                        <span v-if="av.target !== 'track'">
+                          <sub>EP</sub> {{ albums.get(res.id).title}} <br/>
+                          <sub>By</sub> {{ servers.get(albums.get(res.id).author).name}}
+                        </span>
+                      </div>
+                    </td>
+                    <td> <span class="tag">{{ res.count }}</span></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </blockquote>
+
           <h3>Ballots ({{ ballotsOf(av).length }})</h3>
           <div class="ballots">
             <table>
@@ -31,88 +116,60 @@
               </tr>
             </table>
           </div>
-          <div class="columns is-mobile">
-            <div class="column is-4">
+          <div class="columns">
+            <div class="column is-12">
               <h3>Per server votes</h3>
               <div class="per-server-vote-block">
                 <div
                   v-for="[id, re] in perServerVotesOf(av)" 
                   :key="'psvo-' + av.id + '-' + id"
                 >
-                  <strong>{{ id }}</strong>
+                  <strong>
+                    <span v-if="infoShownOption === 'id'">{{ id }}</span>
+                    <span v-if="infoShownOption !== 'id'">{{ id != '-1' ? servers.get(id).name : 'Community vote'}}</span>
+                  </strong>
                   <table>
+                    <tr>
+                      <th>Vote</th>
+                      <th>Count</th>
+                    </tr>
                     <tr 
                       v-for="[clid, c] in re.castList" 
                       :key="'psvo-' + av.id + '-' + id + '-' + clid"
                     >
-                      <td>{{ clid }}</td>
+                      <td>
+                        <div v-if="infoShownOption === 'id'">
+                          {{ clid }}
+                        </div>
+
+                        <div v-if="infoShownOption === 'title'">
+                          <span v-if="av.target === 'track'">
+                            {{ tracks.get(clid).title}}
+                          </span>
+                          <span v-if="av.target !== 'track'">
+                            {{ albums.get(clid).title}}
+                          </span>
+                        </div>
+
+                        <div v-if="infoShownOption === 'full'" style="font-size: 0.8em;">
+                          <div v-if="av.target === 'track'">
+                            <sub>Tr</sub> {{ tracks.get(clid).title}}
+                            <sub>In</sub> {{ albums.get(tracks.get(clid).albumId).title}}
+                            <sub>By</sub> {{ servers.get(albums.get(tracks.get(clid).albumId).author).name}}
+                          </div>
+                          <span v-if="av.target !== 'track'">
+                            <sub>EP</sub> {{ albums.get(clid).title}}
+                            <sub>By</sub> {{ servers.get(albums.get(clid).author).name}}
+                          </span>
+                        </div>
+                      </td>
                       <td class="tag">
                         {{ c.length }}
                       </td>
-                      <!-- <td>{{ballot.voter.discord_tag}}</td>
-                      <td>{{ballot.voted_on_behalf_of}}</td> -->
                     </tr>
                   </table>
                   <hr>
                 </div>
-              </div>
-            </div>
-            <div class="column is-4">
-              <h3>Results (with the bug)</h3>
-              <div class="per-server-vote-block">
-                <table>
-                  <tr>
-                    <th>Rank</th>
-                    <th>Rank w skips</th>
-                    <th>Vote</th>
-                    <th>Count</th>
-                  </tr>
-                  <tr
-                    v-for="res in resultsOfOld(av)"
-                    :key="'res-old-' + av.id + '-' + res.id"
-                  >
-                    <td> <span class="tag">{{ res.rank }}</span></td>
-                    <td> <span class="tag is-primary">{{ res.rankWithSkip }}</span></td>
-                    <td>
-                      <tooltip :vertical="'bottom'">
-                        {{ res.id }}
-                        <template slot="message">
-                          {{ tracks.get(res.id) ? tracks.get(res.id).title : 'loading..'}}
-                        </template>
-                      </tooltip>
-                    </td>
-                    <td> <span class="tag">{{ res.count }}</span></td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-            <div class="column is-4">
-              <h3>Results (fixed)</h3>
-              <div class="per-server-vote-block">
-                <table>
-                  <tr>
-                    <th>Rank</th>
-                    <th>Rank w skips</th>
-                    <th>Vote</th>
-                    <th>Count</th>
-                  </tr>
-                  <tr
-                    v-for="res in resultsOf(av)"
-                    :key="'res-' + av.id + '-' + res.id"
-                  >
-                    <td> <span class="tag">{{ res.rank }}</span></td>
-                    <td> <span class="tag is-primary">{{ res.rankWithSkip }}</span></td>
-                    <td>
-                      <tooltip :vertical="'bottom'">
-                        {{ res.id }}
-                        <template slot="message">
-                          {{ tracks.get(res.id) ? tracks.get(res.id).title : 'loading..'}}
-                        </template>
-                      </tooltip>
-                    </td>
-                    <td> <span class="tag">{{ res.count }}</span></td>
-                  </tr>
-                </table>
               </div>
             </div>
           </div>
@@ -148,12 +205,14 @@
 
 <script>
 import * as Firestore from "../../../plugins/backend/firestore"
-import { getResultsOf } from "../../../models/vote"
+import * as Forms from "../../../modules/forms";
+import { getResultsOf, getResultsOf_ReproducedBug, getPopularResultsOf } from "../../../models/vote"
 import TooltipVue from '@/components/Tooltip.vue'
 
 export default {
   components: {
-    'tooltip': TooltipVue
+    // 'tooltip': TooltipVue,
+    "select-input": Forms.SelectInputComponent,
   },
   data() {
     return { 
@@ -165,29 +224,111 @@ export default {
        * @type {Firestore.AwardVoteEntry[]}
        */
       awardVoteEntries: [],
-      tracks: new Map()
+      tracks: new Map(),
+      albums: new Map(),
+      servers: new Map(),
+      leftAlgorithmName: "v0-bug",
+      rightAlgorithmName: "reproduced-bug",
+      algorithmsOptions: [
+        "v0-bug",
+        "reproduced-bug",
+        "fixed",
+        "popular"
+      ],
+      infoShownOption: "id",
+      infoShownOptions: [
+        "id",
+        "title",
+        "full"
+      ]
     }
   },
   async mounted() {
     /**
-     * @type {Firestore.AwardVote[]}
+     * @type {Map<string, Firestore.AwardVote>}
      */
     let avsMap = await this.$svsBackend.getAllAwardVotes()
+    /**
+     * @type {Map<string, Firestore.AwardVoteEntry>}
+     */
     let avsEntries = await this.$svsBackend.getAllAwardVoteEntries()
-    
+    // let avsMap = {}
+    // let avsEntries = {}
+
     let avs = []
     for (let avid in avsMap) {
       avs.push(avsMap[avid])
     }
 
+    /**
+     * @type {Firestore.AwardVoteEntry[]}
+     */
     let aves = []
     for (let aveid in avsEntries) {
       aves.push(avsEntries[aveid])
     }
+
+    aves.forEach((v) => {
+      let awardVote = avsMap[v.award_id]
+      this.$svsCatalog.mainCatalog.asyncGetServerById(v.voted_on_behalf_of).then(server => {
+        if (!server) return
+        this.servers.set(server.id, server)
+      })
+      .catch(err => {
+        console.warn(v)
+      })
+
+      if (awardVote.target === 'track') {
+        v.vote_for.forEach((value) => {
+          this.$svsCatalog.mainCatalog.asyncGetTrackById(value).then(track => {
+            this.tracks.set(track.id, track)
+            this.$svsCatalog.mainCatalog.asyncGetAlbumById(track.albumId).then(album => {
+              this.albums.set(album.id, album)
+              this.$svsCatalog.mainCatalog.asyncGetServerById(album.author).then(server => {
+                this.servers.set(server.id, server)
+              })
+            })
+          })
+        })
+      } else {
+        v.vote_for.forEach((value) => {
+          this.$svsCatalog.mainCatalog.asyncGetAlbumById(value).then(album => {
+            this.albums.set(album.id, album)
+            this.$svsCatalog.mainCatalog.asyncGetServerById(album.author).then(server => {
+              this.servers.set(server.id, server)
+            })
+          })
+        })
+      }
+    })
+
     this.awardVoteEntries = aves
     this.awardVotesList = avs.filter(av => av.album_collection_id === 'svs-iv')
   },
+  computed: {
+    leftAlgorithm() {
+      return this.pickAlgorithm(this.leftAlgorithmName)
+    },
+    rightAlgorithm() {
+      return this.pickAlgorithm(this.rightAlgorithmName)
+    }
+  },
   methods: {
+    pickAlgorithm(name) {
+      switch(name) {
+        case "fixed": 
+          return (awardVote) => getResultsOf(awardVote, this.awardVoteEntries);
+        case "popular": 
+          return (awardVote) => getPopularResultsOf(awardVote, this.awardVoteEntries)
+        case "reproduced-bug":
+          return (awardVote) => getResultsOf_ReproducedBug(awardVote, this.awardVoteEntries);
+        case "v0-bug": 
+          return (awardVote) => {
+            return this.resultsOfOld(awardVote)
+          }
+      }
+      return (_) => null
+    },
     ballotsOf(awardVote)  {
       // Only keep this award entries
       let voteEntries = this.awardVoteEntries
@@ -296,16 +437,6 @@ export default {
      */
     resultsOf(awardVote) {
       let res = getResultsOf(awardVote, this.awardVoteEntries)
-      if (awardVote.target === 'track') {
-        res.forEach((value) => {
-          this.$svsCatalog.mainCatalog.asyncGetTrackById(value.id).then(track => {
-            this.tracks.set(track.id, track)
-            // let ts = this.tracks
-            // this.tracks = null
-            // this.tracks = ts
-          })
-        })
-      }
       return res
     }
   }
@@ -320,7 +451,12 @@ export default {
 }
 
 .per-server-vote-block {
-  max-height: 400px;
+  max-height: 200px;
+  overflow: visible scroll;
+}
+
+.vote-results {
+  max-height: 600px;
   overflow: visible scroll;
 }
 
@@ -329,6 +465,40 @@ table {
 
   th {
     color: white !important;
+  }
+
+  td {
+    vertical-align: middle;
+  }
+
+}
+.vote-results {
+  .underlined {
+    border-bottom: 1px solid grey;
+  }
+
+  tr.not-in-cut {
+    // opacity: 0.5;
+    filter: grayscale(0.5) brightness(0.7) contrast(0.6);
+  }
+  
+  tr:not(.not-in-cut) {
+    background: #0003;
+  }
+
+  .first {
+    text-shadow: 2px 2px 0px #333377;
+    box-shadow: 0 0 2px 0px #0008, 0 0 20px 20px #fa04 inset;
+    & > * { font-weight: 600 !important; }
+  }
+
+  .second {
+    box-shadow: 0 0 1px 0px #0008, 0 0 20px 20px #8884 inset;
+    & > * { font-weight: 600 !important; }
+  }
+
+  .third {
+    opacity: 1;
   }
 }
 </style>

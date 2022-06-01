@@ -54,7 +54,15 @@
             <div class="column is-6" v-for="(algorithm, idx) in [leftAlgorithmName, rightAlgorithmName]" :key="idx">
               <h3>Results {{algorithm}}</h3>
               <div class="vote-results">
-                <table>
+                <pre 
+                  v-if="infoShownOption === 'json'"
+                  class="textual-results" 
+                >{{ jsonOf(algorithm, av) }}</pre>
+                <pre 
+                  v-if="infoShownOption === 'markdown'"
+                  class="textual-results" 
+                >{{ markdownOf(algorithm, av) }}</pre>
+                <table v-if="!['markdown', 'json'].includes(infoShownOption)">
                   <tr>
                     <th>Rank</th>
                     <th><span style="font-size: 0.6em;">Rank with skips</span></th>
@@ -209,7 +217,7 @@
 <script>
 import * as Firestore from "../../../plugins/backend/firestore"
 import * as Forms from "../../../modules/forms";
-import { getResultsOf, getResultsOf_ReproducedBug, getPopularResultsOf } from "../../../models/vote"
+import { getResultsOf, getResultsOf_ReproducedBug, getPopularResultsOf, VoteResultEntry } from "../../../models/vote"
 import TooltipVue from '@/components/Tooltip.vue'
 
 export default {
@@ -231,7 +239,7 @@ export default {
       albums: new Map(),
       servers: new Map(),
       leftAlgorithmName: "v0-bug",
-      rightAlgorithmName: "reproduced-bug",
+      rightAlgorithmName: "fixed",
       algorithmsOptions: [
         "v0-bug",
         "reproduced-bug",
@@ -242,7 +250,9 @@ export default {
       infoShownOptions: [
         "id",
         "title",
-        "full"
+        "full",
+        "markdown",
+        "json"
       ]
     }
   },
@@ -317,10 +327,11 @@ export default {
     }
   },
   methods: {
+    /**
+     * @returns {(awardVote: Firestore.AwardVote) => VoteResultEntry[]}
+     */
     pickAlgorithm(name) {
       switch(name) {
-        case "fixed": 
-          return (awardVote) => getResultsOf(awardVote, this.awardVoteEntries);
         case "popular": 
           return (awardVote) => getPopularResultsOf(awardVote, this.awardVoteEntries)
         case "reproduced-bug":
@@ -329,8 +340,49 @@ export default {
           return (awardVote) => {
             return this.resultsOfOld(awardVote)
           }
+        default:
+        case "fixed": 
+          return (awardVote) => getResultsOf(awardVote, this.awardVoteEntries);
       }
-      return (_) => null
+    },
+    jsonOf(algorithmName, awardVote) {
+      let res = this.pickAlgorithm(algorithmName)(awardVote)
+      return JSON.stringify(res, null, 2)
+    },
+    /**
+     * @param {string} algorithmName
+     * @param {Firestore.AwardVote} awardVote
+     */
+    markdownOf(algorithmName, awardVote) {
+      let res = this.pickAlgorithm(algorithmName)(awardVote)
+      let resStringArr = [`__**${awardVote.label}**__`, '']
+      for (let row of res) {
+        let rankString = row.rank
+        let id = row.id
+
+        if (row.rank === 1)       rankString += 'st'
+        else if (row.rank === 2)  rankString += 'nd'
+        else if (row.rank === 3)  rankString += 'rd'
+        else                      rankString += 'th'
+
+        let titleStr = awardVote.target === 'track' ? this.tracks.get(id).title : this.albums.get(id).title
+        let author = null
+        if (awardVote.target === 'track') {
+          let track = this.tracks.get(id)
+          let album = this.albums.get(track.albumId)
+          let server = this.servers.get(album.author)
+          titleStr = track.title
+          author = server.name
+        } else {
+          let album = this.albums.get(id)
+          let server = this.servers.get(album.author)
+          titleStr = album.title
+          author = server.name
+        }
+        resStringArr.push(`• ${rankString}. **${titleStr}** - _${author}_`)
+      }
+
+      return resStringArr.join('\n')
     },
     ballotsOf(awardVote)  {
       // Only keep this award entries
@@ -503,5 +555,12 @@ table {
   .third {
     opacity: 1;
   }
+}
+
+.textual-results {
+  line-height: 1;
+  background: #333366;
+  color: inherit;
+  font-style: normal;
 }
 </style>

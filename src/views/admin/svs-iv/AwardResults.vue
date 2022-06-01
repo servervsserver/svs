@@ -112,7 +112,10 @@
                   {{ ballot.id }}
                 </td> 
                 <td>{{ ballot.voter.discord_tag }}</td>
-                <td>{{ ballot.voted_on_behalf_of }}</td>
+                <td>
+                  <span v-if="infoShownOption === 'id'">{{ ballot.voted_on_behalf_of }}</span>
+                  <span v-if="infoShownOption !== 'id'">{{ ballot.voted_on_behalf_of != '-1' ? servers.get(ballot.voted_on_behalf_of).name : 'Community vote'}}</span>
+                </td>
               </tr>
             </table>
           </div>
@@ -446,7 +449,7 @@ export default {
 <style scoped lang="scss">
 .ballots {
   padding-left: 2em;
-  max-height: 80px;
+  max-height: 200px;
   overflow: visible scroll;
 }
 

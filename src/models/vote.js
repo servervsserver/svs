@@ -27,8 +27,6 @@ export function filterDupSubmissions(ballots) {
       bMap.set(vTag, ballot)
     } else if (bMap.get(vTag).submission_date < ballot.submission_date) {
       bMap.set(vTag, ballot)
-    } else {
-      console.warn(ballot, "discard against", bMap.get(vTag))
     }
   }
 
